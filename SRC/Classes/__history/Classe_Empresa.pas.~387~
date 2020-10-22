@@ -367,7 +367,7 @@ end;
 
 function TEmpresa.getFTratarICMS_Diferimento: Boolean;
 begin
-   result := self.FTratarICMS_Diferimento;
+
 end;
 
 function TEmpresa.getFWhatsApp: String;
@@ -763,7 +763,7 @@ end;
 
 procedure TEmpresa.setFTratarICMS_Diferimento(const Value: Boolean);
 begin
-   FTratarICMS_Diferimento := Value;
+
 end;
 
 procedure TEmpresa.setFWhatsApp(const Value: String);
@@ -924,58 +924,57 @@ begin
         qLocal.ConnectionName :='X';
         qLocal.Close;
         qLocal.SQL.Clear;
-        qLocal.SQL.Add('UPDATE EMPRESA_EMP                                               ');
-        qLocal.SQL.Add('   SET EMP_NOME_FANTASIA           = :EMP_NOME_FANTASIA,         ');
-        qLocal.SQL.Add('       EMP_RAZAOSOCIAL             = :EMP_RAZAOSOCIAL,           ');
-        qLocal.SQL.Add('       EMP_INICIOATIVIDADES        = :EMP_INICIOATIVIDADES,      ');
-        qLocal.SQL.Add('       EMP_BLOQUEADA               = :EMP_BLOQUEADA,             ');
-        qLocal.SQL.Add('       EMP_PESSOAJF                = :EMP_PESSOAJF,              ');
-        qLocal.SQL.Add('       EMP_INSCRICAO_ESTADUAL      = :EMP_INSCRICAO_ESTADUAL,    ');
-        qLocal.SQL.Add('       EMP_INSCRICAO_MUNICIPAL     = :EMP_INSCRICAO_MUNICIPAL,   ');
-        qLocal.SQL.Add('       EMP_SUFRAMA                 = :EMP_SUFRAMA,               ');
-        qLocal.SQL.Add('       EMP_CNAE                    = :EMP_CNAE,                  ');
-        qLocal.SQL.Add('       EMP_CNPJ                    = :EMP_CNPJ,                  ');
-        qLocal.SQL.Add('       EMP_NIRE                    = :EMP_NIRE,                  ');
-        qLocal.SQL.Add('       EMP_INSCRICAO_ESTADUAL_ST   = :EMP_INSCRICAO_ESTADUAL_ST, ');
-        qLocal.SQL.Add('       EMP_ENDERECO                = :EMP_ENDERECO,              ');
-        qLocal.SQL.Add('       EMP_CEP                     = :EMP_CEP,                   ');
-        qLocal.SQL.Add('       EMP_ENDERECO_NUMERO         = :EMP_ENDERECO_NUMERO,       ');
-        qLocal.SQL.Add('       EMP_BAIRRO                  = :EMP_BAIRRO,                ');
-        qLocal.SQL.Add('       EMP_ENDERECO_COMPLEMENTO    = :EMP_ENDERECO_COMPLEMENTO,  ');
-        qLocal.SQL.Add('       EMP_CIDADE                  = :EMP_CIDADE,                ');
-        qLocal.SQL.Add('       EMP_IBGECIDADE              = :EMP_IBGECIDADE,            ');
-        qLocal.SQL.Add('       EMP_UF                      = :EMP_UF,                    ');
-        qLocal.SQL.Add('       EMP_IBGEUF                  = :EMP_IBGEUF,                ');
-        qLocal.SQL.Add('       EMP_FONES                   = :EMP_FONES,                 ');
-        qLocal.SQL.Add('       EMP_CELULAR                 = :EMP_CELULAR,               ');
-        qLocal.SQL.Add('       EMP_WHATSAPP                = :EMP_WHATSAPP,              ');
-        qLocal.SQL.Add('       EMP_EMAIL                   = :EMP_EMAIL,                 ');
-        qLocal.SQL.Add('       EMP_CONTRIBUINTE_IPI        = :EMP_CONTRIBUINTE_IPI,      ');
-        qLocal.SQL.Add('       EMP_TRATAR_ICMS_DIFERIMENTO = :EMP_TRATAR_ICMS_DIFERIMENTO,      ');
-        qLocal.SQL.Add('       EMP_RESPONSAVEL_NOME        = :EMP_RESPONSAVEL_NOME,      ');
-        qLocal.SQL.Add('       EMP_RESPONSAVEL_TELEFONE    = :EMP_RESPONSAVEL_TELEFONE,  ');
-        qLocal.SQL.Add('       EMP_RESPONSAVEL_CELULAR     = :EMP_RESPONSAVEL_CELULAR,   ');
-        qLocal.SQL.Add('       EMP_RESPONSAVEL_EMAIL       = :EMP_RESPONSAVEL_EMAIL,     ');
-        qLocal.SQL.Add('       EMP_CONTADOR_EMPRESA        = :EMP_CONTADOR_EMPRESA,      ');
-        qLocal.SQL.Add('       EMP_CONTADOR_RESPONSAVEL    = :EMP_CONTADOR_RESPONSAVEL,  ');
-        qLocal.SQL.Add('       EMP_CONTADOR_CNPJ           = :EMP_CONTADOR_CNPJ,         ');
-        qLocal.SQL.Add('       EMP_CONTADOR_CPF            = :EMP_CONTADOR_CPF,          ');
-        qLocal.SQL.Add('       EMP_CONTADOR_TEL1           = :EMP_CONTADOR_TEL1,         ');
-        qLocal.SQL.Add('       EMP_CONTADOR_TEL2           = :EMP_CONTADOR_TEL2,         ');
-        qLocal.SQL.Add('       EMP_CONTADOR_CRC            = :EMP_CONTADOR_CRC,          ');
-        qLocal.SQL.Add('       EMP_CONTADOR_CEL1           = :EMP_CONTADOR_CEL1,         ');
-        qLocal.SQL.Add('       EMP_CONTADOR_CEL2           = :EMP_CONTADOR_CEL2,         ');
-        qLocal.SQL.Add('       EMP_CONTADOR_EMAIL          = :EMP_CONTADOR_EMAIL,        ');
-        qLocal.SQL.Add('       EMP_LOGO                    = :EMP_LOGO,                  ');
-        qLocal.SQL.Add('       EMP_ASSINATURA              = :EMP_ASSINATURA,            ');
-        qLocal.SQL.Add('       EMP_PIS_CUMULATIVO          = :EMP_PIS_CUMULATIVO,        ');
-        qLocal.SQL.Add('       EMP_PIS_ALIQUOTA            = :EMP_PIS_ALIQUOTA,          ');
-        qLocal.SQL.Add('       EMP_COFINS_CUMULATIVO       = :EMP_COFINS_CUMULATIVO,     ');
-        qLocal.SQL.Add('       EMP_COFINS_ALIQUOTA         = :EMP_COFINS_ALIQUOTA,       ');
+        qLocal.SQL.Add('UPDATE EMPRESA_EMP                                             ');
+        qLocal.SQL.Add('   SET EMP_NOME_FANTASIA         = :EMP_NOME_FANTASIA,         ');
+        qLocal.SQL.Add('       EMP_RAZAOSOCIAL           = :EMP_RAZAOSOCIAL,           ');
+        qLocal.SQL.Add('       EMP_INICIOATIVIDADES      = :EMP_INICIOATIVIDADES,      ');
+        qLocal.SQL.Add('       EMP_BLOQUEADA             = :EMP_BLOQUEADA,             ');
+        qLocal.SQL.Add('       EMP_PESSOAJF              = :EMP_PESSOAJF,              ');
+        qLocal.SQL.Add('       EMP_INSCRICAO_ESTADUAL    = :EMP_INSCRICAO_ESTADUAL,    ');
+        qLocal.SQL.Add('       EMP_INSCRICAO_MUNICIPAL   = :EMP_INSCRICAO_MUNICIPAL,   ');
+        qLocal.SQL.Add('       EMP_SUFRAMA               = :EMP_SUFRAMA,               ');
+        qLocal.SQL.Add('       EMP_CNAE                  = :EMP_CNAE,                  ');
+        qLocal.SQL.Add('       EMP_CNPJ                  = :EMP_CNPJ,                  ');
+        qLocal.SQL.Add('       EMP_NIRE                  = :EMP_NIRE,                  ');
+        qLocal.SQL.Add('       EMP_INSCRICAO_ESTADUAL_ST = :EMP_INSCRICAO_ESTADUAL_ST, ');
+        qLocal.SQL.Add('       EMP_ENDERECO              = :EMP_ENDERECO,              ');
+        qLocal.SQL.Add('       EMP_CEP                   = :EMP_CEP,                   ');
+        qLocal.SQL.Add('       EMP_ENDERECO_NUMERO       = :EMP_ENDERECO_NUMERO,       ');
+        qLocal.SQL.Add('       EMP_BAIRRO                = :EMP_BAIRRO,                ');
+        qLocal.SQL.Add('       EMP_ENDERECO_COMPLEMENTO  = :EMP_ENDERECO_COMPLEMENTO,  ');
+        qLocal.SQL.Add('       EMP_CIDADE                = :EMP_CIDADE,                ');
+        qLocal.SQL.Add('       EMP_IBGECIDADE            = :EMP_IBGECIDADE,            ');
+        qLocal.SQL.Add('       EMP_UF                    = :EMP_UF,                    ');
+        qLocal.SQL.Add('       EMP_IBGEUF                = :EMP_IBGEUF,                ');
+        qLocal.SQL.Add('       EMP_FONES                 = :EMP_FONES,                 ');
+        qLocal.SQL.Add('       EMP_CELULAR               = :EMP_CELULAR,               ');
+        qLocal.SQL.Add('       EMP_WHATSAPP              = :EMP_WHATSAPP,              ');
+        qLocal.SQL.Add('       EMP_EMAIL                 = :EMP_EMAIL,                 ');
+        qLocal.SQL.Add('       EMP_CONTRIBUINTE_IPI      = :EMP_CONTRIBUINTE_IPI,      ');
+        qLocal.SQL.Add('       EMP_RESPONSAVEL_NOME      = :EMP_RESPONSAVEL_NOME,      ');
+        qLocal.SQL.Add('       EMP_RESPONSAVEL_TELEFONE  = :EMP_RESPONSAVEL_TELEFONE,  ');
+        qLocal.SQL.Add('       EMP_RESPONSAVEL_CELULAR   = :EMP_RESPONSAVEL_CELULAR,   ');
+        qLocal.SQL.Add('       EMP_RESPONSAVEL_EMAIL     = :EMP_RESPONSAVEL_EMAIL,     ');
+        qLocal.SQL.Add('       EMP_CONTADOR_EMPRESA      = :EMP_CONTADOR_EMPRESA,      ');
+        qLocal.SQL.Add('       EMP_CONTADOR_RESPONSAVEL  = :EMP_CONTADOR_RESPONSAVEL,  ');
+        qLocal.SQL.Add('       EMP_CONTADOR_CNPJ         = :EMP_CONTADOR_CNPJ,         ');
+        qLocal.SQL.Add('       EMP_CONTADOR_CPF          = :EMP_CONTADOR_CPF,          ');
+        qLocal.SQL.Add('       EMP_CONTADOR_TEL1         = :EMP_CONTADOR_TEL1,         ');
+        qLocal.SQL.Add('       EMP_CONTADOR_TEL2         = :EMP_CONTADOR_TEL2,         ');
+        qLocal.SQL.Add('       EMP_CONTADOR_CRC          = :EMP_CONTADOR_CRC,          ');
+        qLocal.SQL.Add('       EMP_CONTADOR_CEL1         = :EMP_CONTADOR_CEL1,         ');
+        qLocal.SQL.Add('       EMP_CONTADOR_CEL2         = :EMP_CONTADOR_CEL2,         ');
+        qLocal.SQL.Add('       EMP_CONTADOR_EMAIL        = :EMP_CONTADOR_EMAIL,        ');
+        qLocal.SQL.Add('       EMP_LOGO                  = :EMP_LOGO,                  ');
+        qLocal.SQL.Add('       EMP_ASSINATURA            = :EMP_ASSINATURA,            ');
+        qLocal.SQL.Add('       EMP_PIS_CUMULATIVO        = :EMP_PIS_CUMULATIVO,        ');
+        qLocal.SQL.Add('       EMP_PIS_ALIQUOTA          = :EMP_PIS_ALIQUOTA,          ');
+        qLocal.SQL.Add('       EMP_COFINS_CUMULATIVO     = :EMP_COFINS_CUMULATIVO,     ');
+        qLocal.SQL.Add('       EMP_COFINS_ALIQUOTA       = :EMP_COFINS_ALIQUOTA,       ');
 
         //--------------------------------------------------------------------------------
-        qLocal.SQL.Add('       EMP_DT                      = :EMP_DT,                    ');
-        qLocal.SQL.Add('       EMP_CODIGO_UNISYSTEM        = :EMP_CODIGO_UNISYSTEM       ');
+        qLocal.SQL.Add('       EMP_DT                    = :EMP_DT,                    ');
+        qLocal.SQL.Add('       EMP_CODIGO_UNISYSTEM      = :EMP_CODIGO_UNISYSTEM       ');
 
         //passo11
         Preencher_Parametros_Empresa(qLocal);

@@ -10,7 +10,7 @@ uses Classes, Dialogs, SysUtils, IniFiles,
 
      Classe_TributacaoPIS,
      Classe_TributacaoCOFINS,
-     Classe_TributacaoISS;
+     Classe_TributacaoISS;;
 
 type
 
@@ -25,7 +25,7 @@ type
     property PIS    : TPIS    read FPIS    write FPIS;
     property COFINS : TCOFINS read FCOFINS write FCOFINS;
     property ISS    : TISS    read FISS    write FISS;
-  end;
+   end;
 
 implementation
 { TEmpresa }

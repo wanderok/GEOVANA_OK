@@ -49,8 +49,7 @@ uses
   vw_acesso_remoto in '..\..\src\views\Acesso_Remoto\vw_acesso_remoto.pas' {frm_acesso_remoto},
   Classe_TributacaoPIS in '..\..\src\Classes\Classe_TributacaoPIS.pas',
   Classe_EmpresaTributacao in '..\..\src\Classes\Classe_EmpresaTributacao.pas',
-  Classe_TributacaoCOFINS in '..\..\SRC\Classes\Classe_TributacaoCOFINS.pas',
-  Classe_TributacaoISS in '..\..\SRC\Classes\Classe_TributacaoISS.pas';
+  Classe_TributacaoCOFINS in '..\..\SRC\Classes\Classe_TributacaoCOFINS.pas';
 
 {$R *.res}
 

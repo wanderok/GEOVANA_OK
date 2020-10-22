@@ -8,9 +8,8 @@ uses Classes, Dialogs, SysUtils, IniFiles,
      FireDAC.Comp.Client,
      FireDAC.Stan.Intf, FireDAC.Stan.Option,
 
-     Classe_TributacaoPIS,
-     Classe_TributacaoCOFINS,
-     Classe_TributacaoISS;
+     Classe_TributacaoPIS;
+     Classe_TributacaoCOFINS;
 
 type
 
@@ -18,14 +17,13 @@ type
    private
 	  FPIS    : TPIS;
 	  FCOFINS : TCOFINS;
-	  FISS    : TISS;
    public
     Constructor Create;
     Destructor  Destroy; Override;
     property PIS    : TPIS    read FPIS    write FPIS;
     property COFINS : TCOFINS read FCOFINS write FCOFINS;
-    property ISS    : TISS    read FISS    write FISS;
-  end;
+
+   end;
 
 implementation
 { TEmpresa }
@@ -39,16 +37,12 @@ var qEmpresa: TFDQuery;
 
 constructor TTributosDeEmpresa.Create;
 begin
-   FPIS    := TPIS.Create;
-   FCOFINS := TCOFINS.Create;
-   FISS    := TISS.Create;
+   FPIS := TPIS.Create;
 end;
 
 destructor TTributosDeEmpresa.Destroy;
 begin
   FPIS.Free;
-  FCOFINS.Free;
-  FISS.Free;
   inherited;
 end;
 

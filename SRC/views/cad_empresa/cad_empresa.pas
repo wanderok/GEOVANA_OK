@@ -24,7 +24,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, Vcl.ExtCtrls;
+  dxSkinXmas2008Blue, Vcl.ExtCtrls, Vcl.ExtDlgs;
 
 type
   Tfrm_cad_empresa = class(TForm)
@@ -32,11 +32,11 @@ type
     GroupBox1: TGroupBox;
     grpPisCofins: TGroupBox;
     edPISAliquota: TEdit;
-    ed_EMPRESA_pCOFINS: TEdit;
-    cxCheckBox1: TcxCheckBox;
+    edCOFINSAliquota: TEdit;
+    cbTratarICMS_Diferimento: TcxCheckBox;
     GroupBox3: TGroupBox;
     Label11: TLabel;
-    Edit3: TEdit;
+    edISSAliquota: TEdit;
     grpIPI: TGroupBox;
     cbContribuinteIPI: TcxCheckBox;
     grpConfig: TGroupBox;
@@ -124,6 +124,9 @@ type
     edWhatsApp: TEdit;
     edEmail: TEdit;
     rgPISCumulativo: TRadioGroup;
+    OpenPictureDialog1: TOpenPictureDialog;
+    imgLogoMarca: TImage;
+    imgAssinatura: TImage;
     procedure BtnCertificadoClick(Sender: TObject);
     procedure BtnEmailClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
@@ -140,6 +143,10 @@ type
     procedure cxButton10Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BtnGravarClick(Sender: TObject);
+    procedure cxButton1Click(Sender: TObject);
+    procedure cxButton2Click(Sender: TObject);
+    procedure cxButton3Click(Sender: TObject);
+    procedure cxButton7Click(Sender: TObject);
   private
     { Private declarations }
     procedure Preencher_Campos_da_Tela;
@@ -151,7 +158,8 @@ type
 
 var
   frm_cad_empresa: Tfrm_cad_empresa;
-
+  vLogoMarca,
+  vAssinatura : String;
 implementation
 
 uses
@@ -226,6 +234,39 @@ begin
     FRM_cad_zona.showmodal;
 end;
 
+procedure Tfrm_cad_empresa.cxButton1Click(Sender: TObject);
+begin
+  if OpenPictureDialog1.Execute then
+  begin
+    TL_colab.visible := false;
+    imgLogoMarca.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+    if not DirectoryExists(ExtractFilePath(Application.ExeName) + 'Arquivos\Imagens\') then
+      forceDirectories(StringToOleStr(ExtractFilePath(Application.ExeName) + 'Arquivos\Imagens\'));
+    vLogoMarca := ExtractFilePath(Application.ExeName) + 'Arquivos\Imagens\' + ExtractFileName(OpenPictureDialog1.FileName);
+    imgLogoMarca.Picture.SaveToFile(vLogoMarca);
+  end;
+end;
+
+procedure Tfrm_cad_empresa.cxButton2Click(Sender: TObject);
+begin
+  DeleteFile(vLogoMarca);
+  imgLogoMarca.Picture := nil;
+  TL_colab.Show;
+end;
+
+procedure Tfrm_cad_empresa.cxButton3Click(Sender: TObject);
+begin
+  if OpenPictureDialog1.Execute then
+  begin
+    TL_colab.visible := false;
+    imgAssinatura.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+    if not DirectoryExists(ExtractFilePath(Application.ExeName) + 'Arquivos\Imagens\') then
+      forceDirectories(StringToOleStr(ExtractFilePath(Application.ExeName) + 'Arquivos\Imagens\'));
+    vAssinatura := ExtractFilePath(Application.ExeName) + 'Arquivos\Imagens\' + ExtractFileName(OpenPictureDialog1.FileName);
+    imgAssinatura.Picture.SaveToFile(vAssinatura);
+  end;
+end;
+
 procedure Tfrm_cad_empresa.cxButton4Click(Sender: TObject);
 begin
     frm_config_email_fiscais := Tfrm_config_email_fiscais.Create(nil);
@@ -243,6 +284,13 @@ begin
     frm_reg_tributaria := Tfrm_reg_tributaria.Create(nil);
     frm_reg_tributaria.showmodal;
     frm_reg_tributaria.Free;
+end;
+
+procedure Tfrm_cad_empresa.cxButton7Click(Sender: TObject);
+begin
+  DeleteFile(vAssinatura);
+  imgAssinatura.Picture := nil;
+  TL_colab.Show;
 end;
 
 procedure Tfrm_cad_empresa.cxButton8Click(Sender: TObject);
@@ -266,6 +314,17 @@ begin
    else
       if not PercentualValido(edPISAliquota.Text) then
          exit;
+   if edCOFINSAliquota.Text = '' then
+      edCOFINSAliquota.Text := '0'
+   else
+      if not PercentualValido(edCOFINSAliquota.Text) then
+         exit;
+   if edISSAliquota.Text = '' then
+      edISSAliquota.Text := '0'
+   else
+      if not PercentualValido(edISSAliquota.Text) then
+         exit;
+
    result := true;
 end;
 
@@ -304,6 +363,7 @@ begin
         Empresa.WhatsApp                    := edWhatsApp.Text;
         Empresa.Email                       := edEmail.Text;
         Empresa.ContribuinteIPI             := cbContribuinteIPI.Checked;
+        Empresa.TratarICMS_Diferimento      := cbTratarICMS_Diferimento.Checked;
         Empresa.ResponsavelNome             := edResponsavelNome.Text;
         Empresa.ResponsavelTelefone         := edResponsavelTelefone.Text;
         Empresa.ResponsavelCelular          := edResponsavelCelular.Text;
@@ -318,15 +378,23 @@ begin
         Empresa.ContadorCelular1            := edContadorCelular1.Text;
         Empresa.ContadorCelular2            := edContadorCelular2.Text;
         Empresa.ContadorEmail               := edContadorEmail.Text;
-
+        Empresa.Logomarca                   := vLogoMarca;
+        Empresa.Assinatura                  := vAssinatura;
         //Tributacao
         //----------------------------------------------------------------------
         Empresa.Tributacao.PIS.Cumulativo   :=(rgPISCumulativo.ItemIndex = 1);
         if edPISAliquota.Text = '' then
            edPISAliquota.Text := '0';
-
         Empresa.Tributacao.PIS.Aliquota     := StrToFloat(MascToStr(edPISAliquota.Text));
 
+        Empresa.Tributacao.COFINS.Cumulativo:=(rgPISCumulativo.ItemIndex = 1);
+        if edCOFINSAliquota.Text = '' then
+           edCOFINSAliquota.Text := '0';
+        Empresa.Tributacao.COFINS.Aliquota  := StrToFloat(MascToStr(edCOFINSAliquota.Text));
+
+        if edISSAliquota.Text = '' then
+           edISSAliquota.Text := '0';
+        Empresa.Tributacao.ISS.Aliquota  := StrToFloat(MascToStr(edISSAliquota.Text));
 
         // UNISYSTEM
         //----------------------------------------------------------------------
@@ -370,6 +438,7 @@ begin
    edWhatsApp.Text                    := Empresa.WhatsApp;
    edEmail.Text                       := Empresa.Email;
    cbContribuinteIPI.Checked          := Empresa.ContribuinteIPI;
+   cbTratarICMS_Diferimento.Checked   := Empresa.TratarICMS_Diferimento;
    edResponsavelNome.Text             := Empresa.ResponsavelNome;
    edResponsavelTelefone.Text         := Empresa.ResponsavelTelefone;
    edResponsavelCelular.Text          := Empresa.ResponsavelCelular;
@@ -384,9 +453,29 @@ begin
    edContadorCelular1.Text            := Empresa.ContadorCelular1;
    edContadorCelular2.Text            := Empresa.ContadorCelular2;
    edContadorEmail.Text               := Empresa.ContadorEmail;
-   edDataCadastro.Text                := Empresa.DataCadastroString;
+
+   vLogoMarca                         := Empresa.Logomarca;
+   if vLogoMarca <> '' then
+    if FileExists(vLogoMarca, True) then
+    begin
+      imgLogoMarca.Picture.LoadFromFile(vLogoMarca);
+      TL_colab.Hide;
+    end;
+
+   vAssinatura                        := Empresa.Assinatura;
+   if vAssinatura <> '' then
+    if FileExists(vAssinatura, True) then
+    begin
+      imgAssinatura.Picture.LoadFromFile(vAssinatura);
+      TL_colab.Hide;
+    end;
+
+
    rgPISCumulativo.ItemIndex          := f0ou1(Empresa.Tributacao.PIS.Cumulativo);
    edPISAliquota.Text                 := FormatFloat('#.00',Empresa.Tributacao.PIS.Aliquota);
+   edCOFINSAliquota.Text              := FormatFloat('#.00',Empresa.Tributacao.COFINS.Aliquota);
+   edISSAliquota.Text                 := FormatFloat('#.00',Empresa.Tributacao.ISS.Aliquota);
+   //
    edDataCadastro.Text                := Empresa.DataCadastroString;
    edCodigoUniSystem.Text             := Empresa.CodigoUniSystem;
 //PASSO 9 :)

@@ -10,7 +10,7 @@ uses Classes, Dialogs, SysUtils, IniFiles,
 
      Classe_TributacaoPIS,
      Classe_TributacaoCOFINS,
-     Classe_TributacaoISS;
+     Classe_TributacaoISS;;
 
 type
 
@@ -25,7 +25,8 @@ type
     property PIS    : TPIS    read FPIS    write FPIS;
     property COFINS : TCOFINS read FCOFINS write FCOFINS;
     property ISS    : TISS    read FISS    write FISS;
-  end;
+
+   end;
 
 implementation
 { TEmpresa }
@@ -41,14 +42,12 @@ constructor TTributosDeEmpresa.Create;
 begin
    FPIS    := TPIS.Create;
    FCOFINS := TCOFINS.Create;
-   FISS    := TISS.Create;
 end;
 
 destructor TTributosDeEmpresa.Destroy;
 begin
   FPIS.Free;
   FCOFINS.Free;
-  FISS.Free;
   inherited;
 end;
 

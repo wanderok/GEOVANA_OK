@@ -265,6 +265,8 @@
         </DCCReference>
         <DCCReference Include="..\..\src\Classes\Classe_TributacaoPIS.pas"/>
         <DCCReference Include="..\..\src\Classes\Classe_EmpresaTributacao.pas"/>
+        <DCCReference Include="..\..\SRC\Classes\Classe_TributacaoCOFINS.pas"/>
+        <DCCReference Include="..\..\SRC\Classes\Classe_TributacaoISS.pas"/>
         <None Include="ModelSupport_SMC_PLUS_\default.txaPackage"/>
         <None Include="ModelSupport_SMC_PLUS_\default.txvpck"/>
         <None Include="ModelSupport_SMC_PLUS_\vw_Login\default.txvpck"/>

@@ -10,7 +10,7 @@ uses Classes, Dialogs, SysUtils, IniFiles,
 
      Classe_TributacaoPIS,
      Classe_TributacaoCOFINS,
-     Classe_TributacaoISS;
+     Classe_TributacaoISS;;
 
 type
 

@@ -199,6 +199,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
         Top = 17
         Width = 49
         Height = 26
+        Color = 8454016
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clRed
         Font.Height = -15
@@ -208,11 +209,12 @@ object frm_cad_empresa: Tfrm_cad_empresa
         TabOrder = 1
         Text = 'Edit1'
       end
-      object ed_EMPRESA_pCOFINS: TEdit
+      object edCOFINSAliquota: TEdit
         Left = 220
         Top = 17
         Width = 49
         Height = 26
+        Color = 8454016
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clRed
         Font.Height = -15
@@ -238,7 +240,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
         TabOrder = 0
       end
     end
-    object cxCheckBox1: TcxCheckBox
+    object cbTratarICMS_Diferimento: TcxCheckBox
       Left = 168
       Top = 169
       Caption = 'Tratar ICMS de Diferimento (CST 51) (depende da UF)'
@@ -266,7 +268,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
     end
     object GroupBox3: TGroupBox
       Left = 453
-      Top = 95
+      Top = 79
       Width = 159
       Height = 50
       Caption = '  ISS  '
@@ -293,11 +295,12 @@ object frm_cad_empresa: Tfrm_cad_empresa
         Font.Style = []
         ParentFont = False
       end
-      object Edit3: TEdit
+      object edISSAliquota: TEdit
         Left = 84
         Top = 16
         Width = 49
         Height = 26
+        Color = 8454016
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNone
         Font.Height = -15
@@ -3147,13 +3150,20 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object imgLogoMarca: TImage
+      Left = 14
+      Top = 29
+      Width = 186
+      Height = 163
+      Stretch = True
+      Transparent = True
+    end
     object cxButton1: TcxButton
       Left = 14
       Top = 179
       Width = 87
       Height = 25
       Caption = 'Inserir'
-      Enabled = False
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Office2013White'
       OptionsImage.Glyph.Data = {
@@ -3198,6 +3208,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = cxButton1Click
     end
     object cxButton2: TcxButton
       Left = 114
@@ -3205,7 +3216,6 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Width = 86
       Height = 25
       Caption = 'Remover'
-      Enabled = False
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Office2013White'
       OptionsImage.Glyph.Data = {
@@ -3250,6 +3260,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = cxButton2Click
     end
   end
   object grpDadosEmpresa: TGroupBox
@@ -3722,13 +3733,20 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object imgAssinatura: TImage
+      Left = 14
+      Top = -7
+      Width = 186
+      Height = 163
+      Stretch = True
+      Transparent = True
+    end
     object cxButton3: TcxButton
       Left = 14
       Top = 119
       Width = 87
       Height = 25
       Caption = 'Inserir'
-      Enabled = False
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Office2013White'
       OptionsImage.Glyph.Data = {
@@ -3773,6 +3791,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = cxButton3Click
     end
     object cxButton7: TcxButton
       Left = 114
@@ -3780,7 +3799,6 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Width = 86
       Height = 25
       Caption = 'Remover'
-      Enabled = False
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Office2013White'
       OptionsImage.Glyph.Data = {
@@ -3825,6 +3843,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = cxButton7Click
     end
   end
   object grpEndereco: TGroupBox
@@ -4538,5 +4557,9 @@ object frm_cad_empresa: Tfrm_cad_empresa
       TabOrder = 3
       Text = 'Edit1'
     end
+  end
+  object OpenPictureDialog1: TOpenPictureDialog
+    Left = 940
+    Top = 128
   end
 end

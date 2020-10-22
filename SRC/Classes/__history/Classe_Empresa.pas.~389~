@@ -367,7 +367,7 @@ end;
 
 function TEmpresa.getFTratarICMS_Diferimento: Boolean;
 begin
-   result := self.FTratarICMS_Diferimento;
+   result := self.TratarICMS_Diferimento;
 end;
 
 function TEmpresa.getFWhatsApp: String;
@@ -763,7 +763,7 @@ end;
 
 procedure TEmpresa.setFTratarICMS_Diferimento(const Value: Boolean);
 begin
-   FTratarICMS_Diferimento := Value;
+   fTratarICMS_Diferimento := Value;
 end;
 
 procedure TEmpresa.setFWhatsApp(const Value: String);
