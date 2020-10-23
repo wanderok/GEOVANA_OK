@@ -44,6 +44,7 @@ uses
   consulta in '..\..\src\views\Consulta_Cadastros\consulta.pas' {frm_consulta},
   ControleDeAcessos in '..\..\src\Controles\ControleDeAcessos\ControleDeAcessos.pas',
   LiberaAcesso in '..\..\src\Controles\ControleDeAcessos\LiberaAcesso.pas' {frmLiberaAcesso},
+<<<<<<< HEAD
   cad_empresa_T3 in '..\..\SRC\views\cad_empresa\cad_empresa_T3.pas' {frm_cad_empresa_T3},
   U_Municipio in '..\..\src\views\consultar_municipio\U_Municipio.pas' {Frm_Municipio},
   vw_acesso_remoto in '..\..\src\views\Acesso_Remoto\vw_acesso_remoto.pas' {frm_acesso_remoto},
@@ -51,6 +52,11 @@ uses
   Classe_EmpresaTributacao in '..\..\src\Classes\Classe_EmpresaTributacao.pas',
   Classe_TributacaoCOFINS in '..\..\SRC\Classes\Classe_TributacaoCOFINS.pas',
   Classe_TributacaoISS in '..\..\SRC\Classes\Classe_TributacaoISS.pas';
+=======
+  cad_empresa in '..\..\src\views\cad_empresa\cad_empresa.pas' {frm_cad_empresa},
+  U_Municipio in '..\..\src\views\consultar_municipio\U_Municipio.pas' {Frm_Municipio},
+  vw_acesso_remoto in '..\..\src\views\Acesso_Remoto\vw_acesso_remoto.pas' {frm_acesso_remoto};
+>>>>>>> cb9b60c45f9c9ea98946d7a181b67597cfe683bf
 
 {$R *.res}
 

@@ -2840,7 +2840,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
   end
   object gbContador: TGroupBox
-    Left = 658
+    Left = 656
     Top = 388
     Width = 437
     Height = 256
@@ -2983,7 +2983,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object edContadorEmpresa: TEdit
-      Tag = 100
+      Tag = 200
       Left = 98
       Top = 23
       Width = 314
@@ -3001,7 +3001,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       OnExit = edRazaoSocialExit
     end
     object edContadorResponsavel: TEdit
-      Tag = 100
+      Tag = 200
       Left = 98
       Top = 55
       Width = 314
@@ -3076,7 +3076,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       OnKeyPress = edCNPJKeyPress
     end
     object edContadorEmail: TEdit
-      Tag = 100
+      Tag = 200
       Left = 98
       Top = 214
       Width = 314
@@ -3133,7 +3133,6 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       OnKeyPress = edCNPJKeyPress
     end
     object edContadorTeleFone2: TEdit
-      Tag = 200
       Left = 294
       Top = 149
       Width = 118
@@ -4149,7 +4148,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 6
       Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      OnExit = edEnderecoMunicipioExit
     end
     object edEnderecoComplemento: TEdit
       Left = 112
@@ -4290,9 +4289,9 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
   end
   object GroupBox5: TGroupBox
-    Left = 658
+    Left = 656
     Top = 227
-    Width = 211
+    Width = 220
     Height = 155
     Caption = '  Contatos Respons'#225'vel  '
     Color = clBtnHighlight
@@ -4306,11 +4305,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     ParentFont = False
     TabOrder = 5
     object TLabel
-      Left = 22
+      Left = 25
       Top = 90
-      Width = 50
+      Width = 26
       Height = 17
-      Caption = 'Celular:'
+      Caption = 'Cel:'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -4319,7 +4318,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object TLabel
-      Left = 26
+      Left = 5
       Top = 122
       Width = 46
       Height = 17
@@ -4334,9 +4333,9 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     object TLabel
       Left = 14
       Top = 58
-      Width = 58
+      Width = 37
       Height = 17
-      Caption = 'Telefone:'
+      Caption = 'Fone:'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -4345,7 +4344,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object TLabel
-      Left = 29
+      Left = 8
       Top = 26
       Width = 43
       Height = 17
@@ -4358,10 +4357,10 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object edResponsavelNome: TEdit
-      Tag = 100
-      Left = 76
+      Tag = 200
+      Left = 54
       Top = 21
-      Width = 118
+      Width = 160
       Height = 26
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
@@ -4375,9 +4374,10 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       OnKeyPress = edResponsavelNomeKeyPress
     end
     object edResponsavelTelefone: TEdit
-      Left = 76
+      Tag = 200
+      Left = 54
       Top = 53
-      Width = 118
+      Width = 160
       Height = 26
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
@@ -4392,10 +4392,10 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       OnKeyPress = edCNPJKeyPress
     end
     object edResponsavelCelular: TEdit
-      Tag = 100
-      Left = 76
+      Tag = 200
+      Left = 54
       Top = 85
-      Width = 118
+      Width = 160
       Height = 26
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
@@ -4411,9 +4411,10 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       OnKeyPress = edCNPJKeyPress
     end
     object edResponsavelEmail: TEdit
-      Left = 76
+      Tag = 200
+      Left = 54
       Top = 117
-      Width = 118
+      Width = 160
       Height = 26
       CharCase = ecLowerCase
       Color = 8454016
@@ -4510,9 +4511,9 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
   end
   object grpContatos: TGroupBox
-    Left = 652
+    Left = 656
     Top = 33
-    Width = 211
+    Width = 220
     Height = 155
     Caption = '  Contatos Empresa  '
     Color = clBtnHighlight
@@ -4527,11 +4528,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     TabOrder = 4
     OnClick = BTNbase_dadosClick
     object TLabel
-      Left = 21
+      Left = 25
       Top = 58
-      Width = 50
+      Width = 26
       Height = 17
-      Caption = 'Celular:'
+      Caption = 'Cel:'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -4540,11 +4541,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object TLabel
-      Left = 13
+      Left = 29
       Top = 26
-      Width = 58
+      Width = 22
       Height = 17
-      Caption = 'Telefone:'
+      Caption = 'Tel:'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -4553,7 +4554,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object TLabel
-      Left = 24
+      Left = 4
       Top = 90
       Width = 47
       Height = 17
@@ -4566,7 +4567,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object TLabel
-      Left = 25
+      Left = 5
       Top = 122
       Width = 46
       Height = 17
@@ -4580,9 +4581,9 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object edTelefone: TEdit
       Tag = 100
-      Left = 76
+      Left = 54
       Top = 21
-      Width = 118
+      Width = 160
       Height = 26
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
@@ -4599,9 +4600,9 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object edCelular: TEdit
       Tag = 100
-      Left = 76
+      Left = 54
       Top = 53
-      Width = 118
+      Width = 160
       Height = 26
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
@@ -4618,9 +4619,9 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object edWhatsApp: TEdit
       Tag = 100
-      Left = 76
+      Left = 54
       Top = 85
-      Width = 118
+      Width = 160
       Height = 26
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
@@ -4638,9 +4639,9 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object edEmail: TEdit
       Tag = 100
-      Left = 76
+      Left = 54
       Top = 117
-      Width = 118
+      Width = 160
       Height = 26
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET

@@ -231,6 +231,8 @@ implementation
 
 uses Funcoes;
 
+var qEmpresa: TFDQuery;
+
 procedure TEmpresa.Abrir;
 var qLocal: TFDQuery;
 begin
@@ -322,7 +324,6 @@ begin
 
     Result := True;
 end;
-
 
 destructor TEmpresa.Destroy;
 begin
@@ -721,7 +722,6 @@ begin
     pQuery.ParamByName('EMP_PIS_ALIQUOTA'           ).AsFloat    := FTributacao.PIS.Aliquota;
     pQuery.ParamByName('EMP_COFINS_CUMULATIVO'      ).AsInteger  := f0ou1(FTributacao.COFINS.Cumulativo);
     pQuery.ParamByName('EMP_COFINS_ALIQUOTA'        ).AsFloat    := FTributacao.COFINS.Aliquota;
-
     //passo12
 end;
 

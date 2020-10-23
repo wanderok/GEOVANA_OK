@@ -1315,7 +1315,6 @@ procedure InicioPadraoDeTodasAsTelasDoSistema;
 begin
 end;
 
-
 Function fNomeDoSistema:String;
 begin
      Result := 'SMC Plus';

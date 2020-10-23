@@ -156,6 +156,7 @@ type
     procedure edCOFINSAliquotaExit(Sender: TObject);
     procedure edISSAliquotaExit(Sender: TObject);
     procedure edPISAliquotaKeyPress(Sender: TObject; var Key: Char);
+    procedure edEnderecoMunicipioExit(Sender: TObject);
   private
     { Private declarations }
     procedure Preencher_Campos_da_Tela;
@@ -174,9 +175,12 @@ var
 implementation
 
 uses
+   Dados,
    funcoes,
    config_certificado, config_email,
-   config_nfe, config_mde, config_nfs, reg_tributario, email_arquivos_fiscais, integracao_outros_bancos, config_mdfe, U_Municipio, cad_bairro, cad_regiao, cad_zona;
+   config_nfe, config_mde, config_nfs, reg_tributario, email_arquivos_fiscais,
+   integracao_outros_bancos, config_mdfe, U_Municipio, cad_bairro,
+   cad_regiao, cad_zona;
 
 {$R *.dfm}
 
@@ -365,6 +369,38 @@ begin
       ShowMessage('Valor inválido');
       edCOFINSAliquota.SetFocus;
     end;
+end;
+
+procedure Tfrm_cad_empresa_T3.edEnderecoMunicipioExit(Sender: TObject);
+begin
+  if Sender is TEdit then
+  begin
+     (Sender as TEdit).Text := Trim((Sender as TEdit).Text);
+  end;
+  edEnderecoMunicipioIBGE.text := '';
+  edEnderecoUF.text            := '';
+  edEnderecoUFIBGE.text        := '';
+  if edEnderecoMunicipio.text = '' then
+  begin
+     ShowMessage('Informe o município');
+     edEnderecoMunicipio.SetFocus;
+     exit;
+  end;
+
+  dm.Query1.Close;
+  dm.Query1.Sql.Clear;
+  dm.Query1.Sql.Add('SELECT * FROM CIDADE_CID ');
+  dm.Query1.Sql.Add(' WHERE CID_CODIGO = :COD ');
+  dm.Query1.ParamByName('COD').AsString := edEnderecoMunicipio.Text;
+  dm.Query1.Open;
+  if dm.Query1.Eof Then
+  Begin
+     ShowMessage('Município inexistente...');
+     edEnderecoMunicipio.SetFocus;
+     Exit;
+  End;
+  //edNomeCidade.Text  := dm.Query1.FieldByName('CID_NOME').AsString;
+  //edFILI_IBGEUF.Text := dm.Query1.FieldByName('CID_UF'  ).AsString;
 end;
 
 procedure Tfrm_cad_empresa_T3.edISSAliquotaExit(Sender: TObject);
