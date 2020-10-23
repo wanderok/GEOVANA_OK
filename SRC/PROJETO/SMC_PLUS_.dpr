@@ -44,7 +44,7 @@ uses
   consulta in '..\..\src\views\Consulta_Cadastros\consulta.pas' {frm_consulta},
   ControleDeAcessos in '..\..\src\Controles\ControleDeAcessos\ControleDeAcessos.pas',
   LiberaAcesso in '..\..\src\Controles\ControleDeAcessos\LiberaAcesso.pas' {frmLiberaAcesso},
-  cad_empresa in '..\..\src\views\cad_empresa\cad_empresa.pas' {frm_cad_empresa},
+  cad_empresa_T3 in '..\..\SRC\views\cad_empresa\cad_empresa_T3.pas' {frm_cad_empresa_T3},
   U_Municipio in '..\..\src\views\consultar_municipio\U_Municipio.pas' {Frm_Municipio},
   vw_acesso_remoto in '..\..\src\views\Acesso_Remoto\vw_acesso_remoto.pas' {frm_acesso_remoto},
   Classe_TributacaoPIS in '..\..\src\Classes\Classe_TributacaoPIS.pas',

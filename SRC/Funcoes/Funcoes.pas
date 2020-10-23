@@ -41,8 +41,14 @@ var Acesso : TAcesso;
     xMemo : tMemo;
 
     xxxAtualizado,
-    globalFuncoes_Atualizado:String;
+    globalFuncoes_Atualizado       :String;
 
+Function fSemAcentos(pCaracter:Char):Char;
+function SoNumero(pCaracter:Char):Char;
+function SoValor(pCaracter:Char):Char;
+function SoLetra(pCaracter:Char):Char;
+
+procedure InicioPadraoDeTodasAsTelasDoSistema;
 function PercentualValido(pValor:String):Boolean;
 function masctostr(numero:string):string;
 function f0ou1(pBoolean:Boolean):Integer;
@@ -76,7 +82,11 @@ Procedure Log(pHistorico:string); overload;
 Procedure Log(pEmail,pHistorico:string); overload;
 Procedure LogErros(pHistorico:string);
 function Ja_Executou_Script(pInformacao:String) : Boolean;
-function FaltaPreencherAlgumCampoObrigatorio(pTela:TForm):Boolean;
+
+function NaoPreencheuCamposObrigatoriosOuImportantes(pTela:TForm):Boolean;
+function HaCamposObrigatorios_tag_100_NaoPreenchidos(pTela:TForm):Boolean;
+function HaCamposImportantes_tag_200_NaoPreenchidos(pTela:TForm):Boolean;
+
 procedure Limpar_os_campos_da_Tela(pTela:TForm);
 procedure Destroi_Objetos_das_Classes;
 procedure Gravar_Dados_do_Ultimo_Acesso(pEmpresa:String);
@@ -906,13 +916,20 @@ begin
    qLocal.Free;
 end;
 
-function FaltaPreencherAlgumCampoObrigatorio(pTela:TForm):Boolean;
+function NaoPreencheuCamposObrigatoriosOuImportantes(pTela:TForm):Boolean;
+begin
+  result := true;
+  if HaCamposObrigatorios_tag_100_NaoPreenchidos(pTela) then exit;
+  if HaCamposImportantes_tag_200_NaoPreenchidos(pTela)  then exit;
+  Result := false;
+end;
+
+function HaCamposObrigatorios_tag_100_NaoPreenchidos(pTela:TForm):Boolean;
 var vComponent:Integer;
 begin
    Result := False;
    for vComponent := 0 to pTela.ComponentCount-1 do
    begin
-      //Edit
       if pTela.Components[vComponent] is tEdit then
       begin
          if (pTela.Components[vComponent] as tEdit).Tag = 100 then
@@ -924,7 +941,6 @@ begin
             end;
          end;
       end;
-      //Edit
       if pTela.Components[vComponent] is tMaskEdit then
       begin
          if (pTela.Components[vComponent] as tMaskEdit).Tag = 100 then
@@ -941,9 +957,54 @@ begin
    Application.ProcessMessages;
    if result then
    begin
-     ShowMessage('Preencha os campos obrigatórios assinalados');
+     ShowMessage('Preencha os campos obrigatórios assinalados (cor ciano)');
+     exit;
    end;
 end;
+
+function HaCamposImportantes_tag_200_NaoPreenchidos(pTela:TForm):Boolean;
+var vComponent:Integer;
+begin
+   result := false;
+   for vComponent := 0 to pTela.ComponentCount-1 do
+   begin
+      if pTela.Components[vComponent] is tEdit then
+      begin
+         if (pTela.Components[vComponent] as tEdit).Tag = 200 then
+         begin
+            if (pTela.Components[vComponent] as tEdit).Text = '' then
+            begin
+               Result := True;
+               (pTela.Components[vComponent] as tEdit).Color := clYellow;
+            end;
+         end;
+      end;
+      if pTela.Components[vComponent] is tMaskEdit then
+      begin
+         if (pTela.Components[vComponent] as tMaskEdit).Tag = 200 then
+         begin
+            if (pTela.Components[vComponent] as tMaskEdit).Text = '' then
+            begin
+               Result := True;
+               (pTela.Components[vComponent] as tMaskEdit).Color := clYellow;
+            end;
+         end;
+      end;
+   end;
+   pTela.Refresh;
+   Application.ProcessMessages;
+   if result then
+   begin
+     if MessageDlg('Deseja preencher os dados importantes (destacados em cor amarela)?', mtConfirmation,
+       [mbYes, mbNo], 0) = mrYes then
+       result := true
+     else
+       result := false;
+   end;
+begin
+   end;
+end;
+
 
 procedure Destroi_Objetos_das_Classes;
 begin
@@ -1225,6 +1286,35 @@ begin
    end;
    result := true;
 end;
+
+Function fSemAcentos(pCaracter:Char):Char;
+begin
+    if not (pCaracter in [#8,'A'..'Z', 'a'..'z', '0'..'9',' ',',']) then pCaracter := #0;
+    Result := pCaracter;
+end;
+
+function SoNumero(pCaracter:Char):Char;
+begin
+    if not (pCaracter in [#8,'0'..'9']) then pCaracter := #0;
+    Result := pCaracter;
+end;
+
+function SoValor(pCaracter:Char):Char;
+begin
+    if not (pCaracter in [#8,'0'..'9',',','.']) then pCaracter := #0;
+    Result := pCaracter;
+end;
+
+function SoLetra(pCaracter:Char):Char;
+begin
+    if not (pCaracter in [#8,'A'..'Z', 'a'..'z']) then pCaracter := #0;
+    Result := pCaracter;
+end;
+
+procedure InicioPadraoDeTodasAsTelasDoSistema;
+begin
+end;
+
 
 Function fNomeDoSistema:String;
 begin

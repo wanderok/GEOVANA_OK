@@ -376,7 +376,7 @@
 implementation
 
 uses
-  cad_empresa, reg_tributario, cad_usuario, alterar_senha,
+  cad_empresa_T3, reg_tributario, cad_usuario, alterar_senha,
   //cadastro_produto,
   cad_cliente, cadastro_colaborador, cadastro_fornecedor, cad_transportadora, cad_motorista,
   //cad_veiculos,
@@ -678,8 +678,9 @@ end;
 
 procedure TFrm_main.dxBarLargeButton18Click(Sender: TObject);
 begin
-    frm_cad_empresa := Tfrm_cad_empresa.Create(nil);
-    frm_cad_empresa.showmodal;
+    frm_cad_empresa_T3 := Tfrm_cad_empresa_T3.Create(nil);
+    frm_cad_empresa_T3.showmodal;
+    frm_cad_empresa_T3.Free;
 end;
 
 end.

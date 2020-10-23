@@ -1,4 +1,4 @@
-object frm_cad_empresa: Tfrm_cad_empresa
+object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
@@ -13,11 +13,30 @@ object frm_cad_empresa: Tfrm_cad_empresa
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnKeyPress = FormKeyPress
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object lbNomeDaTela: TLabel
+    Left = 0
+    Top = 690
+    Width = 1260
+    Height = 13
+    Align = alBottom
+    Alignment = taRightJustify
+    Caption = 'T3'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ExplicitLeft = 1246
+    ExplicitWidth = 14
+  end
   object BtnGravar: TcxButton
     Left = 1132
     Top = 8
@@ -208,6 +227,8 @@ object frm_cad_empresa: Tfrm_cad_empresa
         ParentFont = False
         TabOrder = 1
         Text = 'Edit1'
+        OnExit = edPISAliquotaExit
+        OnKeyPress = edPISAliquotaKeyPress
       end
       object edCOFINSAliquota: TEdit
         Left = 220
@@ -223,6 +244,8 @@ object frm_cad_empresa: Tfrm_cad_empresa
         ParentFont = False
         TabOrder = 2
         Text = '0,00'
+        OnExit = edCOFINSAliquotaExit
+        OnKeyPress = edPISAliquotaKeyPress
       end
       object rgPISCumulativo: TRadioGroup
         Left = 2
@@ -309,6 +332,8 @@ object frm_cad_empresa: Tfrm_cad_empresa
         ParentFont = False
         TabOrder = 0
         Text = 'Edit1'
+        OnExit = edISSAliquotaExit
+        OnKeyPress = edPISAliquotaKeyPress
       end
     end
     object grpIPI: TGroupBox
@@ -2973,6 +2998,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 0
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
     end
     object edContadorResponsavel: TEdit
       Tag = 100
@@ -2990,6 +3016,8 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 1
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edResponsavelNomeKeyPress
     end
     object edContadorCNPJ: TEdit
       Left = 98
@@ -3003,9 +3031,12 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 14
       ParentFont = False
       TabOrder = 2
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edContadorCRC: TEdit
       Left = 98
@@ -3022,6 +3053,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 4
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
     end
     object edContadorCelular1: TEdit
       Tag = 100
@@ -3036,9 +3068,12 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 9
       ParentFont = False
       TabOrder = 7
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edContadorEmail: TEdit
       Tag = 100
@@ -3056,6 +3091,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 9
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
     end
     object edContadorTelefone1: TEdit
       Tag = 200
@@ -3070,9 +3106,12 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 8
       ParentFont = False
       TabOrder = 5
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edContadorCPF: TEdit
       Left = 294
@@ -3086,9 +3125,12 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 11
       ParentFont = False
       TabOrder = 3
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edContadorTeleFone2: TEdit
       Tag = 200
@@ -3103,9 +3145,12 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 8
       ParentFont = False
       TabOrder = 6
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edContadorCelular2: TEdit
       Left = 294
@@ -3119,9 +3164,12 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 9
       ParentFont = False
       TabOrder = 8
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
   end
   object grpLogo: TGroupBox
@@ -3154,7 +3202,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Left = 14
       Top = 29
       Width = 186
-      Height = 163
+      Height = 149
       Stretch = True
       Transparent = True
     end
@@ -3408,9 +3456,9 @@ object frm_cad_empresa: Tfrm_cad_empresa
     end
     object edRazaoSocial: TEdit
       Tag = 100
-      Left = 139
+      Left = 140
       Top = 20
-      Width = 461
+      Width = 462
       Height = 26
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
@@ -3420,6 +3468,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Style = []
       ParentFont = False
       TabOrder = 0
+      OnExit = edRazaoSocialExit
     end
     object edNomeFantasia: TEdit
       Tag = 100
@@ -3435,6 +3484,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Style = []
       ParentFont = False
       TabOrder = 1
+      OnExit = edRazaoSocialExit
     end
     object edCNAE: TEdit
       Tag = 100
@@ -3450,6 +3500,8 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Style = []
       ParentFont = False
       TabOrder = 8
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edSUFRAMA: TEdit
       Left = 140
@@ -3464,6 +3516,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Style = []
       ParentFont = False
       TabOrder = 6
+      OnExit = edRazaoSocialExit
     end
     object edInscricaoEstadual: TEdit
       Tag = 100
@@ -3477,8 +3530,11 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 14
       ParentFont = False
       TabOrder = 4
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edCNPJ: TEdit
       Tag = 100
@@ -3492,8 +3548,11 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 14
       ParentFont = False
       TabOrder = 3
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edInscricaoMunicipal: TEdit
       Left = 444
@@ -3508,6 +3567,8 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Style = []
       ParentFont = False
       TabOrder = 5
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edNIRE: TEdit
       Left = 444
@@ -3523,6 +3584,8 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 7
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edIESubstTributario: TEdit
       Left = 444
@@ -3538,6 +3601,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 9
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
     end
     object edDataInicioAtividades: TMaskEdit
       Tag = 100
@@ -3554,7 +3618,6 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Style = []
       MaxLength = 8
       ParentFont = False
-      ReadOnly = True
       TabOrder = 2
       Text = '  /  /  '
     end
@@ -3735,9 +3798,9 @@ object frm_cad_empresa: Tfrm_cad_empresa
     end
     object imgAssinatura: TImage
       Left = 14
-      Top = -7
+      Top = 17
       Width = 186
-      Height = 163
+      Height = 102
       Stretch = True
       Transparent = True
     end
@@ -4086,6 +4149,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 6
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
     end
     object edEnderecoComplemento: TEdit
       Left = 112
@@ -4101,6 +4165,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 5
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
     end
     object edEnderecoNumero: TEdit
       Tag = 100
@@ -4117,6 +4182,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 2
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
     end
     object edEnderecoRua: TEdit
       Tag = 100
@@ -4132,6 +4198,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Style = []
       ParentFont = False
       TabOrder = 0
+      OnExit = edRazaoSocialExit
     end
     object edEnderecoMunicipioIBGE: TEdit
       Tag = 100
@@ -4148,6 +4215,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 8
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
     end
     object edEnderecoBairro: TEdit
       Tag = 100
@@ -4164,6 +4232,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 3
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
     end
     object edEnderecoUF: TEdit
       Tag = 100
@@ -4182,6 +4251,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 9
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
     end
     object edEnderecoUFIBGE: TEdit
       Tag = 100
@@ -4198,6 +4268,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 10
       Text = 'edEnderecoUFIBGE'
+      OnExit = edRazaoSocialExit
     end
     object edEnderecoCEP: TEdit
       Tag = 100
@@ -4214,6 +4285,8 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 1
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
   end
   object GroupBox5: TGroupBox
@@ -4296,8 +4369,10 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 8
       ParentFont = False
       TabOrder = 0
+      OnKeyPress = edResponsavelNomeKeyPress
     end
     object edResponsavelTelefone: TEdit
       Left = 76
@@ -4313,6 +4388,8 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 1
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edResponsavelCelular: TEdit
       Tag = 100
@@ -4326,9 +4403,12 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 9
       ParentFont = False
       TabOrder = 2
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edResponsavelEmail: TEdit
       Left = 76
@@ -4345,6 +4425,8 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 3
       Text = 'edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
   end
   object grpOutras: TGroupBox
@@ -4401,9 +4483,11 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 10
       ParentFont = False
       TabOrder = 0
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
     end
     object edDataCadastro: TMaskEdit
       Left = 155
@@ -4441,6 +4525,7 @@ object frm_cad_empresa: Tfrm_cad_empresa
     ParentColor = False
     ParentFont = False
     TabOrder = 4
+    OnClick = BTNbase_dadosClick
     object TLabel
       Left = 21
       Top = 58
@@ -4505,9 +4590,12 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 8
       ParentFont = False
       TabOrder = 0
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edCelular: TEdit
       Tag = 100
@@ -4524,6 +4612,9 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 1
       Text = 'Edit1'
+      OnClick = BTNbase_dadosClick
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edWhatsApp: TEdit
       Tag = 100
@@ -4537,9 +4628,13 @@ object frm_cad_empresa: Tfrm_cad_empresa
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 9
       ParentFont = False
       TabOrder = 2
       Text = 'Edit1'
+      OnClick = BTNbase_dadosClick
+      OnExit = edRazaoSocialExit
+      OnKeyPress = edCNPJKeyPress
     end
     object edEmail: TEdit
       Tag = 100
@@ -4556,10 +4651,11 @@ object frm_cad_empresa: Tfrm_cad_empresa
       ParentFont = False
       TabOrder = 3
       Text = 'Edit1'
+      OnExit = edRazaoSocialExit
     end
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    Left = 940
-    Top = 128
+    Left = 1036
+    Top = 136
   end
 end

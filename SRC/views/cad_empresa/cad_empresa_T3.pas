@@ -1,4 +1,4 @@
-unit cad_empresa;
+unit cad_empresa_T3;
 
 interface
 
@@ -24,10 +24,10 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, Vcl.ExtCtrls, Vcl.ExtDlgs;
+  dxSkinXmas2008Blue, Vcl.ExtCtrls, Vcl.ExtDlgs, ACBrBase, ACBrEnterTab;
 
 type
-  Tfrm_cad_empresa = class(TForm)
+  Tfrm_cad_empresa_T3 = class(TForm)
     BtnGravar: TcxButton;
     GroupBox1: TGroupBox;
     grpPisCofins: TGroupBox;
@@ -127,6 +127,7 @@ type
     OpenPictureDialog1: TOpenPictureDialog;
     imgLogoMarca: TImage;
     imgAssinatura: TImage;
+    lbNomeDaTela: TLabel;
     procedure BtnCertificadoClick(Sender: TObject);
     procedure BtnEmailClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
@@ -147,6 +148,14 @@ type
     procedure cxButton2Click(Sender: TObject);
     procedure cxButton3Click(Sender: TObject);
     procedure cxButton7Click(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure edRazaoSocialExit(Sender: TObject);
+    procedure edCNPJKeyPress(Sender: TObject; var Key: Char);
+    procedure edResponsavelNomeKeyPress(Sender: TObject; var Key: Char);
+    procedure edPISAliquotaExit(Sender: TObject);
+    procedure edCOFINSAliquotaExit(Sender: TObject);
+    procedure edISSAliquotaExit(Sender: TObject);
+    procedure edPISAliquotaKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     procedure Preencher_Campos_da_Tela;
@@ -157,9 +166,11 @@ type
   end;
 
 var
-  frm_cad_empresa: Tfrm_cad_empresa;
-  vLogoMarca,
-  vAssinatura : String;
+  frm_cad_empresa_T3: Tfrm_cad_empresa_T3;
+
+  vAssinatura,
+  vLogoMarca        : String;
+
 implementation
 
 uses
@@ -169,25 +180,25 @@ uses
 
 {$R *.dfm}
 
-procedure Tfrm_cad_empresa.BTNbase_dadosClick(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.BTNbase_dadosClick(Sender: TObject);
 begin
     frm_intagracao_outras_base_dados := Tfrm_intagracao_outras_base_dados.Create(nil);
     frm_intagracao_outras_base_dados.showmodal;
 end;
 
-procedure Tfrm_cad_empresa.BtnCertificadoClick(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.BtnCertificadoClick(Sender: TObject);
 begin
     frm_config_certificado := Tfrm_config_certificado.Create(nil);
     frm_config_certificado.showmodal;
 end;
 
-procedure Tfrm_cad_empresa.BtnEmailClick(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.BtnEmailClick(Sender: TObject);
 begin
     frm_config_email := Tfrm_config_email.Create(nil);
     frm_config_email.showmodal;
 end;
 
-procedure Tfrm_cad_empresa.BtnGravarClick(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.BtnGravarClick(Sender: TObject);
 begin
      if not DadosCorretos then
         exit;
@@ -198,43 +209,43 @@ begin
      Close;
 end;
 
-procedure Tfrm_cad_empresa.BtnMDEClick(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.BtnMDEClick(Sender: TObject);
 begin
     Frm_Conf_mde := TFrm_Conf_mde.Create(nil);
     Frm_Conf_mde.showmodal;
 end;
 
-procedure Tfrm_cad_empresa.BtnNFCEClick(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.BtnNFCEClick(Sender: TObject);
 begin
     Frm_Conf_Nfce := TFrm_Conf_Nfce.Create(nil);
     Frm_Conf_Nfce.showmodal;
 end;
 
-procedure Tfrm_cad_empresa.BtnNFEClick(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.BtnNFEClick(Sender: TObject);
 begin
     Frmconfig_NFe := TFrmconfig_NFe.Create(nil);
     Frmconfig_NFe.showmodal;
 end;
 
-procedure Tfrm_cad_empresa.BtnNFSEClick(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.BtnNFSEClick(Sender: TObject);
 begin
     frm_confi_nfs := Tfrm_confi_nfs.Create(nil);
     frm_confi_nfs.showmodal;
 end;
 
-procedure Tfrm_cad_empresa.cxButton10Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.cxButton10Click(Sender: TObject);
 begin
     Frm_Municipio := TFrm_Municipio.Create(nil);
     Frm_Municipio.showmodal;
 end;
 
-procedure Tfrm_cad_empresa.cxButton11Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.cxButton11Click(Sender: TObject);
 begin
     FRM_cad_zona := TFRM_cad_zona.Create(nil);
     FRM_cad_zona.showmodal;
 end;
 
-procedure Tfrm_cad_empresa.cxButton1Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.cxButton1Click(Sender: TObject);
 begin
   if OpenPictureDialog1.Execute then
   begin
@@ -247,14 +258,14 @@ begin
   end;
 end;
 
-procedure Tfrm_cad_empresa.cxButton2Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.cxButton2Click(Sender: TObject);
 begin
-  DeleteFile(vLogoMarca);
+  //DeleteFile(vLogoMarca);
   imgLogoMarca.Picture := nil;
   TL_colab.Show;
 end;
 
-procedure Tfrm_cad_empresa.cxButton3Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.cxButton3Click(Sender: TObject);
 begin
   if OpenPictureDialog1.Execute then
   begin
@@ -267,48 +278,51 @@ begin
   end;
 end;
 
-procedure Tfrm_cad_empresa.cxButton4Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.cxButton4Click(Sender: TObject);
 begin
     frm_config_email_fiscais := Tfrm_config_email_fiscais.Create(nil);
     frm_config_email_fiscais.showmodal;
 end;
 
-procedure Tfrm_cad_empresa.cxButton5Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.cxButton5Click(Sender: TObject);
 begin
     frm_cad_bairro := Tfrm_cad_bairro.Create(nil);
     frm_cad_bairro.showmodal;
 end;
 
-procedure Tfrm_cad_empresa.cxButton6Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.cxButton6Click(Sender: TObject);
 begin
     frm_reg_tributaria := Tfrm_reg_tributaria.Create(nil);
     frm_reg_tributaria.showmodal;
     frm_reg_tributaria.Free;
 end;
 
-procedure Tfrm_cad_empresa.cxButton7Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.cxButton7Click(Sender: TObject);
 begin
-  DeleteFile(vAssinatura);
+  //DeleteFile(vAssinatura);
   imgAssinatura.Picture := nil;
   TL_colab.Show;
 end;
 
-procedure Tfrm_cad_empresa.cxButton8Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.cxButton8Click(Sender: TObject);
 begin
     Frm_config_MDFe := TFrm_config_MDFe.Create(nil);
     Frm_config_MDFe.showmodal;
 end;
 
-procedure Tfrm_cad_empresa.cxButton9Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.cxButton9Click(Sender: TObject);
 begin
     Frm_regiao := TFrm_regiao.Create(nil);
     Frm_regiao.showmodal;
 end;
 
-function Tfrm_cad_empresa.DadosCorretos: Boolean;
+function Tfrm_cad_empresa_T3.DadosCorretos: Boolean;
 begin
    result := false;
-   if FaltaPreencherAlgumCampoObrigatorio(frm_cad_empresa) then exit;
+
+   if NaoPreencheuCamposObrigatoriosOuImportantes(frm_cad_empresa_T3) then
+      exit;
+
    if edPISAliquota.Text = '' then
       edPISAliquota.Text := '0'
    else
@@ -328,14 +342,112 @@ begin
    result := true;
 end;
 
-procedure Tfrm_cad_empresa.FormShow(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.edCNPJKeyPress(Sender: TObject; var Key: Char);
 begin
-   Limpar_os_campos_da_Tela(frm_cad_empresa);
+   key := SoNumero(key);
+end;
+
+procedure Tfrm_cad_empresa_T3.edCOFINSAliquotaExit(Sender: TObject);
+var valor : Real;
+begin
+    try
+      if edCOFINSAliquota.Text = '' then
+         edCOFINSAliquota.Text := '0';
+      valor := StrToFloat(MascToStr(edCOFINSAliquota.Text));
+      edCOFINSAliquota.Text := FormatFloat('#,##0.00',valor);
+      if (valor < 0)
+      or (valor >=100) then
+      begin
+        ShowMessage('Valor inválido');
+        edCOFINSAliquota.SetFocus;
+      end;
+    Except
+      ShowMessage('Valor inválido');
+      edCOFINSAliquota.SetFocus;
+    end;
+end;
+
+procedure Tfrm_cad_empresa_T3.edISSAliquotaExit(Sender: TObject);
+var valor : Real;
+begin
+    try
+      if edISSAliquota.Text = '' then
+         edISSAliquota.Text := '0';
+      valor := StrToFloat(MascToStr(edISSAliquota.Text));
+      edISSAliquota.Text := FormatFloat('#,##0.00',valor);
+      if (valor < 0)
+      or (valor >=100) then
+      begin
+        ShowMessage('Valor inválido');
+        edISSAliquota.SetFocus;
+      end;
+    Except
+      ShowMessage('Valor inválido');
+      edISSAliquota.SetFocus;
+    end;
+
+end;
+
+procedure Tfrm_cad_empresa_T3.edPISAliquotaExit(Sender: TObject);
+var valor : Real;
+begin
+    try
+      if edPISAliquota.Text = '' then
+         edPISAliquota.Text := '0';
+      valor := StrToFloat(MascToStr(edPISAliquota.Text));
+      edPISAliquota.Text := FormatFloat('#,##0.00',valor);
+      if (valor < 0)
+      or (valor >=100) then
+      begin
+        ShowMessage('Valor inválido');
+        edPISAliquota.SetFocus;
+      end;
+    Except
+      ShowMessage('Valor inválido');
+      edPISAliquota.SetFocus;
+    end;
+end;
+
+procedure Tfrm_cad_empresa_T3.edPISAliquotaKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     key := SoValor(key);
+end;
+
+procedure Tfrm_cad_empresa_T3.edRazaoSocialExit(Sender: TObject);
+begin
+      if Sender is TEdit then
+      begin
+         (Sender as TEdit).Text := Trim((Sender as TEdit).Text);
+      end;
+end;
+
+procedure Tfrm_cad_empresa_T3.edResponsavelNomeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+   Key := SoLetra(key);
+end;
+
+procedure Tfrm_cad_empresa_T3.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+     if Key = #13 then
+     begin
+        Key := #0;
+        Perform(WM_NEXTDLGCTL, 0, 0);
+        exit;
+     end;
+     key := fSemAcentos(key);
+end;
+
+procedure Tfrm_cad_empresa_T3.FormShow(Sender: TObject);
+begin
+   InicioPadraoDeTodasAsTelasDoSistema;
+   Limpar_os_campos_da_Tela(frm_cad_empresa_T3);
    Preencher_Campos_da_Tela;
    edRazaoSocial.SetFocus;
 end;
 
-function Tfrm_cad_empresa.Gravar_Empresa:Boolean;
+function Tfrm_cad_empresa_T3.Gravar_Empresa:Boolean;
 begin
     Result := False;
     try
@@ -411,7 +523,7 @@ begin
     end;
 end;
 
-procedure Tfrm_cad_empresa.Preencher_Campos_da_Tela;
+procedure Tfrm_cad_empresa_T3.Preencher_Campos_da_Tela;
 begin
    Empresa.Abrir;
    edRazaoSocial.Text                 := Empresa.RazaoSocial;
