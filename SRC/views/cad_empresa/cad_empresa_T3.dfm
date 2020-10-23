@@ -4541,11 +4541,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object TLabel
-      Left = 29
+      Left = 14
       Top = 26
-      Width = 22
+      Width = 37
       Height = 17
-      Caption = 'Tel:'
+      Caption = 'Fone:'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
