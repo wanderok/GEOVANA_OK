@@ -21,6 +21,9 @@ type
       function getNomeDaConexao: String;
       procedure setNomeDaConexao(const Value: String);
       procedure AtualizaBaseDeDados;
+      procedure Alteracoes_Gerais;
+      procedure Alteracoes_Cad_Empresa;
+      procedure Alteracoes_Cad_Cliente;
    public
       procedure Conectar;
       procedure Desconectar;
@@ -48,26 +51,14 @@ begin
    result := true;
 end;
 
-procedure TAcesso.AtualizaBaseDeDados;
+procedure TAcesso.Alteracoes_Cad_Cliente;
 begin
-   if globalFuncoes_Atualizado = 'S' then
-      EXIT;
 
-   //Aumenta o tamanho da coluna ATU_FUNCAO de 100 para 255 caracteres
-   {
-   Executar_Script('ALTER TABLE ATUALIZADO_ATU ADD ATU_FUNCAOOLD VARCHAR(100) NULL');
-   Executar_Script('UPDATE ATUALIZADO_ATU SET ATU_FUNCAOOLD = ATU_FUNCAO');
-   Executar_Script('ALTER TABLE ATUALIZADO_ATU DROP COLUMN ATU_FUNCAO');
-   Executar_Script('ALTER TABLE ATUALIZADO_ATU ADD ATU_FUNCAO  VARCHAR(255) NULL');
-   Executar_Script('UPDATE ATUALIZADO_ATU SET ATU_FUNCAO = ATU_FUNCAOOLD');
-   Executar_Script('ALTER TABLE ATUALIZADO_ATU DROP COLUMN ATU_FUNCAOOLD');
-   }
-   // Outras Atualizações
+end;
+
+procedure TAcesso.Alteracoes_Cad_Empresa;
+begin
    Executar_Script('ALTER TABLE EMPRESA_EMP ADD EMP_CODIGO_UNISYSTEM VARCHAR(10) NULL');
-   Executar_Script('TRUNCATE TABLE CORPOEMAIL_CEMAIL');
-   Executar_Script('TRUNCATE TABLE EMAIL_EMAIL      ');
-   Executar_Script('TRUNCATE TABLE FUSADA_FUS       ');
-   Executar_Script('TRUNCATE TABLE FUNCOES_FUN      ');
    Executar_Script('ALTER TABLE EMPRESA_EMP DROP COLUMN EMP_DESCRICAO');
    Executar_Script('ALTER TABLE EMPRESA_EMP ADD EMP_INICIOATIVIDADES    DATETIME    NULL');
    Executar_Script('ALTER TABLE EMPRESA_EMP ADD EMP_SUFRAMA             VARCHAR(10) NULL');
@@ -145,6 +136,41 @@ begin
    Executar_Script('ALTER TABLE EMPRESA_EMP ADD EMP_LOGO VARCHAR(255) NULL');
    Executar_Script('ALTER TABLE EMPRESA_EMP ADD EMP_ASSINATURA VARCHAR(255) NULL');
    Executar_Script('ALTER TABLE EMPRESA_EMP ADD EMP_TRATAR_ICMS_DIFERIMENTO INTEGER NULL DEFAULT 0');
+   Executar_Script('ALTER TABLE EMPRESA_EMP ALTER COLUMN EMP_RAZAOSOCIAL VARCHAR(50) NULL');
+   Executar_Script('ALTER TABLE EMPRESA_EMP ADD EMP_RAZAOSOCIAL VARCHAR(50) NULL');
+   Executar_Script('ALTER TABLE EMPRESA_EMP ADD EMP_RESPONSAVEL_WHATSAPP varchar(40) NULL');
+   Executar_Script('ALTER TABLE EMPRESA_EMP DROP COLUMN EMP_RESPONSAVEL_TELEFONE');
+
+
+end;
+
+procedure TAcesso.Alteracoes_Gerais;
+begin
+   //Aumenta o tamanho da coluna ATU_FUNCAO de 100 para 255 caracteres
+   {
+   Executar_Script('ALTER TABLE ATUALIZADO_ATU ADD ATU_FUNCAOOLD VARCHAR(100) NULL');
+   Executar_Script('UPDATE ATUALIZADO_ATU SET ATU_FUNCAOOLD = ATU_FUNCAO');
+   Executar_Script('ALTER TABLE ATUALIZADO_ATU DROP COLUMN ATU_FUNCAO');
+   Executar_Script('ALTER TABLE ATUALIZADO_ATU ADD ATU_FUNCAO  VARCHAR(255) NULL');
+   Executar_Script('UPDATE ATUALIZADO_ATU SET ATU_FUNCAO = ATU_FUNCAOOLD');
+   Executar_Script('ALTER TABLE ATUALIZADO_ATU DROP COLUMN ATU_FUNCAOOLD');
+   }
+   Executar_Script('TRUNCATE TABLE CORPOEMAIL_CEMAIL');
+   Executar_Script('TRUNCATE TABLE EMAIL_EMAIL      ');
+   Executar_Script('TRUNCATE TABLE FUSADA_FUS       ');
+   Executar_Script('TRUNCATE TABLE FUNCOES_FUN      ');
+
+end;
+
+procedure TAcesso.AtualizaBaseDeDados;
+begin
+   if globalFuncoes_Atualizado = 'S' then
+      EXIT;
+
+   Alteracoes_Gerais;
+   Alteracoes_Cad_Empresa;
+   Alteracoes_Cad_Cliente;
+
 
    globalFuncoes_Atualizado:='S';
 

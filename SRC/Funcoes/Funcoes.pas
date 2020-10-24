@@ -24,6 +24,13 @@ uses Dialogs, SysUtils,
      Dados, Winsock, Quickrpt, QRCtrls;
 
 const
+ {    Setas = '37,28,40,45,46'
+38: Coloca(’ [SETA ACIMA] ‘);
+39: Coloca(’ [SETA DIREITA] ‘);
+40: Coloca(’ [SETA ABAIXO] ‘);
+45: Coloca(’ [INSERT] ‘);
+46: Coloca(’ [DEL] ‘);
+             }
     Email_Host      = 'server-web4.dal.pz.samtooweb.com';   // 'smtps.bol.com.br'; // smtps.bol.com.br
     //imap 993
     //pop3 995
@@ -43,6 +50,7 @@ var Acesso : TAcesso;
     xxxAtualizado,
     globalFuncoes_Atualizado       :String;
 
+function DataNoFuturo(pData:String):Boolean;
 Function fSemAcentos(pCaracter:Char):Char;
 function SoNumero(pCaracter:Char):Char;
 function SoValor(pCaracter:Char):Char;
@@ -154,14 +162,20 @@ begin
        if (pTela.Components[vComponents] is TEdit) then
        begin
           (pTela.Components[vComponents] as TEdit).Text := '';
-          (pTela.Components[vComponents] as TEdit).Color := clWhite;
+          if (pTela.Components[vComponents] as TEdit).ReadOnly then
+             (pTela.Components[vComponents] as TEdit).Color := clSilver
+          else
+             (pTela.Components[vComponents] as TEdit).Color := clWhite;
           if (pTela.Components[vComponents] as TEdit).CharCase <> ecLowerCase then
              (pTela.Components[vComponents] as TEdit).CharCase := ecUpperCase;
        end;
        if (pTela.Components[vComponents] is TMaskEdit) then
        begin
           (pTela.Components[vComponents] as TMaskEdit).Text := '';
-          (pTela.Components[vComponents] as TMaskEdit).Color := clWhite;
+          if (pTela.Components[vComponents] as TMaskEdit).ReadOnly then
+             (pTela.Components[vComponents] as TMaskEdit).Color := clSilver
+          else
+             (pTela.Components[vComponents] as TMaskEdit).Color := clWhite;
        end;
 
        if (pTela.Components[vComponents] is TStringGrid) then
@@ -1307,13 +1321,33 @@ end;
 
 function SoLetra(pCaracter:Char):Char;
 begin
-    if not (pCaracter in [#8,'A'..'Z', 'a'..'z']) then pCaracter := #0;
+    if not (pCaracter in [#8,'A'..'Z', 'a'..'z',' ']) then pCaracter := #0;
     Result := pCaracter;
 end;
 
 procedure InicioPadraoDeTodasAsTelasDoSistema;
 begin
 end;
+
+function DataNoFuturo(pData:String):Boolean;
+begin
+   result := false;
+   if pData = '' then
+      exit;
+   try
+     if StrToDate(pData) > DataServidor then
+     begin
+       result := true;
+       ShowMessage('Data no futuro');
+       exit;
+     end;
+   except
+       result := true;
+       ShowMessage('Data inválida');
+       exit;
+   end;
+end;
+
 
 Function fNomeDoSistema:String;
 begin
@@ -1322,3 +1356,71 @@ end;
 
 
 end.
+
+{
+8: Coloca(’ [BACKSPACE] ‘);
+9: Coloca(’ [TAB] ‘);
+12: Coloca(’ [ALT] ‘);
+13: Coloca(’ [ENTER] ‘);
+16: Coloca(’ [SHIFT] ‘);
+17: Coloca(’ [CONTROL] ‘);
+18: Coloca(’ [ALT] ‘);
+20: Coloca(’ [CAPS LOCK] ‘);
+21: Coloca(’ [PAGE UP] ‘);
+27: Coloca(’ [ESC] ‘);
+33: Coloca(’ [PAGE UP] ‘);
+34: Coloca(’ [PAGE DOWN] ‘);
+35: Coloca(’ [END] ‘);
+36: Coloca(’ [HOME] ‘);
+37: Coloca(’ [SETA ESQUERDA] ‘);
+38: Coloca(’ [SETA ACIMA] ‘);
+39: Coloca(’ [SETA DIREITA] ‘);
+40: Coloca(’ [SETA ABAIXO] ‘);
+45: Coloca(’ [INSERT] ‘);
+46: Coloca(’ [DEL] ‘);
+91: Coloca(’ [WIN ESQUERDA] ‘);
+92: Coloca(’ [WIN DIREITA] ‘);
+93: Coloca(’ [MENU POP-UP] ‘);
+96: Coloca(’0&8242;);
+97: Coloca(’1&8242;);
+98: Coloca(’2&8242;);
+99: Coloca(’3&8242;);
+100: Coloca(’4&8242;);
+101: Coloca(’5&8242;);
+102: Coloca(’6&8242;);
+103: Coloca(’7&8242;);
+104: Coloca(’8&8242;);
+105: Coloca(’9&8242;);
+106: Coloca(’ [NUM *] ‘);
+107: Coloca(’ [NUM +] ‘);
+109: Coloca(’ [NUM -] ‘);
+110: Coloca(’ [NUM SEP. DECIMAL] ‘);
+111: Coloca(’ [NUM /] ‘);
+112: Coloca(’ [F1] ‘);
+113: Coloca(’ [F2] ‘);
+114: Coloca(’ [F3] ‘);
+115: Coloca(’ [F4] ‘);
+116: Coloca(’ [F5] ‘);
+117: Coloca(’ [F6] ‘);
+118: Coloca(’ [F7] ‘);
+119: Coloca(’ [F8] ‘);
+120: Coloca(’ [F9] ‘);
+121: Coloca(’ [F10] ‘);
+122: Coloca(’ [F11] ‘);
+123: Coloca(’ [F12] ‘);
+144: Coloca(’ [NUM LOCK] ‘);
+186: Coloca(’Ç’);
+187: Coloca(’=´);
+188: Coloca(’,´);
+189: Coloca(’-´);
+190: Coloca(’.´);
+191: Coloca(’;´);
+192: Coloca(’ [APÓSTROFO] ‘);
+193: Coloca(’/´);
+194: Coloca(’ [NUM PONTO] ‘);
+219: Coloca(’´’);
+220: Coloca(’]´);
+221: Coloca(’[´);
+222: Coloca(’~´);
+226: Coloca(’\´);
+}

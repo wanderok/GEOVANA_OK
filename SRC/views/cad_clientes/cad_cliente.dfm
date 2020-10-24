@@ -44,9 +44,66 @@ object frm_cadastro_cliente: Tfrm_cadastro_cliente
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object Label3: TLabel
+    Left = 100
+    Top = 25
+    Width = 39
+    Height = 18
+    Caption = 'Ativo'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clGreen
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label7: TLabel
+    Left = 100
+    Top = 40
+    Width = 54
+    Height = 18
+    Caption = 'Inativo'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clRed
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label11: TLabel
+    Left = 100
+    Top = 56
+    Width = 78
+    Height = 18
+    Caption = 'Bloqueado'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = 33023
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object RadioGroup1: TRadioGroup
+    Left = 71
+    Top = 8
+    Width = 111
+    Height = 70
+    Caption = 'Status'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    Items.Strings = (
+      ''
+      ''
+      '')
+    ParentFont = False
+    TabOrder = 10
+  end
   object GroupBox4: TGroupBox
-    Left = 72
-    Top = 14
+    Left = 595
+    Top = 405
     Width = 111
     Height = 70
     Caption = '  Status  '
@@ -56,75 +113,7 @@ object frm_cadastro_cliente: Tfrm_cadastro_cliente
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 0
-    object Label3: TLabel
-      Left = 28
-      Top = 17
-      Width = 39
-      Height = 18
-      Caption = 'Ativo'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clGreen
-      Font.Height = -15
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label7: TLabel
-      Left = 28
-      Top = 32
-      Width = 54
-      Height = 18
-      Caption = 'Inativo'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clRed
-      Font.Height = -15
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label11: TLabel
-      Left = 28
-      Top = 48
-      Width = 78
-      Height = 18
-      Caption = 'Bloqueado'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = 33023
-      Font.Height = -15
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object rd_ativo: TRadioButton
-      Left = 8
-      Top = 18
-      Width = 28
-      Height = 17
-      Color = clWhite
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clBlack
-      Font.Height = -15
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-      TabOrder = 0
-    end
-    object rd_inativo: TRadioButton
-      Left = 8
-      Top = 33
-      Width = 16
-      Height = 17
-      TabOrder = 1
-    end
-    object RadioButton1: TRadioButton
-      Left = 8
-      Top = 49
-      Width = 16
-      Height = 17
-      TabOrder = 2
-    end
+    TabOrder = 1
   end
   object gpData: TGroupBox
     Left = 191
@@ -138,7 +127,7 @@ object frm_cadastro_cliente: Tfrm_cadastro_cliente
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 2
     object Label13: TLabel
       Left = 9
       Top = 16
@@ -302,7 +291,7 @@ object frm_cadastro_cliente: Tfrm_cadastro_cliente
     Font.Style = []
     ParentFont = False
     ReadOnly = True
-    TabOrder = 2
+    TabOrder = 0
   end
   object GroupBox5: TGroupBox
     Left = 518
@@ -515,10 +504,6 @@ object frm_cadastro_cliente: Tfrm_cadastro_cliente
     TabOrder = 4
     object tsPessoaFisica: TTabSheet
       Caption = 'Pessoa F'#237'sica'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label25: TLabel
         Left = 10
         Top = 13
@@ -810,10 +795,6 @@ object frm_cadastro_cliente: Tfrm_cadastro_cliente
       Font.Style = [fsBold]
       ImageIndex = 1
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 106
       object lbl3: TLabel
         Left = 9
         Top = 47

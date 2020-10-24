@@ -127,8 +127,10 @@ end;
 function Tfrm_cad_usuario_T2.DadosCorretos: Boolean;
 begin
   result := false;
-  if FaltaPreencherAlgumCampoObrigatorio(frm_cad_usuario_T2)then
-     exit;
+
+  if NaoPreencheuCamposObrigatoriosOuImportantes(frm_cad_usuario_T2) then
+      exit;
+
   if edt_senha.Text <> edt_Confirma_Senha.Text then
   begin
     ShowMessage('As senhas não conferem.');
@@ -211,6 +213,7 @@ end;
 
 procedure Tfrm_cad_usuario_T2.FormShow(Sender: TObject);
 begin
+   InicioPadraoDeTodasAsTelasDoSistema;
    Iniciar;
 end;
 

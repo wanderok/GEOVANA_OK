@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 339
-  Width = 492
+  Height = 98
+  Width = 361
   object FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink
     Left = 128
     Top = 8
@@ -9,10 +9,10 @@ object DM: TDM
   object Database1: TFDConnection
     ConnectionName = 'X'
     Params.Strings = (
-      'Database=DILMADEIRAS2014'
+      'Database=SMCPLUS'
       'User_Name=sa'
-      'Password=Senha123'
-      'Server=i7'
+      'Password=Senha123@'
+      'Server=HPW'
       'DriverID=MSSQL')
     FetchOptions.AssignedValues = [evMode, evAutoFetchAll]
     UpdateOptions.AssignedValues = [uvAutoCommitUpdates]

@@ -8,7 +8,8 @@ uses Classes, Dialogs, SysUtils, IniFiles,
      FireDAC.Comp.Client,
      FireDAC.Stan.Intf, FireDAC.Stan.Option,
 
-     Classe_EmpresaTributacao;
+     Classe_EmpresaTributacao,
+     validadorDeDocumentos;
 
 type
 
@@ -16,7 +17,7 @@ type
   private
 	  FAtiva                       : Boolean;   // EMP_BLOQUEADA               varchar(1)   NULL
     FNomeFantasia                : String;    // EMP_NOME_FANTASIA           varchar(50)  NULL
-	  FRazaoSocial                 : String;    // EMP_RAZAOSOCIAL             varchar(30)  NULL
+	  FRazaoSocial                 : String;    // EMP_RAZAOSOCIAL             varchar(50)  NULL
     FPessoaJuridica              : Boolean;   // EMP_PESSOAJF                varchar(1)   NULL
     FEMP_PESSOAJF                : String;
     FDataInicioAtividades        : TDateTime; // EMP_INICIOATIVIDADES        DATETIME     NULL
@@ -44,7 +45,7 @@ type
     FContribuinteIPI             : Boolean;   // EMP_CONTRIBUINTE_IPI        integer      NULL
     fTratarICMS_Diferimento      : Boolean;   // EMP_TRATAR_ICMS_DIFERIMENTO integer      NULL
     FResponsavelNome             : String;    // EMP_RESPONSAVEL_NOME        varchar(40)  NULL
-    FResponsavelTelefone         : String;    // EMP_RESPONSAVEL_TELEFONE    varchar(40)  NULL
+    FResponsavelWhatsApp         : String;    // EMP_RESPONSAVEL_WHATSAPP    varchar(40)  NULL
     FResponsavelCelular          : String;    // EMP_RESPONSAVEL_CELULAR     varchar(40)  NULL
     FResponsavelEmail            : String;    // EMP_RESPONSAVEL_EMAIL       varchar(40)  NULL
     FContadorEmpresa             : String;    // EMP_CONTADOR_EMPRESA        VARCHAR(40)  NULL
@@ -130,11 +131,11 @@ type
     function getFResponsavelCelular: String;
     function getFResponsavelEmail: String;
     function getFResponsavelNome: String;
-    function getFResponsavelTelefone: String;
+    function getFResponsavelWhatsApp: String;
     procedure setFResponsavelCelular(const Value: String);
     procedure setFResponsavelEmail(const Value: String);
     procedure setFResponsavelNome(const Value: String);
-    procedure setFResponsavelTelefone(const Value: String);
+    procedure setFResponsavelWhatsApp(const Value: String);
     function getFContadorEmpresa: String;
     procedure setFContadorEmpresa(const Value: String);
     procedure setFContadorResponsavel(const Value: String);
@@ -199,7 +200,7 @@ type
       property ContribuinteIPI             : Boolean   read getFContribuinteIPI             write setFContribuinteIPI;
       property TratarICMS_Diferimento      : Boolean   read getFTratarICMS_Diferimento      write setFTratarICMS_Diferimento;
       property ResponsavelNome             : String    read getFResponsavelNome             write setFResponsavelNome;
-      property ResponsavelTelefone         : String    read getFResponsavelTelefone         write setFResponsavelTelefone;
+      property ResponsavelWhatsApp         : String    read getFResponsavelWhatsApp         write setFResponsavelWhatsApp;
       property ResponsavelCelular          : String    read getFResponsavelCelular          write setFResponsavelCelular;
       property ResponsavelEmail            : String    read getFResponsavelEmail            write setFResponsavelEmail;
       property ContadorEmpresa             : String    read getFContadorEmpresa             write setFContadorEmpresa;
@@ -281,7 +282,7 @@ begin
     FContribuinteIPI             :=(qLocal.FieldByname('EMP_CONTRIBUINTE_IPI'       ).AsInteger = 1);
     FTratarICMS_Diferimento      :=(qLocal.FieldByname('EMP_TRATAR_ICMS_DIFERIMENTO').AsInteger = 1);
     FResponsavelNome             := qLocal.FieldByname('EMP_RESPONSAVEL_NOME'       ).AsString;
-    FResponsavelTelefone         := qLocal.FieldByname('EMP_RESPONSAVEL_TELEFONE'   ).AsString;
+    FResponsavelWhatsApp         := qLocal.FieldByname('EMP_RESPONSAVEL_WHATSAPP'   ).AsString;
     FResponsavelCelular          := qLocal.FieldByname('EMP_RESPONSAVEL_CELULAR'    ).AsString;
     FResponsavelEmail            := qLocal.FieldByname('EMP_RESPONSAVEL_EMAIL'      ).AsString;
     FContadorEmpresa             := qLocal.FieldByname('EMP_CONTADOR_EMPRESA'       ).AsString;
@@ -333,6 +334,7 @@ end;
 
 function TEmpresa.getDataCadastroString: String;
 begin
+   FDataCadastroString := DateToStr(FDataCadastro);
    result := self.FDataCadastroString;
 end;
 
@@ -363,7 +365,7 @@ end;
 
 function TEmpresa.getFTelefone: String;
 begin
-   result := self.FTelefone;
+   result := frmValidadorDeDocumentos.formataTelCel(self.FTelefone);
 end;
 
 function TEmpresa.getFTratarICMS_Diferimento: Boolean;
@@ -373,7 +375,7 @@ end;
 
 function TEmpresa.getFWhatsApp: String;
 begin
-   result := self.FWhatsApp;
+   result := FrmValidadorDeDocumentos.formataTelCel(self.FWhatsApp);
 end;
 
 function TEmpresa.getFEnderecoBairro: String;
@@ -408,7 +410,7 @@ end;
 
 function TEmpresa.getFCelular: String;
 begin
-   result := self.FCelular;
+   result := FrmValidadorDeDocumentos.formataTelCel(self.FCelular);
 end;
 
 function TEmpresa.getFCNAE: String;
@@ -418,7 +420,14 @@ end;
 
 function TEmpresa.getFCNPJ: String;
 begin
-   result := self.FCNPJ; // FormataCPF_CGC(self.FCNPJ);
+   if self.FCNPJ = '' then
+   begin
+     result := self.FCNPJ;
+     exit;
+   end;
+   self.FCNPJ :=Trim(self.FCNPJ);
+   if frmValidadorDeDocumentos.CNPJ_Valido(self.FCNPJ) then
+      result := vVDD_DocumentoFormatado;
 end;
 
 function TEmpresa.getFCodigoUniSystem: String;
@@ -503,7 +512,7 @@ end;
 
 function TEmpresa.getFResponsavelCelular: String;
 begin
-   Result := self.FResponsavelCelular;
+   Result := FrmValidadorDeDocumentos.formataTelCel(self.FResponsavelCelular);
 end;
 
 function TEmpresa.getFResponsavelEmail: String;
@@ -516,9 +525,9 @@ begin
    Result := self.FResponsavelNome;
 end;
 
-function TEmpresa.getFResponsavelTelefone: String;
+function TEmpresa.getFResponsavelWhatsApp: String;
 begin
-   Result := self.FResponsavelTelefone;
+   Result := FrmValidadorDeDocumentos.formataTelCel(self.FResponsavelWhatsApp);
 end;
 
 function TEmpresa.Gravar:Boolean;
@@ -580,7 +589,7 @@ begin
         qLocal.SQL.Add('       EMP_CONTRIBUINTE_IPI,       ');
         qLocal.SQL.Add('       EMP_TRATAR_ICMS_DIFERIMENTO,');
         qLocal.SQL.Add('       EMP_RESPONSAVEL_NOME,       ');
-        qLocal.SQL.Add('       EMP_RESPONSAVEL_TELEFONE,   ');
+        qLocal.SQL.Add('       EMP_RESPONSAVEL_WHATSAPP,   ');
         qLocal.SQL.Add('       EMP_RESPONSAVEL_CELULAR,    ');
         qLocal.SQL.Add('       EMP_RESPONSAVEL_EMAIL,      ');
         qLocal.SQL.Add('       EMP_CONTADOR_EMPRESA,       ');
@@ -632,7 +641,7 @@ begin
         qLocal.SQL.Add('      :EMP_CONTRIBUINTE_IPI,       ');
         qLocal.SQL.Add('      :EMP_TRATAR_ICMS_DIFERIMENTO,');
         qLocal.SQL.Add('      :EMP_RESPONSAVEL_NOME,       ');
-        qLocal.SQL.Add('      :EMP_RESPONSAVEL_TELEFONE,   ');
+        qLocal.SQL.Add('      :EMP_RESPONSAVEL_WHATSAPP,   ');
         qLocal.SQL.Add('      :EMP_RESPONSAVEL_CELULAR,    ');
         qLocal.SQL.Add('      :EMP_RESPONSAVEL_EMAIL,      ');
         qLocal.SQL.Add('      :EMP_CONTADOR_EMPRESA,       ');
@@ -656,6 +665,8 @@ begin
 
         //passo 11
         Preencher_Parametros_Empresa(qLocal);
+        qLocal.ParamByName('EMP_DT').AsDateTime := DataServidor;
+
         qLocal.ExecSql;
         qLocal.Free;
         Log('Incluiu empresa '+ Empresa.FNomeFantasia);
@@ -701,7 +712,7 @@ begin
     pQuery.ParamByName('EMP_CONTRIBUINTE_IPI'       ).AsInteger  := f0ou1(FContribuinteIPI);
     pQuery.ParamByName('EMP_TRATAR_ICMS_DIFERIMENTO').AsInteger  := f0ou1(FTratarICMS_Diferimento);
     pQuery.ParamByName('EMP_RESPONSAVEL_NOME'       ).AsString   := FResponsavelNome;
-    pQuery.ParamByName('EMP_RESPONSAVEL_TELEFONE'   ).AsString   := FResponsavelTelefone;
+    pQuery.ParamByName('EMP_RESPONSAVEL_WHATSAPP'   ).AsString   := FResponsavelWhatsApp;
     pQuery.ParamByName('EMP_RESPONSAVEL_CELULAR'    ).AsString   := FResponsavelCelular;
     pQuery.ParamByName('EMP_RESPONSAVEL_EMAIL'      ).AsString   := FResponsavelEmail;
     pQuery.ParamByName('EMP_CONTADOR_EMPRESA'       ).AsString   := FContadorEmpresa;
@@ -716,7 +727,6 @@ begin
     pQuery.ParamByName('EMP_CONTADOR_EMAIL'         ).AsString   := FContadorEmail;
     pQuery.ParamByName('EMP_LOGO'                   ).AsString   := FLogomarca;
     pQuery.ParamByName('EMP_ASSINATURA'             ).AsString   := FAssinatura;
-    pQuery.ParamByName('EMP_DT'                     ).AsDateTime := FDataCadastro;
     pQuery.ParamByName('EMP_CODIGO_UNISYSTEM'       ).AsString   := FCodigoUniSystem;
     pQuery.ParamByName('EMP_PIS_CUMULATIVO'         ).AsInteger  := f0ou1(FTributacao.PIS.Cumulativo);
     pQuery.ParamByName('EMP_PIS_ALIQUOTA'           ).AsFloat    := FTributacao.PIS.Aliquota;
@@ -758,7 +768,7 @@ end;
 
 procedure TEmpresa.setFTelefone(const Value: String);
 begin
-   FTelefone := Copy(Value,1,40);
+   FTelefone := Copy(SoNumeros(Value),1,40);
 end;
 
 procedure TEmpresa.setFTratarICMS_Diferimento(const Value: Boolean);
@@ -768,7 +778,7 @@ end;
 
 procedure TEmpresa.setFWhatsApp(const Value: String);
 begin
-   FWhatsApp := Copy(Value,1,40);
+   FWhatsApp := Copy(SoNumeros(Value),1,40);
 end;
 
 procedure TEmpresa.setFEnderecoBairro(const Value: String);
@@ -808,7 +818,7 @@ end;
 
 procedure TEmpresa.setFCelular(const Value: String);
 begin
-   FCelular := Copy(Value,1,40);
+   FCelular := Copy(SoNumeros(Value),1,40);
 end;
 
 procedure TEmpresa.setFCNAE(const Value: String);
@@ -893,12 +903,12 @@ end;
 
 procedure TEmpresa.setFRazaoSocial(const Value: String);
 begin
-   FRazaoSocial := Copy(Value,1,30);
+   FRazaoSocial := Copy(Value,1,50);
 end;
 
 procedure TEmpresa.setFResponsavelCelular(const Value: String);
 begin
-   FResponsavelCelular := Copy(Value,1,40);
+   FResponsavelCelular := Copy(SoNumeros(Value),1,40);
 end;
 
 procedure TEmpresa.setFResponsavelEmail(const Value: String);
@@ -911,9 +921,9 @@ begin
    FResponsavelNome := Copy(Value,1,40);
 end;
 
-procedure TEmpresa.setFResponsavelTelefone(const Value: String);
+procedure TEmpresa.setFResponsavelWhatsApp(const Value: String);
 begin
-   FResponsavelTelefone := Copy(Value,1,40);
+   FResponsavelWhatsApp := Copy(SoNumeros(Value),1,40);
 end;
 
 function TEmpresa.Update:Boolean;
@@ -953,7 +963,7 @@ begin
         qLocal.SQL.Add('       EMP_CONTRIBUINTE_IPI        = :EMP_CONTRIBUINTE_IPI,      ');
         qLocal.SQL.Add('       EMP_TRATAR_ICMS_DIFERIMENTO = :EMP_TRATAR_ICMS_DIFERIMENTO,      ');
         qLocal.SQL.Add('       EMP_RESPONSAVEL_NOME        = :EMP_RESPONSAVEL_NOME,      ');
-        qLocal.SQL.Add('       EMP_RESPONSAVEL_TELEFONE    = :EMP_RESPONSAVEL_TELEFONE,  ');
+        qLocal.SQL.Add('       EMP_RESPONSAVEL_WHATSAPP    = :EMP_RESPONSAVEL_WHATSAPP,  ');
         qLocal.SQL.Add('       EMP_RESPONSAVEL_CELULAR     = :EMP_RESPONSAVEL_CELULAR,   ');
         qLocal.SQL.Add('       EMP_RESPONSAVEL_EMAIL       = :EMP_RESPONSAVEL_EMAIL,     ');
         qLocal.SQL.Add('       EMP_CONTADOR_EMPRESA        = :EMP_CONTADOR_EMPRESA,      ');
@@ -979,6 +989,7 @@ begin
 
         //passo11
         Preencher_Parametros_Empresa(qLocal);
+        qLocal.ParamByName('EMP_DT').AsDateTime := FDataCadastro;
         qLocal.ExecSql;
         qLocal.Free;
         Log('Alterou empresa '+ Empresa.FNomeFantasia);
@@ -1007,47 +1018,61 @@ end;
 
 procedure TEmpresa.setFContadorResponsavel(const Value: String);
 begin
-  FContadorEmpresa  := Copy(Value,1,40);
+  FContadorResponsavel  := Copy(Value,1,40);
 end;
 
 function TEmpresa.getFContadorCNPJ: String;
 begin
-   Result := self.FContadorCNPJ;
+   if self.FContadorCNPJ = '' then
+   begin
+     result := self.FContadorCNPJ;
+     exit;
+   end;
+   self.FContadorCNPJ :=Trim(self.FContadorCNPJ);
+   if frmValidadorDeDocumentos.CNPJ_Valido(self.FContadorCNPJ) then
+      result := vVDD_DocumentoFormatado;
 end;
 
 procedure TEmpresa.setFContadorCNPJ(const Value: String);
 begin
-  FContadorCNPJ  := Copy(Value,1,14);
+  FContadorCNPJ  := Copy(SoNumeros(Value),1,14);
 end;
 
 function TEmpresa.getFContadorCPF: String;
 begin
-   Result := self.FContadorCPF;
+   if self.FContadorCPF = '' then
+   begin
+     result := self.FContadorCPF;
+     exit;
+   end;
+   self.FContadorCPF :=Trim(self.FContadorCPF);
+   if frmValidadorDeDocumentos.CPF_Valido(self.FContadorCPF) then
+      result := vVDD_DocumentoFormatado;
 end;
 
 procedure TEmpresa.setFContadorCPF(const Value: String);
 begin
-  FContadorCPF  := Copy(Value,1,11);
+  FContadorCPF  := Copy(SoNumeros(Value),1,11);
 end;
 
 function TEmpresa.getFContadorTelefone1: String;
 begin
-   Result := self.FContadorTelefone1;
+   Result := frmValidadorDeDocumentos.formataTelCel(self.FContadorTelefone1);
 end;
 
 procedure TEmpresa.setFContadorTelefone1(const Value: String);
 begin
-  FContadorTelefone1  := Copy(Value,1,40);
+  FContadorTelefone1  := Copy(SoNumeros(Value),1,40);
 end;
 
 function TEmpresa.getFContadorTelefone2: String;
 begin
-   Result := self.FContadorTelefone2;
+   Result := frmValidadorDeDocumentos.formataTelCel(self.FContadorTelefone2);
 end;
 
 procedure TEmpresa.setFContadorTelefone2(const Value: String);
 begin
-  FContadorTelefone2  := Copy(Value,1,40);
+  FContadorTelefone2  := Copy(SoNumeros(Value),1,40);
 end;
 
 function TEmpresa.getFContadorCRC: String;
@@ -1062,22 +1087,22 @@ end;
 
 function TEmpresa.getFContadorCelular1: String;
 begin
-   Result := self.FContadorCelular1;
+   Result := FrmValidadorDeDocumentos.formataTelCel(self.FContadorCelular1);
 end;
 
 procedure TEmpresa.setFContadorCelular1(const Value: String);
 begin
-   FContadorCelular1  := Copy(Value,1,40);
+   FContadorCelular1  := Copy(SoNumeros(Value),1,40);
 end;
 
 function TEmpresa.getFContadorCelular2: String;
 begin
-   Result := self.FContadorCelular2;
+   Result := frmValidadorDeDocumentos.formataTelCel(self.FContadorCelular2);
 end;
 
 procedure TEmpresa.setFContadorCelular2(const Value: String);
 begin
-   FContadorCelular1  := Copy(Value,1,40);
+   FContadorCelular2  := Copy(SoNumeros(Value),1,40);
 end;
 
 function TEmpresa.getFContadorEmail: String;

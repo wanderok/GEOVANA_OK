@@ -119,11 +119,9 @@ type
     cxButton9: TcxButton;
     Label2: TLabel;
     Edit5: TEdit;
+    RadioGroup1: TRadioGroup;
     Label3: TLabel;
-    rd_ativo: TRadioButton;
-    rd_inativo: TRadioButton;
     Label7: TLabel;
-    RadioButton1: TRadioButton;
     Label11: TLabel;
     procedure cxButton8Click(Sender: TObject);
     procedure cxButton9Click(Sender: TObject);

@@ -98,6 +98,9 @@
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppEnableHighDPI>true</AppEnableHighDPI>
+        <DCC_ExeOutput>c:\smcplus</DCC_ExeOutput>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -251,13 +254,8 @@
             <Form>frmLiberaAcesso</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-<<<<<<< HEAD
         <DCCReference Include="..\..\SRC\views\cad_empresa\cad_empresa_T3.pas">
             <Form>frm_cad_empresa_T3</Form>
-=======
-        <DCCReference Include="..\..\src\views\cad_empresa\cad_empresa.pas">
-            <Form>frm_cad_empresa</Form>
->>>>>>> cb9b60c45f9c9ea98946d7a181b67597cfe683bf
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\consultar_municipio\U_Municipio.pas">
@@ -268,13 +266,10 @@
             <Form>frm_acesso_remoto</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-<<<<<<< HEAD
         <DCCReference Include="..\..\src\Classes\Classe_TributacaoPIS.pas"/>
         <DCCReference Include="..\..\src\Classes\Classe_EmpresaTributacao.pas"/>
         <DCCReference Include="..\..\SRC\Classes\Classe_TributacaoCOFINS.pas"/>
         <DCCReference Include="..\..\SRC\Classes\Classe_TributacaoISS.pas"/>
-=======
->>>>>>> cb9b60c45f9c9ea98946d7a181b67597cfe683bf
         <None Include="ModelSupport_SMC_PLUS_\default.txaPackage"/>
         <None Include="ModelSupport_SMC_PLUS_\default.txvpck"/>
         <None Include="ModelSupport_SMC_PLUS_\vw_Login\default.txvpck"/>

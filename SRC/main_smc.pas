@@ -376,9 +376,13 @@
 implementation
 
 uses
-  cad_empresa_T3, reg_tributario, cad_usuario, alterar_senha,
+  cad_usuario_T2,
+  cad_empresa_T3,
+  reg_tributario_T4,
+  cad_cliente_T6,
+  alterar_senha,
   //cadastro_produto,
-  cad_cliente, cadastro_colaborador, cadastro_fornecedor, cad_transportadora, cad_motorista,
+  cadastro_colaborador, cadastro_fornecedor, cad_transportadora, cad_motorista,
   //cad_veiculos,
   cad_consultor;
   //cad_contador,
@@ -396,14 +400,16 @@ uses
 
 procedure TFrm_main.Button1Click(Sender: TObject);
 begin
-    frm_reg_tributaria := Tfrm_reg_tributaria.Create(nil);
-    frm_reg_tributaria.showmodal;
+    frm_reg_tributario_T4 := Tfrm_reg_tributario_T4.Create(nil);
+    frm_reg_tributario_T4.showmodal;
+    frm_reg_tributario_T4.Free;
 end;
 
 procedure TFrm_main.cxButton1Click(Sender: TObject);
 begin
-    frm_cadastro_cliente := Tfrm_cadastro_cliente.Create(nil);
-    frm_cadastro_cliente.showmodal;
+    frm_cad_cliente_T6 := Tfrm_cad_cliente_T6.Create(nil);
+    frm_cad_cliente_T6.ShowModal;
+    frm_cad_cliente_T6.Free;
 end;
 
 procedure TFrm_main.cxButton8Click(Sender: TObject);
@@ -625,8 +631,9 @@ end;
 
 procedure TFrm_main.dxBarButton84Click(Sender: TObject);
 begin
-    frm_cadastro_cliente := Tfrm_cadastro_cliente.Create(nil);
-    frm_cadastro_cliente.showmodal;
+    frm_cad_cliente_T6 := Tfrm_cad_cliente_T6.Create(nil);
+    frm_cad_cliente_T6.ShowModal;
+    frm_cad_cliente_T6.Free;
 end;
 
 procedure TFrm_main.dxBarButton85Click(Sender: TObject);
@@ -661,8 +668,9 @@ end;
 
 procedure TFrm_main.dxBarLargeButton113Click(Sender: TObject);
 begin
-    frm_cad_usuario := Tfrm_cad_usuario.Create(nil);
-    frm_cad_usuario.showmodal;
+    frm_cad_usuario_T2 := Tfrm_cad_usuario_T2.Create(nil);
+    frm_cad_usuario_T2.showmodal;
+    frm_cad_usuario_T2.Free;
 end;
 
 procedure TFrm_main.dxBarLargeButton114Click(Sender: TObject);

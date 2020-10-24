@@ -1,11 +1,12 @@
 object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Cadastro | Empresa'
-  ClientHeight = 703
-  ClientWidth = 1260
+  ClientHeight = 644
+  ClientWidth = 1051
   Color = clWhite
   DefaultMonitor = dmMainForm
   Font.Charset = DEFAULT_CHARSET
@@ -22,25 +23,25 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
   TextHeight = 13
   object lbNomeDaTela: TLabel
     Left = 0
-    Top = 690
-    Width = 1260
+    Top = 631
+    Width = 1051
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
-    Caption = 'T3'
+    Caption = 'T3 '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 1246
-    ExplicitWidth = 14
+    ExplicitLeft = 1034
+    ExplicitWidth = 17
   end
   object BtnGravar: TcxButton
-    Left = 1132
-    Top = 8
-    Width = 105
+    Left = 939
+    Top = 0
+    Width = 111
     Height = 43
     Caption = 'Gravar'
     LookAndFeel.Kind = lfOffice11
@@ -177,7 +178,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000}
-    TabOrder = 9
+    TabOrder = 11
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -186,265 +187,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     ParentFont = False
     OnClick = BtnGravarClick
   end
-  object GroupBox1: TGroupBox
-    Left = 21
-    Top = 388
-    Width = 625
-    Height = 228
-    Caption = '  Par'#226'metros de Tributa'#231#227'o'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNone
-    Font.Height = -15
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 2
-    TabStop = True
-    object grpPisCofins: TGroupBox
-      Left = 162
-      Top = 80
-      Width = 279
-      Height = 81
-      Caption = '  PIS | COFINS               PIS      -    COFINS '
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNone
-      Font.Height = -12
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 1
-      object edPISAliquota: TEdit
-        Left = 144
-        Top = 17
-        Width = 49
-        Height = 26
-        Color = 8454016
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
-        Font.Height = -15
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 1
-        Text = 'Edit1'
-        OnExit = edPISAliquotaExit
-        OnKeyPress = edPISAliquotaKeyPress
-      end
-      object edCOFINSAliquota: TEdit
-        Left = 220
-        Top = 17
-        Width = 49
-        Height = 26
-        Color = 8454016
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
-        Font.Height = -15
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 2
-        Text = '0,00'
-        OnExit = edCOFINSAliquotaExit
-        OnKeyPress = edPISAliquotaKeyPress
-      end
-      object rgPISCumulativo: TRadioGroup
-        Left = 2
-        Top = 16
-        Width = 135
-        Height = 60
-        Ctl3D = False
-        DoubleBuffered = False
-        Items.Strings = (
-          'N'#227'o Comulativo'
-          'Cumulativo')
-        ParentBackground = False
-        ParentCtl3D = False
-        ParentDoubleBuffered = False
-        TabOrder = 0
-      end
-    end
-    object cbTratarICMS_Diferimento: TcxCheckBox
-      Left = 168
-      Top = 169
-      Caption = 'Tratar ICMS de Diferimento (CST 51) (depende da UF)'
-      ParentBackground = False
-      ParentColor = False
-      ParentFont = False
-      Style.BorderColor = clWindow
-      Style.Color = clBtnHighlight
-      Style.Font.Charset = DEFAULT_CHARSET
-      Style.Font.Color = clNone
-      Style.Font.Height = -13
-      Style.Font.Name = 'Tahoma'
-      Style.Font.Style = [fsBold]
-      Style.LookAndFeel.NativeStyle = False
-      Style.LookAndFeel.SkinName = 'Office2013White'
-      Style.Shadow = False
-      Style.IsFontAssigned = True
-      StyleDisabled.LookAndFeel.NativeStyle = False
-      StyleDisabled.LookAndFeel.SkinName = 'Office2013White'
-      StyleFocused.LookAndFeel.NativeStyle = False
-      StyleFocused.LookAndFeel.SkinName = 'Office2013White'
-      StyleHot.LookAndFeel.NativeStyle = False
-      StyleHot.LookAndFeel.SkinName = 'Office2013White'
-      TabOrder = 3
-    end
-    object GroupBox3: TGroupBox
-      Left = 453
-      Top = 79
-      Width = 159
-      Height = 50
-      Caption = '  ISS  '
-      Color = clWhite
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNone
-      Font.Height = -15
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentBackground = False
-      ParentColor = False
-      ParentFont = False
-      TabOrder = 2
-      object Label11: TLabel
-        Left = 59
-        Top = 20
-        Width = 20
-        Height = 18
-        Caption = '%:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNone
-        Font.Height = -15
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object edISSAliquota: TEdit
-        Left = 84
-        Top = 16
-        Width = 49
-        Height = 26
-        Color = 8454016
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNone
-        Font.Height = -15
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 0
-        Text = 'Edit1'
-        OnExit = edISSAliquotaExit
-        OnKeyPress = edPISAliquotaKeyPress
-      end
-    end
-    object grpIPI: TGroupBox
-      Left = 10
-      Top = 21
-      Width = 602
-      Height = 52
-      Caption = '  IPI  '
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNone
-      Font.Height = -12
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 0
-      object cbContribuinteIPI: TcxCheckBox
-        Left = 20
-        Top = 21
-        Caption = 'Contribuinte'
-        ParentBackground = False
-        ParentColor = False
-        ParentFont = False
-        Style.BorderColor = clWindow
-        Style.Color = clBtnHighlight
-        Style.Font.Charset = DEFAULT_CHARSET
-        Style.Font.Color = clNone
-        Style.Font.Height = -12
-        Style.Font.Name = 'Tahoma'
-        Style.Font.Style = [fsBold]
-        Style.LookAndFeel.NativeStyle = False
-        Style.LookAndFeel.SkinName = 'Office2013White'
-        Style.Shadow = False
-        Style.IsFontAssigned = True
-        StyleDisabled.LookAndFeel.NativeStyle = False
-        StyleDisabled.LookAndFeel.SkinName = 'Office2013White'
-        StyleFocused.LookAndFeel.NativeStyle = False
-        StyleFocused.LookAndFeel.SkinName = 'Office2013White'
-        StyleHot.LookAndFeel.NativeStyle = False
-        StyleHot.LookAndFeel.SkinName = 'Office2013White'
-        TabOrder = 0
-      end
-    end
-    object cxButton6: TcxButton
-      Left = 10
-      Top = 197
-      Width = 602
-      Height = 25
-      Caption = 'Regime Tribut'#225'rio'
-      Colors.Default = clRed
-      Colors.DefaultText = clRed
-      Colors.Normal = clRed
-      Colors.NormalText = clRed
-      Colors.Hot = clRed
-      Colors.HotText = clRed
-      Colors.Pressed = clRed
-      Colors.PressedText = clRed
-      Colors.Disabled = clRed
-      Colors.DisabledText = clRed
-      LookAndFeel.Kind = lfOffice11
-      LookAndFeel.NativeStyle = False
-      LookAndFeel.SkinName = 'Metropolis'
-      OptionsImage.Glyph.Data = {
-        36040000424D3604000000000000360000002800000010000000100000000100
-        2000000000000004000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        000000000000000000001511C6FF1511C6FF1511C5FE00000000AB6F4DFFAB6F
-        4DFFA76C4BF9000000000070EEFF0070EEFF0070EEFF00000000000000000000
-        000000000000000000000C0CCDFF0C0CCDFF0C0CCDFF00000000B06F48FFB06F
-        48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000000000
-        000000000000000000000C0CCDFF0C0CCDFF0C0CCDFF00000000B06F48FFB06F
-        48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000000000
-        000000000000000000000C0CCDFF0C0CCDFF0C0CCDFF00000000B06F48FFB06F
-        48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000000000
-        000000000000000000000C0CCDFF0C0CCDFF0C0CCDFF00000000B06F48FFB06F
-        48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000000000
-        000000000000000000001511C6FF1511C6FF1511C5FE00000000B06F48FFB06F
-        48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000000000
-        0000000000000000000000000000000000000000000000000000B06F48FFB06F
-        48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000001F24
-        BBFF181CB3FF1016ACFF0C11A8FF0C11A8FF0C11A8FF00000000B06F48FFB06F
-        48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000000000
-        00001F24BBFF0F1272A300000000000000000C11A8FF00000000AB6F4DFFAB6F
-        4DFFA76C4BF9000000000070EEFF0070EEFF0070EEFF00000000000000000000
-        0000000000001C21ACEA0F1272A3000000000000000000000000000000000000
-        000000000000000000000070EEFF0070EEFF0070EEFF00000000000000000000
-        000000000000262AB9F2141777A3000000000000000000000000000000000000
-        000000000000000000000070EEFF0070EEFF0070EEFF00000000000000000000
-        0000373CD3FF1F2282A30000000000000000171CB3FF00000000000000000000
-        000000000000000000000070EEFF0070EEFF0070EEFF00000000000000004347
-        DEFF3F43DAFF383CD3FF3034CBFF272CC3FF1F24BAFF00000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000}
-      TabOrder = 4
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNone
-      Font.Height = -17
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      OnClick = cxButton6Click
-    end
-  end
   object grpConfig: TGroupBox
-    Left = 1128
-    Top = 160
+    Left = 940
+    Top = 100
     Width = 111
-    Height = 529
+    Height = 530
     Color = clWhite
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -454,7 +201,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     ParentBackground = False
     ParentColor = False
     ParentFont = False
-    TabOrder = 11
+    TabOrder = 7
     object BtnCertificado: TcxButton
       Left = 10
       Top = 7
@@ -608,7 +355,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object BtnEmail: TcxButton
       Left = 10
-      Top = 72
+      Top = 71
       Width = 89
       Height = 54
       Hint = 'Excluir cadastro.'
@@ -759,7 +506,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object BtnNFE: TcxButton
       Left = 10
-      Top = 198
+      Top = 194
       Width = 89
       Height = 48
       Hint = 'Excluir cadastro.'
@@ -1050,7 +797,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object BtnNFCE: TcxButton
       Left = 10
-      Top = 254
+      Top = 248
       Width = 89
       Height = 48
       Hint = 'Excluir cadastro.'
@@ -1341,7 +1088,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object BtnNFSE: TcxButton
       Left = 10
-      Top = 309
+      Top = 302
       Width = 89
       Height = 48
       Hint = 'Excluir cadastro.'
@@ -1632,7 +1379,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object BtnMDE: TcxButton
       Left = 10
-      Top = 364
+      Top = 356
       Width = 89
       Height = 48
       Hint = 'Excluir cadastro.'
@@ -1923,7 +1670,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object cxButton4: TcxButton
       Left = 10
-      Top = 134
+      Top = 131
       Width = 89
       Height = 57
       Hint = 'Excluir cadastro.'
@@ -2074,7 +1821,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object BTNbase_dados: TcxButton
       Left = 10
-      Top = 475
+      Top = 464
       Width = 89
       Height = 48
       LookAndFeel.Kind = lfOffice11
@@ -2544,7 +2291,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object cxButton8: TcxButton
       Left = 10
-      Top = 420
+      Top = 410
       Width = 89
       Height = 48
       LookAndFeel.Kind = lfOffice11
@@ -2840,10 +2587,10 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
   end
   object gbContador: TGroupBox
-    Left = 656
-    Top = 388
+    Left = 499
+    Top = 383
     Width = 437
-    Height = 256
+    Height = 249
     Caption = '  Contabilidade  '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -2905,7 +2652,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object Label22: TLabel
-      Left = 254
+      Left = 270
       Top = 91
       Width = 34
       Height = 34
@@ -2944,7 +2691,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object TLabel
-      Left = 239
+      Left = 255
       Top = 154
       Width = 49
       Height = 17
@@ -2970,7 +2717,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object TLabel
-      Left = 246
+      Left = 262
       Top = 186
       Width = 42
       Height = 17
@@ -2986,15 +2733,15 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Tag = 200
       Left = 98
       Top = 23
-      Width = 314
+      Width = 330
       Height = 26
-      Cursor = crHandPoint
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 40
       ParentFont = False
       TabOrder = 0
       Text = 'Edit1'
@@ -3004,15 +2751,15 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Tag = 200
       Left = 98
       Top = 55
-      Width = 314
+      Width = 330
       Height = 26
-      Cursor = crHandPoint
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 40
       ParentFont = False
       TabOrder = 1
       Text = 'Edit1'
@@ -3022,9 +2769,8 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     object edContadorCNPJ: TEdit
       Left = 98
       Top = 87
-      Width = 118
+      Width = 146
       Height = 26
-      Cursor = crHandPoint
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
@@ -3035,90 +2781,88 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 2
       Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      OnExit = edContadorCNPJExit
       OnKeyPress = edCNPJKeyPress
     end
     object edContadorCRC: TEdit
       Left = 98
       Top = 117
-      Width = 118
+      Width = 146
       Height = 26
-      Cursor = crHandPoint
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 10
       ParentFont = False
       TabOrder = 4
       Text = 'Edit1'
       OnExit = edRazaoSocialExit
     end
     object edContadorCelular1: TEdit
-      Tag = 100
+      Tag = 200
       Left = 98
       Top = 181
-      Width = 118
+      Width = 146
       Height = 26
-      Cursor = crHandPoint
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
-      MaxLength = 9
+      MaxLength = 11
       ParentFont = False
       TabOrder = 7
       Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      OnExit = edContadorCelular1Exit
       OnKeyPress = edCNPJKeyPress
     end
     object edContadorEmail: TEdit
       Tag = 200
       Left = 98
       Top = 214
-      Width = 314
+      Width = 330
       Height = 26
-      Cursor = crHandPoint
+      CharCase = ecLowerCase
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 40
       ParentFont = False
       TabOrder = 9
-      Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      Text = 'edit1'
+      OnExit = edContadorEmailExit
     end
     object edContadorTelefone1: TEdit
       Tag = 200
       Left = 98
       Top = 149
-      Width = 118
+      Width = 146
       Height = 26
-      Cursor = crHandPoint
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
-      MaxLength = 8
+      MaxLength = 10
       ParentFont = False
       TabOrder = 5
       Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      OnExit = edContadorTelefone1Exit
       OnKeyPress = edCNPJKeyPress
     end
     object edContadorCPF: TEdit
-      Left = 294
+      Left = 310
       Top = 87
       Width = 118
       Height = 26
-      Cursor = crHandPoint
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
@@ -3129,50 +2873,48 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 3
       Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      OnExit = edContadorCPFExit
       OnKeyPress = edCNPJKeyPress
     end
     object edContadorTeleFone2: TEdit
-      Left = 294
+      Left = 310
       Top = 149
       Width = 118
       Height = 26
-      Cursor = crHandPoint
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
-      MaxLength = 8
+      MaxLength = 10
       ParentFont = False
       TabOrder = 6
       Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      OnExit = edContadorTeleFone2Exit
       OnKeyPress = edCNPJKeyPress
     end
     object edContadorCelular2: TEdit
-      Left = 294
+      Left = 310
       Top = 181
       Width = 118
       Height = 26
-      Cursor = crHandPoint
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
-      MaxLength = 9
+      MaxLength = 11
       ParentFont = False
       TabOrder = 8
       Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      OnExit = edContadorCelular2Exit
       OnKeyPress = edCNPJKeyPress
     end
   end
   object grpLogo: TGroupBox
-    Left = 884
+    Left = 671
     Top = 8
     Width = 211
     Height = 211
@@ -3183,7 +2925,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 7
+    TabOrder = 8
     object TL_colab: TLabel
       Left = 55
       Top = 75
@@ -3198,16 +2940,16 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object imgLogoMarca: TImage
-      Left = 14
-      Top = 29
+      Left = 13
+      Top = 27
       Width = 186
       Height = 149
       Stretch = True
       Transparent = True
     end
     object cxButton1: TcxButton
-      Left = 14
-      Top = 179
+      Left = 13
+      Top = 177
       Width = 87
       Height = 25
       Caption = 'Inserir'
@@ -3258,8 +3000,8 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       OnClick = cxButton1Click
     end
     object cxButton2: TcxButton
-      Left = 114
-      Top = 179
+      Left = 113
+      Top = 177
       Width = 86
       Height = 25
       Caption = 'Remover'
@@ -3311,8 +3053,8 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
   end
   object grpDadosEmpresa: TGroupBox
-    Left = 21
-    Top = 8
+    Left = 0
+    Top = 0
     Width = 625
     Height = 211
     Caption = '  Dados Empresa  '
@@ -3329,19 +3071,6 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Width = 44
       Height = 17
       Caption = 'CNAE:'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -15
-      Font.Name = 'Helvetica Neue'
-      Font.Style = []
-      ParentFont = False
-    end
-    object label8: TLabel
-      Left = 315
-      Top = 180
-      Width = 123
-      Height = 17
-      Caption = 'IE Subst.Tribut'#225'rio:'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -3407,11 +3136,13 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Width = 124
       Height = 17
       Caption = 'Inscri'#231#227'o Estadual:'
+      Color = clRed
       Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
+      Font.Color = clRed
       Font.Height = -15
       Font.Name = 'Helvetica Neue'
       Font.Style = []
+      ParentColor = False
       ParentFont = False
     end
     object Label10: TLabel
@@ -3465,6 +3196,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 50
       ParentFont = False
       TabOrder = 0
       OnExit = edRazaoSocialExit
@@ -3481,6 +3213,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 50
       ParentFont = False
       TabOrder = 1
       OnExit = edRazaoSocialExit
@@ -3497,6 +3230,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 10
       ParentFont = False
       TabOrder = 8
       OnExit = edRazaoSocialExit
@@ -3513,9 +3247,10 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 10
       ParentFont = False
       TabOrder = 6
-      OnExit = edRazaoSocialExit
+      OnExit = edSUFRAMAExit
     end
     object edInscricaoEstadual: TEdit
       Tag = 100
@@ -3532,7 +3267,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       MaxLength = 14
       ParentFont = False
       TabOrder = 4
-      OnExit = edRazaoSocialExit
+      OnExit = edInscricaoEstadualExit
       OnKeyPress = edCNPJKeyPress
     end
     object edCNPJ: TEdit
@@ -3550,7 +3285,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       MaxLength = 14
       ParentFont = False
       TabOrder = 3
-      OnExit = edRazaoSocialExit
+      OnExit = edCNPJExit
       OnKeyPress = edCNPJKeyPress
     end
     object edInscricaoMunicipal: TEdit
@@ -3564,6 +3299,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 14
       ParentFont = False
       TabOrder = 5
       OnExit = edRazaoSocialExit
@@ -3580,27 +3316,12 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 11
       ParentFont = False
       TabOrder = 7
       Text = 'Edit1'
       OnExit = edRazaoSocialExit
       OnKeyPress = edCNPJKeyPress
-    end
-    object edIESubstTributario: TEdit
-      Left = 444
-      Top = 177
-      Width = 158
-      Height = 26
-      Color = 8454016
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNone
-      Font.Height = -15
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 9
-      Text = 'Edit1'
-      OnExit = edRazaoSocialExit
     end
     object edDataInicioAtividades: TMaskEdit
       Tag = 100
@@ -3619,12 +3340,13 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 2
       Text = '  /  /  '
+      OnExit = edDataInicioAtividadesExit
     end
   end
   object BtnRelatorio: TcxButton
-    Left = 1132
-    Top = 103
-    Width = 105
+    Left = 939
+    Top = 48
+    Width = 111
     Height = 49
     Caption = 'Relat'#243'rio'
     LookAndFeel.Kind = lfOffice11
@@ -3770,8 +3492,8 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     ParentFont = False
   end
   object GroupBox4: TGroupBox
-    Left = 884
-    Top = 226
+    Left = 671
+    Top = 218
     Width = 211
     Height = 156
     Caption = '  Assinatura  '
@@ -3781,10 +3503,10 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 8
+    TabOrder = 9
     object Label12: TLabel
-      Left = 55
-      Top = 59
+      Left = 54
+      Top = 61
       Width = 86
       Height = 36
       Caption = '  Assinatura'#13' 200x97pixel'
@@ -3796,16 +3518,16 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object imgAssinatura: TImage
-      Left = 14
-      Top = 17
+      Left = 13
+      Top = 19
       Width = 186
       Height = 102
       Stretch = True
       Transparent = True
     end
     object cxButton3: TcxButton
-      Left = 14
-      Top = 119
+      Left = 13
+      Top = 121
       Width = 87
       Height = 25
       Caption = 'Inserir'
@@ -3856,8 +3578,8 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       OnClick = cxButton3Click
     end
     object cxButton7: TcxButton
-      Left = 114
-      Top = 119
+      Left = 113
+      Top = 121
       Width = 86
       Height = 25
       Caption = 'Remover'
@@ -3909,8 +3631,8 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
   end
   object grpEndereco: TGroupBox
-    Left = 21
-    Top = 226
+    Left = 0
+    Top = 218
     Width = 625
     Height = 156
     Caption = '  Endere'#231'o  '
@@ -4016,19 +3738,6 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object TLabel
-      Left = 307
-      Top = 124
-      Width = 35
-      Height = 17
-      Caption = 'C'#243'd.:'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -15
-      Font.Name = 'Helvetica Neue'
-      Font.Style = []
-      ParentFont = False
-    end
-    object TLabel
       Left = 511
       Top = 124
       Width = 35
@@ -4085,10 +3794,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       TabOrder = 4
+      TabStop = False
       OnClick = cxButton5Click
     end
     object cxButton10: TcxButton
-      Left = 268
+      Left = 178
       Top = 119
       Width = 25
       Height = 26
@@ -4131,13 +3841,14 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       TabOrder = 7
+      TabStop = False
       OnClick = cxButton10Click
     end
-    object edEnderecoMunicipio: TEdit
+    object edEnderecoMunicipioIBGE: TEdit
       Tag = 100
       Left = 112
       Top = 119
-      Width = 154
+      Width = 65
       Height = 26
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
@@ -4145,10 +3856,12 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 7
       ParentFont = False
       TabOrder = 6
       Text = 'Edit1'
-      OnExit = edEnderecoMunicipioExit
+      OnExit = edEnderecoMunicipioIBGEExit
+      OnKeyDown = edEnderecoMunicipioIBGEKeyDown
     end
     object edEnderecoComplemento: TEdit
       Left = 112
@@ -4161,6 +3874,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 30
       ParentFont = False
       TabOrder = 5
       Text = 'Edit1'
@@ -4178,6 +3892,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 5
       ParentFont = False
       TabOrder = 2
       Text = 'Edit1'
@@ -4195,26 +3910,27 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 50
       ParentFont = False
       TabOrder = 0
       OnExit = edRazaoSocialExit
     end
-    object edEnderecoMunicipioIBGE: TEdit
-      Tag = 100
-      Left = 348
+    object edEnderecoMunicipio: TEdit
+      Left = 203
       Top = 119
-      Width = 45
+      Width = 208
       Height = 26
-      Color = 8454016
+      TabStop = False
+      Color = clSilver
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
+      ReadOnly = True
       TabOrder = 8
       Text = 'Edit1'
-      OnExit = edRazaoSocialExit
     end
     object edEnderecoBairro: TEdit
       Tag = 100
@@ -4228,17 +3944,18 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 30
       ParentFont = False
       TabOrder = 3
       Text = 'Edit1'
       OnExit = edRazaoSocialExit
     end
     object edEnderecoUF: TEdit
-      Tag = 100
       Left = 446
       Top = 119
       Width = 49
       Height = 26
+      TabStop = False
       Color = 8454016
       DoubleBuffered = False
       Font.Charset = DEFAULT_CHARSET
@@ -4246,25 +3963,29 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 2
       ParentDoubleBuffered = False
       ParentFont = False
+      ReadOnly = True
       TabOrder = 9
       Text = 'Edit1'
       OnExit = edRazaoSocialExit
     end
     object edEnderecoUFIBGE: TEdit
-      Tag = 100
       Left = 552
       Top = 119
       Width = 49
       Height = 26
+      TabStop = False
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 2
       ParentFont = False
+      ReadOnly = True
       TabOrder = 10
       Text = 'edEnderecoUFIBGE'
       OnExit = edRazaoSocialExit
@@ -4281,17 +4002,18 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 8
       ParentFont = False
       TabOrder = 1
       Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      OnExit = edEnderecoCEPExit
       OnKeyPress = edCNPJKeyPress
     end
   end
   object GroupBox5: TGroupBox
-    Left = 656
-    Top = 227
-    Width = 220
+    Left = 255
+    Top = 383
+    Width = 238
     Height = 155
     Caption = '  Contatos Respons'#225'vel  '
     Color = clBtnHighlight
@@ -4303,13 +4025,13 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     ParentBackground = False
     ParentColor = False
     ParentFont = False
-    TabOrder = 5
+    TabOrder = 3
     object TLabel
-      Left = 25
+      Left = 4
       Top = 90
-      Width = 26
+      Width = 47
       Height = 17
-      Caption = 'Cel:'
+      Caption = 'Whats:'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -4331,11 +4053,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object TLabel
-      Left = 14
+      Left = 25
       Top = 58
-      Width = 37
+      Width = 26
       Height = 17
-      Caption = 'Fone:'
+      Caption = 'Cel:'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
@@ -4368,12 +4090,12 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
-      MaxLength = 8
+      MaxLength = 40
       ParentFont = False
       TabOrder = 0
       OnKeyPress = edResponsavelNomeKeyPress
     end
-    object edResponsavelTelefone: TEdit
+    object edResponsavelCelular: TEdit
       Tag = 200
       Left = 54
       Top = 53
@@ -4385,13 +4107,14 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 11
       ParentFont = False
       TabOrder = 1
       Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      OnExit = edResponsavelCelularExit
       OnKeyPress = edCNPJKeyPress
     end
-    object edResponsavelCelular: TEdit
+    object edResponsavelWhatsApp: TEdit
       Tag = 200
       Left = 54
       Top = 85
@@ -4403,11 +4126,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
-      MaxLength = 9
+      MaxLength = 11
       ParentFont = False
       TabOrder = 2
       Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      OnExit = edResponsavelWhatsAppExit
       OnKeyPress = edCNPJKeyPress
     end
     object edResponsavelEmail: TEdit
@@ -4423,20 +4146,20 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 40
       ParentFont = False
       TabOrder = 3
       Text = 'edit1'
-      OnExit = edRazaoSocialExit
-      OnKeyPress = edCNPJKeyPress
+      OnExit = edResponsavelEmailExit
     end
   end
   object grpOutras: TGroupBox
-    Left = 21
-    Top = 627
-    Width = 625
+    Left = 5
+    Top = 570
+    Width = 492
     Height = 62
     Caption = '  Outras Informa'#231#245'es  '
-    Color = 8454143
+    Color = clSilver
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clNone
     Font.Height = -15
@@ -4445,9 +4168,9 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     ParentBackground = False
     ParentColor = False
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 5
     object TLabel
-      Left = 30
+      Left = 6
       Top = 31
       Width = 119
       Height = 17
@@ -4460,7 +4183,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
     end
     object Label13: TLabel
-      Left = 310
+      Left = 222
       Top = 31
       Width = 135
       Height = 17
@@ -4474,9 +4197,9 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     end
     object edCodigoUniSystem: TEdit
       Tag = 100
-      Left = 449
+      Left = 361
       Top = 26
-      Width = 153
+      Width = 120
       Height = 26
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
@@ -4491,7 +4214,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       OnExit = edRazaoSocialExit
     end
     object edDataCadastro: TMaskEdit
-      Left = 155
+      Left = 131
       Top = 26
       Width = 83
       Height = 26
@@ -4508,12 +4231,13 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ReadOnly = True
       TabOrder = 1
       Text = '  /  /  '
+      OnExit = edDataCadastroExit
     end
   end
   object grpContatos: TGroupBox
-    Left = 656
-    Top = 33
-    Width = 220
+    Left = 11
+    Top = 383
+    Width = 238
     Height = 155
     Caption = '  Contatos Empresa  '
     Color = clBtnHighlight
@@ -4525,7 +4249,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     ParentBackground = False
     ParentColor = False
     ParentFont = False
-    TabOrder = 4
+    TabOrder = 2
     OnClick = BTNbase_dadosClick
     object TLabel
       Left = 25
@@ -4591,11 +4315,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
-      MaxLength = 8
+      MaxLength = 10
       ParentFont = False
       TabOrder = 0
       Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      OnExit = edTelefoneExit
       OnKeyPress = edCNPJKeyPress
     end
     object edCelular: TEdit
@@ -4610,11 +4334,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 11
       ParentFont = False
       TabOrder = 1
       Text = 'Edit1'
-      OnClick = BTNbase_dadosClick
-      OnExit = edRazaoSocialExit
+      OnExit = edCelularExit
       OnKeyPress = edCNPJKeyPress
     end
     object edWhatsApp: TEdit
@@ -4629,12 +4353,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Height = -15
       Font.Name = 'Tahoma'
       Font.Style = []
-      MaxLength = 9
+      MaxLength = 11
       ParentFont = False
       TabOrder = 2
       Text = 'Edit1'
-      OnClick = BTNbase_dadosClick
-      OnExit = edRazaoSocialExit
+      OnExit = edWhatsAppExit
       OnKeyPress = edCNPJKeyPress
     end
     object edEmail: TEdit
@@ -4643,6 +4366,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Top = 117
       Width = 160
       Height = 26
+      CharCase = ecLowerCase
       Color = 8454016
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNone
@@ -4651,12 +4375,75 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Style = []
       ParentFont = False
       TabOrder = 3
-      Text = 'Edit1'
-      OnExit = edRazaoSocialExit
+      Text = 'edit1'
+      OnExit = edEmailExit
     end
   end
+  object cxButton6: TcxButton
+    Left = 6
+    Top = 544
+    Width = 491
+    Height = 25
+    Caption = 'Tributa'#231#227'o'
+    Colors.Default = clRed
+    Colors.DefaultText = clRed
+    Colors.Normal = clRed
+    Colors.NormalText = clRed
+    Colors.Hot = clRed
+    Colors.HotText = clRed
+    Colors.Pressed = clRed
+    Colors.PressedText = clRed
+    Colors.Disabled = clRed
+    Colors.DisabledText = clRed
+    LookAndFeel.Kind = lfOffice11
+    LookAndFeel.NativeStyle = False
+    LookAndFeel.SkinName = 'Metropolis'
+    OptionsImage.Glyph.Data = {
+      36040000424D3604000000000000360000002800000010000000100000000100
+      2000000000000004000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000001511C6FF1511C6FF1511C5FE00000000AB6F4DFFAB6F
+      4DFFA76C4BF9000000000070EEFF0070EEFF0070EEFF00000000000000000000
+      000000000000000000000C0CCDFF0C0CCDFF0C0CCDFF00000000B06F48FFB06F
+      48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000000000
+      000000000000000000000C0CCDFF0C0CCDFF0C0CCDFF00000000B06F48FFB06F
+      48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000000000
+      000000000000000000000C0CCDFF0C0CCDFF0C0CCDFF00000000B06F48FFB06F
+      48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000000000
+      000000000000000000000C0CCDFF0C0CCDFF0C0CCDFF00000000B06F48FFB06F
+      48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000000000
+      000000000000000000001511C6FF1511C6FF1511C5FE00000000B06F48FFB06F
+      48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000000000
+      0000000000000000000000000000000000000000000000000000B06F48FFB06F
+      48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000001F24
+      BBFF181CB3FF1016ACFF0C11A8FF0C11A8FF0C11A8FF00000000B06F48FFB06F
+      48FFB06F48FF000000000070EEFF0070EEFF0070EEFF00000000000000000000
+      00001F24BBFF0F1272A300000000000000000C11A8FF00000000AB6F4DFFAB6F
+      4DFFA76C4BF9000000000070EEFF0070EEFF0070EEFF00000000000000000000
+      0000000000001C21ACEA0F1272A3000000000000000000000000000000000000
+      000000000000000000000070EEFF0070EEFF0070EEFF00000000000000000000
+      000000000000262AB9F2141777A3000000000000000000000000000000000000
+      000000000000000000000070EEFF0070EEFF0070EEFF00000000000000000000
+      0000373CD3FF1F2282A30000000000000000171CB3FF00000000000000000000
+      000000000000000000000070EEFF0070EEFF0070EEFF00000000000000004347
+      DEFF3F43DAFF383CD3FF3034CBFF272CC3FF1F24BAFF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000}
+    TabOrder = 4
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clNone
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    OnClick = cxButton6Click
+  end
   object OpenPictureDialog1: TOpenPictureDialog
-    Left = 1036
-    Top = 136
+    Left = 852
+    Top = 40
   end
 end
