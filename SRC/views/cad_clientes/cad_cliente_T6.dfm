@@ -16,6 +16,8 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
   KeyPreview = True
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnClose = FormClose
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label16: TLabel
@@ -32,7 +34,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     ParentFont = False
   end
   object Label10: TLabel
-    Left = 11
+    Left = 5
     Top = 27
     Width = 51
     Height = 18
@@ -45,7 +47,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     ParentFont = False
   end
   object Label3: TLabel
-    Left = 100
+    Left = 172
     Top = 25
     Width = 39
     Height = 18
@@ -58,8 +60,8 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     ParentFont = False
   end
   object Label7: TLabel
-    Left = 100
-    Top = 40
+    Left = 172
+    Top = 56
     Width = 54
     Height = 18
     Caption = 'Inativo'
@@ -71,8 +73,8 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     ParentFont = False
   end
   object Label11: TLabel
-    Left = 100
-    Top = 56
+    Left = 172
+    Top = 40
     Width = 78
     Height = 18
     Caption = 'Bloqueado'
@@ -100,11 +102,11 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     ExplicitLeft = 954
     ExplicitWidth = 14
   end
-  object RadioGroup1: TRadioGroup
-    Left = 71
+  object rgStatus: TRadioGroup
+    Left = 143
     Top = 8
     Width = 111
-    Height = 70
+    Height = 73
     Caption = 'Status'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -116,13 +118,13 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       ''
       '')
     ParentFont = False
-    TabOrder = 9
+    TabOrder = 1
   end
   object gpData: TGroupBox
-    Left = 191
-    Top = 14
-    Width = 315
-    Height = 70
+    Left = 260
+    Top = 8
+    Width = 268
+    Height = 73
     Caption = '  Datas '
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
@@ -130,7 +132,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 5
     object Label13: TLabel
       Left = 9
       Top = 16
@@ -145,7 +147,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       ParentFont = False
     end
     object lbInativo: TLabel
-      Left = 102
+      Left = 109
       Top = 16
       Width = 60
       Height = 18
@@ -158,7 +160,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       ParentFont = False
     end
     object Label14: TLabel
-      Left = 230
+      Left = 192
       Top = 16
       Width = 45
       Height = 18
@@ -171,7 +173,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       ParentFont = False
     end
     object btDetalhesBloqueio: TcxButton
-      Left = 176
+      Left = 157
       Top = 37
       Width = 34
       Height = 26
@@ -240,7 +242,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       Text = '  /  /  '
     end
     object edDTBLOQUEIO: TMaskEdit
-      Left = 102
+      Left = 83
       Top = 37
       Width = 74
       Height = 26
@@ -260,7 +262,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       Text = '  /  /  '
     end
     object MaskEdit2: TMaskEdit
-      Left = 230
+      Left = 192
       Top = 37
       Width = 74
       Height = 26
@@ -280,24 +282,24 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       Text = '  /  /  '
     end
   end
-  object edCODIGO: TEdit
-    Left = 11
-    Top = 53
-    Width = 54
+  object edCodigo: TEdit
+    Left = 3
+    Top = 47
+    Width = 137
     Height = 31
     Hint = 'C'#243'digo do Cliente'
-    Enabled = False
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -19
     Font.Name = 'Tahoma'
     Font.Style = []
+    MaxLength = 10
     ParentFont = False
-    ReadOnly = True
     TabOrder = 0
+    OnExit = edCodigoExit
   end
   object GroupBox5: TGroupBox
-    Left = 518
+    Left = 526
     Top = 11
     Width = 435
     Height = 73
@@ -308,7 +310,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 2
+    TabOrder = 6
     object TLabel
       Left = 10
       Top = 18
@@ -497,14 +499,14 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     Top = 95
     Width = 591
     Height = 176
-    ActivePage = tsPessoaFisica
+    ActivePage = tsPessoaJuridica
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -15
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 2
     object tsPessoaFisica: TTabSheet
       Caption = 'Pessoa F'#237'sica'
       object Label25: TLabel
@@ -879,7 +881,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
         TabOrder = 0
         Text = ''
       end
-      object edFANTASIA: TEdit
+      object edNomeFantasia: TEdit
         Tag = 1
         Left = 119
         Top = 43
@@ -895,7 +897,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
         ParentFont = False
         TabOrder = 1
       end
-      object edRAZAO_SOCIAL: TEdit
+      object edRazaoSocial: TEdit
         Tag = 100
         Left = 120
         Top = 11
@@ -1098,7 +1100,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     ParentBackground = False
     ParentColor = False
     ParentFont = False
-    TabOrder = 4
+    TabOrder = 3
     object Label22: TLabel
       Left = 192
       Top = 58
@@ -1659,7 +1661,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     end
   end
   object cxButton8: TcxButton
-    Left = 626
+    Left = 634
     Top = 391
     Width = 110
     Height = 44
@@ -1798,7 +1800,8 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       0000000000010000000100000001000000010000000100000001000000010000
       0001000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000}
-    TabOrder = 5
+    TabOrder = 7
+    TabStop = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -12
@@ -1808,7 +1811,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     OnClick = cxButton8Click
   end
   object cxButton21: TcxButton
-    Left = 745
+    Left = 753
     Top = 391
     Width = 98
     Height = 44
@@ -1946,16 +1949,18 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000}
-    TabOrder = 6
+    TabOrder = 8
+    TabStop = False
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -12
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = cxButton21Click
   end
   object cxButton28: TcxButton
-    Left = 850
+    Left = 858
     Top = 391
     Width = 103
     Height = 44
@@ -2093,7 +2098,8 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000}
-    TabOrder = 7
+    TabOrder = 9
+    TabStop = False
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -12
@@ -2102,8 +2108,8 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     ParentFont = False
   end
   object GroupBox3: TGroupBox
-    Left = 626
-    Top = 90
+    Left = 634
+    Top = 95
     Width = 327
     Height = 259
     Caption = '  Contatos  '
@@ -2113,7 +2119,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 8
+    TabOrder = 4
     object TLabel
       Left = 30
       Top = 26

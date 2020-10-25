@@ -407,9 +407,9 @@ end;
 
 procedure TFrm_main.cxButton1Click(Sender: TObject);
 begin
-    frm_cad_cliente_T6 := Tfrm_cad_cliente_T6.Create(nil);
-    frm_cad_cliente_T6.ShowModal;
-    frm_cad_cliente_T6.Free;
+   frm_cad_cliente_T6 := Tfrm_cad_cliente_T6.Create(nil);
+   frm_cad_cliente_T6.ShowModal;
+   frm_cad_cliente_T6.Free;
 end;
 
 procedure TFrm_main.cxButton8Click(Sender: TObject);

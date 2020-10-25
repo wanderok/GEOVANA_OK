@@ -30,8 +30,9 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue;
+  dxSkinXmas2008Blue,
 
+  Classe_Cliente;
 
 type
   Tfrm_cad_cliente_T6 = class(TForm)
@@ -45,7 +46,7 @@ type
     MaskEdit2: TMaskEdit;
     Label16: TLabel;
     Label10: TLabel;
-    edCODIGO: TEdit;
+    edCodigo: TEdit;
     GroupBox5: TGroupBox;
     Label15: TLabel;
     edUSUALTEROU: TEdit;
@@ -75,8 +76,8 @@ type
     lbl4: TLabel;
     lbl2: TLabel;
     edCNPJ: TMaskEdit;
-    edFANTASIA: TEdit;
-    edRAZAO_SOCIAL: TEdit;
+    edNomeFantasia: TEdit;
+    edRazaoSocial: TEdit;
     edINSCRICAO_ESTADUAL_PJ: TEdit;
     cxButton3: TcxButton;
     cxButton1: TcxButton;
@@ -118,7 +119,7 @@ type
     cxButton9: TcxButton;
     Label2: TLabel;
     Edit5: TEdit;
-    RadioGroup1: TRadioGroup;
+    rgStatus: TRadioGroup;
     Label3: TLabel;
     Label7: TLabel;
     Label11: TLabel;
@@ -129,21 +130,44 @@ type
     procedure cxButton4Click(Sender: TObject);
     procedure cxButton5Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
-
- public
+    procedure FormShow(Sender: TObject);
+    procedure Inicio;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure edCodigoExit(Sender: TObject);
+    procedure Preencher_Campos_da_Tela;
+    procedure PrepararCamposdaTela;
+    procedure cxButton21Click(Sender: TObject);
+    function DadosCorretos:Boolean;
+    function Gravar_Cliente:Boolean;
+  public
     { Public declarations }
   end;
 
 var
   frm_cad_cliente_T6: Tfrm_cad_cliente_T6;
+  Cliente           : TCliente;
 
 implementation
 
 uses
-  cad_ramo_atividade, consulta, cad_zona, cad_regiao, cad_bairro;
+  Funcoes,
+  TiposDeDados,
+  consulta_T7,
+  cad_ramo_atividade, cad_zona, cad_regiao, cad_bairro;
 
 {$R *.dfm}
 
+procedure Tfrm_cad_cliente_T6.cxButton21Click(Sender: TObject);
+begin
+   if not DadosCorretos then
+      exit;
+
+   if not Gravar_Cliente then
+     exit;
+
+   Cliente.Free;
+   Inicio;
+end;
 
 procedure Tfrm_cad_cliente_T6.cxButton2Click(Sender: TObject);
 begin
@@ -171,8 +195,11 @@ end;
 
 procedure Tfrm_cad_cliente_T6.cxButton8Click(Sender: TObject);
 begin
-    frm_consulta := Tfrm_consulta.Create(nil);
-    frm_consulta.showmodal;
+    frm_consulta_T7 := Tfrm_consulta_T7.Create(nil);
+    frm_consulta_T7.rgConsultar.itemindex := 0;
+    frm_consulta_T7.showmodal;
+ // Cliente
+    frm_consulta_T7.Free;
 end;
 
 procedure Tfrm_cad_cliente_T6.cxButton9Click(Sender: TObject);
@@ -180,6 +207,89 @@ begin
     FRM_cad_ramo_atividade := TFRM_cad_ramo_atividade.Create(nil);
     FRM_cad_ramo_atividade.showmodal;
 
+end;
+
+function Tfrm_cad_cliente_T6.DadosCorretos: Boolean;
+begin
+   result := false;
+
+   if NaoPreencheuCamposObrigatoriosOuImportantes(frm_cad_cliente_T6) then
+      exit;
+
+   result := true;
+end;
+
+procedure Tfrm_cad_cliente_T6.edCodigoExit(Sender: TObject);
+var vCodigo:String;
+begin
+   if edCodigo.Text = '' then
+   begin
+      Limpar_os_campos_da_Tela(frm_cad_cliente_T6);
+      rgStatus.SetFocus;
+      exit;
+   end;
+   Cliente.Codigo := edCodigo.Text;
+   Cliente.Abrir;
+   if Cliente.Existe then
+      Preencher_Campos_da_Tela
+   else
+   begin
+      vCodigo := edCodigo.Text;
+      Limpar_os_campos_da_Tela(frm_cad_cliente_T6);
+      edCodigo.Text := vCodigo;
+      rgStatus.SetFocus;
+      exit;
+   end;
+end;
+
+procedure Tfrm_cad_cliente_T6.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   Cliente.Free;
+end;
+
+procedure Tfrm_cad_cliente_T6.FormShow(Sender: TObject);
+begin
+   Inicio;
+end;
+
+function Tfrm_cad_cliente_T6.Gravar_Cliente: Boolean;
+begin
+    Result := False;
+    try
+        Cliente.Codigo                      := edCodigo.Text;
+        Cliente.NomeFantasia                := edNome.Text;  //edFantasia.Text;
+        Cliente.RazaoSocial                 := edRazaoSocial.Text;
+        //Cliente.Detalhes.
+        result := Cliente.Gravar;
+    Except
+
+    end;
+end;
+
+procedure Tfrm_cad_cliente_T6.Inicio;
+begin
+   InicioPadraoDeTodasAsTelasDoSistema;
+   PrepararCamposdaTela;
+   Limpar_os_campos_da_Tela(frm_cad_cliente_T6);
+   Cliente := TCliente.Create;
+   edCodigo.SetFocus;
+end;
+
+procedure Tfrm_cad_cliente_T6.Preencher_Campos_da_Tela;
+begin
+   Limpar_os_campos_da_Tela(frm_cad_cliente_T6);
+
+   edCodigo.Text                      := Cliente.Codigo;
+   rgStatus.ItemIndex                 := StatusCadastralToInt(Cliente.Status);
+   edNome.Text                        := Cliente.NomeFantasia;
+   edNomeFantasia.Text                := Cliente.NomeFantasia;
+   edRazaoSocial.Text                 := Cliente.RazaoSocial;
+end;
+
+procedure Tfrm_cad_cliente_T6.PrepararCamposdaTela;
+begin
+//
 end;
 
 end.

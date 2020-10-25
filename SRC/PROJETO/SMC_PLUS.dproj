@@ -236,8 +236,8 @@
             <Form>frmMenuConfiguracaoNfeNFce</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\views\Consulta_Cadastros\consulta.pas">
-            <Form>frm_consulta</Form>
+        <DCCReference Include="..\..\src\views\Consulta_Cadastros\consulta_T7.pas">
+            <Form>frm_consulta_T7</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\Controles\ControleDeAcessos\ControleDeAcessos.pas"/>

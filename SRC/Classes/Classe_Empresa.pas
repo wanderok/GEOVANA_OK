@@ -65,7 +65,7 @@ type
     FDataCadastro                : TDateTime; // EMP_DT                      DATETIME     NULL
     FDataCadastroString          : String;
     FCodigoUniSystem             : String;    // EMP_CODIGO_UNISYSTEM        varchar(10)  NULL
-    FExiste         : Boolean;
+    FExiste                      : Boolean;
 
     procedure Preencher_Parametros_Empresa(pQuery:TFDQuery);
     function getFNomeFantasia: String;
@@ -228,6 +228,7 @@ type
 
 
 implementation
+
 { TEmpresa }
 
 uses Funcoes;
@@ -673,8 +674,8 @@ begin
         Result := True;
     except
        qLocal.Free;
-       ShowMessage('Erro ao incluir Empresa');
-       LOGErros('Erro ao incluir Empresa');
+       ShowMessage('Erro ao incluir Empresa '+ Empresa.FNomeFantasia);
+       LOGErros('Erro ao incluir Empresa '+ Empresa.FNomeFantasia);
     end;
 end;
 
@@ -996,8 +997,8 @@ begin
         Result := True;
     except
        qLocal.Free;
-       ShowMessage('Erro ao alterar Empresa');
-       LogErros('Erro ao alterar Empresa');
+       ShowMessage('Erro ao alterar Empresa '+ Empresa.FNomeFantasia);
+       LogErros('Erro ao alterar Empresa '+ Empresa.FNomeFantasia);
     end;
 end;
 

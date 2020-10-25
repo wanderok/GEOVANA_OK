@@ -147,7 +147,7 @@ implementation
 
 uses
   //tipo_colab, funcao_colab, cad_comissoes;
-  tipo_colab, cad_comissoes, consulta;
+  tipo_colab, cad_comissoes, consulta_T7;
 
 procedure Tfrm_colaborador.cxButton5Click(Sender: TObject);
 begin
@@ -165,8 +165,8 @@ end;
 
 procedure Tfrm_colaborador.cxButton8Click(Sender: TObject);
 begin
-    frm_consulta := Tfrm_consulta.Create(nil);
-    frm_consulta.showmodal;
+    frm_consulta_T7 := Tfrm_consulta_T7.Create(nil);
+    frm_consulta_T7.showmodal;
 end;
 
 procedure Tfrm_colaborador.cxButton9Click(Sender: TObject);

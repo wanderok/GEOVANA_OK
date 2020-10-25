@@ -139,7 +139,7 @@ var
 implementation
 
 uses
-  consultor_banco_comissoes, consulta, cad_bairro, cad_regiao, cad_zona;
+  consultor_banco_comissoes, consulta_T7, cad_bairro, cad_regiao, cad_zona;
 
 {$R *.dfm}
 
@@ -169,8 +169,8 @@ end;
 
 procedure TFrm_consultor.cxButton8Click(Sender: TObject);
 begin
-    frm_consulta := Tfrm_consulta.Create(nil);
-    frm_consulta.showmodal;
+    frm_consulta_T7 := Tfrm_consulta_T7.Create(nil);
+    frm_consulta_T7.showmodal;
 end;
 
 end.

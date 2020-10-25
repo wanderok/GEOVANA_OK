@@ -23,7 +23,22 @@ uses
   cxDataStorage, cxNavigator, cxDBData, cxLabel, cxTextEdit, cxGridLevel,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxClasses,
   cxGridCustomView, cxGrid, Vcl.ComCtrls, dxCore, cxDateUtils, cxMaskEdit,
-  cxDropDownEdit, cxCalendar;
+  cxDropDownEdit, cxCalendar, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
+  dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
+  dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
+  dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
+  dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
+  dxSkinXmas2008Blue;
 
 type
   TFrm_motorista = class(TForm)
@@ -121,14 +136,14 @@ var
 implementation
 
 uses
-  cad_zona, cad_regiao, consulta, cad_bairro;
+  cad_zona, cad_regiao, consulta_T7, cad_bairro;
 
 {$R *.dfm}
 
 procedure TFrm_motorista.cxButton1Click(Sender: TObject);
 begin
-    frm_consulta := Tfrm_consulta.Create(nil);
-    frm_consulta.showmodal;
+    frm_consulta_T7 := Tfrm_consulta_T7.Create(nil);
+    frm_consulta_T7.showmodal;
 end;
 
 procedure TFrm_motorista.cxButton4Click(Sender: TObject);

@@ -4443,7 +4443,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     OnClick = cxButton6Click
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    Left = 852
-    Top = 40
+    Left = 636
+    Top = 80
   end
 end

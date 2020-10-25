@@ -728,7 +728,6 @@ procedure Tfrm_cad_empresa_T3.FormShow(Sender: TObject);
 begin
    InicioPadraoDeTodasAsTelasDoSistema;
    PrepararCamposdaTela;
-   Limpar_os_campos_da_Tela(frm_cad_empresa_T3);
    Preencher_Campos_da_Tela;
    edRazaoSocial.SetFocus;
 end;
@@ -814,7 +813,10 @@ end;
 
 procedure Tfrm_cad_empresa_T3.Preencher_Campos_da_Tela;
 begin
+   Limpar_os_campos_da_Tela(frm_cad_empresa_T3);
+
    Empresa.Abrir;
+
    edRazaoSocial.Text                 := Empresa.RazaoSocial;
    edNomeFantasia.Text                := Empresa.NomeFantasia;
    edDataInicioAtividades.Text        := Empresa.DataInicioAtividadesString;

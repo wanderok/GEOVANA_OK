@@ -835,6 +835,10 @@ object Frm_transportadora: TFrm_transportadora
       Font.Style = [fsBold]
       ImageIndex = 1
       ParentFont = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object lbl3: TLabel
         Left = 9
         Top = 47

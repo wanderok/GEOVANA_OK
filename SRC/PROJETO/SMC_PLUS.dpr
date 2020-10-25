@@ -39,7 +39,7 @@ uses
   email_arquivos_fiscais in '..\..\src\views\configs\email_arquivos_fiscais.pas' {frm_config_email_fiscais},
   integracao_outros_bancos in '..\..\src\views\configs\integracao_outros_bancos.pas' {frm_intagracao_outras_base_dados},
   MenuConfiguracaoNfeNFce in '..\..\src\views\configs\MenuConfiguracaoNfeNFce.pas' {frmMenuConfiguracaoNfeNFce},
-  consulta in '..\..\src\views\Consulta_Cadastros\consulta.pas' {frm_consulta},
+  consulta_T7 in '..\..\src\views\Consulta_Cadastros\consulta_T7.pas' {frm_consulta_T7},
   ControleDeAcessos in '..\..\src\Controles\ControleDeAcessos\ControleDeAcessos.pas',
   LiberaAcesso in '..\..\src\Controles\ControleDeAcessos\LiberaAcesso.pas' {frmLiberaAcesso},
   cad_empresa_T3 in '..\..\SRC\views\cad_empresa\cad_empresa_T3.pas' {frm_cad_empresa_T3},

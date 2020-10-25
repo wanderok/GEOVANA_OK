@@ -1,4 +1,4 @@
-object frm_consulta: Tfrm_consulta
+object frm_consulta_T7: Tfrm_consulta_T7
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
@@ -64,14 +64,17 @@ object frm_consulta: Tfrm_consulta
   end
   object gd: TcxGrid
     Left = 0
-    Top = 70
+    Top = 66
     Width = 1294
-    Height = 346
+    Height = 365
+    Align = alBottom
     TabOrder = 0
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Office2013White'
+    ExplicitTop = 67
     object tb: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
+      DataController.DataSource = DataSource1
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
@@ -285,7 +288,7 @@ object frm_consulta: Tfrm_consulta
       end
       object tbemail: TcxGridDBColumn
         Caption = 'E-mail'
-        DataBinding.FieldName = 'inscricao_estadual'
+        DataBinding.FieldName = 'email'
         PropertiesClassName = 'TcxTextEditProperties'
         Properties.Alignment.Horz = taCenter
         Properties.ReadOnly = True
@@ -514,6 +517,7 @@ object frm_consulta: Tfrm_consulta
     Height = 21
     CharCase = ecUpperCase
     TabOrder = 2
+    OnChange = edArgumentoDePesquisaChange
   end
   object cxButton21: TcxButton
     Left = 574
@@ -757,5 +761,40 @@ object frm_consulta: Tfrm_consulta
       Font.Style = [fsBold]
       ParentFont = False
     end
+  end
+  object rgConsultar: TRadioGroup
+    Left = 30
+    Top = 96
+    Width = 355
+    Height = 273
+    Caption = 'CONSULTAR...'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -27
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    Items.Strings = (
+      '0-Cliente'
+      '1-Fornecedor'
+      '2-Consultor'
+      '3-Contador'
+      '4-Motorista'
+      '5-Coaborador')
+    ParentFont = False
+    TabOrder = 5
+    Visible = False
+  end
+  object qLocal: TFDQuery
+    Active = True
+    Connection = DM.Database1
+    SQL.Strings = (
+      'select * FROM cliente_cli')
+    Left = 472
+    Top = 152
+  end
+  object DataSource1: TDataSource
+    DataSet = qLocal
+    Left = 400
+    Top = 160
   end
 end

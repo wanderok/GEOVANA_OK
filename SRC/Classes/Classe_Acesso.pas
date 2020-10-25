@@ -53,7 +53,98 @@ end;
 
 procedure TAcesso.Alteracoes_Cad_Cliente;
 begin
+   Executar_Script('SELECT * INTO CLIENTE_CLI_OLD FROM CLIENTE_CLI');
+   Executar_Script('DROP TABLE CLIENTE_CLI');
+   Executar_Script('SELECT CLI_CODIGO, CLI_NOME_FANTASIA, CLI_RAZAO_SOCIAL INTO CLIENTE_CLI FROM CLIENTE_CLI_OLD');
+   Executar_Script('ALTER TABLE CLIENTE_CLI ADD CLI_STATUS INTEGER NOT NULL DEFAULT 0');
 
+   if not Ja_Executou_Script('Criar_CLIENTE_DETALHE_CLID..') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('SELECT CLI_CODIGO               AS CLID_CODIGO,           ');
+      dm.Query1.sql.Add('       CLI_CNPJ_CPF             AS CLID_CNPJ_CPF,         ');
+	    dm.Query1.sql.Add('       CLI_INSCRICAO_ESTADUAL   AS CLID_IE,               ');
+	    dm.Query1.sql.Add('       CLI_INSCRICAO_MUNICIPAL  AS CLID_IM,               ');
+	    dm.Query1.sql.Add('       CLI_TELEFONE_GERAL       AS CLID_TELEFONE,         ');
+	    dm.Query1.sql.Add('       CLI_EMAIL_GERAL          AS CLID_EMAIL,            ');
+	    dm.Query1.sql.Add('       CLI_CDVENDEDOR           AS CLID_CDVENDEDOR,       ');
+	    dm.Query1.sql.Add('       CLI_OBSERVACAO           AS CLID_OBS,              ');
+	    dm.Query1.sql.Add('       CLI_LIMITE_CREDITO       AS CLID_LIMITE_CREDITO,   ');
+	    dm.Query1.sql.Add('       CLI_RG                   AS CLID_RG,               ');
+	    dm.Query1.sql.Add('       CLI_DTNASC               AS CLID_DTNASC,           ');
+	    dm.Query1.sql.Add('       CLI_SEXO                 AS CLID_SEXO,             ');
+	    dm.Query1.sql.Add('       CLI_TPPESSOAJF           AS CLID_PESSOA_FJ,        ');
+	    dm.Query1.sql.Add('       CLI_FORMAPG              AS CLID_FORMAPG,          ');
+	    dm.Query1.sql.Add('       CLI_DT                   AS CLID_DT,               ');
+	    dm.Query1.sql.Add('       CLI_USU                  AS CLID_USU,              ');
+	    dm.Query1.sql.Add('       CLI_HR                   AS CLID_HR,               ');
+	    dm.Query1.sql.Add('       CLI_CDRAMOATIVIDADE      AS CLID_CDRAMO,           ');
+	    dm.Query1.sql.Add('       CLI_GRUPO                AS CLID_CDGRUPO,          ');
+      dm.Query1.sql.Add('       CLI_TRIBUTACAO_ICMS      AS CLID_TRIBUTACAO_ICMS,  ');
+	    dm.Query1.sql.Add('       CLI_SALDO                AS CLID_SALDO,            ');
+	    dm.Query1.sql.Add('       CLI_REGIAO               AS CLID_CDREGIAO,         ');
+	    dm.Query1.sql.Add('       CLI_CONTRIBUINTE_ICMS    AS CLID_CONTRIBUINTE_ICMS,');
+	    dm.Query1.sql.Add('       CLI_EMAILXMLNFE          AS CLID_EMAIL_XML,        ');
+	    dm.Query1.sql.Add('       CLI_INDICACAO_IE         AS CLID_INDICACAO_IE,     ');
+	    dm.Query1.sql.Add('       CLI_WHATSAPP             AS CLID_WHATSAPP,         ');
+	    dm.Query1.sql.Add('       CLI_ATUALIZADO_NA_NUVEM  AS CLID_NUVEM_ATUALIZADO, ');
+	    dm.Query1.sql.Add('       CLI_DTNUVEM              AS CLID_NUVEM_DT,         ');
+	    dm.Query1.sql.Add('       CLI_HRNUVEM              AS CLID_NUVEM_HR,         ');
+	    dm.Query1.sql.Add('       CLI_SUFRAMA              AS CLID_SUFRAMA           ');
+      dm.Query1.sql.Add('  INTO CLIENTE_DETALHE_CLID FROM CLIENTE_CLI_OLD          ');
+      dm.Query1.ExecSql;
+   end;
+
+   if not Ja_Executou_Script('Criar_CLIENTE_ENDERECO_CLIE.') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('SELECT 1                       AS CLIE_ID,           ');
+      dm.Query1.sql.Add('       CLI_CODIGO              AS CLIE_CODIGO,       ');
+      dm.Query1.sql.Add('       0                       AS CLIE_TIPO_ENDERECO,');
+      dm.Query1.sql.Add('       CLI_ENTREGA_ENDERECO    AS CLIE_RUA,          ');
+	    dm.Query1.sql.Add('       CLI_ENDERECO_NUMERO     AS CLIE_NUMERO,       ');
+	    dm.Query1.sql.Add('       CLI_ENTREGA_CEP         AS CLIE_CEP,          ');
+	    dm.Query1.sql.Add('       CLI_ENTREGA_CIDADE      AS CLIE_CIDADE,       ');
+	    dm.Query1.sql.Add('       CLI_IBGECIDADE          AS CLIE_CIDADE_IBGE,  ');
+	    dm.Query1.sql.Add('       CLI_ENTREGA_BAIRRO      AS CLIE_BAIRRO,       ');
+	    dm.Query1.sql.Add('       CLI_ENTREGA_UF          AS CLIE_UF,           ');
+	    dm.Query1.sql.Add('       CLI_IBGEUF              AS CLIE_UF_IBGE,      ');
+	    dm.Query1.sql.Add('       CLI_ENTREGA_TELEFONE    AS CLIE_TELEFONE,     ');
+	    dm.Query1.sql.Add('       CLI_ENTREGA_OBSERVACAO2 AS CLIE_OBS1,         ');
+	    dm.Query1.sql.Add('       CLI_ENTREGA_OBSERVACAO3 AS CLIE_OBS2,         ');
+	    dm.Query1.sql.Add('       CLI_CPAIS               AS CLIE_CPAIS         ');
+      dm.Query1.sql.Add('  INTO CLIENTE_ENDERECO_CLIE FROM CLIENTE_CLI_OLD    ');
+      dm.Query1.ExecSql;
+   end;
+
+   if not Ja_Executou_Script('Criar_CLIENTE_CONTATO_CLIC') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('SELECT 1                        AS CLIC_ID,         ');
+      dm.Query1.sql.Add('       CLI_CODIGO               AS CLIE_CODIGO,     ');
+	    dm.Query1.sql.Add('       CLI_ENTREGA_CONTATO      AS CLIC_CONTATO,    ');
+      dm.Query1.sql.Add('       CLI_ENTREGA_CONTATO_FONE AS CLIC_TELEFONE    ');
+      dm.Query1.sql.Add('  INTO CLIENTE_CONTATO_CLIC FROM CLIENTE_CLI_OLD    ');
+      dm.Query1.ExecSql;
+   end;
+   if not Ja_Executou_Script('Criar_CLIENTE_BLOQUEIOS_CLIB') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('SELECT 1                     AS CLIB_ID,           ');
+      dm.Query1.sql.Add('       CLI_CODIGO            AS CLIB_CODIGO,       ');
+	    dm.Query1.sql.Add('       CLI_USUBLOQUEIO       AS CLIB_USU,          ');
+	    dm.Query1.sql.Add('       CLI_DTBLOQUEIO        AS CLIB_DT,           ');
+	    dm.Query1.sql.Add('       CLI_HRBLOQUEIO        AS CLIB_HR,           ');
+	    dm.Query1.sql.Add('       CLI_USULIBERACAO      AS CLIB_USULIBEROU,   ');
+	    dm.Query1.sql.Add('       CLI_DTLIBERACAO       AS CLIB_DTLIBERAOU,   ');
+	    dm.Query1.sql.Add('       CLI_HRLIBERACAO       AS CLIB_HRLIBEROU     ');
+      dm.Query1.sql.Add('  INTO CLIENTE_BLOQUEIOS_CLIB FROM CLIENTE_CLI_OLD ');
+      dm.Query1.ExecSql;
+   end;
 end;
 
 procedure TAcesso.Alteracoes_Cad_Empresa;
@@ -140,8 +231,6 @@ begin
    Executar_Script('ALTER TABLE EMPRESA_EMP ADD EMP_RAZAOSOCIAL VARCHAR(50) NULL');
    Executar_Script('ALTER TABLE EMPRESA_EMP ADD EMP_RESPONSAVEL_WHATSAPP varchar(40) NULL');
    Executar_Script('ALTER TABLE EMPRESA_EMP DROP COLUMN EMP_RESPONSAVEL_TELEFONE');
-
-
 end;
 
 procedure TAcesso.Alteracoes_Gerais;
