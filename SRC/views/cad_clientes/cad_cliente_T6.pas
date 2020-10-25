@@ -41,7 +41,7 @@ type
     lbInativo: TLabel;
     Label14: TLabel;
     btDetalhesBloqueio: TcxButton;
-    edDATA_CADASTRO: TMaskEdit;
+    edDataCadastro: TMaskEdit;
     edDTBLOQUEIO: TMaskEdit;
     MaskEdit2: TMaskEdit;
     Label16: TLabel;
@@ -139,6 +139,11 @@ type
     procedure cxButton21Click(Sender: TObject);
     function DadosCorretos:Boolean;
     function Gravar_Cliente:Boolean;
+    procedure Pesquisar;
+    procedure Consultar;
+    procedure edCodigoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   public
     { Public declarations }
   end;
@@ -193,13 +198,20 @@ begin
     FRM_cad_zona.showmodal;
 end;
 
+
 procedure Tfrm_cad_cliente_T6.cxButton8Click(Sender: TObject);
 begin
+   Consultar;
+end;
+
+procedure Tfrm_cad_cliente_T6.Consultar;
+begin
     frm_consulta_T7 := Tfrm_consulta_T7.Create(nil);
-    frm_consulta_T7.rgConsultar.itemindex := 0;
+    frm_consulta_T7.rgConsultar.itemindex := 0; //Cliente
     frm_consulta_T7.showmodal;
- // Cliente
+    edCodigo.Text:= vfrm_consulta_T7_Codigo;
     frm_consulta_T7.Free;
+    Pesquisar;
 end;
 
 procedure Tfrm_cad_cliente_T6.cxButton9Click(Sender: TObject);
@@ -220,6 +232,18 @@ begin
 end;
 
 procedure Tfrm_cad_cliente_T6.edCodigoExit(Sender: TObject);
+begin
+   Pesquisar;
+end;
+
+procedure Tfrm_cad_cliente_T6.edCodigoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+   if key = vk_F1 then
+     Consultar;
+end;
+
+procedure Tfrm_cad_cliente_T6.Pesquisar;
 var vCodigo:String;
 begin
    if edCodigo.Text = '' then
@@ -246,6 +270,16 @@ procedure Tfrm_cad_cliente_T6.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
    Cliente.Free;
+end;
+
+procedure Tfrm_cad_cliente_T6.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+     if Key = #13 then
+     begin
+        Key := #0;
+        Perform(WM_NEXTDLGCTL, 0, 0);
+        exit;
+     end;
 end;
 
 procedure Tfrm_cad_cliente_T6.FormShow(Sender: TObject);
@@ -285,6 +319,7 @@ begin
    edNome.Text                        := Cliente.NomeFantasia;
    edNomeFantasia.Text                := Cliente.NomeFantasia;
    edRazaoSocial.Text                 := Cliente.RazaoSocial;
+   edDataCadastro.Text                := Cliente.Detalhes.DataCadastroString;
 end;
 
 procedure Tfrm_cad_cliente_T6.PrepararCamposdaTela;

@@ -291,6 +291,7 @@ end;
 procedure Tfrm_cad_empresa_T3.cxButton2Click(Sender: TObject);
 begin
   //DeleteFile(vLogoMarca);
+  vLogoMarca := '';
   imgLogoMarca.Picture := nil;
   TL_colab.Show;
 end;
@@ -330,7 +331,9 @@ end;
 procedure Tfrm_cad_empresa_T3.cxButton7Click(Sender: TObject);
 begin
   //DeleteFile(vAssinatura);
+  vAssinatura := '';
   imgAssinatura.Picture := nil;
+
   TL_colab.Show;
 end;
 
@@ -459,7 +462,7 @@ end;
 
 procedure Tfrm_cad_empresa_T3.edContadorCNPJExit(Sender: TObject);
 begin
-   if edContadorCNPJ.Text = '' then
+   if trim(edContadorCNPJ.Text) = '' then
       exit;
    edContadorCNPJ.Text :=Trim(edContadorCNPJ.Text);
    if not frmValidadorDeDocumentos.CNPJ_Valido(edContadorCNPJ.Text) then
@@ -590,7 +593,7 @@ end;
 
 procedure Tfrm_cad_empresa_T3.edInscricaoEstadualExit(Sender: TObject);
 begin
-{   if edInscricaoEstadual.Text = '' then
+   if edInscricaoEstadual.Text = '' then
       exit;
    edInscricaoEstadual.Text :=Trim(edInscricaoEstadual.Text);
    if not frmValidadorDeDocumentos.IE_Valida(edInscricaoEstadual.Text,edEnderecoUF.Text) then
@@ -599,7 +602,6 @@ begin
       exit;
    end;
    edInscricaoEstadual.Text := vVDD_DocumentoFormatado;
-}
 end;
 
 procedure Tfrm_cad_empresa_T3.edISSAliquotaExit(Sender: TObject);

@@ -15,8 +15,9 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   OnClose = FormClose
+  OnKeyPress = FormKeyPress
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -221,7 +222,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       TabOrder = 0
       TabStop = False
     end
-    object edDATA_CADASTRO: TMaskEdit
+    object edDataCadastro: TMaskEdit
       Left = 8
       Top = 37
       Width = 73
@@ -297,6 +298,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     ParentFont = False
     TabOrder = 0
     OnExit = edCodigoExit
+    OnKeyDown = edCodigoKeyDown
   end
   object GroupBox5: TGroupBox
     Left = 526

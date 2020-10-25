@@ -13,8 +13,13 @@ uses Classes, Dialogs, SysUtils, IniFiles,
 type
   tDetalhes_Cliente = class
   private
-    FCodigo            : String;   // CLID_CODIGO
-
+    FDataCadastro      : TDateTime;
+    function  getFDataCadastro: TDateTime;
+    procedure setFDataCadastro(const Value: TDateTime);
+    function  getDataCadastroString: String; // CLID_DT
+  public
+    property DataCadastro      : TDateTime read getFDataCadastro       write setFDataCadastro;
+    property DataCadastroString: String    read getDataCadastroString;
 end;
 
 
@@ -28,21 +33,25 @@ end;
     FDetalhes          : tDetalhes_Cliente;
     function getFStatus: TStatusCadastral;
     procedure setFStatus(const Value: TStatusCadastral);
-    function getFCodigo: String;
-    function getFNomeFantasia: String;
-    function getRazaoSocial: String;
+    function  getFCodigo: String;
+    function  getFNomeFantasia: String;
+    function  getRazaoSocial: String;
     procedure setFCodigo(const Value: String);
     procedure setFNomeFantasia(const Value: String);
     procedure setRazaoSocial(const Value: String);
-    function proximoCodigo:String;
-    function getFExiste: Boolean;
+    function  proximoCodigo:String;
+    function  getFExiste: Boolean;
     procedure LimparCampos;
-    function getDetalhes: tDetalhes_Cliente;
+    function  getDetalhes: tDetalhes_Cliente;
     procedure setDetalhes(const Value: tDetalhes_Cliente);
-    function Insert:Boolean;
-    function Update:Boolean;
-    function DadosCorretos:Boolean;
+    function  Insert:Boolean;
+    function  Update:Boolean;
+    function  DadosCorretos:Boolean;
     procedure Preencher_Parametros_Cliente(pQuery:TFDQuery);
+    procedure Pegar_Dados_Basicos;
+    procedure Pegar_Detalhes;
+    procedure Pegar_Endereco;
+    procedure Pegar_Contato;
   public
     constructor Create;
     destructor Destroy; override;
@@ -65,29 +74,14 @@ var qCliente: TFDQuery;
 { TCliente }
 
 procedure TCliente.Abrir;
-var qLocal: TFDQuery;
 begin
     LimparCampos;
 
-    qLocal := TFDQuery.Create(nil);
-    qLocal.ConnectionName :='X';
-    qLocal.Close;
-    qLocal.SQL.Clear;
-    qLocal.SQL.Add('SELECT * FROM CLIENTE_CLI      ');
-    qLocal.SQL.Add(' WHERE CLI_CODIGO = :CLI_CODIGO');
-    qLocal.ParamByName('CLI_CODIGO').AsString := FCodigo;
-    qLocal.Open;
-    if qLocal.eof then
-    begin
-       FExiste:=False;
-       qLocal.Free;
+    Pegar_Dados_Basicos;
+    if not Existe then
        exit;
-    end;
-    FExiste                      := True;
-    FCodigo                      := qLocal.FieldByName('CLI_CODIGO'                 ).AsString;
-    FNomeFantasia                := qLocal.FieldByName('CLI_NOME_FANTASIA'          ).AsString;
-    FRazaoSocial                 := qLocal.FieldByName('CLI_RAZAO_SOCIAL'           ).AsString;
-    Qlocal.Free;
+
+    Pegar_Detalhes;
 end;
 
 
@@ -180,14 +174,31 @@ begin
         qLocal.SQL.Add('      :CLI_RAZAO_SOCIAL   ');
         qLocal.SQL.Add('     )                    ');
 
-        //passo 11
         Preencher_Parametros_Cliente(qLocal);
-        //qLocal.ParamByName('EMP_DT').AsDateTime := DataServidor;
-
         qLocal.ExecSql;
+
+        qLocal.Close;
+        qLocal.SQL.Clear;
+        qLocal.SQL.Add('INSERT INTO CLIENTE_DETALHE_CLID ');
+        qLocal.SQL.Add('     (                           ');
+        qLocal.SQL.Add('       CLID_CODIGO,              ');
+        qLocal.SQL.Add('       CLID_NUVEM_ATUALIZADO,    ');
+        qLocal.SQL.Add('       CLID_DT                   ');
+        qLocal.SQL.Add('     )                           ');
+        qLocal.SQL.Add('VALUES                           ');
+        qLocal.SQL.Add('     (                           ');
+        qLocal.SQL.Add('      :CLID_CODIGO,              ');
+        qLocal.SQL.Add('      :CLID_NUVEM_ATUALIZADO,    ');
+        qLocal.SQL.Add('      :CLID_DT                   ');
+        qLocal.SQL.Add('     )                           ');
+        qLocal.ParamByName('CLID_CODIGO'          ).AsString   := FCodigo;
+        qLocal.ParamByName('CLID_NUVEM_ATUALIZADO').AsInteger  := 0;
+        qLocal.ParamByName('CLID_DT'              ).AsDateTime := DataServidor;
+        //qLocal.ExecSql;
         qLocal.Free;
-        Log('Incluiu cliente ' + FNomeFantasia);
         Result := True;
+        Log('Incluiu cliente ' + FNomeFantasia);
+
     except
        qLocal.Free;
        ShowMessage('Erro ao incluir Cliente ' + FNomeFantasia);
@@ -202,60 +213,116 @@ begin
 	  FStatus            := -1;
 end;
 
+procedure TCliente.Pegar_Contato;
+begin
+//
+end;
+
+procedure TCliente.Pegar_Dados_Basicos;
+var qLocal: TFDQuery;
+begin
+    qLocal := TFDQuery.Create(nil);
+    qLocal.ConnectionName :='X';
+
+    qLocal.Close;
+    qLocal.SQL.Clear;
+    qLocal.SQL.Add('SELECT * FROM CLIENTE_CLI      ');
+    qLocal.SQL.Add(' WHERE CLI_CODIGO = :CLI_CODIGO');
+    qLocal.ParamByName('CLI_CODIGO').AsString := FCodigo;
+    qLocal.Open;
+    if qLocal.eof then
+    begin
+       FExiste:=False;
+       qLocal.Free;
+       exit;
+    end;
+    FExiste                      := True;
+    FCodigo                      := qLocal.FieldByName('CLI_CODIGO'                 ).AsString;
+    FNomeFantasia                := qLocal.FieldByName('CLI_NOME_FANTASIA'          ).AsString;
+    FRazaoSocial                 := qLocal.FieldByName('CLI_RAZAO_SOCIAL'           ).AsString;
+    Qlocal.Free;
+end;
+
+procedure TCliente.Pegar_Detalhes;
+var qLocal: TFDQuery;
+begin
+    qLocal := TFDQuery.Create(nil);
+    qLocal.ConnectionName :='X';
+
+    qLocal.Close;
+    qLocal.SQL.Clear;
+    qLocal.SQL.Add('SELECT * FROM CLIENTE_DETALHE_CLID');
+    qLocal.SQL.Add(' WHERE CLID_CODIGO = :CLID_CODIGO ');
+    qLocal.ParamByName('CLID_CODIGO').AsString := FCodigo;
+    qLocal.Open;
+    if qLocal.eof then
+    begin
+       qLocal.Free;
+       exit;
+    end;
+    FDetalhes.FDataCadastro      := qLocal.FieldByName('CLID_DT'                 ).AsDateTime;
+    qLocal.Free;
+end;
+
+procedure TCliente.Pegar_Endereco;
+begin
+//
+end;
+
 procedure TCliente.Preencher_Parametros_Cliente(pQuery: TFDQuery);
 begin
-   pQuery.ParamByName('CLI_CODIGO'       ).AsString := FCodigo;
-   pQuery.ParamByName('CLI_NOME_FANTASIA').AsString := FNomeFantasia;
-   pQuery.ParamByName('CLI_RAZAO_SOCIAL' ).AsString := FRazaoSocial;
+   pQuery.ParamByName('CLI_CODIGO'       ).AsString   := FCodigo;
+   pQuery.ParamByName('CLI_NOME_FANTASIA').AsString   := FNomeFantasia;
+   pQuery.ParamByName('CLI_RAZAO_SOCIAL' ).AsString   := FRazaoSocial;
 end;
 
 function TCliente.proximoCodigo: String;
-var qLocal: TFDQuery;
+var qProximo: TFDQuery;
     vCodigoCandidato:Integer;
     sCodigoCandidato:String;
 begin
     vCodigoCandidato := 1;
     sCodigoCandidato := FormatFloat('0000000000',vCodigoCandidato);
-    qLocal := TFDQuery.Create(nil);
-    qLocal.ConnectionName :='X';
-    qLocal.Close;
-    qLocal.SQL.Clear;
-    qLocal.SQL.Add('SELECT MAX(CLI_CODIGO) AS MAIOR');
-    qLocal.SQL.Add('  FROM CLIENTE_CLI             ');
-    qLocal.Open;
-    if qLocal.eof then
+    qProximo := TFDQuery.Create(nil);
+    qProximo.ConnectionName :='X';
+    qProximo.Close;
+    qProximo.SQL.Clear;
+    qProximo.SQL.Add('SELECT MAX(CLI_CODIGO) AS MAIOR');
+    qProximo.SQL.Add('  FROM CLIENTE_CLI             ');
+    qProximo.Open;
+    if qProximo.eof then
     begin
-      qLocal.Free;
+      qProximo.Free;
       result := sCodigoCandidato;
       exit;
     end;
     try
-      vCodigoCandidato := StrToInt(qLocal.FieldByName('MAIOR').AsString)+1;
-      qLocal.Free;
+      vCodigoCandidato := StrToInt(qProximo.FieldByName('MAIOR').AsString)+1;
       vCodigoCandidato := vCodigoCandidato + 1;
       sCodigoCandidato := FormatFloat('0000000000',vCodigoCandidato);
       result := sCodigoCandidato;
+      qProximo.Free;
       exit;
     except
        vCodigoCandidato := 1;
-       sCodigoCandidato := FormatFloat('0000000000',vCodigoCandidato);
-
-       qLocal.Close;
-       qLocal.SQL.Clear;
-       qLocal.SQL.Add('SELECT 1                       ');
-       qLocal.SQL.Add('  FROM CLIENTE_CLI             ');
-       qLocal.SQL.Add(' WHERE CLI_CODIGO = :CLI_CODIGO');
-       qLocal.ParamByName('CLI_CODIGO').AsString := sCodigoCandidato;
-       qLocal.Open;
-       while not qLocal.Eof do
+       sCodigoCandidato := FormatFloat('00000',vCodigoCandidato);
+       qProximo.Close;
+       qProximo.SQL.Clear;
+       qProximo.SQL.Add('SELECT CLI_CODIGO              ');
+       qProximo.SQL.Add('  FROM CLIENTE_CLI             ');
+       qProximo.SQL.Add(' WHERE CLI_CODIGO = :CLI_CODIGO');
+       qProximo.ParamByName('CLI_CODIGO').AsString := sCodigoCandidato;
+       qProximo.Open;
+       while not qProximo.Eof do
        begin
+          qProximo.Close;
           inc(vCodigoCandidato);
-          sCodigoCandidato := FormatFloat('0000000000',vCodigoCandidato);
-          qLocal.ParamByName('CLI_CODIGO').AsString := sCodigoCandidato;
-          qLocal.Open;
+          sCodigoCandidato := FormatFloat('00000',vCodigoCandidato);
+          qProximo.ParamByName('CLI_CODIGO').AsString := sCodigoCandidato;
+          qProximo.Open;
        end;
-       qLocal.Free;
-       result := FormatFloat('0000000000',vCodigoCandidato);
+       qProximo.Free;
+       result := sCodigoCandidato;
        exit;
     end;
 end;
@@ -316,6 +383,24 @@ begin
        ShowMessage('Erro ao alterar Cliente '+ FNomeFantasia);
        LogErros('Erro ao alterar Cliente '+ FNomeFantasia);
     end;
+end;
+
+{ tDetalhes_Cliente }
+
+function tDetalhes_Cliente.getDataCadastroString: String;
+begin
+   result := DateToStr(FDataCadastro);
+end;
+
+function tDetalhes_Cliente.getFDataCadastro: TDateTime;
+begin
+   result := FDataCadastro;
+end;
+
+
+procedure tDetalhes_Cliente.setFDataCadastro(const Value: TDateTime);
+begin
+   FDataCadastro := Value;
 end;
 
 end.
@@ -510,4 +595,12 @@ GO
 
 
 }
+ALTER TABLE CLIENTE_DETALHE_CLID ADD	CLI_ATUALIZADO_NA_NUVEM int NOT NULL
+ALTER TABLE CLIENTE_DETALHE_CLID ADD		CLI_DTNUVEM datetime NULL
+ALTER TABLE CLIENTE_DETALHE_CLID ADD		CLI_HRNUVEM varchar(5) NULL
+ALTER TABLE CLIENTE_DETALHE_CLID ADD		CLI_SMC int NULL
+ALTER TABLE CLIENTE_DETALHE_CLID ADD		CLI_ATIVO int NULL
+ALTER TABLE CLIENTE_DETALHE_CLID ADD		CLI_IM varchar(20) NULL
+ALTER TABLE CLIENTE_DETALHE_CLID ADD		CLI_CPAIS int NULL
+ALTER TABLE CLIENTE_DETALHE_CLID ADD		CLI_SUFRAMA varchar(9) NULL
 

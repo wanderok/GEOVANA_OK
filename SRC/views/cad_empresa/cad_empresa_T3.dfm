@@ -3136,9 +3136,9 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Width = 124
       Height = 17
       Caption = 'Inscri'#231#227'o Estadual:'
-      Color = clRed
+      Color = clBlack
       Font.Charset = ANSI_CHARSET
-      Font.Color = clRed
+      Font.Color = clBlack
       Font.Height = -15
       Font.Name = 'Helvetica Neue'
       Font.Style = []
@@ -4443,7 +4443,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     OnClick = cxButton6Click
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    Left = 636
-    Top = 80
+    Left = 348
+    Top = 160
   end
 end

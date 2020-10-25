@@ -63,7 +63,6 @@ type
     //PASSO 3
     FTributacao                  : TTributosDeEmpresa;
     FDataCadastro                : TDateTime; // EMP_DT                      DATETIME     NULL
-    FDataCadastroString          : String;
     FCodigoUniSystem             : String;    // EMP_CODIGO_UNISYSTEM        varchar(10)  NULL
     FExiste                      : Boolean;
 
@@ -335,8 +334,7 @@ end;
 
 function TEmpresa.getDataCadastroString: String;
 begin
-   FDataCadastroString := DateToStr(FDataCadastro);
-   result := self.FDataCadastroString;
+   result := DateToStr(FDataCadastro);
 end;
 
 function TEmpresa.getDataInicioAtividadesString: String;

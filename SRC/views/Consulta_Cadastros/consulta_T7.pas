@@ -62,8 +62,13 @@ type
     qLocal: TFDQuery;
     DataSource1: TDataSource;
     rgConsultar: TRadioGroup;
+    cbQualquerParteDoNome: TCheckBox;
     procedure cxButton21Click(Sender: TObject);
     procedure edArgumentoDePesquisaChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure cbQualquerParteDoNomeClick(Sender: TObject);
   private
     { Private declarations }
     procedure Pesquisar;
@@ -79,10 +84,16 @@ type
 
 var
   frm_consulta_T7: Tfrm_consulta_T7;
+  vfrm_consulta_T7_Codigo:String;
 
 implementation
 
 {$R *.dfm}
+
+procedure Tfrm_consulta_T7.cbQualquerParteDoNomeClick(Sender: TObject);
+begin
+   Pesquisar_Clientes;
+end;
 
 procedure Tfrm_consulta_T7.cxButton21Click(Sender: TObject);
 begin
@@ -92,6 +103,35 @@ end;
 procedure Tfrm_consulta_T7.edArgumentoDePesquisaChange(Sender: TObject);
 begin
      Pesquisar;
+end;
+
+procedure Tfrm_consulta_T7.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = VK_RETURN then
+  begin
+     if not edArgumentoDePesquisa.focused then
+     begin
+        vfrm_consulta_T7_Codigo := qLocal.FieldByName('Codigo').AsString;
+        Close;
+     end;
+  end;
+end;
+
+procedure Tfrm_consulta_T7.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+     if Key = #13 then
+     begin
+        Key := #0;
+        Perform(WM_NEXTDLGCTL, 0, 0);
+        exit;
+     end;
+end;
+
+procedure Tfrm_consulta_T7.FormShow(Sender: TObject);
+begin
+   vfrm_consulta_T7_Codigo := '';
+   edArgumentoDePesquisa.SetFocus;
 end;
 
 procedure Tfrm_consulta_T7.Pesquisar;
@@ -126,7 +166,11 @@ begin
    qLocal.SQL.Add(' WHERE CLI_CODIGO        LIKE :ARGUMENTO     ');
    qLocal.SQL.Add('    OR CLI_RAZAO_SOCIAL  LIKE :ARGUMENTO     ');
    qLocal.SQL.Add('    OR CLI_NOME_FANTASIA LIKE :ARGUMENTO     ');
-   qLocal.ParamByName('ARGUMENTO').AsString := '%'+edArgumentoDePesquisa.Text + '%';
+   qLocal.SQL.Add(' ORDER BY CLI_RAZAO_SOCIAL                   ');
+   if cbQualquerParteDoNome.Checked then
+      qLocal.ParamByName('ARGUMENTO').AsString := '%'+edArgumentoDePesquisa.Text + '%'
+   else
+            qLocal.ParamByName('ARGUMENTO').AsString := edArgumentoDePesquisa.Text + '%';
    qLocal.open;
    Label2.Caption := FormatFloat('#,##0',qLocal.RecordCount);
 
@@ -150,6 +194,8 @@ end;
 procedure Tfrm_consulta_T7.Pesquisar_Fornecedor;
 begin
 //
+
+
 end;
 
 procedure Tfrm_consulta_T7.Pesquisar_Motorista;

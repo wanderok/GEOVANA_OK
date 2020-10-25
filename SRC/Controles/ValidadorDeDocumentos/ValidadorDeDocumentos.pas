@@ -76,6 +76,12 @@ end;
 
 function TfrmValidadorDeDocumentos.CNPJ_Valido(pCNPJ: String): Boolean;
 begin
+   if trim(pCNPJ) = '' then
+   begin
+      vVDD_DocumentoFormatado:='';
+      result:=true;
+      exit;
+   end;
    result := false;
    pCNPJ := SoNumeros(pCNPJ);
    ACBrValidador1.TipoDocto := docCNPJ;

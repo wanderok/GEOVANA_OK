@@ -12,8 +12,12 @@ object frm_consulta_T7: Tfrm_consulta_T7
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label24: TLabel
@@ -68,10 +72,9 @@ object frm_consulta_T7: Tfrm_consulta_T7
     Width = 1294
     Height = 365
     Align = alBottom
-    TabOrder = 0
+    TabOrder = 1
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Office2013White'
-    ExplicitTop = 67
     object tb: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource1
@@ -502,7 +505,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
       A5FFD1B3A4FFD1B3A4FFD0B2A4FFD1B2A4FFD0B2A4FFCFB2A3FFCFB2A3FFCFB2
       A3FFCFB0A3FFCFB1A2FFCFB0A2FFCEB0A2FFCEB0A2FFCEAFA1FF998277C10000
       0007000000020000000000000000000000000000000000000000}
-    TabOrder = 1
+    TabOrder = 2
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -17
@@ -513,10 +516,10 @@ object frm_consulta_T7: Tfrm_consulta_T7
   object edArgumentoDePesquisa: TEdit
     Left = 91
     Top = 22
-    Width = 428
+    Width = 262
     Height = 21
     CharCase = ecUpperCase
-    TabOrder = 2
+    TabOrder = 0
     OnChange = edArgumentoDePesquisaChange
   end
   object cxButton21: TcxButton
@@ -785,8 +788,16 @@ object frm_consulta_T7: Tfrm_consulta_T7
     TabOrder = 5
     Visible = False
   end
+  object cbQualquerParteDoNome: TCheckBox
+    Left = 359
+    Top = 24
+    Width = 201
+    Height = 17
+    Caption = 'Procurar em qualque parte do texto'
+    TabOrder = 6
+    OnClick = cbQualquerParteDoNomeClick
+  end
   object qLocal: TFDQuery
-    Active = True
     Connection = DM.Database1
     SQL.Strings = (
       'select * FROM cliente_cli')
