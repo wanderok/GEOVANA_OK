@@ -85,7 +85,7 @@ begin
          if qLocal.eof then
          begin
             ShowMessage('Função Inexistente. Execute o ATUALIZADOR do Sistema.');
-            LogErros('Função Inexistente: '+funcao);
+            LogErros('ControleDeAcessos','Função Inexistente: '+funcao);
             qLocal.free;
             exit;
          end;
@@ -131,7 +131,7 @@ begin
    qLocal.Sql.Add(' WHERE FUN_CODIGO = :CODIGO           ');
    qLocal.ParamByName('CODIGO'   ).AsString := Copy(Funcao,1,10);
    qLocal.open; //PausaDelay;
-   Log(Funcao+': '+qLocal.FieldByName('FUN_DESCRICAO').AsString);
+   Log('ControleDeAcessos',Funcao+': '+qLocal.FieldByName('FUN_DESCRICAO').AsString);
    qLocal.free;
 
    AtualizaFUSADA_FUS(pUSUARIO,funcao);

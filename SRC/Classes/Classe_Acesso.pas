@@ -24,6 +24,7 @@ type
       procedure Alteracoes_Gerais;
       procedure Alteracoes_Cad_Empresa;
       procedure Alteracoes_Cad_Cliente;
+
    public
       procedure Conectar;
       procedure Desconectar;
@@ -145,6 +146,56 @@ begin
       dm.Query1.sql.Add('  INTO CLIENTE_BLOQUEIOS_CLIB FROM CLIENTE_CLI_OLD ');
       dm.Query1.ExecSql;
    end;
+
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_CPF  VARCHAR(11) NULL');
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_CNPJ VARCHAR(14) NULL');
+   if not Ja_Executou_Script('Preencher_CLID_CPF_e_CLID_CNPJ....') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('SELECT CLID_CODIGO,         ');
+      dm.Query1.sql.Add('       CLID_CNPJ_CPF,       ');
+	    dm.Query1.sql.Add('       CLID_PESSOA_FJ       ');
+      dm.Query1.sql.Add('  FROM CLIENTE_DETALHE_CLID ');
+      dm.Query1.Open;
+      while not dm.Query1.eof do
+      begin
+         if dm.Query1.FieldByName('CLID_PESSOA_FJ').AsString = 'F' then
+         begin
+             dm.Query2.close;
+             dm.Query2.sql.Clear;
+             dm.Query2.sql.Add('UPDATE CLIENTE_DETALHE_CLID      ');
+             dm.Query2.sql.Add('   SET CLID_CPF    = :CLID_CPF   ');
+             dm.Query2.sql.Add(' WHERE CLID_CODIGO = :CLID_CODIGO');
+             dm.Query2.ParamByName('CLID_CPF'   ).AsString := COPY(TRIM(SoNumeros(dm.Query1.FieldByName('CLID_CNPJ_CPF').AsString)),1,11);
+             dm.Query2.ParamByName('CLID_CODIGO').AsString := dm.Query1.FieldByName('CLID_CODIGO').AsString;
+             dm.Query2.ExecSql;
+         end
+         else
+         begin
+             dm.Query2.close;
+             dm.Query2.sql.Clear;
+             dm.Query2.sql.Add('UPDATE CLIENTE_DETALHE_CLID      ');
+             dm.Query2.sql.Add('   SET CLID_CNPJ   = :CLID_CNPJ  ');
+             dm.Query2.sql.Add(' WHERE CLID_CODIGO = :CLID_CODIGO');
+             dm.Query2.ParamByName('CLID_CNPJ'  ).AsString := COPY(TRIM(SoNumeros(dm.Query1.FieldByName('CLID_CNPJ_CPF').AsString)),1,14);
+             dm.Query2.ParamByName('CLID_CODIGO').AsString := dm.Query1.FieldByName('CLID_CODIGO').AsString;
+             dm.Query2.ExecSql;
+         end;
+         dm.Query1.Next;
+      end;
+      Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID DROP COLUMN CLID_CNPJ_CPF');
+   end;
+
+   Executar_Script('ALTER TABLE CLIENTE_CLI ALTER COLUMN CLI_CODIGO VARCHAR(10) NOT NULL');
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ALTER COLUMN CLID_CODIGO VARCHAR(10) NOT NULL');
+
+   Executar_Script('ALTER TABLE CLIENTE_CLI ADD CONSTRAINT PK_CLIENTE_CLI PRIMARY KEY  (CLI_CODIGO)');
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CONSTRAINT PK_CLIENTE_DETALHE_CLID PRIMARY KEY (CLID_CODIGO)');
+   Executar_Script('CREATE CLUSTERED INDEX IDXCLI_CODIGO ON CLIENTE_CLI (CLI_CODIGO ASC)');// INCLUDE(CEP)
+   Executar_Script('CREATE NONCLUSTERED INDEX IDXCLI_RAZAO_SOCIAL ON CLIENTE_CLI (CLI_RAZAO_SOCIAL ASC)');
+   Executar_Script('CREATE NONCLUSTERED INDEX IDXCLI_NOME_FANTASIA ON CLIENTE_CLI (CLI_NOME_FANTASIA ASC)');
+   //Executar_Script('CREATE NONCLUSTERED INDEX IDX_UF ON clientes (UF ASC) INCLUDE(CEP)
 end;
 
 procedure TAcesso.Alteracoes_Cad_Empresa;
@@ -248,6 +299,8 @@ begin
    Executar_Script('TRUNCATE TABLE EMAIL_EMAIL      ');
    Executar_Script('TRUNCATE TABLE FUSADA_FUS       ');
    Executar_Script('TRUNCATE TABLE FUNCOES_FUN      ');
+
+   Executar_Script('ALTER TABLE LOG_LOG ADD LOG_TELA VARCHAR(6) NULL');
 
 end;
 

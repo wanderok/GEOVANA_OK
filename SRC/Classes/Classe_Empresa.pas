@@ -668,12 +668,12 @@ begin
 
         qLocal.ExecSql;
         qLocal.Free;
-        Log('Incluiu empresa '+ Empresa.FNomeFantasia);
+        Log('Classe_Empresa','Incluiu empresa '+ Empresa.FNomeFantasia);
         Result := True;
     except
        qLocal.Free;
        ShowMessage('Erro ao incluir Empresa '+ Empresa.FNomeFantasia);
-       LOGErros('Erro ao incluir Empresa '+ Empresa.FNomeFantasia);
+       LOGErros('Classe_Empresa','Erro ao incluir Empresa '+ Empresa.FNomeFantasia);
     end;
 end;
 
@@ -991,12 +991,12 @@ begin
         qLocal.ParamByName('EMP_DT').AsDateTime := FDataCadastro;
         qLocal.ExecSql;
         qLocal.Free;
-        Log('Alterou empresa '+ Empresa.FNomeFantasia);
+        Log('Classe_Empresa','Alterou empresa '+ Empresa.FNomeFantasia);
         Result := True;
     except
        qLocal.Free;
        ShowMessage('Erro ao alterar Empresa '+ Empresa.FNomeFantasia);
-       LogErros('Erro ao alterar Empresa '+ Empresa.FNomeFantasia);
+       LogErros('Classe_Empresa','Erro ao alterar Empresa '+ Empresa.FNomeFantasia);
     end;
 end;
 

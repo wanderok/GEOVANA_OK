@@ -213,7 +213,7 @@ end;
 
 procedure Tfrm_cad_usuario_T2.FormShow(Sender: TObject);
 begin
-   InicioPadraoDeTodasAsTelasDoSistema;
+   inicio_Padrao_De_Todas_As_Telas_Do_Sistema;
    Iniciar;
 end;
 

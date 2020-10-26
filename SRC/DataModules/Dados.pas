@@ -16,6 +16,7 @@ type
     Database1: TFDConnection;
     Query1: TFDQuery;
     qUSUARIO: TFDQuery;
+    Query2: TFDQuery;
   private
     { Private declarations }
   public

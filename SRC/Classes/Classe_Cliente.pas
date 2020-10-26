@@ -8,18 +8,37 @@ uses Classes, Dialogs, SysUtils, IniFiles,
      FireDAC.Comp.Client,
      FireDAC.Stan.Intf, FireDAC.Stan.Option,
 
-     TiposDeDados;
+     TiposDeDados,
+     validadorDeDocumentos;
 
 type
+  tPessoa_Fisica = class
+    private
+       FCPF              : String;         // CLI_CPF VARCHAR(11)
+       function  getFCPF:String;
+       procedure setFCPF(const Value:String);
+    public
+       property CPF : String read getFCPF write setFCPF;
+  end;
+
   tDetalhes_Cliente = class
-  private
-    FDataCadastro      : TDateTime;
-    function  getFDataCadastro: TDateTime;
-    procedure setFDataCadastro(const Value: TDateTime);
-    function  getDataCadastroString: String; // CLID_DT
-  public
-    property DataCadastro      : TDateTime read getFDataCadastro       write setFDataCadastro;
-    property DataCadastroString: String    read getDataCadastroString;
+    private
+      FDataCadastro      : TDateTime;        // CLI_DT         DATETIME
+      FTipoPessoa	       : String;           // CLID_PESSOA_FJ VARCHAR(1)
+      FPessoaFisica      : tPessoa_Fisica;
+      //
+      function  getFDataCadastro: TDateTime;
+      procedure setFDataCadastro(const Value: TDateTime);
+      function  getDataCadastroString: String;
+      function  getFTipoPessoa: TTipoPessoa;
+      procedure setFTipoPessoa(const Value: TTipoPessoa); // CLID_DT
+    public
+      constructor Create;
+      destructor Destroy; override;
+      property DataCadastro      : TDateTime      read getFDataCadastro       write setFDataCadastro;
+      property DataCadastroString: String         read getDataCadastroString;
+      property TipoPessoa        : TTipoPessoa    read getFTipoPessoa         write setFTipoPessoa;
+      property PessoaFisica      : tPessoa_Fisica read FPessoaFisica          write FPessoaFisica;
 end;
 
 
@@ -165,13 +184,15 @@ begin
         qLocal.SQL.Add('     (                    ');
         qLocal.SQL.Add('       CLI_CODIGO,        ');
         qLocal.SQL.Add('       CLI_NOME_FANTASIA, ');
-        qLocal.SQL.Add('       CLI_RAZAO_SOCIAL   ');
+        qLocal.SQL.Add('       CLI_RAZAO_SOCIAL,  ');
+        qLocal.SQL.Add('       CLI_STATUS         ');
         qLocal.SQL.Add('     )                    ');
         qLocal.SQL.Add('VALUES                    ');
         qLocal.SQL.Add('     (                    ');
         qLocal.SQL.Add('      :CLI_CODIGO,        ');
         qLocal.SQL.Add('      :CLI_NOME_FANTASIA, ');
-        qLocal.SQL.Add('      :CLI_RAZAO_SOCIAL   ');
+        qLocal.SQL.Add('      :CLI_RAZAO_SOCIAL,  ');
+        qLocal.SQL.Add('      :CLI_STATUS         ');
         qLocal.SQL.Add('     )                    ');
 
         Preencher_Parametros_Cliente(qLocal);
@@ -182,27 +203,33 @@ begin
         qLocal.SQL.Add('INSERT INTO CLIENTE_DETALHE_CLID ');
         qLocal.SQL.Add('     (                           ');
         qLocal.SQL.Add('       CLID_CODIGO,              ');
+        qLocal.SQL.Add('       CLID_PESSOA_FJ,           ');
         qLocal.SQL.Add('       CLID_NUVEM_ATUALIZADO,    ');
+        qLocal.SQL.Add('       CLID_CPF,                 ');
         qLocal.SQL.Add('       CLID_DT                   ');
         qLocal.SQL.Add('     )                           ');
         qLocal.SQL.Add('VALUES                           ');
         qLocal.SQL.Add('     (                           ');
         qLocal.SQL.Add('      :CLID_CODIGO,              ');
         qLocal.SQL.Add('      :CLID_NUVEM_ATUALIZADO,    ');
+        qLocal.SQL.Add('      :CLID_PESSOA_FJ,           ');
+        qLocal.SQL.Add('      :CLID_CPF,                 ');
         qLocal.SQL.Add('      :CLID_DT                   ');
         qLocal.SQL.Add('     )                           ');
         qLocal.ParamByName('CLID_CODIGO'          ).AsString   := FCodigo;
         qLocal.ParamByName('CLID_NUVEM_ATUALIZADO').AsInteger  := 0;
+        qLocal.ParamByName('CLID_PESSOA_FJ'       ).AsString   := Detalhes.FTipoPessoa;
+        qLocal.ParamByName('CLID_CPF'             ).AsString   := Detalhes.FPessoaFisica.FCPF;
         qLocal.ParamByName('CLID_DT'              ).AsDateTime := DataServidor;
-        //qLocal.ExecSql;
+        qLocal.ExecSql;
         qLocal.Free;
         Result := True;
-        Log('Incluiu cliente ' + FNomeFantasia);
+        Log('Classe_Cliente','Incluiu cliente ' + FNomeFantasia);
 
     except
        qLocal.Free;
        ShowMessage('Erro ao incluir Cliente ' + FNomeFantasia);
-       LOGErros('Erro ao incluir Cliente ' + FNomeFantasia);
+       LOGErros('Classe_Cliente','Erro ao incluir Cliente ' + FNomeFantasia);
     end;
 end;
 
@@ -240,6 +267,7 @@ begin
     FCodigo                      := qLocal.FieldByName('CLI_CODIGO'                 ).AsString;
     FNomeFantasia                := qLocal.FieldByName('CLI_NOME_FANTASIA'          ).AsString;
     FRazaoSocial                 := qLocal.FieldByName('CLI_RAZAO_SOCIAL'           ).AsString;
+    FStatus                      := qLocal.FieldByName('CLI_STATUS'                 ).AsInteger;
     Qlocal.Free;
 end;
 
@@ -260,6 +288,8 @@ begin
        qLocal.Free;
        exit;
     end;
+    Detalhes.FTipoPessoa         := qLocal.FieldByName('CLID_PESSOA_FJ'          ).AsString;
+    Detalhes.FPessoaFisica.FCPF  := qLocal.FieldByName('CLID_CPF'                ).AsString;
     FDetalhes.FDataCadastro      := qLocal.FieldByName('CLID_DT'                 ).AsDateTime;
     qLocal.Free;
 end;
@@ -274,6 +304,7 @@ begin
    pQuery.ParamByName('CLI_CODIGO'       ).AsString   := FCodigo;
    pQuery.ParamByName('CLI_NOME_FANTASIA').AsString   := FNomeFantasia;
    pQuery.ParamByName('CLI_RAZAO_SOCIAL' ).AsString   := FRazaoSocial;
+   pQuery.ParamByName('CLI_STATUS'       ).AsInteger  := FStatus;
 end;
 
 function TCliente.proximoCodigo: String;
@@ -335,7 +366,7 @@ end;
 procedure TCliente.setFCodigo(const Value: String);
 begin
    if Value = '' then
-      FCodigo := proximoCodigo
+      FCodigo := Copy(proximoCodigo,1,10)
    else
       FCodigo := Copy(Value,1,10);
 end;
@@ -365,27 +396,49 @@ begin
         qLocal.SQL.Clear;
         qLocal.SQL.Add('UPDATE CLIENTE_CLI                                             ');
         qLocal.SQL.Add('   SET CLI_NOME_FANTASIA           = :CLI_NOME_FANTASIA,       ');
-        qLocal.SQL.Add('       CLI_RAZAO_SOCIAL            = :CLI_RAZAO_SOCIAL         ');
+        qLocal.SQL.Add('       CLI_RAZAO_SOCIAL            = :CLI_RAZAO_SOCIAL,        ');
+        qLocal.SQL.Add('       CLI_STATUS                  = :CLI_STATUS               ');
         qLocal.SQL.Add(' WHERE CLI_CODIGO                  = :CLI_CODIGO               ');
-        //--------------------------------------------------------------------------------
-        //qLocal.SQL.Add('       EMP_DT                      = :EMP_DT,                    ');
-        //qLocal.SQL.Add('       EMP_CODIGO_UNISYSTEM        = :EMP_CODIGO_UNISYSTEM       ');
 
-        //passo11
         Preencher_Parametros_Cliente(qLocal);
-        //qLocal.ParamByName('EMP_DT').AsDateTime := FDataCadastro;
+
         qLocal.ExecSql;
+
+        qLocal.Close;
+        qLocal.SQL.Clear;
+        qLocal.SQL.Add('UPDATE CLIENTE_DETALHE_CLID                               ');
+        qLocal.SQL.Add('   SET CLID_PESSOA_FJ        = :CLID_PESSOA_FJ,           ');
+        qLocal.SQL.Add('       CLID_NUVEM_ATUALIZADO = :CLID_NUVEM_ATUALIZADO,    ');
+        qLocal.SQL.Add('       CLID_CPF              = :CLID_CPF                  ');
+        qLocal.SQL.Add(' WHERE CLID_CODIGO           = :CLID_CODIGO               ');
+        qLocal.ParamByName('CLID_CODIGO'          ).AsString   := FCodigo;
+        qLocal.ParamByName('CLID_NUVEM_ATUALIZADO').AsInteger  := 0;
+        qLocal.ParamByName('CLID_PESSOA_FJ'       ).AsString   := Detalhes.FTipoPessoa;
+        qLocal.ParamByName('CLID_CPF'             ).AsString   := Detalhes.FPessoaFisica.FCPF;
+        qLocal.ExecSql;
+
         qLocal.Free;
-        Log('Alterou Cliente '+ FNomeFantasia);
+        Log('Classe_Cliente','Alterou Cliente '+ FNomeFantasia);
         Result := True;
     except
        qLocal.Free;
        ShowMessage('Erro ao alterar Cliente '+ FNomeFantasia);
-       LogErros('Erro ao alterar Cliente '+ FNomeFantasia);
+       LogErros('Classe_Cliente','Erro ao alterar Cliente '+ FNomeFantasia);
     end;
 end;
 
 { tDetalhes_Cliente }
+
+constructor tDetalhes_Cliente.Create;
+begin
+  FPessoaFisica := tPessoa_Fisica.Create;
+end;
+
+destructor tDetalhes_Cliente.Destroy;
+begin
+  FPessoaFisica.Free;
+  inherited;
+end;
 
 function tDetalhes_Cliente.getDataCadastroString: String;
 begin
@@ -398,18 +451,43 @@ begin
 end;
 
 
+function tDetalhes_Cliente.getFTipoPessoa: TTipoPessoa;
+begin
+   Result := StringToTipoPessoa(FTipoPessoa);
+end;
+
 procedure tDetalhes_Cliente.setFDataCadastro(const Value: TDateTime);
 begin
    FDataCadastro := Value;
 end;
 
+procedure tDetalhes_Cliente.setFTipoPessoa(const Value: TTipoPessoa);
+begin
+   FTipoPessoa := TipoPessoaToString(Value);
+end;
+
+{ tPessoaFisica }
+
+function tPessoa_Fisica.getFCPF: String;
+begin
+   if self.FCPF = '' then
+   begin
+     result := self.FCPF;
+     exit;
+   end;
+   self.FCPF :=Trim(self.FCPF);
+   if frmValidadorDeDocumentos.CPF_Valido(self.FCPF) then
+      result := vVDD_DocumentoFormatado;
+end;
+
+procedure tPessoa_Fisica.setFCPF(const Value: String);
+begin
+  FCPF  := Copy(SoNumeros(Value),1,11);
+end;
+
 end.
 {
 CREATE TABLE CLIENTE_CLI(
-	CLI_CODIGO varchar(10) NULL,
-	CLI_CDIDENTIFICACAO varchar(2) NULL,
-	CLI_NOME_FANTASIA varchar(50) NULL,
-	CLI_RAZAO_SOCIAL varchar(50) NULL,
 	CLI_FATURA_ENDERECO varchar(40) NULL,
 	CLI_FATURA_CEP varchar(9) NULL,
 	CLI_FATURA_CIDADE varchar(20) NULL,
@@ -447,7 +525,6 @@ CREATE TABLE CLIENTE_CLI(
 	CLI_RG varchar(20) NULL,
 	CLI_DTNASC datetime NULL,
 	CLI_SEXO varchar(1) NULL,
-	CLI_TPPESSOAJF varchar(1) NULL,
 	CLI_FORMAPG varchar(10) NULL,
 	CLI_CDSUBTABELA_PRECOS varchar(10) NULL,
 	CLI_OBSNOTA1 varchar(50) NULL,

@@ -48,7 +48,7 @@ var Acesso : TAcesso;
     xMemo : tMemo;
 
     xxxAtualizado,
-    globalFuncoes_Atualizado       :String;
+    globalFuncoes_Atualizado:String;
 
 function DataNoFuturo(pData:String):Boolean;
 Function fSemAcentos(pCaracter:Char):Char;
@@ -56,7 +56,7 @@ function SoNumero(pCaracter:Char):Char;
 function SoValor(pCaracter:Char):Char;
 function SoLetra(pCaracter:Char):Char;
 
-procedure InicioPadraoDeTodasAsTelasDoSistema;
+procedure Inicio_Padrao_De_Todas_As_Telas_Do_Sistema;
 function PercentualValido(pValor:String):Boolean;
 function masctostr(numero:string):string;
 function f0ou1(pBoolean:Boolean):Integer;
@@ -86,9 +86,14 @@ function ProximoEMAIL_SEQUENCIAL:Integer;
 Function DataDoExecutavel:String;
 procedure Executar_Script(pComando:String);
 procedure Atualizado;
-Procedure Log(pHistorico:string); overload;
-Procedure Log(pEmail,pHistorico:string); overload;
-Procedure LogErros(pHistorico:string);
+
+//------------------------------------------------------------------------------
+Procedure Log(pTela,pEmail,pHistorico:string); overload;
+Procedure Log(pTela,pHistorico:string); overload;
+Procedure LogErros(pTela,pHistorico:string);
+Procedure Log_Salvar(pTipo,pTela,pHistorico:string);
+//------------------------------------------------------------------------------
+
 function Ja_Executou_Script(pInformacao:String) : Boolean;
 
 function NaoPreencheuCamposObrigatoriosOuImportantes(pTela:TForm):Boolean;
@@ -253,11 +258,55 @@ var vFrase: String;
 begin
      vFrase := 'Certificado Digital vence em '+
                DateToStr(VerificacaoInicial.ValidadeCertificado);
-     log('wanderok@msn.com',vFrase);
+     log('funcoes','wanderok@msn.com',vFrase);
      ShowMessage(vFrase);
 end;
 
-Procedure Log(pHistorico:string); overload;
+Procedure Log(pTela,pEmail,pHistorico:string); overload;
+begin
+   //Envia o erro para o email do suporte
+   xMemo := tMemo.Create(nil);
+   xMemo.Parent := Application.MainForm;
+   xMemo.visible := false;
+   xMemo.lines.clear;
+   xMemo.lines.add('==================================');
+   xMemo.lines.add(pHistorico);
+   xMemo.lines.add('==================================');
+   xMemo.lines.add('Empresa: '          + Empresa.NomeFantasia);
+   xMemo.lines.add('Codigo Unisystem: ' + Empresa.CodigoUniSystem);
+   xMemo.lines.add('Data: '             + sDataServidor + ' ' + HoraServidor);
+   xMemo.lines.add('==================================');
+   xMemo.lines.add('Banco de Dados: '   + Acesso.nomeDaConexao);
+   xMemo.lines.add('Versao do EXE: '    + DataDoExecutavel);
+   xMemo.lines.add('Computador: '       + NomeComputador);
+   xMemo.lines.add('Usuario: '          + Usuario.Nome);
+   xMemo.Lines.Add('Tela: '             + pTela);
+   xMemo.lines.add('==================================');
+
+   MandaEmailCurto(pEmail,
+                   'Certificado Digital Vencendo: '+Empresa.NomeFantasia
+                   ,xMemo);
+
+   MandaEmailCurto('smc.atendimentos@gmail.com',
+                   'Certificado Digital Vencendo: '+Empresa.NomeFantasia
+                   ,xMemo);
+
+   xMemo.Free;
+
+   Log(pTela,pHistorico);
+end;
+
+Procedure Log(pTela,pHistorico:string); overload;
+begin
+   Log_Salvar('',pTela,pHistorico);
+end;
+
+Procedure LogErros(pTela,pHistorico:string);
+begin
+   Log_Salvar('E',pTela,pHistorico);
+end;
+
+Procedure Log_Salvar(pTipo,pTela,pHistorico:string);
 var Q1: TFDQuery;
     vFuncao: String;
     vLOG_SEQUENCIAL, vLetra,
@@ -287,6 +336,7 @@ begin
              Q1.Sql.Clear;
              Q1.Sql.Add('INSERT INTO LOG_LOG   ');
              Q1.Sql.Add('    ( LOG_SEQUENCIAL, ');
+             Q1.Sql.Add('      LOG_TELA,       ');
              Q1.Sql.Add('      LOG_EXECUTAVEL, '); // 24/03/19
              Q1.Sql.Add('      LOG_LINHA,      ');
              Q1.Sql.Add('      LOG_DATA,       '); // DATA DA OPERACAO
@@ -304,6 +354,7 @@ begin
              Q1.Sql.Add('      LOG_SEQFINANCEIRO)');
              Q1.Sql.Add('VALUES                ');
              Q1.Sql.Add('    ( :LOG_SEQUENCIAL,');
+             Q1.Sql.Add('      :LOG_TELA,      ');
              Q1.Sql.Add('      :LOG_EXECUTAVEL,'); // 24/03/19
              Q1.Sql.Add('      :LOG_LINHA,     ');
              Q1.Sql.Add('      :LOG_DATA,      ');
@@ -320,6 +371,7 @@ begin
              Q1.Sql.Add('      :LOG_ESTACAO,      '); // NOME DO COMPUTADOR
              Q1.Sql.Add('      :LOG_SEQFINANCEIRO)');
              Q1.ParamByName('LOG_SEQUENCIAL').AsInteger  := vLOG_SEQUENCIAL;
+             Q1.ParamByName('LOG_TELA'      ).AsString   := Copy(pTela,1,6);
              Q1.ParamByName('LOG_EXECUTAVEL').AsString   := DataDoExecutavel;
              Q1.ParamByName('LOG_LINHA'     ).AsInteger  := vLOG_LINHA;
              Q1.ParamByName('LOG_DATA'      ).AsDateTime := DataServidor;
@@ -330,7 +382,7 @@ begin
              Q1.ParamByName('LOG_HISTORICO' ).AsString   := Copy(Uppercase(vFrase),1,255);
              Q1.ParamByName('LOG_DADOANTIGO').AsString   := '';
              Q1.ParamByName('LOG_DADONOVO'  ).AsString   := '';
-             Q1.ParamByName('LOG_TIPO'      ).AsString   := '';
+             Q1.ParamByName('LOG_TIPO'      ).AsString   := pTipo;
              Q1.ParamByName('LOG_CRIPTOGRAFADO').AsString:= 'N';
              Q1.ParamByName('LOG_PEDIDO'    ).AsString   := '';
              Q1.ParamByName('LOG_ESTACAO'   ).AsString   := NomeComputador;
@@ -387,7 +439,7 @@ begin
      Q1.ParamByName('LOG_HISTORICO' ).AsString   := vFrase;
      Q1.ParamByName('LOG_DADOANTIGO').AsString   := '';
      Q1.ParamByName('LOG_DADONOVO'  ).AsString   := '';
-     Q1.ParamByName('LOG_TIPO'      ).AsString   := '';
+     Q1.ParamByName('LOG_TIPO'      ).AsString   := pTipo;
      Q1.ParamByName('LOG_CRIPTOGRAFADO').AsString:= 'N';
      Q1.ParamByName('LOG_PEDIDO'    ).AsString   := '';
      Q1.ParamByName('LOG_ESTACAO'   ).AsString   := NomeComputador;
@@ -396,181 +448,6 @@ begin
    except
    end;
    Q1.free;
-end;
-
-Procedure Log(pEmail,pHistorico:string); overload;
-begin
-   //Envia o erro para o email do suporte
-   xMemo := tMemo.Create(nil);
-   xMemo.Parent := Application.MainForm;
-   xMemo.visible := false;
-   xMemo.lines.clear;
-   xMemo.lines.add('==================================');
-   xMemo.lines.add(pHistorico);
-   xMemo.lines.add('==================================');
-   xMemo.lines.add('Empresa: '          + Empresa.NomeFantasia);
-   xMemo.lines.add('Codigo Unisystem: ' + Empresa.CodigoUniSystem);
-   xMemo.lines.add('Data: '             + sDataServidor + ' ' + HoraServidor);
-   xMemo.lines.add('==================================');
-   xMemo.lines.add('Banco de Dados: '   + Acesso.nomeDaConexao);
-   xMemo.lines.add('Versao do EXE: '    + DataDoExecutavel);
-   xMemo.lines.add('Computador: '       + NomeComputador);
-   xMemo.lines.add('Usuario: '          + Usuario.Nome);
-   xMemo.lines.add('==================================');
-
-   MandaEmailCurto(pEmail,
-                   'Certificado Digital Vencendo: '+Empresa.NomeFantasia
-                   ,xMemo);
-
-   MandaEmailCurto('smc.atendimentos@gmail.com',
-                   'Certificado Digital Vencendo: '+Empresa.NomeFantasia
-                   ,xMemo);
-
-   xMemo.Free;
-
-   Log(pHistorico);
-end;
-
-Procedure LogErros(pHistorico:string);
-var qLocal: TFDQuery;
-    vFuncao: String;
-    vLOG_SEQUENCIAL, vLetra,
-    vLOG_LINHA : integer;
-    vFrase,i : String;
-begin
-   try
-     qLocal := TFDQuery.Create(nil);
-     qLocal.ConnectionName := 'X';
-
-     qLocal.Close;
-     qLocal.Sql.Clear;
-     qLocal.Sql.Add('SELECT MAX(LOG_SEQUENCIAL) AS MAXIMO FROM LOG_LOG   ');
-     qLocal.open; //PausaDelay;
-     vLOG_SEQUENCIAL := qLocal.fieldByName('MAXIMO').AsInteger+1;
-     vLOG_LINHA      := 0;
-
-     // dividir o historico...
-     vFrase := '';
-     For vLetra := 1 to length(pHistorico) Do
-     begin
-        vFrase := vFrase + pHistorico[vLetra];
-        if Length(vFrase) >= 255 then
-        begin
-             inc(vLOG_LINHA);
-             qLocal.Close;
-             qLocal.Sql.Clear;
-             qLocal.Sql.Add('INSERT INTO LOG_LOG   ');
-             qLocal.Sql.Add('    ( LOG_SEQUENCIAL, ');
-             qLocal.Sql.Add('      LOG_EXECUTAVEL, '); // 24/03/19
-             qLocal.Sql.Add('      LOG_LINHA,      ');
-             qLocal.Sql.Add('      LOG_DATA,       '); // DATA DA OPERACAO
-             qLocal.Sql.Add('      LOG_USUARIO,    '); // USUARIO
-             qLocal.Sql.Add('      LOG_HORA,       '); // HORARIO
-             qLocal.Sql.Add('      LOG_ACESSO,     '); // NOME DA ROTINA DE ACESSO (CODIGOS DE "CRIAR FUNCOES")
-             qLocal.Sql.Add('      LOG_FUNCAO,     '); // NOME DA FUNCAO/OPERACAO EXECUTADA
-             qLocal.Sql.Add('      LOG_HISTORICO,  '); // DESCRICAO DO QUE FOI FEITO
-             qLocal.Sql.Add('      LOG_DADOANTIGO, '); // SE ALTERACAO, VALOR ANTERIOR
-             qLocal.Sql.Add('      LOG_DADONOVO,   '); // SE ALTERACAO, VALOR NOVO/ALTERADO
-             qLocal.Sql.Add('      LOG_TIPO,       '); // '' = usuarios, E=Erros
-             qLocal.Sql.Add('      LOG_CRIPTOGRAFADO,'); // S=SIM N=NAO
-             qLocal.Sql.Add('      LOG_PEDIDO,       '); // NUMERO DO PEDIDO
-             qLocal.Sql.Add('      LOG_ESTACAO,      '); // NOME DO COMPUTADOR
-             qLocal.Sql.Add('      LOG_SEQFINANCEIRO)');
-             qLocal.Sql.Add('VALUES                ');
-             qLocal.Sql.Add('    ( :LOG_SEQUENCIAL,');
-             qLocal.Sql.Add('      :LOG_EXECUTAVEL,'); // 24/03/19
-             qLocal.Sql.Add('      :LOG_LINHA,     ');
-             qLocal.Sql.Add('      :LOG_DATA,      ');
-             qLocal.Sql.Add('      :LOG_USUARIO,   ');
-             qLocal.Sql.Add('      :LOG_HORA,      ');
-             qLocal.Sql.Add('      :LOG_ACESSO,    ');
-             qLocal.Sql.Add('      :LOG_FUNCAO,    ');
-             qLocal.Sql.Add('      :LOG_HISTORICO, ');
-             qLocal.Sql.Add('      :LOG_DADOANTIGO,');
-             qLocal.Sql.Add('      :LOG_DADONOVO,  ');
-             qLocal.Sql.Add('      :LOG_TIPO,      ');
-             qLocal.Sql.Add('      :LOG_CRIPTOGRAFADO,'); // S=SIM N=NAO
-             qLocal.Sql.Add('      :LOG_PEDIDO,       '); // NUMERO DO PEDIDO
-             qLocal.Sql.Add('      :LOG_ESTACAO,      '); // NOME DO COMPUTADOR
-             qLocal.Sql.Add('      :LOG_SEQFINANCEIRO)');
-             qLocal.ParamByName('LOG_SEQUENCIAL').AsInteger  := vLOG_SEQUENCIAL;
-             qLocal.ParamByName('LOG_EXECUTAVEL').AsString   := DataDoExecutavel;
-             qLocal.ParamByName('LOG_LINHA'     ).AsInteger  := vLOG_LINHA;
-             qLocal.ParamByName('LOG_DATA'      ).AsDateTime := DataServidor;
-             qLocal.ParamByName('LOG_USUARIO'   ).AsString   := Usuario.Codigo;
-             qLocal.ParamByName('LOG_HORA'      ).AsString   := HoraServidor;
-             qLocal.ParamByName('LOG_ACESSO'    ).AsString   := '';
-             qLocal.ParamByName('LOG_FUNCAO'    ).AsString   := '';
-             qLocal.ParamByName('LOG_HISTORICO' ).AsString   := Copy(Uppercase(vFrase),1,255);
-             qLocal.ParamByName('LOG_DADOANTIGO').AsString   := '';
-             qLocal.ParamByName('LOG_DADONOVO'  ).AsString   := '';
-             qLocal.ParamByName('LOG_TIPO'      ).AsString   := 'E';
-             qLocal.ParamByName('LOG_CRIPTOGRAFADO').AsString:= 'N';
-             qLocal.ParamByName('LOG_PEDIDO'    ).AsString   := '';
-             qLocal.ParamByName('LOG_ESTACAO'   ).AsString   := NomeComputador;
-             qLocal.ParamByName('LOG_SEQFINANCEIRO').AsInteger  := 0;
-             qLocal.ExecSql;
-           vFrase := '';
-        end;
-     end;
-     inc(vLOG_LINHA);
-     qLocal.Close;
-     qLocal.Sql.Clear;
-     qLocal.Sql.Add('INSERT INTO LOG_LOG   ');
-     qLocal.Sql.Add('    ( LOG_SEQUENCIAL, ');
-     qLocal.Sql.Add('      LOG_TIPO,       ');
-     qLocal.Sql.Add('      LOG_EXECUTAVEL,'); // 24/03/19
-     qLocal.Sql.Add('      LOG_LINHA,      ');
-     qLocal.Sql.Add('      LOG_DATA,       '); // DATA DA OPERACAO
-     qLocal.Sql.Add('      LOG_USUARIO,    '); // USUARIO
-     qLocal.Sql.Add('      LOG_HORA,       '); // HORARIO
-     qLocal.Sql.Add('      LOG_ACESSO,     '); // NOME DA ROTINA DE ACESSO (CODIGOS DE "CRIAR FUNCOES")
-     qLocal.Sql.Add('      LOG_FUNCAO,     '); // NOME DA FUNCAO/OPERACAO EXECUTADA
-     qLocal.Sql.Add('      LOG_HISTORICO,  '); // DESCRICAO DO QUE FOI FEITO
-     qLocal.Sql.Add('      LOG_DADOANTIGO, '); // SE ALTERACAO, VALOR ANTERIOR
-     qLocal.Sql.Add('      LOG_DADONOVO,   '); // SE ALTERACAO, VALOR NOVO/ALTERADO
-     qLocal.Sql.Add('      LOG_TIPO,       ');
-     qLocal.Sql.Add('      LOG_CRIPTOGRAFADO,'); // S=SIM N=NAO
-     qLocal.Sql.Add('      LOG_PEDIDO,       '); // NUMERO DO PEDIDO
-     qLocal.Sql.Add('      LOG_ESTACAO,      '); // NOME DO COMPUTADOR
-     qLocal.Sql.Add('      LOG_SEQFINANCEIRO)');
-     qLocal.Sql.Add('VALUES                ');
-     qLocal.Sql.Add('    ( :LOG_SEQUENCIAL,');
-     qLocal.Sql.Add('      :LOG_EXECUTAVEL,'); // 24/03/19
-     qLocal.Sql.Add('      :LOG_LINHA,     ');
-     qLocal.Sql.Add('      :LOG_DATA,      ');
-     qLocal.Sql.Add('      :LOG_USUARIO,   ');
-     qLocal.Sql.Add('      :LOG_HORA,      ');
-     qLocal.Sql.Add('      :LOG_ACESSO,    ');
-     qLocal.Sql.Add('      :LOG_FUNCAO,    ');
-     qLocal.Sql.Add('      :LOG_HISTORICO, ');
-     qLocal.Sql.Add('      :LOG_DADOANTIGO,');
-     qLocal.Sql.Add('      :LOG_DADONOVO,  ');
-     qLocal.Sql.Add('      :LOG_TIPO,      ');
-     qLocal.Sql.Add('      :LOG_CRIPTOGRAFADO,'); // S=SIM N=NAO
-     qLocal.Sql.Add('      :LOG_PEDIDO,       '); // NUMERO DO PEDIDO
-     qLocal.Sql.Add('      :LOG_ESTACAO,      '); // NOME DO COMPUTADOR
-     qLocal.Sql.Add('      :LOG_SEQFINANCEIRO)');
-     qLocal.ParamByName('LOG_SEQUENCIAL').AsInteger  := vLOG_SEQUENCIAL;
-     qLocal.ParamByName('LOG_EXECUTAVEL').AsString   := DataDoExecutavel;
-     qLocal.ParamByName('LOG_LINHA'     ).AsInteger  := vLOG_LINHA;
-     qLocal.ParamByName('LOG_DATA'      ).AsDateTime := DataServidor;
-     qLocal.ParamByName('LOG_USUARIO'   ).AsString   := Usuario.Codigo;
-     qLocal.ParamByName('LOG_HORA'      ).AsString   := HoraServidor;
-     qLocal.ParamByName('LOG_ACESSO'    ).AsString   := '';
-     qLocal.ParamByName('LOG_FUNCAO'    ).AsString   := '';
-     qLocal.ParamByName('LOG_HISTORICO' ).AsString   := vFrase;
-     qLocal.ParamByName('LOG_DADOANTIGO').AsString   := '';
-     qLocal.ParamByName('LOG_DADONOVO'  ).AsString   := '';
-     qLocal.ParamByName('LOG_TIPO'      ).AsString   := 'E';
-     qLocal.ParamByName('LOG_CRIPTOGRAFADO').AsString:= 'N';
-     qLocal.ParamByName('LOG_PEDIDO'    ).AsString   := '';
-     qLocal.ParamByName('LOG_ESTACAO'   ).AsString   := NomeComputador;
-     qLocal.ParamByName('LOG_SEQFINANCEIRO').AsInteger  := 0;
-     qLocal.ExecSql;
-   except
-   end;
-   qLocal.free;
 end;
 
 function MandaEmail(pEmail,pSubject:String; pTexto:TMemo):Boolean;
@@ -860,7 +737,7 @@ begin
       qLocal.ExecSql;
       Atualizado;
    except
-      LogErros('Erro ao executar: '+pComando);
+      LogErros('Funcoes','Erro ao executar: '+pComando);
    end;
    qLocal.Close;
    qLocal.Sql.Clear;
@@ -1325,7 +1202,7 @@ begin
     Result := pCaracter;
 end;
 
-procedure InicioPadraoDeTodasAsTelasDoSistema;
+procedure Inicio_Padrao_De_Todas_As_Telas_Do_Sistema;
 begin
 end;
 

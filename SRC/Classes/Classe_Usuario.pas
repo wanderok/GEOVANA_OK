@@ -99,7 +99,7 @@ begin
     qLocal.ExecSql;
     //
     qLocal.Free;
-    Log('Cad Usu '+FCodigo);
+    Log('Classe_Usuario','Cad Usu '+FCodigo);
 end;
 
 procedure TUsuario.setAtivo(const Value: Boolean);
@@ -148,7 +148,7 @@ begin
   qLocal.ExecSql;
   //
   qLocal.Free;
-  Log('Alt Usu '+FCodigo);
+  Log('Classe_Usuario','Alt Usu '+FCodigo);
 end;
 
 function TUsuario.Existe(Const Value:String):Boolean;

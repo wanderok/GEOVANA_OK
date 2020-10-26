@@ -32,6 +32,13 @@ object DM: TDM
     Connection = Database1
     SQL.Strings = (
       'select * from cliente')
+    Left = 304
+    Top = 16
+  end
+  object Query2: TFDQuery
+    Connection = Database1
+    SQL.Strings = (
+      'select * from cliente')
     Left = 256
     Top = 16
   end

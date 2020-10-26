@@ -173,7 +173,7 @@ type
     function Gravar_Empresa:Boolean;
     procedure PesquisaMunicipio;
     procedure Preencher_Campos_da_Tela;
-    procedure PrepararCamposdaTela;
+    procedure Preparar_Campos_da_Tela;
   public
     { Public declarations }
   end;
@@ -728,8 +728,8 @@ end;
 
 procedure Tfrm_cad_empresa_T3.FormShow(Sender: TObject);
 begin
-   InicioPadraoDeTodasAsTelasDoSistema;
-   PrepararCamposdaTela;
+   Inicio_Padrao_De_Todas_As_Telas_Do_Sistema;
+   Preparar_Campos_da_Tela;
    Preencher_Campos_da_Tela;
    edRazaoSocial.SetFocus;
 end;
@@ -889,9 +889,9 @@ begin
 
 end;
 
-procedure Tfrm_cad_empresa_T3.PrepararCamposdaTela;
+procedure Tfrm_cad_empresa_T3.Preparar_Campos_da_Tela;
 begin
-
+//
 end;
 
 end.
