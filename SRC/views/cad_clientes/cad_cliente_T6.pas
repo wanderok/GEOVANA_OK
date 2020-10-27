@@ -1,3 +1,4 @@
+
 { v 13.10.20 09:30am }
 unit cad_cliente_T6;
 
@@ -67,9 +68,9 @@ type
     edRG_OrgaoEmissor: TEdit;
     edNOME: TEdit;
     edCPF: TMaskEdit;
-    edDATA_NASCIMENTO: TMaskEdit;
+    edDataNascimento: TMaskEdit;
     cbSexo: TComboBox;
-    MaskEdit4: TMaskEdit;
+    edRG_DataEmissao: TMaskEdit;
     tsPessoaJuridica: TTabSheet;
     lbl3: TLabel;
     lbl7: TLabel;
@@ -434,13 +435,30 @@ begin
         begin
            Cliente.NomeFantasia             := edNome.Text;
            Cliente.RazaoSocial              := '';
-           Cliente.Detalhes.PessoaFisica.CPF:= edCPF.Text;
+           with Cliente.Detalhes.PessoaFisica do
+           begin
+              CPF            := edCPF.Text;
+              RG             := edRG.Text;
+              RG_OrgaoEmissor:= edRG_OrgaoEmissor.Text;
+              RG_DataEmissao := edRG_DataEmissao.Text;
+              DataNascimento := edDataNascimento.Text;
+              Sexo           := cbSexo.ItemIndex;
+           end;
         end
         else
         begin
            Cliente.NomeFantasia             := edNomeFantasia.Text;
            Cliente.RazaoSocial              := edRazaoSocial.Text;
-           Cliente.Detalhes.PessoaFisica.CPF:= '';
+           with Cliente.Detalhes.PessoaFisica do
+           begin
+              CPF            := '';
+              RG             := '';
+              RG_OrgaoEmissor:= '';
+              RG_DataEmissao := '';
+              DataNascimento := '';
+              Sexo           := -1;
+           end;
+
         end;
         Cliente.Status                      := IntToStatusCadastral(rgStatus.ItemIndex);
         Cliente.Detalhes.TipoPessoa         := StringToTipoPessoa(fTipoPessoa_JF);
@@ -452,7 +470,6 @@ end;
 
 procedure Tfrm_cad_cliente_T6.Inicio;
 begin
-   ;
    Preparar_Campos_da_Tela;
    Limpar_os_campos_da_Tela(frm_cad_cliente_T6);
    Cliente := TCliente.Create;
@@ -488,6 +505,11 @@ begin
    pgControlPessoa.ActivePage := tsPessoaFisica;
    edNome.Text                := Cliente.NomeFantasia;
    edCPF.Text                 := Cliente.Detalhes.PessoaFisica.CPF;
+   edRG.Text                  := Cliente.Detalhes.PessoaFisica.RG;
+   edRG_OrgaoEmissor.Text     := Cliente.Detalhes.PessoaFisica.RG_OrgaoEmissor;
+   edRG_DataEmissao.Text      := Cliente.Detalhes.PessoaFisica.RG_DataEmissao;
+   edDataNascimento.Text      := Cliente.Detalhes.PessoaFisica.DataNascimento;
+   cbSexo.ItemIndex           := Cliente.Detalhes.PessoaFisica.Sexo;
 end;
 
 procedure Tfrm_cad_cliente_T6.Preencher_Dados_Pessoa_Juridica;

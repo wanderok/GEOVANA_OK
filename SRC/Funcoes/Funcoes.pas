@@ -50,6 +50,7 @@ var Acesso : TAcesso;
     xxxAtualizado,
     globalFuncoes_Atualizado:String;
 
+function BarrasSeDataNula(pData:String):String;
 function DataNoFuturo(pData:String):Boolean;
 Function fSemAcentos(pCaracter:Char):Char;
 function SoNumero(pCaracter:Char):Char;
@@ -154,6 +155,12 @@ begin
           (pTela.Components[vComponents] as TRadioGroup).ItemIndex := -1;
           (pTela.Components[vComponents] as TRadioGroup).Color := clWhite;
        end;
+       if (pTela.Components[vComponents] is TComboBox) then
+       begin
+          (pTela.Components[vComponents] as TComboBox).Text := '';
+          (pTela.Components[vComponents] as TComboBox).ItemIndex := -1;
+          (pTela.Components[vComponents] as TComboBox).Color := clWhite;
+       end;
        if (pTela.Components[vComponents] is TMemo) then
        begin
           (pTela.Components[vComponents] as TMemo).Lines.Clear;
@@ -189,6 +196,7 @@ begin
           for i := 1 to (pTela.Components[vComponents] as TStringGrid).RowCount -1 do
              (pTela.Components[vComponents] as TStringGrid).rows[i].Clear;
        end;
+
      end;
 end;
 
@@ -1225,6 +1233,14 @@ begin
    end;
 end;
 
+function BarrasSeDataNula(pData:String):String;
+begin
+   if pData = '30/12/1899' then
+      result := '  /  /  '
+   else
+      result := pData;
+
+end;
 
 Function fNomeDoSistema:String;
 begin

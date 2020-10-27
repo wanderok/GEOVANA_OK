@@ -524,8 +524,6 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     TabOrder = 2
     object tsPessoaFisica: TTabSheet
       Caption = 'Pessoa F'#237'sica'
-      ExplicitWidth = 583
-      ExplicitHeight = 143
       object Label25: TLabel
         Left = 10
         Top = 13
@@ -629,7 +627,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 4
       end
       object edRG_OrgaoEmissor: TEdit
         Left = 318
@@ -643,7 +641,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        TabOrder = 2
+        TabOrder = 5
       end
       object edNOME: TEdit
         Left = 61
@@ -651,7 +649,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
         Width = 548
         Height = 26
         CharCase = ecUpperCase
-        Color = clWhite
+        Color = 8454016
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlue
         Font.Height = -15
@@ -662,23 +660,24 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
         TabOrder = 0
       end
       object edCPF: TMaskEdit
-        Left = 61
-        Top = 42
+        Left = 60
+        Top = 43
         Width = 166
         Height = 26
         Hint = 'CPF'
         CharCase = ecUpperCase
+        Color = 8454016
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -15
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 1
         Text = ''
         OnExit = edCPFExit
       end
-      object edDATA_NASCIMENTO: TMaskEdit
+      object edDataNascimento: TMaskEdit
         Left = 318
         Top = 42
         Width = 83
@@ -691,8 +690,7 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
         Font.Style = []
         MaxLength = 8
         ParentFont = False
-        ReadOnly = True
-        TabOrder = 4
+        TabOrder = 2
         Text = '  /  /  '
       end
       object cbSexo: TComboBox
@@ -707,12 +705,12 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 3
         Items.Strings = (
           'MASCULINO'
           'FEMININO')
       end
-      object MaskEdit4: TMaskEdit
+      object edRG_DataEmissao: TMaskEdit
         Left = 526
         Top = 75
         Width = 83
@@ -725,7 +723,6 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
         Font.Style = []
         MaxLength = 8
         ParentFont = False
-        ReadOnly = True
         TabOrder = 6
         Text = '  /  /  '
       end
@@ -739,8 +736,6 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       Font.Style = [fsBold]
       ImageIndex = 1
       ParentFont = False
-      ExplicitWidth = 583
-      ExplicitHeight = 143
       object lbl3: TLabel
         Left = 9
         Top = 47

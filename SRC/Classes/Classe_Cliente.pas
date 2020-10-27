@@ -14,11 +14,34 @@ uses Classes, Dialogs, SysUtils, IniFiles,
 type
   tPessoa_Fisica = class
     private
-       FCPF              : String;         // CLI_CPF VARCHAR(11)
+       FCPF                  : String;         // CLI_CPF VARCHAR(11)
+       FDataNascimento       : TDateTime;      // CLID_DTNASC
+       FDataNascimentoString,
+       FRG,
+       FRG_OrgaoEmissor      : String;
+       FRG_DataEmissao       : TDateTime;
+       FRG_DataEmissaoString,
+       FSexo                 : String;
+       //
        function  getFCPF:String;
        procedure setFCPF(const Value:String);
+       function  getDataNascimentoString: String;
+       procedure setDataNascimentoString(const Value: String);
+       function  getFRG: String;
+       function  getFRG_OrgaoEmissor: String;
+       procedure setFRG(const Value: String);
+       procedure setFRG_OrgaoEmissor(const Value: String);
+       function  getFSexo: Integer;
+       procedure setFSexo(const Value: Integer);
+       function  getFRG_DataEmissaoString: String;
+       procedure setFRG_DataEmissaoString(const Value: String);
     public
-       property CPF : String read getFCPF write setFCPF;
+       property CPF              : String  read getFCPF                  write setFCPF;
+       property DataNascimento   : String  read getDataNascimentoString  write setDataNascimentoString;
+       property RG               : String  read getFRG                   write setFRG;
+       property RG_OrgaoEmissor  : String  read getFRG_OrgaoEmissor      write setFRG_OrgaoEmissor;
+       property RG_DataEmissao   : String  read getFRG_DataEmissaoString write setFRG_DataEmissaoString;
+       property Sexo             : Integer read getFSexo                 write setFSexo;
   end;
 
   tDetalhes_Cliente = class
@@ -206,6 +229,11 @@ begin
         qLocal.SQL.Add('       CLID_PESSOA_FJ,           ');
         qLocal.SQL.Add('       CLID_NUVEM_ATUALIZADO,    ');
         qLocal.SQL.Add('       CLID_CPF,                 ');
+        qLocal.SQL.Add('       CLID_RG,                  ');
+        qLocal.SQL.Add('       CLID_RG_EMISSOR,          ');
+        qLocal.SQL.Add('       CLID_RG_DTEMISSAO,        ');
+        qLocal.SQL.Add('       CLID_DTNASC,              ');
+        qLocal.SQL.Add('       CLID_SEXO,                ');
         qLocal.SQL.Add('       CLID_DT                   ');
         qLocal.SQL.Add('     )                           ');
         qLocal.SQL.Add('VALUES                           ');
@@ -214,12 +242,22 @@ begin
         qLocal.SQL.Add('      :CLID_NUVEM_ATUALIZADO,    ');
         qLocal.SQL.Add('      :CLID_PESSOA_FJ,           ');
         qLocal.SQL.Add('      :CLID_CPF,                 ');
+        qLocal.SQL.Add('      :CLID_RG,                  ');
+        qLocal.SQL.Add('      :CLID_RG_EMISSOR,          ');
+        qLocal.SQL.Add('      :CLID_RG_DTEMISSAO,        ');
+        qLocal.SQL.Add('      :CLID_DTNASC,              ');
+        qLocal.SQL.Add('      :CLID_SEXO,                ');
         qLocal.SQL.Add('      :CLID_DT                   ');
         qLocal.SQL.Add('     )                           ');
         qLocal.ParamByName('CLID_CODIGO'          ).AsString   := FCodigo;
         qLocal.ParamByName('CLID_NUVEM_ATUALIZADO').AsInteger  := 0;
         qLocal.ParamByName('CLID_PESSOA_FJ'       ).AsString   := Detalhes.FTipoPessoa;
         qLocal.ParamByName('CLID_CPF'             ).AsString   := Detalhes.FPessoaFisica.FCPF;
+        qLocal.ParamByName('CLID_RG'              ).AsString   := Detalhes.FPessoaFisica.FRG;
+        qLocal.ParamByName('CLID_RG_EMISSOR'      ).AsString   := Detalhes.FPessoaFisica.FRG_OrgaoEmissor;
+        qLocal.ParamByName('CLID_RG_DTEMISSAO'    ).AsDateTime := Detalhes.FPessoaFisica.FRG_DataEmissao;
+        qLocal.ParamByName('CLID_DTNASC'          ).AsDateTime := Detalhes.FPessoaFisica.FDataNascimento;
+        qLocal.ParamByName('CLID_SEXO'            ).AsString   := Detalhes.FPessoaFisica.FSexo;
         qLocal.ParamByName('CLID_DT'              ).AsDateTime := DataServidor;
         qLocal.ExecSql;
         qLocal.Free;
@@ -288,8 +326,19 @@ begin
        qLocal.Free;
        exit;
     end;
+
     Detalhes.FTipoPessoa         := qLocal.FieldByName('CLID_PESSOA_FJ'          ).AsString;
-    Detalhes.FPessoaFisica.FCPF  := qLocal.FieldByName('CLID_CPF'                ).AsString;
+    with Detalhes.FPessoaFisica do
+    begin
+       FCPF                      := qLocal.FieldByName('CLID_CPF'                ).AsString;
+       FRG                       := qLocal.FieldByName('CLID_RG'                 ).AsString;
+       FRG_OrgaoEmissor          := qLocal.FieldByName('CLID_RG_EMISSOR'         ).AsString;
+       FRG_DataEmissao           := qLocal.FieldByName('CLID_RG_DTEMISSAO'       ).AsDateTime;
+       FRG_DataEmissaoString     := BarrasSeDataNula(qLocal.FieldByName('CLID_RG_DTEMISSAO').AsString);
+       FDataNascimento           := qLocal.FieldByName('CLID_DTNASC'             ).AsDateTime;
+       FSexo                     := qLocal.FieldByName('CLID_SEXO'               ).AsString;
+       FDataNascimentoString     := BarrasSeDataNula(qLocal.FieldByName('CLID_DTNASC' ).AsString);
+    end;
     FDetalhes.FDataCadastro      := qLocal.FieldByName('CLID_DT'                 ).AsDateTime;
     qLocal.Free;
 end;
@@ -409,12 +458,22 @@ begin
         qLocal.SQL.Add('UPDATE CLIENTE_DETALHE_CLID                               ');
         qLocal.SQL.Add('   SET CLID_PESSOA_FJ        = :CLID_PESSOA_FJ,           ');
         qLocal.SQL.Add('       CLID_NUVEM_ATUALIZADO = :CLID_NUVEM_ATUALIZADO,    ');
-        qLocal.SQL.Add('       CLID_CPF              = :CLID_CPF                  ');
+        qLocal.SQL.Add('       CLID_CPF              = :CLID_CPF,                 ');
+        qLocal.SQL.Add('       CLID_RG               = :CLID_RG,                  ');
+        qLocal.SQL.Add('       CLID_RG_EMISSOR       = :CLID_RG_EMISSOR,          ');
+        qLocal.SQL.Add('       CLID_RG_DTEMISSAO     = :CLID_RG_DTEMISSAO,        ');
+        qLocal.SQL.Add('       CLID_DTNASC           = :CLID_DTNASC,              ');
+        qLocal.SQL.Add('       CLID_SEXO             = :CLID_SEXO                 ');
         qLocal.SQL.Add(' WHERE CLID_CODIGO           = :CLID_CODIGO               ');
         qLocal.ParamByName('CLID_CODIGO'          ).AsString   := FCodigo;
         qLocal.ParamByName('CLID_NUVEM_ATUALIZADO').AsInteger  := 0;
         qLocal.ParamByName('CLID_PESSOA_FJ'       ).AsString   := Detalhes.FTipoPessoa;
         qLocal.ParamByName('CLID_CPF'             ).AsString   := Detalhes.FPessoaFisica.FCPF;
+        qLocal.ParamByName('CLID_RG'              ).AsString   := Detalhes.FPessoaFisica.FRG;
+        qLocal.ParamByName('CLID_RG_EMISSOR'      ).AsString   := Detalhes.FPessoaFisica.FRG_OrgaoEmissor;
+        qLocal.ParamByName('CLID_RG_DTEMISSAO'    ).AsDateTime := Detalhes.FPessoaFisica.FRG_DataEmissao;
+        qLocal.ParamByName('CLID_DTNASC'          ).AsDateTime := Detalhes.FPessoaFisica.FDataNascimento;
+        qLocal.ParamByName('CLID_SEXO'            ).AsString   := Detalhes.FPessoaFisica.FSexo;
         qLocal.ExecSql;
 
         qLocal.Free;
@@ -450,7 +509,6 @@ begin
    result := FDataCadastro;
 end;
 
-
 function tDetalhes_Cliente.getFTipoPessoa: TTipoPessoa;
 begin
    Result := StringToTipoPessoa(FTipoPessoa);
@@ -480,9 +538,74 @@ begin
       result := vVDD_DocumentoFormatado;
 end;
 
+function tPessoa_Fisica.getFRG: String;
+begin
+   Result := FRG;
+end;
+
+function tPessoa_Fisica.getFRG_DataEmissaoString: String;
+begin
+   result := self.FRG_DataEmissaoString;
+end;
+
+function tPessoa_Fisica.getFRG_OrgaoEmissor: String;
+begin
+   Result := FRG_OrgaoEmissor;
+end;
+
+function tPessoa_Fisica.getFSexo: Integer;
+begin
+   if      FSexo = 'M' then result := 0
+   else if FSexo = 'F' then result := 1
+   else                     result := -1;
+end;
+
+procedure tPessoa_Fisica.setDataNascimentoString(const Value: String);
+begin
+   if Value = '  /  /  ' then
+      FDataNascimento := 0
+   else
+      FDataNascimento := StrToDate(Value);
+   FDataNascimentoString := Value;
+end;
+
 procedure tPessoa_Fisica.setFCPF(const Value: String);
 begin
   FCPF  := Copy(SoNumeros(Value),1,11);
+end;
+
+procedure tPessoa_Fisica.setFRG(const Value: String);
+begin
+   FRG := Value;
+end;
+
+procedure tPessoa_Fisica.setFRG_DataEmissaoString(const Value: String);
+begin
+   if Value = '  /  /  ' then
+      FRG_DataEmissao := 0
+   else
+      FRG_DataEmissao := StrToDate(Value);
+   FRG_DataEmissaoString := Value;
+end;
+
+procedure tPessoa_Fisica.setFRG_OrgaoEmissor(const Value: String);
+begin
+   FRG_OrgaoEmissor := Value;
+end;
+
+procedure tPessoa_Fisica.setFSexo(const Value: Integer);
+begin
+   case Value of
+      0 : FSexo := 'M';
+      1 : FSexo := 'F';
+   else
+      FSexo := '';
+   end;
+end;
+
+function tPessoa_Fisica.getDataNascimentoString: String;
+begin
+   result := self.FDataNascimentoString;
 end;
 
 end.
