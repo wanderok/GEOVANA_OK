@@ -1,4 +1,4 @@
-﻿object Frm_regiao: TFrm_regiao
+﻿object frm_regiao_T11: Tfrm_regiao_T11
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
@@ -21,7 +21,7 @@
   object Descrição: TLabel
     Left = 13
     Top = 12
-    Width = 59
+    Width = 67
     Height = 18
     Caption = 'Descri'#231#227'o:'
     Font.Charset = ANSI_CHARSET
@@ -30,6 +30,23 @@
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+  end
+  object lbNomeDaTela: TLabel
+    Left = 0
+    Top = 256
+    Width = 236
+    Height = 13
+    Align = alBottom
+    Alignment = taRightJustify
+    Caption = 'T11 '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ExplicitLeft = 212
+    ExplicitWidth = 24
   end
   object edREG_DESCRICAO: TEdit
     Left = 86
@@ -51,6 +68,7 @@
     Top = 46
     Width = 209
     Height = 150
+    DataSource = DataSource1
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -382,5 +400,22 @@
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+  end
+  object ACBrEnterTab1: TACBrEnterTab
+    Left = 176
+    Top = 40
+  end
+  object qLocal: TFDQuery
+    Active = True
+    Connection = DM.Database1
+    SQL.Strings = (
+      'select * FROM regiao_reg')
+    Left = 152
+    Top = 104
+  end
+  object DataSource1: TDataSource
+    DataSet = qLocal
+    Left = 80
+    Top = 112
   end
 end

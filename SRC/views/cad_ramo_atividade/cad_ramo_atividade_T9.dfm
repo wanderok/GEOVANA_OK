@@ -1,4 +1,4 @@
-object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
+object frm_cad_ramo_atividade_T9: Tfrm_cad_ramo_atividade_T9
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
@@ -30,6 +30,23 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+  end
+  object lbNomeDaTela: TLabel
+    Left = 0
+    Top = 255
+    Width = 281
+    Height = 13
+    Align = alBottom
+    Alignment = taRightJustify
+    Caption = 'T9 '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ExplicitLeft = 264
+    ExplicitWidth = 17
   end
   object edFiltro: TEdit
     Left = 86
@@ -67,12 +84,11 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     TitleFont.Style = []
     OnDblClick = DBGrid2DblClick
     OnKeyDown = DBGrid2KeyDown
-    OnKeyPress = DBGrid2KeyPress
     Columns = <
       item
         Expanded = False
         FieldName = 'RAMO_DESCRICAO'
-        Title.Caption = 'Ramo Atividade'
+        Title.Caption = 'Ramo de Atividade'
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11

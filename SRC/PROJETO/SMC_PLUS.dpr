@@ -16,7 +16,7 @@ uses
   TiposDeDados in '..\..\src\TiposDeDados\TiposDeDados.pas',
   Email in '..\..\src\EnviarEmail\Email.pas' {frmEmail},
   Classe_Empresa in '..\..\src\Classes\Classe_Empresa.pas',
-  cad_bairro in '..\..\src\views\cad_bairro\cad_bairro.pas' {frm_cad_bairro},
+  cad_bairro_T8 in '..\..\src\views\cad_bairro\cad_bairro_T8.pas' {frm_cad_bairro_T8},
   cad_cliente_T6 in '..\..\src\views\cad_clientes\cad_cliente_T6.pas' {frm_cad_cliente_T6},
   cad_comissoes in '..\..\src\views\cad_colaborador\cad_comissoes.pas' {fmr_comissao_colab},
   cadastro_colaborador in '..\..\src\views\cad_colaborador\cadastro_colaborador.pas' {frm_colaborador},
@@ -24,10 +24,9 @@ uses
   cad_consultor in '..\..\src\views\cad_consultor\cad_consultor.pas' {Frm_consultor},
   consultor_banco_comissoes in '..\..\src\views\cad_consultor\consultor_banco_comissoes.pas' {frm_consultor_comissoes_banco},
   cad_motorista in '..\..\src\views\cad_motorista\cad_motorista.pas' {Frm_motorista},
-  cad_ramo_atividade in '..\..\src\views\cad_ramo_atividade\cad_ramo_atividade.pas' {FRM_cad_ramo_atividade},
-  cad_regiao in '..\..\src\views\cad_regiao\cad_regiao.pas' {Frm_regiao},
+  cad_ramo_atividade_T9 in '..\..\src\views\cad_ramo_atividade\cad_ramo_atividade_T9.pas' {frm_cad_ramo_atividade_T9},
+  cad_regiao_T11 in '..\..\src\views\cad_regiao\cad_regiao_T11.pas' {frm_cad_regiao_T11},
   cad_transportadora in '..\..\src\views\cad_transportadora\cad_transportadora.pas' {Frm_transportadora},
-  cad_zona in '..\..\src\views\cad_zona\cad_zona.pas' {FRM_cad_zona},
   cadastro_fornecedor in '..\..\src\views\cadastro_fornecedor\cadastro_fornecedor.pas' {Frm_fornecedor},
   config_certificado in '..\..\src\views\configs\config_certificado.pas' {frm_config_certificado},
   config_email in '..\..\src\views\configs\config_email.pas' {frm_config_email},
@@ -51,7 +50,12 @@ uses
   Classe_TributacaoISS in '..\..\SRC\Classes\Classe_TributacaoISS.pas',
   ValidadorDeDocumentos in '..\..\src\Controles\ValidadorDeDocumentos\ValidadorDeDocumentos.pas' {frmValidadorDeDocumentos},
   reg_tributario_T4 in '..\..\src\views\configs\reg_tributario_T4.pas' {frm_reg_tributario_T4},
-  Classe_Cliente in '..\..\src\Classes\Classe_Cliente.pas';
+  Classe_Cliente in '..\..\src\Classes\Classe_Cliente.pas',
+  Classe_Alteracao in '..\..\src\Classes\Classe_Alteracao.pas',
+  Classe_Endereco in '..\..\src\Classes\Classe_Endereco.pas',
+  auditoria_T10 in '..\..\src\views\Auditoria\auditoria_T10.pas' {frm_auditoria_T10},
+  Classe_Contato in '..\..\src\Classes\Classe_Contato.pas',
+  cad_zona_T12 in '..\..\src\views\cad_zona\cad_zona_T12.pas' {frm_cad_zona_T12};
 
 {$R *.res}
 
@@ -60,8 +64,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDM, DM);
   Application.CreateForm(Tfrm_Login_T1, frm_Login_T1);
-  Application.CreateForm(Tfrm_acesso_remoto, frm_acesso_remoto);
   Application.CreateForm(TfrmValidadorDeDocumentos, frmValidadorDeDocumentos);
-  Application.CreateForm(Tfrm_reg_tributario_T4, frm_reg_tributario_T4);
   Application.Run;
 end.

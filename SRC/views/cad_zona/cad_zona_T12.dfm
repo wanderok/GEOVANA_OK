@@ -1,11 +1,11 @@
-object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
+object frm_cad_zona_T12: Tfrm_cad_zona_T12
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'Cadastro | Ramo Atividade'
+  Caption = 'Cadastro | Zona'
   ClientHeight = 268
-  ClientWidth = 281
+  ClientWidth = 288
   Color = clWhite
   DefaultMonitor = dmDesktop
   Font.Charset = DEFAULT_CHARSET
@@ -30,6 +30,23 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+  end
+  object lbNomeDaTela: TLabel
+    Left = 0
+    Top = 255
+    Width = 288
+    Height = 13
+    Align = alBottom
+    Alignment = taRightJustify
+    Caption = 'T11 '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ExplicitLeft = 212
+    ExplicitWidth = 24
   end
   object edFiltro: TEdit
     Left = 86
@@ -67,12 +84,23 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     TitleFont.Style = []
     OnDblClick = DBGrid2DblClick
     OnKeyDown = DBGrid2KeyDown
-    OnKeyPress = DBGrid2KeyPress
     Columns = <
       item
         Expanded = False
-        FieldName = 'RAMO_DESCRICAO'
-        Title.Caption = 'Ramo Atividade'
+        FieldName = 'ZON_CODIGO'
+        Title.Caption = 'C'#243'digo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 48
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ZON_DESCRICAO'
+        Title.Caption = 'Zona'
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11
@@ -82,7 +110,7 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
         Visible = True
       end>
   end
-  object cxButton1: TcxButton
+  object bGravar: TcxButton
     Left = 13
     Top = 211
     Width = 98
@@ -228,6 +256,7 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = bGravarClick
   end
   object cxButton2: TcxButton
     Left = 170
@@ -375,22 +404,23 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = cxButton2Click
   end
-  object ACBrEnterTab1: TACBrEnterTab
-    Left = 253
-    Top = 16
+  object DataSource1: TDataSource
+    DataSet = qLocal
+    Left = 80
+    Top = 112
   end
   object qLocal: TFDQuery
     Active = True
     Connection = DM.Database1
     SQL.Strings = (
-      'select * FROM RAMOATIVIDADE_RAMO')
-    Left = 184
-    Top = 80
+      'select * FROM ZONA_ZON')
+    Left = 152
+    Top = 104
   end
-  object DataSource1: TDataSource
-    DataSet = qLocal
-    Left = 112
-    Top = 88
+  object ACBrEnterTab1: TACBrEnterTab
+    Left = 176
+    Top = 40
   end
 end

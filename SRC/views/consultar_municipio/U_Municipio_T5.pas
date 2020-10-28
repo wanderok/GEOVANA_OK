@@ -28,12 +28,12 @@ type
     lbNomeDaTela: TLabel;
     procedure Edit1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure DBGrid1CellClick(Column: TColumn);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-
+    procedure DBGrid1DblClick(Sender: TObject);
   private
     { Private declarations }
+    procedure Selecionar;
   public
     { Public declarations }
   end;
@@ -48,20 +48,16 @@ implementation
 
 uses dados;
 
-procedure TFrm_Municipio_T5.DBGrid1CellClick(Column: TColumn);
+procedure TFrm_Municipio_T5.DBGrid1DblClick(Sender: TObject);
 begin
-   vFrm_Municipio:=qLocal.FieldByName('CID_CODIGO').AsString;
-   Close;
+   Selecionar;
 end;
 
 procedure TFrm_Municipio_T5.DBGrid1KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if key = VK_RETURN then
-  begin
-     vFrm_Municipio:=qLocal.FieldByName('CID_CODIGO').AsString;
-     Close;
-  end;
+     Selecionar;
 end;
 
 procedure TFrm_Municipio_T5.Edit1Change(Sender: TObject);
@@ -81,6 +77,12 @@ end;
 procedure TFrm_Municipio_T5.FormShow(Sender: TObject);
 begin
    vFrm_Municipio:='';
+end;
+
+procedure TFrm_Municipio_T5.Selecionar;
+begin
+   vFrm_Municipio := qLocal.FieldByName('CID_CODIGO').AsString;
+   Close;
 end;
 
 end.

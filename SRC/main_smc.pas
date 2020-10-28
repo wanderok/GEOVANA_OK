@@ -2,6 +2,8 @@
 
   interface
 
+
+
   uses
     Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
     Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, Vcl.StdCtrls,
@@ -362,6 +364,7 @@
     procedure dxBarButton78Click(Sender: TObject);
     procedure dxBarButton21Click(Sender: TObject);
     procedure dxBarButton4Click(Sender: TObject);
+    procedure dxBarLargeButton124Click(Sender: TObject);
   
     private
       { Private declarations }
@@ -380,6 +383,7 @@ uses
   cad_empresa_T3,
   reg_tributario_T4,
   cad_cliente_T6,
+  auditoria_T10,
   alterar_senha,
   //cadastro_produto,
   cadastro_colaborador, cadastro_fornecedor, cad_transportadora, cad_motorista,
@@ -677,6 +681,13 @@ procedure TFrm_main.dxBarLargeButton114Click(Sender: TObject);
 begin
     frm_alterar_senha := Tfrm_alterar_senha.Create(nil);
     frm_alterar_senha.showmodal;
+end;
+
+procedure TFrm_main.dxBarLargeButton124Click(Sender: TObject);
+begin
+   frm_auditoria_T10 := Tfrm_auditoria_T10.Create(nil);
+   frm_auditoria_T10.ShowModal;
+   frm_auditoria_T10.Free;
 end;
 
 procedure TFrm_main.dxBarLargeButton12Click(Sender: TObject);

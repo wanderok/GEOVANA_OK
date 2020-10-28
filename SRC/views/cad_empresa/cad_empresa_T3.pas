@@ -67,8 +67,8 @@ type
     Label17: TLabel;
     Label18: TLabel;
     Label26: TLabel;
-    cxButton5: TcxButton;
-    cxButton10: TcxButton;
+    bPesqBairro: TcxButton;
+    bPesqMunicipio: TcxButton;
     edRazaoSocial: TEdit;
     edNomeFantasia: TEdit;
     edCNAE: TEdit;
@@ -128,8 +128,8 @@ type
     procedure cxButton8Click(Sender: TObject);
     procedure cxButton11Click(Sender: TObject);
     procedure cxButton9Click(Sender: TObject);
-    procedure cxButton5Click(Sender: TObject);
-    procedure cxButton10Click(Sender: TObject);
+    procedure bPesqBairroClick(Sender: TObject);
+    procedure bPesqMunicipioClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BtnGravarClick(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
@@ -152,21 +152,13 @@ type
     procedure edInscricaoEstadualExit(Sender: TObject);
     procedure edSUFRAMAExit(Sender: TObject);
     procedure edEmailExit(Sender: TObject);
-    procedure edResponsavelEmailExit(Sender: TObject);
-    procedure edContadorEmailExit(Sender: TObject);
     procedure edEnderecoCEPExit(Sender: TObject);
     procedure edContadorCPFExit(Sender: TObject);
     procedure edDataInicioAtividadesExit(Sender: TObject);
     procedure edDataCadastroExit(Sender: TObject);
-    procedure edContadorTelefone1Exit(Sender: TObject);
-    procedure edContadorTeleFone2Exit(Sender: TObject);
     procedure edTelefoneExit(Sender: TObject);
-    procedure edCelularExit(Sender: TObject);
-    procedure edResponsavelCelularExit(Sender: TObject);
-    procedure edContadorCelular1Exit(Sender: TObject);
-    procedure edContadorCelular2Exit(Sender: TObject);
     procedure edWhatsAppExit(Sender: TObject);
-    procedure edResponsavelWhatsAppExit(Sender: TObject);
+    procedure edRazaoSocialKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     function DadosCorretos:Boolean;
@@ -192,12 +184,15 @@ uses
    ValidadorDeDocumentos,
    reg_tributario_T4,
    U_Municipio_T5,
+   cad_bairro_T8,
+   cad_regiao_T11,
+   cad_zona_T12,
 
    config_certificado, config_email,
    config_nfe, config_mde, config_nfs,
    email_arquivos_fiscais,
-   integracao_outros_bancos, config_mdfe, cad_bairro,
-   cad_regiao, cad_zona;
+   integracao_outros_bancos, config_mdfe;
+
 
 {$R *.dfm}
 
@@ -254,7 +249,7 @@ begin
     frm_confi_nfs.showmodal;
 end;
 
-procedure Tfrm_cad_empresa_T3.cxButton10Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.bPesqMunicipioClick(Sender: TObject);
 begin
    PesquisaMunicipio;
 end;
@@ -271,8 +266,9 @@ end;
 
 procedure Tfrm_cad_empresa_T3.cxButton11Click(Sender: TObject);
 begin
-    FRM_cad_zona := TFRM_cad_zona.Create(nil);
-    FRM_cad_zona.showmodal;
+    FRM_cad_zona_T12 := TFRM_cad_zona_T12.Create(nil);
+    FRM_cad_zona_T12.showmodal;
+    FRM_cad_zona_T12.Free;
 end;
 
 procedure Tfrm_cad_empresa_T3.cxButton1Click(Sender: TObject);
@@ -315,10 +311,11 @@ begin
     frm_config_email_fiscais.showmodal;
 end;
 
-procedure Tfrm_cad_empresa_T3.cxButton5Click(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.bPesqBairroClick(Sender: TObject);
 begin
-    frm_cad_bairro := Tfrm_cad_bairro.Create(nil);
-    frm_cad_bairro.showmodal;
+    frm_cad_bairro_T8 := Tfrm_cad_bairro_T8.Create(nil);
+    frm_cad_bairro_T8.showmodal;
+    frm_cad_bairro_T8.Free;
 end;
 
 procedure Tfrm_cad_empresa_T3.cxButton6Click(Sender: TObject);
@@ -345,8 +342,9 @@ end;
 
 procedure Tfrm_cad_empresa_T3.cxButton9Click(Sender: TObject);
 begin
-    Frm_regiao := TFrm_regiao.Create(nil);
-    Frm_regiao.showmodal;
+    frm_cad_regiao_T11 := Tfrm_cad_regiao_T11.Create(nil);
+    frm_cad_regiao_T11.showmodal;
+    frm_cad_regiao_T11.Free;
 end;
 
 function Tfrm_cad_empresa_T3.DadosCorretos: Boolean;
@@ -405,22 +403,13 @@ begin
    result := true;
 end;
 
-procedure Tfrm_cad_empresa_T3.edCelularExit(Sender: TObject);
-begin
-   edCelular.text := frmValidadorDeDocumentos.formataTelCel(edCelular.text);
-end;
-
 procedure Tfrm_cad_empresa_T3.edCNPJExit(Sender: TObject);
 begin
-   if edCNPJ.Text = '' then
-      exit;
-   edCNPJ.Text :=Trim(edCNPJ.Text);
-   if not frmValidadorDeDocumentos.CNPJ_Valido(edCNPJ.Text) then
+   if not CNPJValido((Sender as TEdit)) then
    begin
-      edCNPJ.SetFocus;
+      (Sender as TEdit).SetFocus;
       exit;
    end;
-   edCNPJ.Text := vVDD_DocumentoFormatado;
 end;
 
 procedure Tfrm_cad_empresa_T3.edCNPJKeyPress(Sender: TObject; var Key: Char);
@@ -450,62 +439,22 @@ begin
     }
 end;
 
-procedure Tfrm_cad_empresa_T3.edContadorCelular1Exit(Sender: TObject);
-begin
-    edContadorCelular1.text := frmValidadorDeDocumentos.formataTelCel(edContadorCelular1.text);
-end;
-
-procedure Tfrm_cad_empresa_T3.edContadorCelular2Exit(Sender: TObject);
-begin
-    edContadorCelular2.text := frmValidadorDeDocumentos.formataTelCel(edContadorCelular2.text);
-end;
-
 procedure Tfrm_cad_empresa_T3.edContadorCNPJExit(Sender: TObject);
 begin
-   if trim(edContadorCNPJ.Text) = '' then
-      exit;
-   edContadorCNPJ.Text :=Trim(edContadorCNPJ.Text);
-   if not frmValidadorDeDocumentos.CNPJ_Valido(edContadorCNPJ.Text) then
+   if not CNPJValido((Sender as TEdit)) then
    begin
-      edContadorCNPJ.SetFocus;
+      (Sender as TEdit).SetFocus;
       exit;
    end;
-   edContadorCNPJ.Text := vVDD_DocumentoFormatado;
 end;
 
 procedure Tfrm_cad_empresa_T3.edContadorCPFExit(Sender: TObject);
 begin
-   if edContadorCPF.Text = '' then
-      exit;
-   edContadorCPF.Text :=Trim(edContadorCPF.Text);
-   if not frmValidadorDeDocumentos.CPF_Valido(edContadorCPF.Text) then
+   if not CPFValido((Sender as TEdit)) then
    begin
-      edContadorCPF.SetFocus;
+      (Sender as TEdit).SetFocus;
       exit;
    end;
-   edContadorCPF.Text := vVDD_DocumentoFormatado;
-end;
-
-procedure Tfrm_cad_empresa_T3.edContadorEmailExit(Sender: TObject);
-begin
-   if edContadorEmail.Text = '' then
-      exit;
-   if not frmValidadorDeDocumentos.Email_Valido(edContadorEmail.Text) then
-   begin
-      edContadorEmail.SetFocus;
-      exit;
-   end;
-   edContadorEmail.Text := vVDD_DocumentoFormatado;
-end;
-
-procedure Tfrm_cad_empresa_T3.edContadorTelefone1Exit(Sender: TObject);
-begin
-   edContadorTelefone1.text := frmValidadorDeDocumentos.formataTelCel(edContadorTelefone1.text);
-end;
-
-procedure Tfrm_cad_empresa_T3.edContadorTeleFone2Exit(Sender: TObject);
-begin
-   edContadorTelefone2.text := frmValidadorDeDocumentos.formataTelCel(edContadorTelefone2.text);
 end;
 
 procedure Tfrm_cad_empresa_T3.edDataCadastroExit(Sender: TObject);
@@ -528,14 +477,14 @@ end;
 
 procedure Tfrm_cad_empresa_T3.edEmailExit(Sender: TObject);
 begin
-   if edEmail.Text = '' then
+   if (sender as TEdit).Text = '' then
       exit;
-   if not frmValidadorDeDocumentos.Email_Valido(edEmail.Text) then
+   if not frmValidadorDeDocumentos.Email_Valido((sender as TEdit).Text) then
    begin
-      edEmail.SetFocus;
+      (sender as TEdit).SetFocus;
       exit;
    end;
-   edEmail.Text := vVDD_DocumentoFormatado;
+   (sender as TEdit).Text := vVDD_DocumentoFormatado;
 end;
 
 procedure Tfrm_cad_empresa_T3.edEnderecoCEPExit(Sender: TObject);
@@ -552,7 +501,7 @@ end;
 
 procedure Tfrm_cad_empresa_T3.edEnderecoMunicipioIBGEExit(Sender: TObject);
 begin
-  if cxButton10.Focused then
+  if bPesqMunicipio.Focused then
      exit;
   edEnderecoMunicipioIBGE.Text := Trim(edEnderecoMunicipioIBGE.Text);
   edEnderecoMunicipio.text     := '';
@@ -660,36 +609,20 @@ procedure Tfrm_cad_empresa_T3.edRazaoSocialExit(Sender: TObject);
 begin
    if Sender is TEdit then
    begin
-      (Sender as TEdit).Text := Trim((Sender as TEdit).Text);
+      (Sender as TEdit).Text := fSemAcentos(Trim((Sender as TEdit).Text));
    end;
 end;
 
-procedure Tfrm_cad_empresa_T3.edResponsavelEmailExit(Sender: TObject);
+procedure Tfrm_cad_empresa_T3.edRazaoSocialKeyPress(Sender: TObject;
+  var Key: Char);
 begin
-   if edResponsavelEmail.Text = '' then
-      exit;
-   if not frmValidadorDeDocumentos.Email_Valido(edResponsavelEmail.Text) then
-   begin
-      edResponsavelEmail.SetFocus;
-      exit;
-   end;
-   edResponsavelEmail.Text := vVDD_DocumentoFormatado;
+  key := fSemAcentos(key);
 end;
 
 procedure Tfrm_cad_empresa_T3.edResponsavelNomeKeyPress(Sender: TObject;
   var Key: Char);
 begin
    Key := SoLetra(key);
-end;
-
-procedure Tfrm_cad_empresa_T3.edResponsavelWhatsAppExit(Sender: TObject);
-begin
-    edResponsavelWhatsApp.text := frmValidadorDeDocumentos.formataTelCel(edResponsavelWhatsApp.text);
-end;
-
-procedure Tfrm_cad_empresa_T3.edResponsavelCelularExit(Sender: TObject);
-begin
-   edResponsavelCelular.text := frmValidadorDeDocumentos.formataTelCel(edResponsavelCelular.text);
 end;
 
 procedure Tfrm_cad_empresa_T3.edSUFRAMAExit(Sender: TObject);
@@ -707,12 +640,14 @@ end;
 
 procedure Tfrm_cad_empresa_T3.edTelefoneExit(Sender: TObject);
 begin
-   edTelefone.text := frmValidadorDeDocumentos.formataTelCel(edTelefone.text);
+   if not TelValido((Sender as TEdit)) then
+      (Sender as TEdit).SetFocus;
 end;
 
 procedure Tfrm_cad_empresa_T3.edWhatsAppExit(Sender: TObject);
 begin
-    edWhatsApp.text := frmValidadorDeDocumentos.formataTelCel(edWhatsApp.text);
+   if not TelValido((Sender as TEdit)) then
+      (Sender as TEdit).SetFocus;
 end;
 
 procedure Tfrm_cad_empresa_T3.FormKeyPress(Sender: TObject; var Key: Char);

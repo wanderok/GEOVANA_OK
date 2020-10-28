@@ -5,9 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-
   ACBrBase, ACBrValidador,
-  System.MaskUtils;
+  System.MaskUtils, Vcl.StdCtrls;
 
 type
   TfrmValidadorDeDocumentos = class(TForm)
@@ -160,9 +159,16 @@ end;
 function TfrmValidadorDeDocumentos.formataTelCel(numtexto: String): String;
 begin
    result := '';
-   numtexto := trim(numtexto);
+   numtexto := SoNumeros(trim(numtexto));
    if numtexto = '' then
       exit;
+
+   if length(numtexto) < 10 then
+   begin
+     Result := '';
+     ShowMessage('Número inválido');
+     exit;
+   end;
 
    if length(numtexto) = 10 then
        result := formaTelefone(numtexto)
@@ -173,6 +179,11 @@ end;
 Function TfrmValidadorDeDocumentos.formaTelefone(numtexto:String):String;
 begin
     numtexto := sonumeros(numtexto);
+    if numtexto = '' then
+    begin
+       Result:='';
+       exit;
+    end;
     Delete(numtexto,ansipos('-',numtexto),1);  //Remove traço -
     Delete(numtexto,ansipos('-',numtexto),1);
     Delete(numtexto,ansipos('(',numtexto),1); //Remove parenteses  (
@@ -191,3 +202,6 @@ begin
 end;
 
 end.
+
+
+

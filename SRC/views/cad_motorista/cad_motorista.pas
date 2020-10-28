@@ -136,7 +136,10 @@ var
 implementation
 
 uses
-  cad_zona, cad_regiao, consulta_T7, cad_bairro;
+  consulta_T7,
+  cad_bairro_T8,
+  cad_regiao_T11,
+  cad_zona_T12;
 
 {$R *.dfm}
 
@@ -148,20 +151,23 @@ end;
 
 procedure TFrm_motorista.cxButton4Click(Sender: TObject);
 begin
-    Frm_regiao := TFrm_regiao.Create(nil);
-    Frm_regiao.showmodal;
+    frm_cad_regiao_T11 := Tfrm_cad_regiao_T11.Create(nil);
+    frm_cad_regiao_T11.showmodal;
+    frm_cad_regiao_T11.Free;
 end;
 
 procedure TFrm_motorista.cxButton5Click(Sender: TObject);
 begin
-    frm_cad_bairro := Tfrm_cad_bairro.Create(nil);
-    frm_cad_bairro.showmodal;
+    frm_cad_bairro_T8 := Tfrm_cad_bairro_T8.Create(nil);
+    frm_cad_bairro_T8.showmodal;
+    frm_cad_bairro_T8.Free;
 end;
 
 procedure TFrm_motorista.cxButton7Click(Sender: TObject);
 begin
-    FRM_cad_zona := TFRM_cad_zona.Create(nil);
-    FRM_cad_zona.showmodal;
+    FRM_cad_zona_T12 := TFRM_cad_zona_T12.Create(nil);
+    FRM_cad_zona_T12.showmodal;
+    FRM_cad_zona_T12.Free;
 end;
 
 

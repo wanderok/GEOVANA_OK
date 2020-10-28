@@ -30,6 +30,23 @@ object FRM_cad_zona: TFRM_cad_zona
     Font.Style = []
     ParentFont = False
   end
+  object lbNomeDaTela: TLabel
+    Left = 0
+    Top = 255
+    Width = 288
+    Height = 13
+    Align = alBottom
+    Alignment = taRightJustify
+    Caption = 'T11 '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ExplicitLeft = 212
+    ExplicitWidth = 24
+  end
   object edREG_DESCRICAO: TEdit
     Left = 86
     Top = 8
@@ -44,12 +61,14 @@ object FRM_cad_zona: TFRM_cad_zona
     MaxLength = 50
     ParentFont = False
     TabOrder = 0
+    OnChange = edREG_DESCRICAOChange
   end
   object DBGrid2: TDBGrid
     Left = 13
     Top = 46
     Width = 260
     Height = 150
+    DataSource = DataSource1
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -65,7 +84,7 @@ object FRM_cad_zona: TFRM_cad_zona
     Columns = <
       item
         Expanded = False
-        FieldName = 'REG_CODIGO'
+        FieldName = 'ZON_CODIGO'
         Title.Caption = 'C'#243'digo'
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
@@ -77,7 +96,7 @@ object FRM_cad_zona: TFRM_cad_zona
       end
       item
         Expanded = False
-        FieldName = 'REG_ZONA'
+        FieldName = 'ZON_DESCRICAO'
         Title.Caption = 'Zona'
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
@@ -381,5 +400,22 @@ object FRM_cad_zona: TFRM_cad_zona
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+  end
+  object DataSource1: TDataSource
+    DataSet = qLocal
+    Left = 80
+    Top = 112
+  end
+  object qLocal: TFDQuery
+    Active = True
+    Connection = DM.Database1
+    SQL.Strings = (
+      'select * FROM ZONA_ZON')
+    Left = 152
+    Top = 104
+  end
+  object ACBrEnterTab1: TACBrEnterTab
+    Left = 176
+    Top = 40
   end
 end

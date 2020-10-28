@@ -60,9 +60,12 @@ type
     FContadorEmail               : String;    // EMP_CONTADOR_EMAIL          VARCHAR(40)  NULL
     FLogomarca                   : String;    // EMP_LOGO                    VARCHAR(255) NULL
     FAssinatura                  : String;    // EMP_ASSINATURA              VARCHAR(255) NULL
-    //PASSO 3
+    //
     FTributacao                  : TTributosDeEmpresa;
+    //
     FDataCadastro                : TDateTime; // EMP_DT                      DATETIME     NULL
+    FDataBloqueio                : TDateTime;
+
     FCodigoUniSystem             : String;    // EMP_CODIGO_UNISYSTEM        varchar(10)  NULL
     FExiste                      : Boolean;
 
@@ -215,12 +218,11 @@ type
       property Logomarca                   : String    read getFLogomarca                   write setFLogomarca;
       property Assinatura                  : String    read getFAssinatura                  write setFAssinatura;
 
-      //
-      property DataCadastro                : TDateTime read getFDataCadastro                write setFDataCadastro;
-      property DataCadastroString          : String    read getDataCadastroString;
       property Tributacao                  : TTributosDeEmpresa read FTributacao write FTributacao;
 
-     //PASSO 4
+      property DataCadastro                : TDateTime read getFDataCadastro                write setFDataCadastro;
+      property DataCadastroString          : String    read getDataCadastroString;
+
       procedure Abrir;
       Function Gravar:Boolean;
    end;
@@ -364,7 +366,7 @@ end;
 
 function TEmpresa.getFTelefone: String;
 begin
-   result := frmValidadorDeDocumentos.formataTelCel(self.FTelefone);
+   result := frmValidadorDeDocumentos.formatelefone(self.FTelefone);
 end;
 
 function TEmpresa.getFTratarICMS_Diferimento: Boolean;
@@ -409,7 +411,7 @@ end;
 
 function TEmpresa.getFCelular: String;
 begin
-   result := FrmValidadorDeDocumentos.formataTelCel(self.FCelular);
+   result := frmValidadorDeDocumentos.formacelular(self.FCelular);
 end;
 
 function TEmpresa.getFCNAE: String;
@@ -511,7 +513,7 @@ end;
 
 function TEmpresa.getFResponsavelCelular: String;
 begin
-   Result := FrmValidadorDeDocumentos.formataTelCel(self.FResponsavelCelular);
+   Result := FrmValidadorDeDocumentos.formaCelular(self.FResponsavelCelular);
 end;
 
 function TEmpresa.getFResponsavelEmail: String;
@@ -586,7 +588,7 @@ begin
         qLocal.SQL.Add('       EMP_WHATSAPP,               ');
         qLocal.SQL.Add('       EMP_EMAIL,                  ');
         qLocal.SQL.Add('       EMP_CONTRIBUINTE_IPI,       ');
-        qLocal.SQL.Add('       EMP_TRATAR_ICMS_DIFERIMENTO,');
+        qLocal.SQL.Add('       EMP_TRATAR_ICM,');
         qLocal.SQL.Add('       EMP_RESPONSAVEL_NOME,       ');
         qLocal.SQL.Add('       EMP_RESPONSAVEL_WHATSAPP,   ');
         qLocal.SQL.Add('       EMP_RESPONSAVEL_CELULAR,    ');
@@ -1113,6 +1115,8 @@ procedure TEmpresa.setFContadorEmail(const Value: String);
 begin
   FContadorEmail := Copy(Value,1,40);
 end;
+
+
 
 end.
 

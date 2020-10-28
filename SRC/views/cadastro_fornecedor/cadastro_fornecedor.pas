@@ -8,7 +8,6 @@ uses
   System.Classes, Vcl.Controls, Vcl.Forms,
   Vcl.StdCtrls, Vcl.DBCtrls, Vcl.Mask,
 
-
   cxCheckBox, cxButtons,
 
   FireDAC.Stan.Param,
@@ -137,12 +136,12 @@ var
 implementation
 
 uses
-  consulta_T7, cad_zona, cad_bairro, cad_regiao;
+  consulta_T7,
+  cad_bairro_T8,
+  cad_regiao_T11,
+  cad_zona_T12;
 
 {$R *.dfm}
-
-
-
 
 procedure TFrm_fornecedor.consultaClick(Sender: TObject);
 begin
@@ -152,20 +151,23 @@ end;
 
 procedure TFrm_fornecedor.cxButton4Click(Sender: TObject);
 begin
-    Frm_regiao := TFrm_regiao.Create(nil);
-    Frm_regiao.showmodal;
+    frm_cad_regiao_T11 := Tfrm_cad_regiao_T11.Create(nil);
+    frm_cad_regiao_T11.showmodal;
+    frm_cad_regiao_T11.Free;
 end;
 
 procedure TFrm_fornecedor.cxButton5Click(Sender: TObject);
 begin
-    frm_cad_bairro := Tfrm_cad_bairro.Create(nil);
-    frm_cad_bairro.showmodal;
+    frm_cad_bairro_T8 := Tfrm_cad_bairro_T8.Create(nil);
+    frm_cad_bairro_T8.showmodal;
+    frm_cad_bairro_T8.Free;
 end;
 
 procedure TFrm_fornecedor.cxButton7Click(Sender: TObject);
 begin
-    FRM_cad_zona := TFRM_cad_zona.Create(nil);
-    FRM_cad_zona.showmodal;
+    frm_cad_zona_T12 := Tfrm_cad_zona_T12.Create(nil);
+    frm_cad_zona_T12.showmodal;
+    frm_cad_zona_T12.Free;
 end;
 
 end.

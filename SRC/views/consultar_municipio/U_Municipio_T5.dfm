@@ -72,14 +72,14 @@ object Frm_Municipio_T5: TFrm_Municipio_T5
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = [fsBold]
-    OnCellClick = DBGrid1CellClick
+    OnDblClick = DBGrid1DblClick
     OnKeyDown = DBGrid1KeyDown
     Columns = <
       item
         Expanded = False
         FieldName = 'CID_NOME'
         Title.Caption = 'Cidade'
-        Width = 218
+        Width = 248
         Visible = True
       end
       item
@@ -90,20 +90,12 @@ object Frm_Municipio_T5: TFrm_Municipio_T5
         Title.Caption = 'Sigla'
         Width = 44
         Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'CID_CODIGO'
-        Title.Caption = 'IBGE'
-        Width = 71
-        Visible = True
       end>
   end
   object qLocal: TFDQuery
     Connection = DM.Database1
     SQL.Strings = (
-      'select * FROM CIDADE_CID, UF_UF'
-      'WHERE CID_UF = UF_CODIGO')
+      'select * FROM CIDADE_CID, UF_UF WHERE CID_UF=UF_CODIGO')
     Left = 184
     Top = 80
   end

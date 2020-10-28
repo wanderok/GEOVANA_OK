@@ -1,4 +1,4 @@
-unit cad_ramo_atividade;
+unit cad_ramo_atividade_T9;
 
 interface
 
@@ -31,7 +31,7 @@ uses
   dxSkinXmas2008Blue, ACBrBase, ACBrEnterTab;
 
 type
-  TFRM_cad_ramo_atividade = class(TForm)
+  Tfrm_cad_ramo_atividade_T9 = class(TForm)
     Label5: TLabel;
     edFiltro: TEdit;
     DBGrid2: TDBGrid;
@@ -40,12 +40,12 @@ type
     ACBrEnterTab1: TACBrEnterTab;
     qLocal: TFDQuery;
     DataSource1: TDataSource;
+    lbNomeDaTela: TLabel;
     procedure FormShow(Sender: TObject);
     procedure edFiltroChange(Sender: TObject);
     procedure DBGrid2DblClick(Sender: TObject);
     procedure DBGrid2KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure DBGrid2KeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     procedure Selecionar;
@@ -54,7 +54,7 @@ type
   end;
 
 var
-  FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade;
+  frm_cad_ramo_atividade_T9: Tfrm_cad_ramo_atividade_T9;
   vFRM_cad_ramo_atividade:String;
 
 implementation
@@ -63,25 +63,19 @@ implementation
 
 { TFRM_cad_ramo_atividade }
 
-procedure TFRM_cad_ramo_atividade.DBGrid2DblClick(Sender: TObject);
+procedure Tfrm_cad_ramo_atividade_T9.DBGrid2DblClick(Sender: TObject);
 begin
    Selecionar;
 end;
 
-procedure TFRM_cad_ramo_atividade.DBGrid2KeyDown(Sender: TObject; var Key: Word;
+procedure Tfrm_cad_ramo_atividade_T9.DBGrid2KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
-begin
-   Selecionar;
-end;
-
-procedure TFRM_cad_ramo_atividade.DBGrid2KeyPress(Sender: TObject;
-  var Key: Char);
 begin
   if key = VK_RETURN then
      Selecionar;
 end;
 
-procedure TFRM_cad_ramo_atividade.edFiltroChange(Sender: TObject);
+procedure Tfrm_cad_ramo_atividade_T9.edFiltroChange(Sender: TObject);
 begin
    qLocal.Close;
    qLocal.SQL.Clear;
@@ -93,12 +87,12 @@ begin
    qLocal.Open;
 end;
 
-procedure TFRM_cad_ramo_atividade.FormShow(Sender: TObject);
+procedure Tfrm_cad_ramo_atividade_T9.FormShow(Sender: TObject);
 begin
    vFRM_cad_ramo_atividade := '';
 end;
 
-procedure TFRM_cad_ramo_atividade.Selecionar;
+procedure Tfrm_cad_ramo_atividade_T9.Selecionar;
 begin
    vFRM_cad_ramo_atividade := qLocal.FieldByName('RAMO_CODIGO').AsString;
    close;

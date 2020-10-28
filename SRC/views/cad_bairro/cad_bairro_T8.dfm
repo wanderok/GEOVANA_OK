@@ -1,20 +1,21 @@
-object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
+object frm_cad_bairro_T8: Tfrm_cad_bairro_T8
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'Cadastro | Ramo Atividade'
-  ClientHeight = 268
-  ClientWidth = 281
-  Color = clWhite
-  DefaultMonitor = dmDesktop
+  Caption = 'Cadastro | Bairro'
+  ClientHeight = 271
+  ClientWidth = 290
+  Color = clBtnFace
+  DefaultMonitor = dmMainForm
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -30,6 +31,23 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+  end
+  object lbNomeDaTela: TLabel
+    Left = 0
+    Top = 258
+    Width = 290
+    Height = 13
+    Align = alBottom
+    Alignment = taRightJustify
+    Caption = 'T8 '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ExplicitLeft = 273
+    ExplicitWidth = 17
   end
   object edFiltro: TEdit
     Left = 86
@@ -48,8 +66,8 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     OnChange = edFiltroChange
   end
   object DBGrid2: TDBGrid
-    Left = 13
-    Top = 46
+    Left = 8
+    Top = 40
     Width = 260
     Height = 150
     DataSource = DataSource1
@@ -67,12 +85,23 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     TitleFont.Style = []
     OnDblClick = DBGrid2DblClick
     OnKeyDown = DBGrid2KeyDown
-    OnKeyPress = DBGrid2KeyPress
     Columns = <
       item
         Expanded = False
-        FieldName = 'RAMO_DESCRICAO'
-        Title.Caption = 'Ramo Atividade'
+        FieldName = 'BAI_CODIGO'
+        Title.Caption = 'C'#243'digo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 48
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'BAI_DESCRICAO'
+        Title.Caption = 'Bairro'
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11
@@ -82,7 +111,7 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
         Visible = True
       end>
   end
-  object cxButton1: TcxButton
+  object bGravar: TcxButton
     Left = 13
     Top = 211
     Width = 98
@@ -228,6 +257,7 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = bGravarClick
   end
   object cxButton2: TcxButton
     Left = 170
@@ -375,16 +405,16 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = cxButton2Click
   end
   object ACBrEnterTab1: TACBrEnterTab
     Left = 253
     Top = 16
   end
   object qLocal: TFDQuery
-    Active = True
     Connection = DM.Database1
     SQL.Strings = (
-      'select * FROM RAMOATIVIDADE_RAMO')
+      'SELECT * FROM BAIRRO_BAI')
     Left = 184
     Top = 80
   end

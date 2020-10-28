@@ -1,4 +1,4 @@
-object frm_cad_bairro: Tfrm_cad_bairro
+object frm_cad_bairro_T8: Tfrm_cad_bairro_T8
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
@@ -16,6 +16,7 @@ object frm_cad_bairro: Tfrm_cad_bairro
   KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label5: TLabel
@@ -31,7 +32,7 @@ object frm_cad_bairro: Tfrm_cad_bairro
     Font.Style = []
     ParentFont = False
   end
-  object edREG_DESCRICAO: TEdit
+  object edFiltro: TEdit
     Left = 86
     Top = 8
     Width = 187
@@ -45,12 +46,14 @@ object frm_cad_bairro: Tfrm_cad_bairro
     MaxLength = 50
     ParentFont = False
     TabOrder = 0
+    OnChange = edFiltroChange
   end
   object DBGrid2: TDBGrid
     Left = 13
     Top = 46
     Width = 260
     Height = 150
+    DataSource = DataSource1
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -63,10 +66,12 @@ object frm_cad_bairro: Tfrm_cad_bairro
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
+    OnDblClick = DBGrid2DblClick
+    OnKeyPress = DBGrid2KeyPress
     Columns = <
       item
         Expanded = False
-        FieldName = 'REG_CODIGO'
+        FieldName = 'BAI_CODIGO'
         Title.Caption = 'C'#243'digo'
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
@@ -78,7 +83,7 @@ object frm_cad_bairro: Tfrm_cad_bairro
       end
       item
         Expanded = False
-        FieldName = 'REG_BAIRRO'
+        FieldName = 'BAI_DESCRICAO'
         Title.Caption = 'Bairro'
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
@@ -382,5 +387,22 @@ object frm_cad_bairro: Tfrm_cad_bairro
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+  end
+  object ACBrEnterTab1: TACBrEnterTab
+    Left = 253
+    Top = 16
+  end
+  object qLocal: TFDQuery
+    Active = True
+    Connection = DM.Database1
+    SQL.Strings = (
+      'SELECT * FROM BAIRRO_BAI')
+    Left = 184
+    Top = 80
+  end
+  object DataSource1: TDataSource
+    DataSet = qLocal
+    Left = 112
+    Top = 88
   end
 end

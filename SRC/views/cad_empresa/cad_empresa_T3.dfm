@@ -2746,6 +2746,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       TabOrder = 0
       Text = 'Edit1'
       OnExit = edRazaoSocialExit
+      OnKeyPress = edRazaoSocialKeyPress
     end
     object edContadorResponsavel: TEdit
       Tag = 200
@@ -2817,7 +2818,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 7
       Text = 'Edit1'
-      OnExit = edContadorCelular1Exit
+      OnExit = edTelefoneExit
       OnKeyPress = edCNPJKeyPress
     end
     object edContadorEmail: TEdit
@@ -2837,7 +2838,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 9
       Text = 'edit1'
-      OnExit = edContadorEmailExit
+      OnExit = edEmailExit
     end
     object edContadorTelefone1: TEdit
       Tag = 200
@@ -2855,7 +2856,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 5
       Text = 'Edit1'
-      OnExit = edContadorTelefone1Exit
+      OnExit = edTelefoneExit
       OnKeyPress = edCNPJKeyPress
     end
     object edContadorCPF: TEdit
@@ -2891,7 +2892,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 6
       Text = 'Edit1'
-      OnExit = edContadorTeleFone2Exit
+      OnExit = edTelefoneExit
       OnKeyPress = edCNPJKeyPress
     end
     object edContadorCelular2: TEdit
@@ -2909,7 +2910,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 8
       Text = 'Edit1'
-      OnExit = edContadorCelular2Exit
+      OnExit = edTelefoneExit
       OnKeyPress = edCNPJKeyPress
     end
   end
@@ -3200,10 +3201,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 0
       OnExit = edRazaoSocialExit
+      OnKeyPress = edRazaoSocialKeyPress
     end
     object edNomeFantasia: TEdit
       Tag = 100
-      Left = 141
+      Left = 139
       Top = 52
       Width = 461
       Height = 26
@@ -3217,6 +3219,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 1
       OnExit = edRazaoSocialExit
+      OnKeyPress = edRazaoSocialKeyPress
     end
     object edCNAE: TEdit
       Tag = 100
@@ -3750,11 +3753,12 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       Font.Style = []
       ParentFont = False
     end
-    object cxButton5: TcxButton
+    object bPesqBairro: TcxButton
       Left = 577
       Top = 53
       Width = 25
       Height = 26
+      Hint = 'Pesquisa Bairro'
       LookAndFeel.Kind = lfOffice11
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Metropolis'
@@ -3793,15 +3797,18 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
         A2FC62504B900404031000000002000000000000000000000000000000000000
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 4
       TabStop = False
-      OnClick = cxButton5Click
+      OnClick = bPesqBairroClick
     end
-    object cxButton10: TcxButton
+    object bPesqMunicipio: TcxButton
       Left = 178
       Top = 119
       Width = 25
       Height = 26
+      Hint = 'Pesquisa Munic'#237'pio'
       LookAndFeel.Kind = lfOffice11
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Metropolis'
@@ -3840,9 +3847,11 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
         A2FC62504B900404031000000002000000000000000000000000000000000000
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 7
       TabStop = False
-      OnClick = cxButton10Click
+      OnClick = bPesqMunicipioClick
     end
     object edEnderecoMunicipioIBGE: TEdit
       Tag = 100
@@ -3879,6 +3888,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       TabOrder = 5
       Text = 'Edit1'
       OnExit = edRazaoSocialExit
+      OnKeyPress = edRazaoSocialKeyPress
     end
     object edEnderecoNumero: TEdit
       Tag = 100
@@ -3914,6 +3924,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 0
       OnExit = edRazaoSocialExit
+      OnKeyPress = edRazaoSocialKeyPress
     end
     object edEnderecoMunicipio: TEdit
       Left = 203
@@ -3949,6 +3960,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       TabOrder = 3
       Text = 'Edit1'
       OnExit = edRazaoSocialExit
+      OnKeyPress = edRazaoSocialKeyPress
     end
     object edEnderecoUF: TEdit
       Left = 446
@@ -4111,7 +4123,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 1
       Text = 'Edit1'
-      OnExit = edResponsavelCelularExit
+      OnExit = edTelefoneExit
       OnKeyPress = edCNPJKeyPress
     end
     object edResponsavelWhatsApp: TEdit
@@ -4130,7 +4142,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 2
       Text = 'Edit1'
-      OnExit = edResponsavelWhatsAppExit
+      OnExit = edTelefoneExit
       OnKeyPress = edCNPJKeyPress
     end
     object edResponsavelEmail: TEdit
@@ -4150,7 +4162,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 3
       Text = 'edit1'
-      OnExit = edResponsavelEmailExit
+      OnExit = edEmailExit
     end
   end
   object grpOutras: TGroupBox
@@ -4338,7 +4350,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
       ParentFont = False
       TabOrder = 1
       Text = 'Edit1'
-      OnExit = edCelularExit
+      OnExit = edTelefoneExit
       OnKeyPress = edCNPJKeyPress
     end
     object edWhatsApp: TEdit

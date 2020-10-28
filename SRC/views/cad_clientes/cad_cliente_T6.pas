@@ -43,17 +43,17 @@ type
     Label14: TLabel;
     btDetalhesBloqueio: TcxButton;
     edDataCadastro: TMaskEdit;
-    edDTBLOQUEIO: TMaskEdit;
+    edDataBloqueio: TMaskEdit;
     MaskEdit2: TMaskEdit;
     Label16: TLabel;
     Label10: TLabel;
     edCodigo: TEdit;
     GroupBox5: TGroupBox;
     Label15: TLabel;
-    edUSUALTEROU: TEdit;
-    edDTALTEROU: TMaskEdit;
-    edHRALTEROU: TEdit;
-    edMAQALTEROU: TMaskEdit;
+    edUSU: TEdit;
+    edDT: TMaskEdit;
+    edHR: TEdit;
+    edEstacao: TMaskEdit;
     bHistoricoAlteracoes: TcxButton;
     pgControlPessoa: TPageControl;
     tsPessoaFisica: TTabSheet;
@@ -85,52 +85,50 @@ type
     Label22: TLabel;
     Label9: TLabel;
     Label26: TLabel;
-    cxButton5: TcxButton;
-    btn_cep: TcxButton;
+    bPesqBairro: TcxButton;
+    bPesqCEP: TcxButton;
     cxButton4: TcxButton;
-    cxButton6: TcxButton;
-    cxButton7: TcxButton;
+    bPesqMunicipio: TcxButton;
+    bPesqZona: TcxButton;
     cxButton8: TcxButton;
     cxButton21: TcxButton;
     cxButton28: TcxButton;
     GroupBox3: TGroupBox;
     GroupBox8: TGroupBox;
-    Edit20: TEdit;
-    Edit18: TEdit;
-    Edit3: TEdit;
-    Edit1: TEdit;
-    Edit2: TEdit;
-    Edit7: TEdit;
-    Edit8: TEdit;
+    edFone1: TEdit;
+    edCel: TEdit;
+    edWhatsApp: TEdit;
+    edEmail1: TEdit;
+    edFone2: TEdit;
+    edNomeContato: TEdit;
+    edEmail2: TEdit;
     rgStatus: TRadioGroup;
     Label3: TLabel;
     Label7: TLabel;
     Label11: TLabel;
     lbNomeDaTela: TLabel;
-    edEndereco: TEdit;
+    edRua: TEdit;
     edCEP: TEdit;
-    Edit6: TEdit;
-    Edit9: TEdit;
-    Edit11: TEdit;
-    Edit12: TEdit;
-    Edit13: TEdit;
-    Edit14: TEdit;
-    Edit15: TEdit;
-    Edit16: TEdit;
-    Edit17: TEdit;
-    Edit19: TEdit;
-    Edit21: TEdit;
-    Edit22: TEdit;
+    edNumero: TEdit;
+    edBairro: TEdit;
+    edBairroDescricao: TEdit;
+    edComplemento: TEdit;
+    edEnderecoMunicipioIBGE: TEdit;
+    edEnderecoMunicipio: TEdit;
+    edEnderecoUF: TEdit;
+    edEnderecoUFIBGE: TEdit;
+    edZona: TEdit;
+    edZonaDescricao: TEdit;
+    edRegiao: TEdit;
+    edRegiaoDescricao: TEdit;
     Label1: TLabel;
-    Edit4: TEdit;
-    cxButton2: TcxButton;
-    Edit23: TEdit;
-    procedure cxButton8Click(Sender: TObject);
-    procedure cxButton9Click(Sender: TObject);
-    procedure cxButton7Click(Sender: TObject);
+    edAtividadeCodigo: TEdit;
+    bPesqRamoAtividade: TcxButton;
+    edAtividadeCodigoNome: TEdit;
+    procedure bPesqZonaClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
-    procedure cxButton5Click(Sender: TObject);
-    procedure cxButton2Click(Sender: TObject);
+    procedure bPesqBairroClick(Sender: TObject);
+    procedure bPesqRamoAtividadeClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Inicio;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -159,6 +157,39 @@ type
     function  fPessoaJuridica:Boolean;
     procedure edCPFExit(Sender: TObject);
     procedure edCNPJExit(Sender: TObject);
+    procedure bPesqMunicipioClick(Sender: TObject);
+    procedure PesquisaMunicipio;
+    procedure PesquisaAtividade;
+    procedure PesquisaBairro;
+    procedure TrazerAtividade;
+    procedure edEnderecoMunicipioIBGEExit(Sender: TObject);
+    procedure edAtividadeCodigoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure edAtividadeCodigoExit(Sender: TObject);
+    procedure edCEPExit(Sender: TObject);
+    procedure edCEPKeyPress(Sender: TObject; var Key: Char);
+    procedure edCPFKeyPress(Sender: TObject; var Key: Char);
+    procedure edRGKeyPress(Sender: TObject; var Key: Char);
+    procedure edCNPJKeyPress(Sender: TObject; var Key: Char);
+    procedure edIEKeyPress(Sender: TObject; var Key: Char);
+    procedure edFone2KeyPress(Sender: TObject; var Key: Char);
+    procedure edCelKeyPress(Sender: TObject; var Key: Char);
+    procedure edWhatsAppKeyPress(Sender: TObject; var Key: Char);
+    procedure edBairroKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure edBairroExit(Sender: TObject);
+    procedure edNOMEExit(Sender: TObject);
+    procedure RecuperaMunicipio;
+    procedure PesquisaRegiao;
+    procedure PesquisaZona;
+    procedure edRegiaoExit(Sender: TObject);
+    procedure edZonaExit(Sender: TObject);
+    procedure edNOMEKeyPress(Sender: TObject; var Key: Char);
+    procedure edFone1Exit(Sender: TObject);
+    procedure edRG_DataEmissaoExit(Sender: TObject);
+    procedure edDataNascimentoExit(Sender: TObject);
+    procedure edEmail1Exit(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   public
     { Public declarations }
   end;
@@ -173,8 +204,13 @@ uses
   Funcoes,
   TiposDeDados,
   ValidadorDeDocumentos,
+  U_Municipio_T5,
   consulta_T7,
-  cad_ramo_atividade, cad_zona, cad_regiao, cad_bairro;
+  cad_bairro_T8,
+  cad_ramo_atividade_T9,
+  cad_regiao_T11,
+  cad_zona_T12,
+  Dados;
 
 {$R *.dfm}
 
@@ -195,34 +231,49 @@ begin
    Close;
 end;
 
-procedure Tfrm_cad_cliente_T6.cxButton2Click(Sender: TObject);
+procedure Tfrm_cad_cliente_T6.bPesqMunicipioClick(Sender: TObject);
 begin
-    FRM_cad_ramo_atividade := TFRM_cad_ramo_atividade.Create(nil);
-    FRM_cad_ramo_atividade.showmodal;
+   PesquisaMunicipio;
+end;
+
+procedure Tfrm_cad_cliente_T6.bPesqRamoAtividadeClick(Sender: TObject);
+begin
+   PesquisaAtividade;
 end;
 
 procedure Tfrm_cad_cliente_T6.cxButton4Click(Sender: TObject);
 begin
-    Frm_regiao := TFrm_regiao.Create(nil);
-    Frm_regiao.showmodal;
+    PesquisaRegiao;
 end;
 
-procedure Tfrm_cad_cliente_T6.cxButton5Click(Sender: TObject);
-begin
-    frm_cad_bairro := Tfrm_cad_bairro.Create(nil);
-    frm_cad_bairro.showmodal;
+procedure Tfrm_cad_cliente_T6.PesquisaRegiao;
+Begin
+    frm_cad_regiao_T11 := Tfrm_cad_regiao_T11.Create(nil);
+    frm_cad_regiao_T11.showmodal;
+    edRegiao.Text := vfrm_cad_regiao;
+    frm_cad_regiao_T11.Free;
+    edRegiao.SetFocus;
+    edRegiaoExit(nil);
 end;
 
-procedure Tfrm_cad_cliente_T6.cxButton7Click(Sender: TObject);
+procedure Tfrm_cad_cliente_T6.PesquisaZona;
 begin
-    FRM_cad_zona := TFRM_cad_zona.Create(nil);
-    FRM_cad_zona.showmodal;
+    frm_cad_zona_T12 := Tfrm_cad_zona_T12.Create(nil);
+    frm_cad_zona_T12.showmodal;
+    edZona.Text := vfrm_cad_zona;
+    frm_cad_zona_T12.Free;
+    edZona.SetFocus;
+    edZonaExit(nil);
 end;
 
-
-procedure Tfrm_cad_cliente_T6.cxButton8Click(Sender: TObject);
+procedure Tfrm_cad_cliente_T6.bPesqBairroClick(Sender: TObject);
 begin
-   Consultar;
+    PesquisaBairro;
+end;
+
+procedure Tfrm_cad_cliente_T6.bPesqZonaClick(Sender: TObject);
+begin
+   PesquisaZona;
 end;
 
 procedure Tfrm_cad_cliente_T6.Consultar;
@@ -233,13 +284,6 @@ begin
     edCodigo.Text:= vfrm_consulta_T7_Codigo;
     frm_consulta_T7.Free;
     Pesquisar;
-end;
-
-procedure Tfrm_cad_cliente_T6.cxButton9Click(Sender: TObject);
-begin
-    FRM_cad_ramo_atividade := TFRM_cad_ramo_atividade.Create(nil);
-    FRM_cad_ramo_atividade.showmodal;
-
 end;
 
 function Tfrm_cad_cliente_T6.DadosCorretos: Boolean;
@@ -286,17 +330,63 @@ begin
    result := true;
 end;
 
-procedure Tfrm_cad_cliente_T6.edCNPJExit(Sender: TObject);
+procedure Tfrm_cad_cliente_T6.edAtividadeCodigoExit(Sender: TObject);
 begin
-   if edCNPJ.Text = '' then
-      exit;
-   edCNPJ.Text :=Trim(edCNPJ.Text);
-   if not frmValidadorDeDocumentos.CNPJ_Valido(edCNPJ.Text) then
+  TrazerAtividade;
+end;
+
+procedure Tfrm_cad_cliente_T6.edAtividadeCodigoKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+   if key = vk_f1 Then
+      PesquisaMunicipio;
+end;
+
+procedure Tfrm_cad_cliente_T6.edBairroExit(Sender: TObject);
+begin
+   if not SelectBairro(edBairro.Text,edBairroDescricao) then
    begin
-      edCNPJ.SetFocus;
+      edBairro.SetFocus;
       exit;
    end;
-   edCNPJ.Text := vVDD_DocumentoFormatado;
+end;
+
+procedure Tfrm_cad_cliente_T6.edBairroKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+   if key = vk_f1 Then
+      PesquisaBairro;
+end;
+
+procedure Tfrm_cad_cliente_T6.edCEPExit(Sender: TObject);
+begin
+   if edCEP.Text = '' then
+      exit;
+   if not frmValidadorDeDocumentos.CEP_Valido(edCEP.Text) then
+   begin
+      edCEP.SetFocus;
+      exit;
+   end;
+   edCEP.Text := vVDD_DocumentoFormatado;
+end;
+
+procedure Tfrm_cad_cliente_T6.edCEPKeyPress(Sender: TObject; var Key: Char);
+begin
+   key := SoNumero(key);
+end;
+
+procedure Tfrm_cad_cliente_T6.edCNPJExit(Sender: TObject);
+begin
+   if not CNPJValido((Sender as TEdit)) then
+   begin
+      (Sender as TEdit).SetFocus;
+      exit;
+   end;
+end;
+
+procedure Tfrm_cad_cliente_T6.edCNPJKeyPress(Sender: TObject; var Key: Char);
+begin
+   key := SoNumero(key);
 end;
 
 procedure Tfrm_cad_cliente_T6.edCodigoExit(Sender: TObject);
@@ -313,15 +403,170 @@ end;
 
 procedure Tfrm_cad_cliente_T6.edCPFExit(Sender: TObject);
 begin
-   if edCPF.Text = '' then
-      exit;
-   edCPF.Text :=Trim(edCPF.Text);
-   if not frmValidadorDeDocumentos.CPF_Valido(edCPF.Text) then
+   if not CPFValido((Sender as TEdit)) then
    begin
-      edCPF.SetFocus;
+      (Sender as TEdit).SetFocus;
       exit;
    end;
-   edCPF.Text := vVDD_DocumentoFormatado;
+end;
+
+procedure Tfrm_cad_cliente_T6.edCPFKeyPress(Sender: TObject; var Key: Char);
+begin
+   key := SoNumero(key);
+end;
+
+procedure Tfrm_cad_cliente_T6.edDataNascimentoExit(Sender: TObject);
+begin
+   if DataNoFuturo((Sender as TEdit).Text) then
+      (Sender as TEdit).SetFocus;
+
+end;
+
+procedure Tfrm_cad_cliente_T6.edEmail1Exit(Sender: TObject);
+begin
+   if (sender as TEdit).Text = '' then
+      exit;
+   if not frmValidadorDeDocumentos.Email_Valido((sender as TEdit).Text) then
+   begin
+      (sender as TEdit).SetFocus;
+      exit;
+   end;
+   (sender as TEdit).Text := vVDD_DocumentoFormatado;
+end;
+
+procedure Tfrm_cad_cliente_T6.edEnderecoMunicipioIBGEExit(Sender: TObject);
+begin
+  RecuperaMunicipio;
+end;
+
+procedure Tfrm_cad_cliente_T6.RecuperaMunicipio;
+begin
+  if bPesqMunicipio.Focused then
+     exit;
+  edEnderecoMunicipioIBGE.Text := Trim(edEnderecoMunicipioIBGE.Text);
+  edEnderecoMunicipio.text     := '';
+  edEnderecoUF.text            := '';
+  edEnderecoUFIBGE.text        := '';
+
+  if edEnderecoMunicipioIBGE.text = '' then
+     exit;
+
+  dm.Query1.Close;
+  dm.Query1.Sql.Clear;
+  dm.Query1.Sql.Add('SELECT *                  ');
+  dm.Query1.Sql.Add('  FROM CIDADE_CID,        ');
+  dm.Query1.Sql.Add('       UF_UF              ');
+  dm.Query1.Sql.Add(' WHERE UF_CODIGO  = CID_UF');
+  dm.Query1.Sql.Add('   AND CID_CODIGO = :COD  ');
+  dm.Query1.ParamByName('COD').AsString := edEnderecoMunicipioIBGE.text;
+  dm.Query1.Open;
+  if dm.Query1.Eof Then
+  Begin
+     ShowMessage('Município inexistente...');
+     edEnderecoMunicipioIBGE.SetFocus;
+     Exit;
+  End;
+  edEnderecoMunicipio.Text  := dm.Query1.FieldByName('CID_NOME').AsString;
+  edEnderecoUFIBGE.text     := dm.Query1.FieldByName('CID_UF'  ).AsString;
+  edEnderecoUF.text         := dm.Query1.FieldByName('UF_SIGLA').AsString;
+end;
+
+procedure Tfrm_cad_cliente_T6.edIEKeyPress(Sender: TObject; var Key: Char);
+begin
+   key := SoNumero(key);
+end;
+
+procedure Tfrm_cad_cliente_T6.edCelKeyPress(Sender: TObject; var Key: Char);
+begin
+   key := SoNumero(key);
+end;
+
+procedure Tfrm_cad_cliente_T6.edFone1Exit(Sender: TObject);
+begin
+   if not TelValido((Sender as TEdit)) then
+      (Sender as TEdit).SetFocus;
+end;
+
+procedure Tfrm_cad_cliente_T6.edFone2KeyPress(Sender: TObject; var Key: Char);
+begin
+   key := SoNumero(key);
+end;
+
+procedure Tfrm_cad_cliente_T6.edWhatsAppKeyPress(Sender: TObject; var Key: Char);
+begin
+   key := SoNumero(key);
+end;
+
+procedure Tfrm_cad_cliente_T6.edZonaExit(Sender: TObject);
+begin
+   if not SelectZona(edZona.Text,edZonaDescricao) then
+   begin
+      edZona.SetFocus;
+      exit;
+   end
+end;
+
+procedure Tfrm_cad_cliente_T6.edNOMEExit(Sender: TObject);
+begin
+   if Sender is TEdit then
+   begin
+      (Sender as TEdit).Text := fSemAcentos(Trim((Sender as TEdit).Text));
+   end;
+end;
+
+procedure Tfrm_cad_cliente_T6.edNOMEKeyPress(Sender: TObject; var Key: Char);
+begin
+     key := fSemAcentos(key);
+end;
+
+procedure Tfrm_cad_cliente_T6.edRegiaoExit(Sender: TObject);
+begin
+   if not SelectRegiao(edRegiao.Text,edRegiaoDescricao) then
+   begin
+      edRegiao.SetFocus;
+      exit;
+   end;
+end;
+
+procedure Tfrm_cad_cliente_T6.edRGKeyPress(Sender: TObject; var Key: Char);
+begin
+   key := SoNumero(key);
+end;
+
+procedure Tfrm_cad_cliente_T6.edRG_DataEmissaoExit(Sender: TObject);
+begin
+   if DataNoFuturo((Sender as TEdit).Text) then
+      (Sender as TEdit).SetFocus;
+end;
+
+procedure Tfrm_cad_cliente_T6.PesquisaAtividade;
+begin
+    FRM_cad_ramo_atividade_T9 := TFRM_cad_ramo_atividade_T9.Create(nil);
+    FRM_cad_ramo_atividade_T9.showmodal;
+    edAtividadeCodigo.TEXT := vFRM_cad_ramo_atividade;
+    FRM_cad_ramo_atividade_T9.Free;
+    edAtividadeCodigo.SetFocus;
+    edAtividadeCodigoExit(nil);
+end;
+
+procedure Tfrm_cad_cliente_T6.PesquisaBairro;
+begin
+    frm_cad_bairro_T8 := Tfrm_cad_bairro_T8.Create(nil);
+    frm_cad_bairro_T8.showmodal;
+    edBairro.TEXT := vfrm_cad_bairro;
+    frm_cad_bairro_T8.Free;
+    edBairro.SetFocus;
+    edBairroExit(nil);
+end;
+
+procedure Tfrm_cad_cliente_T6.PesquisaMunicipio;
+begin
+    Frm_Municipio_T5 := TFrm_Municipio_T5.Create(nil);
+    Frm_Municipio_T5.showmodal;
+    edEnderecoMunicipioIBGE.TEXT := vFrm_Municipio;
+    Frm_Municipio_T5.Free;
+    edEnderecoMunicipioIBGE.SetFocus;
+    edEnderecoMunicipioIBGEExit(nil);
 end;
 
 procedure Tfrm_cad_cliente_T6.Pesquisar;
@@ -351,6 +596,18 @@ procedure Tfrm_cad_cliente_T6.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
    Cliente.Free;
+end;
+
+procedure Tfrm_cad_cliente_T6.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+   if key = vk_f1 Then
+   begin
+           if edEnderecoMunicipioIBGE.Focused then PesquisaMunicipio
+      else if edZona.Focused                  then PesquisaZona
+      else if edRegiao.Focused                then PesquisaRegiao
+      else if edAtividadeCodigo.Focused       then PesquisaAtividade;
+   end;
 end;
 
 procedure Tfrm_cad_cliente_T6.FormKeyPress(Sender: TObject; var Key: Char);
@@ -460,8 +717,30 @@ begin
            end;
 
         end;
-        Cliente.Status                      := IntToStatusCadastral(rgStatus.ItemIndex);
-        Cliente.Detalhes.TipoPessoa         := StringToTipoPessoa(fTipoPessoa_JF);
+        Cliente.Status                        := IntToStatusCadastral(rgStatus.ItemIndex);
+        Cliente.Detalhes.TipoPessoa           := StringToTipoPessoa(fTipoPessoa_JF);
+        if rgStatus.ItemIndex = 1 then
+           Cliente.Alteracao.DataBloqueio     := sDataServidor
+        else
+           Cliente.Alteracao.DataBloqueio     := '  /  /  ';
+        Cliente.Detalhes.RamoAtividade        := edAtividadeCodigo.Text;
+        Cliente.Detalhes.Regiao               := edRegiao.Text;
+        Cliente.Detalhes.Zona                 := edZona.Text;
+        Cliente.Detalhes.Endereco.Rua         := edRua.Text;
+        Cliente.Detalhes.Endereco.Numero      := edNumero.Text;
+        Cliente.Detalhes.Endereco.Bairro      := edBairro.Text;
+        Cliente.Detalhes.Endereco.Complemento := edComplemento.Text;
+        Cliente.Detalhes.Endereco.Cidade      := edEnderecoMunicipioIBGE.Text;
+        Cliente.Detalhes.Endereco.CEP         := edCEP.Text;
+
+        Cliente.Detalhes.Contato.Fone1        := edFone1.Text;
+        Cliente.Detalhes.Contato.Fone2        := edFone2.Text;
+        Cliente.Detalhes.Contato.Nome         := edNomeContato.Text;
+        Cliente.Detalhes.Contato.Cel          := edCel.Text;
+        Cliente.Detalhes.Contato.WhatsApp     := edWhatsApp.Text;
+        Cliente.Detalhes.Contato.Email1       := edEmail1.Text;
+        Cliente.Detalhes.Contato.Email2       := edEmail2.Text;
+
         result := Cliente.Gravar;
     Except
 
@@ -487,7 +766,13 @@ end;
 
 procedure Tfrm_cad_cliente_T6.Preencher_Contato;
 begin
-//
+   edFone1.Text             := Cliente.Detalhes.Contato.Fone1;
+   edFone2.Text             := Cliente.Detalhes.Contato.Fone2;
+   edNomeContato.Text       := Cliente.Detalhes.Contato.Nome;
+   edCel.Text               := Cliente.Detalhes.Contato.Cel;
+   edWhatsApp.Text          := Cliente.Detalhes.Contato.WhatsApp;
+   edEmail1.Text            := Cliente.Detalhes.Contato.Email1;
+   edEmail2.Text            := Cliente.Detalhes.Contato.Email2;
 end;
 
 procedure Tfrm_cad_cliente_T6.Preencher_Dados_Pessoa;
@@ -498,6 +783,20 @@ begin
       Preencher_Dados_Pessoa_Fisica
    else
       Preencher_Dados_Pessoa_Juridica;
+   edAtividadeCodigo.Text             := Cliente.Detalhes.RamoAtividade;
+   edRegiao.Text                      := Cliente.Detalhes.Regiao;
+   edZona.Text                        := Cliente.Detalhes.Zona;
+   edRua.Text                         := Cliente.Detalhes.Endereco.Rua;
+   edNumero.Text                      := Cliente.Detalhes.Endereco.Numero;
+   edBairro.Text                      := Cliente.Detalhes.Endereco.Bairro;
+   edComplemento.Text                 := Cliente.Detalhes.Endereco.Complemento;
+   edEnderecoMunicipioIBGE.Text       := Cliente.Detalhes.Endereco.Cidade;
+   edCEP.Text                         := Cliente.Detalhes.Endereco.CEP;
+   TrazerAtividade;
+   SelectBairro(edBairro.Text,edBairroDescricao);
+   SelectRegiao(edRegiao.Text,edRegiaoDescricao);
+   SelectZona(edZona.Text,edZonaDescricao);
+   RecuperaMunicipio;
 end;
 
 procedure Tfrm_cad_cliente_T6.Preencher_Dados_Pessoa_Fisica;
@@ -527,18 +826,65 @@ end;
 procedure Tfrm_cad_cliente_T6.Preencher_Historicos;
 begin
    edDataCadastro.Text := Cliente.Detalhes.DataCadastroString;
+   edDataBloqueio.Text := Cliente.Alteracao.DataBloqueio;
+   edUSU.Text          := Cliente.Alteracao.Usuario;
+   edDT.Text           := Cliente.Alteracao.Data;
+   edHR.Text           := Cliente.Alteracao.Hora;
+   edEstacao.Text      := Cliente.Alteracao.Estacao;
 end;
 
 procedure Tfrm_cad_cliente_T6.Preparar_Campos_da_Tela;
 begin
    edCodigo.MaxLength      := 10;
+
    edNome.MaxLength        := 50;
    edRazaoSocial.MaxLength := 50;
+   edCPF.MaxLength             := 11;
+   edRG.MaxLength              := 20;
+   edAtividadeCodigo.MaxLength := 10;
 
-   edCPF.MaxLength    := 11;
-   edRG.MaxLength     := 20;
+   edRua.MaxLength             := 50;
+   edRua.TabOrder              := 0;
+   edRua.Tag                   := 100;
 
+   edCEP.MaxLength             := 8;
+   edCEP.TabOrder              := 1;
+   edCEP.Tag                   := 100;
 
+   edNumero.MaxLength          := 10;
+   edNumero.TabOrder           := 2;
+   edNumero.Tag                := 200;
+
+   edBairro.MaxLength          := 10;
+   edBairro.TabOrder           := 3;
+   edBairro.Tag                := 200;
+
+end;
+
+procedure Tfrm_cad_cliente_T6.TrazerAtividade;
+begin
+  edAtividadeCodigoNome.text     := '';
+  if bPesqRamoAtividade.Focused then
+     exit;
+  edAtividadeCodigo.Text := Trim(edAtividadeCodigo.Text);
+
+  if edAtividadeCodigo.text = '' then
+     exit;
+
+  dm.Query1.Close;
+  dm.Query1.Sql.Clear;
+  dm.Query1.Sql.Add('SELECT *                         ');
+  dm.Query1.Sql.Add('  FROM RAMOATIVIDADE_RAMO        ');
+  dm.Query1.Sql.Add(' WHERE RAMO_CODIGO = :RAMO_CODIGO');
+  dm.Query1.ParamByName('RAMO_CODIGO').AsString := edAtividadeCodigo.text;
+  dm.Query1.Open;
+  if dm.Query1.Eof Then
+  Begin
+     ShowMessage('Ramo de Atividade inexistente...');
+     edAtividadeCodigo.SetFocus;
+     Exit;
+  End;
+  edAtividadeCodigoNome.Text := dm.Query1.FieldByName('RAMO_DESCRICAO').AsString;
 end;
 
 end.

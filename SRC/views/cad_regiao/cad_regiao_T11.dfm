@@ -1,24 +1,25 @@
-object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
+﻿object frm_cad_regiao_T11: Tfrm_cad_regiao_T11
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'Cadastro | Ramo Atividade'
-  ClientHeight = 268
-  ClientWidth = 281
+  Caption = 'Cadastro | Regi'#227'o'
+  ClientHeight = 269
+  ClientWidth = 236
   Color = clWhite
-  DefaultMonitor = dmDesktop
+  DefaultMonitor = dmMainForm
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Label5: TLabel
+  object Descrição: TLabel
     Left = 13
     Top = 12
     Width = 67
@@ -31,10 +32,27 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     Font.Style = []
     ParentFont = False
   end
+  object lbNomeDaTela: TLabel
+    Left = 0
+    Top = 256
+    Width = 236
+    Height = 13
+    Align = alBottom
+    Alignment = taRightJustify
+    Caption = 'T11 '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ExplicitLeft = 212
+    ExplicitWidth = 24
+  end
   object edFiltro: TEdit
     Left = 86
     Top = 8
-    Width = 187
+    Width = 136
     Height = 26
     CharCase = ecUpperCase
     Font.Charset = DEFAULT_CHARSET
@@ -47,10 +65,10 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     TabOrder = 0
     OnChange = edFiltroChange
   end
-  object DBGrid2: TDBGrid
+  object DBGrid1: TDBGrid
     Left = 13
     Top = 46
-    Width = 260
+    Width = 209
     Height = 150
     DataSource = DataSource1
     Font.Charset = DEFAULT_CHARSET
@@ -65,27 +83,38 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
-    OnDblClick = DBGrid2DblClick
-    OnKeyDown = DBGrid2KeyDown
-    OnKeyPress = DBGrid2KeyPress
+    OnDblClick = DBGrid1DblClick
+    OnKeyDown = DBGrid1KeyDown
     Columns = <
       item
         Expanded = False
-        FieldName = 'RAMO_DESCRICAO'
-        Title.Caption = 'Ramo Atividade'
+        FieldName = 'REG_CODIGO'
+        Title.Caption = 'C'#243'digo'
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11
         Title.Font.Name = 'Tahoma'
         Title.Font.Style = [fsBold]
-        Width = 194
+        Width = 48
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'REG_DESCRICAO'
+        Title.Caption = 'Regi'#227'o'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 143
         Visible = True
       end>
   end
-  object cxButton1: TcxButton
+  object bGravar: TcxButton
     Left = 13
     Top = 211
-    Width = 98
+    Width = 90
     Height = 45
     Caption = 'Gravar'
     LookAndFeel.NativeStyle = False
@@ -228,11 +257,12 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = bGravarClick
   end
-  object cxButton2: TcxButton
-    Left = 170
+  object cxButton28: TcxButton
+    Left = 127
     Top = 211
-    Width = 103
+    Width = 95
     Height = 45
     Caption = 'Sair'
     LookAndFeel.NativeStyle = False
@@ -375,22 +405,23 @@ object FRM_cad_ramo_atividade: TFRM_cad_ramo_atividade
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = cxButton28Click
   end
   object ACBrEnterTab1: TACBrEnterTab
-    Left = 253
-    Top = 16
+    Left = 176
+    Top = 40
   end
   object qLocal: TFDQuery
     Active = True
     Connection = DM.Database1
     SQL.Strings = (
-      'select * FROM RAMOATIVIDADE_RAMO')
-    Left = 184
-    Top = 80
+      'select * FROM regiao_reg')
+    Left = 152
+    Top = 104
   end
   object DataSource1: TDataSource
     DataSet = qLocal
-    Left = 112
-    Top = 88
+    Left = 80
+    Top = 112
   end
 end

@@ -8,6 +8,8 @@ uses Dialogs, SysUtils,
      Classe_Usuario,
      Classe_VerificacaoInicial,
 
+     DBCtrls,
+
      Email,
 
      FireDAC.Stan.Intf,  FireDAC.Stan.Option, FireDAC.Stan.Param,
@@ -50,9 +52,17 @@ var Acesso : TAcesso;
     xxxAtualizado,
     globalFuncoes_Atualizado:String;
 
+function TelValido(pTel:TEdit): Boolean;
+function CPFValido(pCPF:TEdit): Boolean;
+function CNPJValido(pCNPJ:TEdit):Boolean;
+function SelectBairro(pBairro:String;pBairroDescricao:Tedit):Boolean;
+function SelectRegiao(pRegiao:String;pRegiaoDescricao:Tedit):Boolean;
+function SelectZona(pZona:String;pZonaDescricao:Tedit):Boolean;
+function ZeroSeDataNula(pData:String):TDatetime;
 function BarrasSeDataNula(pData:String):String;
 function DataNoFuturo(pData:String):Boolean;
-Function fSemAcentos(pCaracter:Char):Char;
+Function fSemAcentos(pCaracter:Char):Char;  overload;
+Function fSemAcentos(pCaracter:String):String;  overload;
 function SoNumero(pCaracter:Char):Char;
 function SoValor(pCaracter:Char):Char;
 function SoLetra(pCaracter:Char):Char;
@@ -84,6 +94,11 @@ function  JaEnviouEmail(pDestinatario,pAssunto:String):Boolean;
 function INSERT_EMAIL_EMAIL(pDestinatario,pAssunto:String;pEMAIL_ENVIADO:Integer):Integer;
 Procedure INSERT_CORPOEMAIL_CEMAIL(pEMAIL_SEQUENCIAL,pCEMAIL_LINHA:Integer;pCEMAIL_TEXTO:String);
 function ProximoEMAIL_SEQUENCIAL:Integer;
+//
+function ProximoBAI_CODIGO:String;
+function ProximoREG_CODIGO:String;
+function ProximoZON_CODIGO:String;
+//
 Function DataDoExecutavel:String;
 procedure Executar_Script(pComando:String);
 procedure Atualizado;
@@ -106,6 +121,8 @@ procedure Destroi_Objetos_das_Classes;
 procedure Gravar_Dados_do_Ultimo_Acesso(pEmpresa:String);
 
 implementation
+
+uses ValidadorDeDocumentos;
 
 function f0ou1(pBoolean:Boolean):Integer;
 begin
@@ -379,7 +396,7 @@ begin
              Q1.Sql.Add('      :LOG_ESTACAO,      '); // NOME DO COMPUTADOR
              Q1.Sql.Add('      :LOG_SEQFINANCEIRO)');
              Q1.ParamByName('LOG_SEQUENCIAL').AsInteger  := vLOG_SEQUENCIAL;
-             Q1.ParamByName('LOG_TELA'      ).AsString   := Copy(pTela,1,6);
+             Q1.ParamByName('LOG_TELA'      ).AsString   := Copy(pTela,1,30);
              Q1.ParamByName('LOG_EXECUTAVEL').AsString   := DataDoExecutavel;
              Q1.ParamByName('LOG_LINHA'     ).AsInteger  := vLOG_LINHA;
              Q1.ParamByName('LOG_DATA'      ).AsDateTime := DataServidor;
@@ -404,6 +421,7 @@ begin
      Q1.Sql.Clear;
      Q1.Sql.Add('INSERT INTO LOG_LOG   ');
      Q1.Sql.Add('    ( LOG_SEQUENCIAL, ');
+     Q1.Sql.Add('      LOG_TELA,       ');
      Q1.Sql.Add('      LOG_EXECUTAVEL,'); // 24/03/19
      Q1.Sql.Add('      LOG_LINHA,      ');
      Q1.Sql.Add('      LOG_DATA,       '); // DATA DA OPERACAO
@@ -421,6 +439,7 @@ begin
      Q1.Sql.Add('      LOG_SEQFINANCEIRO)');
      Q1.Sql.Add('VALUES                ');
      Q1.Sql.Add('    ( :LOG_SEQUENCIAL,');
+     Q1.Sql.Add('      :LOG_TELA,      ');
      Q1.Sql.Add('      :LOG_EXECUTAVEL,'); // 24/03/19
      Q1.Sql.Add('      :LOG_LINHA,     ');
      Q1.Sql.Add('      :LOG_DATA,      ');
@@ -437,6 +456,7 @@ begin
      Q1.Sql.Add('      :LOG_ESTACAO,      '); // NOME DO COMPUTADOR
      Q1.Sql.Add('      :LOG_SEQFINANCEIRO)');
      Q1.ParamByName('LOG_SEQUENCIAL').AsInteger  := vLOG_SEQUENCIAL;
+     Q1.ParamByName('LOG_TELA'      ).AsString   := Copy(pTela,1,30);
      Q1.ParamByName('LOG_EXECUTAVEL').AsString   := DataDoExecutavel;
      Q1.ParamByName('LOG_LINHA'     ).AsInteger  := vLOG_LINHA;
      Q1.ParamByName('LOG_DATA'      ).AsDateTime := DataServidor;
@@ -708,6 +728,70 @@ begin
        result := Q.FieldByName('MAIOR').AsInteger + 1;
     q.Free;
 end;
+
+function ProximoBAI_CODIGO:String;
+var Q : TFDQuery;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+    Q.Close;
+    Q.Sql.Clear;
+    Q.SQL.Add('SELECT MAX(BAI_CODIGO) AS MAIOR ');
+    Q.SQL.Add('  FROM BAIRRO_BAI               ');
+    Q.open;
+    if Q.eof then
+       result := FormatFloat('000',1)
+    else
+       if Q.FieldByName('MAIOR').AsString = '' then
+           result := FormatFloat('000',1)
+       else
+           result := FormatFloat('000',Q.FieldByName('MAIOR').AsInteger + 1);
+    q.Free;
+end;
+
+function ProximoREG_CODIGO:String;
+var Q : TFDQuery;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+    Q.Close;
+    Q.Sql.Clear;
+    Q.SQL.Add('SELECT MAX(REG_CODIGO) AS MAIOR ');
+    Q.SQL.Add('  FROM REGIAO_REG               ');
+    Q.open;
+    if Q.eof then
+       result := FormatFloat('000',1)
+    else
+       if Q.FieldByName('MAIOR').AsString = '' then
+           result := FormatFloat('000',1)
+       else
+           result := FormatFloat('000',Q.FieldByName('MAIOR').AsInteger + 1);
+    q.Free;
+end;
+
+function ProximoZON_CODIGO:String;
+var Q : TFDQuery;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+    Q.Close;
+    Q.Sql.Clear;
+    Q.SQL.Add('SELECT MAX(ZON_CODIGO) AS MAIOR ');
+    Q.SQL.Add('  FROM ZONA_ZON                 ');
+    Q.open;
+    if Q.eof then
+       result := FormatFloat('000',1)
+    else
+       if Q.FieldByName('MAIOR').AsString = '' then
+           result := FormatFloat('000',1)
+       else
+           result := FormatFloat('000',Q.FieldByName('MAIOR').AsInteger + 1);
+    q.Free;
+end;
+
 
 Function DataDoExecutavel:String;
 var FileDate: integer;
@@ -1192,7 +1276,16 @@ begin
     Result := pCaracter;
 end;
 
-function SoNumero(pCaracter:Char):Char;
+Function fSemAcentos(pCaracter:String):String;  overload;
+var i:integer;
+begin
+    for i := 0 to length(pCaracter) do
+       if not (pCaracter[i] in [#8,'A'..'Z', 'a'..'z', '0'..'9',' ',',']) then
+        pCaracter[i] := #0;
+    Result := pCaracter;
+end;
+
+function SoNumero(pCaracter:Char):Char;  overload;
 begin
     if not (pCaracter in [#8,'0'..'9']) then pCaracter := #0;
     Result := pCaracter;
@@ -1239,12 +1332,134 @@ begin
       result := '  /  /  '
    else
       result := pData;
+end;
 
+function ZeroSeDataNula(pData:String):TDatetime;
+begin
+   if (pData = '30/12/99') or
+      (pData = '  /  /  ') or
+      (pData = ''        ) then
+      result := 0
+   else
+      result := StrToDate(pData);
+end;
+
+function SelectBairro(pBairro:String;pBairroDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT BAI_DESCRICAO           ');
+   qLocal.sql.add('  FROM BAIRRO_BAI              ');
+   qLocal.sql.add(' WHERE BAI_CODIGO = :BAI_CODIGO');
+   qLocal.ParamByName('BAI_CODIGO').AsString := pBairro;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+   pBairroDescricao.Text := qlocal.FieldByName('BAI_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
+function SelectZona(pZona:String;pZonaDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT ZON_DESCRICAO           ');
+   qLocal.sql.add('  FROM ZONA_ZON              ');
+   qLocal.sql.add(' WHERE ZON_CODIGO = :ZON_CODIGO');
+   qLocal.ParamByName('ZON_CODIGO').AsString := pZona;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+   pZonaDescricao.Text := qlocal.FieldByName('ZON_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
+function SelectRegiao(pRegiao:String;pRegiaoDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT REG_DESCRICAO           ');
+   qLocal.sql.add('  FROM REGIAO_REG              ');
+   qLocal.sql.add(' WHERE REG_CODIGO = :REG_CODIGO');
+   qLocal.ParamByName('REG_CODIGO').AsString := pRegiao;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+   pRegiaoDescricao.Text := qlocal.FieldByName('REG_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
+function CNPJValido(pCNPJ:TEdit): Boolean;
+begin
+   result := true;
+   if trim(pCNPJ.Text) = '' then
+      exit;
+   pCNPJ.Text :=Trim(pCNPJ.Text);
+   result := frmValidadorDeDocumentos.CNPJ_Valido(pCNPJ.Text);
+   if result then
+      pCNPJ.Text := vVDD_DocumentoFormatado;
+end;
+
+function CPFValido(pCPF:TEdit): Boolean;
+begin
+   result := true;
+   if trim(pCPF.Text) = '' then
+      exit;
+   pCPF.Text :=Trim(pCPF.Text);
+   result := frmValidadorDeDocumentos.CPF_Valido(pCPF.Text);
+   if result then
+      pCPF.Text := vVDD_DocumentoFormatado;
+end;
+
+function TelValido(pTel:TEdit): Boolean;
+var vAntes:String;
+begin
+   if trim(pTel.Text) = '' then
+   begin
+      result:=true;
+      exit;
+   end;
+   result := false;
+   vAntes:=pTel.Text;
+   pTel.Text := frmValidadorDeDocumentos.formataTelCel(pTel.Text);
+   if pTel.Text = '' then
+   begin
+       pTel.Text := vAntes;
+       exit;
+   end;
+   Result := True;
 end;
 
 Function fNomeDoSistema:String;
 begin
-     Result := 'SMC Plus';
+   Result := 'SMC Plus';
 end;
 
 
