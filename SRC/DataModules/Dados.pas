@@ -17,6 +17,7 @@ type
     Query1: TFDQuery;
     qUSUARIO: TFDQuery;
     Query2: TFDQuery;
+    qCONFIG: TFDQuery;
   private
     { Private declarations }
   public

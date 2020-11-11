@@ -38,15 +38,15 @@ object frm_cad_zona_T12: Tfrm_cad_zona_T12
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
-    Caption = 'T11 '
+    Caption = '[ T11 ] '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 212
-    ExplicitWidth = 24
+    ExplicitLeft = 248
+    ExplicitWidth = 40
   end
   object edFiltro: TEdit
     Left = 86
@@ -412,7 +412,6 @@ object frm_cad_zona_T12: Tfrm_cad_zona_T12
     Top = 112
   end
   object qLocal: TFDQuery
-    Active = True
     Connection = DM.Database1
     SQL.Strings = (
       'select * FROM ZONA_ZON')
@@ -420,6 +419,7 @@ object frm_cad_zona_T12: Tfrm_cad_zona_T12
     Top = 104
   end
   object ACBrEnterTab1: TACBrEnterTab
+    EnterAsTab = True
     Left = 176
     Top = 40
   end

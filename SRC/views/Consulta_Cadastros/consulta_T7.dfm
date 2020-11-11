@@ -1,11 +1,12 @@
 object frm_consulta_T7: Tfrm_consulta_T7
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Consulta'
-  ClientHeight = 444
-  ClientWidth = 1294
+  ClientHeight = 432
+  ClientWidth = 841
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,7 +23,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
   TextHeight = 13
   object Label24: TLabel
     Left = 91
-    Top = 47
+    Top = 34
     Width = 428
     Height = 13
     Caption = 
@@ -37,7 +38,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
   end
   object Label45: TLabel
     Left = 12
-    Top = 23
+    Top = 10
     Width = 70
     Height = 18
     Align = alCustom
@@ -51,27 +52,27 @@ object frm_consulta_T7: Tfrm_consulta_T7
   end
   object lbNomeDaTela: TLabel
     Left = 0
-    Top = 431
-    Width = 1294
+    Top = 419
+    Width = 841
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
-    Caption = 'T7 '
+    Caption = '[ T7 ] '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 1277
-    ExplicitWidth = 17
+    ExplicitLeft = 808
+    ExplicitTop = 417
+    ExplicitWidth = 33
   end
   object gd: TcxGrid
     Left = 0
-    Top = 66
-    Width = 1294
+    Top = 53
+    Width = 841
     Height = 365
-    Align = alBottom
     TabOrder = 1
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Office2013White'
@@ -99,7 +100,6 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Options.FilteringWithFindPanel = False
         Options.IgnoreTimeForFiltering = False
         Options.IncSearch = False
-        Options.FilteringAddValueItems = False
         Options.FilteringFilteredItemsList = False
         Options.FilteringMRUItemsList = False
         Options.FilteringPopup = False
@@ -123,7 +123,6 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Options.FilteringWithFindPanel = False
         Options.IgnoreTimeForFiltering = False
         Options.IncSearch = False
-        Options.FilteringAddValueItems = False
         Options.FilteringFilteredItemsList = False
         Options.FilteringMRUItemsList = False
         Options.FilteringPopup = False
@@ -144,7 +143,6 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Options.FilteringWithFindPanel = False
         Options.IgnoreTimeForFiltering = False
         Options.IncSearch = False
-        Options.FilteringAddValueItems = False
         Options.FilteringFilteredItemsList = False
         Options.FilteringMRUItemsList = False
         Options.FilteringPopup = False
@@ -165,7 +163,6 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Options.FilteringWithFindPanel = False
         Options.IgnoreTimeForFiltering = False
         Options.IncSearch = False
-        Options.FilteringAddValueItems = False
         Options.FilteringFilteredItemsList = False
         Options.FilteringMRUItemsList = False
         Options.FilteringPopup = False
@@ -180,6 +177,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
         DataBinding.FieldName = 'cnpj'
         PropertiesClassName = 'TcxTextEditProperties'
         Properties.Alignment.Horz = taCenter
+        Properties.ReadOnly = True
         HeaderAlignmentHorz = taCenter
         HeaderGlyphAlignmentHorz = taCenter
         MinWidth = 125
@@ -188,7 +186,6 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Options.FilteringWithFindPanel = False
         Options.IgnoreTimeForFiltering = False
         Options.IncSearch = False
-        Options.FilteringAddValueItems = False
         Options.FilteringFilteredItemsList = False
         Options.FilteringMRUItemsList = False
         Options.FilteringPopup = False
@@ -203,6 +200,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
         DataBinding.FieldName = 'cpf'
         PropertiesClassName = 'TcxTextEditProperties'
         Properties.Alignment.Horz = taCenter
+        Properties.ReadOnly = True
         HeaderAlignmentHorz = taCenter
         HeaderGlyphAlignmentHorz = taCenter
         MinWidth = 100
@@ -211,7 +209,6 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Options.FilteringWithFindPanel = False
         Options.IgnoreTimeForFiltering = False
         Options.IncSearch = False
-        Options.FilteringAddValueItems = False
         Options.FilteringFilteredItemsList = False
         Options.FilteringMRUItemsList = False
         Options.FilteringPopup = False
@@ -221,155 +218,15 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Options.HorzSizing = False
         Width = 100
       end
-      object tbstatus_cadastral: TcxGridDBColumn
-        Caption = 'S'
-        DataBinding.FieldName = 'status_cadastral'
-        PropertiesClassName = 'TcxLabelProperties'
-        Properties.Alignment.Horz = taCenter
-        Visible = False
-        HeaderAlignmentHorz = taCenter
-        HeaderGlyphAlignmentHorz = taCenter
-        Options.Filtering = False
-        Options.FilteringWithFindPanel = False
-        Options.IgnoreTimeForFiltering = False
-        Options.IncSearch = False
-        Options.FilteringAddValueItems = False
-        Options.FilteringFilteredItemsList = False
-        Options.FilteringMRUItemsList = False
-        Options.FilteringPopup = False
-        Options.FilteringPopupMultiSelect = False
-        Options.GroupFooters = False
-        Options.Grouping = False
-        Options.HorzSizing = False
-        Width = 20
-      end
-      object tbtelefone: TcxGridDBColumn
-        Caption = 'Telefone'
-        DataBinding.FieldName = 'telefone'
-        PropertiesClassName = 'TcxTextEditProperties'
-        Properties.Alignment.Horz = taCenter
-        HeaderAlignmentHorz = taCenter
-        HeaderGlyphAlignmentHorz = taCenter
-        MinWidth = 105
-        Options.Editing = False
-        Options.Filtering = False
-        Options.FilteringWithFindPanel = False
-        Options.IgnoreTimeForFiltering = False
-        Options.IncSearch = False
-        Options.FilteringAddValueItems = False
-        Options.FilteringFilteredItemsList = False
-        Options.FilteringMRUItemsList = False
-        Options.FilteringPopup = False
-        Options.FilteringPopupMultiSelect = False
-        Options.GroupFooters = False
-        Options.Grouping = False
-        Options.HorzSizing = False
-        Width = 105
-      end
-      object tbcelular: TcxGridDBColumn
-        Caption = 'Celular'
-        DataBinding.FieldName = 'celular'
-        PropertiesClassName = 'TcxTextEditProperties'
-        Properties.Alignment.Horz = taCenter
-        HeaderAlignmentHorz = taCenter
-        HeaderGlyphAlignmentHorz = taCenter
-        MinWidth = 105
-        Options.Editing = False
-        Options.Filtering = False
-        Options.FilteringWithFindPanel = False
-        Options.IgnoreTimeForFiltering = False
-        Options.IncSearch = False
-        Options.FilteringAddValueItems = False
-        Options.FilteringFilteredItemsList = False
-        Options.FilteringMRUItemsList = False
-        Options.FilteringPopup = False
-        Options.FilteringPopupMultiSelect = False
-        Options.GroupFooters = False
-        Options.Grouping = False
-        Options.HorzSizing = False
-        Width = 105
-      end
-      object tbemail: TcxGridDBColumn
-        Caption = 'E-mail'
-        DataBinding.FieldName = 'email'
-        PropertiesClassName = 'TcxTextEditProperties'
-        Properties.Alignment.Horz = taCenter
-        Properties.ReadOnly = True
-        HeaderAlignmentHorz = taCenter
-        HeaderGlyphAlignmentHorz = taCenter
-        MinWidth = 105
-        Options.Editing = False
-        Options.Filtering = False
-        Options.FilteringWithFindPanel = False
-        Options.IgnoreTimeForFiltering = False
-        Options.IncSearch = False
-        Options.FilteringAddValueItems = False
-        Options.FilteringFilteredItemsList = False
-        Options.FilteringMRUItemsList = False
-        Options.FilteringPopup = False
-        Options.FilteringPopupMultiSelect = False
-        Options.GroupFooters = False
-        Options.Grouping = False
-        Options.HorzSizing = False
-        Width = 105
-      end
-      object tbmunicipio: TcxGridDBColumn
-        Caption = 'Cidade'
-        DataBinding.FieldName = 'municipio'
-        PropertiesClassName = 'TcxTextEditProperties'
-        Properties.Alignment.Horz = taCenter
-        Properties.ReadOnly = True
-        HeaderAlignmentHorz = taCenter
-        HeaderGlyphAlignmentHorz = taCenter
-        MinWidth = 150
-        Options.Editing = False
-        Options.Filtering = False
-        Options.FilteringWithFindPanel = False
-        Options.IgnoreTimeForFiltering = False
-        Options.IncSearch = False
-        Options.FilteringAddValueItems = False
-        Options.FilteringFilteredItemsList = False
-        Options.FilteringMRUItemsList = False
-        Options.FilteringPopup = False
-        Options.FilteringPopupMultiSelect = False
-        Options.GroupFooters = False
-        Options.Grouping = False
-        Options.HorzSizing = False
-        Width = 150
-      end
-      object tbestado: TcxGridDBColumn
-        Caption = 'UF'
-        DataBinding.FieldName = 'estado'
-        PropertiesClassName = 'TcxTextEditProperties'
-        Properties.Alignment.Horz = taCenter
-        Properties.ReadOnly = True
-        HeaderAlignmentHorz = taCenter
-        HeaderGlyphAlignmentHorz = taCenter
-        MinWidth = 30
-        Options.Editing = False
-        Options.Filtering = False
-        Options.FilteringWithFindPanel = False
-        Options.IgnoreTimeForFiltering = False
-        Options.IncSearch = False
-        Options.FilteringAddValueItems = False
-        Options.FilteringFilteredItemsList = False
-        Options.FilteringMRUItemsList = False
-        Options.FilteringPopup = False
-        Options.FilteringPopupMultiSelect = False
-        Options.GroupFooters = False
-        Options.Grouping = False
-        Options.HorzSizing = False
-        Width = 30
-      end
     end
     object lv: TcxGridLevel
       GridView = tb
     end
   end
   object btn_relatorios_cli: TcxButton
-    Left = 1094
-    Top = 13
-    Width = 188
+    Left = 679
+    Top = 0
+    Width = 162
     Height = 45
     Caption = 'Relat'#243'rios'
     LookAndFeel.NativeStyle = False
@@ -515,7 +372,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
   end
   object edArgumentoDePesquisa: TEdit
     Left = 91
-    Top = 22
+    Top = 9
     Width = 262
     Height = 21
     CharCase = ecUpperCase
@@ -524,7 +381,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
   end
   object cxButton21: TcxButton
     Left = 574
-    Top = 13
+    Top = 0
     Width = 103
     Height = 45
     Caption = 'Incluir'
@@ -670,104 +527,9 @@ object frm_consulta_T7: Tfrm_consulta_T7
     ParentFont = False
     OnClick = cxButton21Click
   end
-  object GroupBox1: TGroupBox
-    Left = 728
-    Top = 3
-    Width = 314
-    Height = 60
-    Caption = '  Totais  '
-    Color = clWhite
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentBackground = False
-    ParentColor = False
-    ParentFont = False
-    TabOrder = 4
-    object Label1: TLabel
-      Left = 14
-      Top = 15
-      Width = 82
-      Height = 16
-      Caption = 'Cadastrados'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clHighlight
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label2: TLabel
-      Left = 16
-      Top = 30
-      Width = 78
-      Height = 24
-      Caption = '000000'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clHighlight
-      Font.Height = -20
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label3: TLabel
-      Left = 122
-      Top = 30
-      Width = 78
-      Height = 24
-      Caption = '000000'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGreen
-      Font.Height = -20
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label4: TLabel
-      Left = 132
-      Top = 15
-      Width = 58
-      Height = 16
-      Caption = 'Ativados'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGreen
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label5: TLabel
-      Left = 230
-      Top = 15
-      Width = 69
-      Height = 16
-      Caption = 'Inativados'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label6: TLabel
-      Left = 225
-      Top = 30
-      Width = 78
-      Height = 24
-      Caption = '000000'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
-      Font.Height = -20
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-  end
   object rgConsultar: TRadioGroup
     Left = 30
-    Top = 96
+    Top = 83
     Width = 355
     Height = 273
     Caption = 'CONSULTAR...'
@@ -785,20 +547,22 @@ object frm_consulta_T7: Tfrm_consulta_T7
       '5-Coaborador'
       '6-Transportador')
     ParentFont = False
-    TabOrder = 5
+    TabOrder = 4
     Visible = False
   end
   object cbQualquerParteDoNome: TCheckBox
     Left = 359
-    Top = 24
+    Top = 11
     Width = 201
     Height = 17
     Caption = 'Procurar em qualque parte do texto'
-    TabOrder = 6
+    TabOrder = 5
     OnClick = cbQualquerParteDoNomeClick
   end
   object qLocal: TFDQuery
     Connection = DM.Database1
+    UpdateOptions.AssignedValues = [uvEUpdate]
+    UpdateOptions.EnableUpdate = False
     SQL.Strings = (
       'select * FROM cliente_cli')
     Left = 472

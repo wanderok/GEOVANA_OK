@@ -64,15 +64,15 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
-    Caption = 'T10 '
+    Caption = '[ T10 ] '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 1171
-    ExplicitWidth = 24
+    ExplicitLeft = 1155
+    ExplicitWidth = 40
   end
   object edUsuario: TEdit
     Left = 375
@@ -316,7 +316,6 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
     TabOrder = 5
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Metropolis'
-    ExplicitTop = 57
     object gdConveniadosTbVw: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource1
@@ -490,8 +489,11 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
     Top = 200
   end
   object FDQuery1: TFDQuery
-    Active = True
     Connection = DM.Database1
+    UpdateOptions.AssignedValues = [uvEDelete, uvEInsert, uvEUpdate]
+    UpdateOptions.EnableDelete = False
+    UpdateOptions.EnableInsert = False
+    UpdateOptions.EnableUpdate = False
     SQL.Strings = (
       'select TOP 20 * from log_log ORDER BY LOG_SEQUENCIAL DESC')
     Left = 704

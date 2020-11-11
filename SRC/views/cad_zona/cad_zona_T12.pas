@@ -66,7 +66,10 @@ implementation
 
 procedure Tfrm_cad_zona_T12.Pesquisar;
 begin
-   qLocal.Close;
+    PesquisaF1.ExisteDescricao('ZONA_ZON',
+                               edFiltro.Text,
+                               qLocal);
+{   qLocal.Close;
    qLocal.Close;
    qLocal.SQL.Clear;
    qLocal.Sql.Add('SELECT *                                 ');
@@ -75,6 +78,7 @@ begin
    qLocal.Sql.Add(' ORDER BY ZON_DESCRICAO                  ');
    qLocal.ParamByName('ZON_DESCRICAO').AsString := '%'+Trim(edFiltro.Text)+'%';
    qLocal.Open;
+}
 end;
 
 procedure Tfrm_cad_zona_T12.Selecionar;

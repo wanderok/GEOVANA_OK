@@ -28,15 +28,15 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
-    Caption = 'T3 '
+    Caption = '[ T3 ] '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 1034
-    ExplicitWidth = 17
+    ExplicitLeft = 1018
+    ExplicitWidth = 33
   end
   object BtnGravar: TcxButton
     Left = 939

@@ -39,15 +39,15 @@
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
-    Caption = 'T11 '
+    Caption = '[ T11 ] '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 212
-    ExplicitWidth = 24
+    ExplicitLeft = 196
+    ExplicitWidth = 40
   end
   object edFiltro: TEdit
     Left = 86
@@ -408,11 +408,11 @@
     OnClick = cxButton28Click
   end
   object ACBrEnterTab1: TACBrEnterTab
+    EnterAsTab = True
     Left = 176
     Top = 40
   end
   object qLocal: TFDQuery
-    Active = True
     Connection = DM.Database1
     SQL.Strings = (
       'select * FROM regiao_reg')

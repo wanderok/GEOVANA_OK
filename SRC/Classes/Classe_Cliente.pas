@@ -2,7 +2,7 @@ unit Classe_Cliente;
 
 interface
 
-uses Classes, Dialogs, SysUtils, IniFiles,
+uses Classes, Dialogs, SysUtils, IniFiles, vcl.stdctrls,
      FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
      FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
      FireDAC.Comp.Client,
@@ -25,7 +25,6 @@ type
        FRG_DataEmissao       : TDateTime;
        FRG_DataEmissaoString,
        FSexo                 : String;
-       FAlteracao            : TAlteracao;
        //
        function  getFCPF:String;
        procedure setFCPF(const Value:String);
@@ -48,16 +47,32 @@ type
        property Sexo             : Integer    read getFSexo                 write setFSexo;
   end;
 
+  tPessoa_Juridica = class
+    private
+       FCNPJ                 : String;         // CLI_CPF VARCHAR(11)
+       FIE                   : String;      // CLID_DTNASC
+       FAlteracao            : TAlteracao;
+    function getFCNPJ: String;
+    function getFIE: String;
+    procedure setFCNPJ(const Value: String);
+    procedure setFIE(const Value: String);
+    public
+       property CNPJ             : String     read getFCNPJ                 write setFCNPJ;
+       property IE               : String     read getFIE                   write setFIE;
+  end;
+
   tDetalhes_Cliente = class
     private
       FDataCadastro      : TDateTime;        // CLI_DT         DATETIME
       FTipoPessoa	       : String;           // CLID_PESSOA_FJ VARCHAR(1)
       FPessoaFisica      : tPessoa_Fisica;
+      FPessoaJuridica    : tPessoa_Juridica;
       FRamoAtividade     : String;          //CLI_CDRAMO
       FRegiao            : String;
       FZona              : String;
       FEndereco          : TEndereco;
       FContato           : TContato;
+      FAlteracao         : TAlteracao;
       //FCodigoMunicipio   : String;           // CLID_CDCIDADE
       //
       function  getFDataCadastro: TDateTime;
@@ -65,26 +80,28 @@ type
       function  getDataCadastroString: String;
       function  getFTipoPessoa: TTipoPessoa;
       procedure setFTipoPessoa(const Value: TTipoPessoa);
-    function getFRamoAtividade: String;
-    procedure setFRamoAtividade(const Value: String);
-    function getFRegiao: String;
-    procedure setFRegiao(const Value: String);
-    function getFZona: String;
-    procedure setFZona(const Value: String);
+      function getFRamoAtividade: String;
+      procedure setFRamoAtividade(const Value: String);
+      function getFRegiao: String;
+      procedure setFRegiao(const Value: String);
+      function getFZona: String;
+      procedure setFZona(const Value: String);
       //function getFCodigoMunicipio: String;
       //procedure setFCodigoMunicipio(const Value: String); // CLID_DT
+
     public
       constructor Create;
       destructor Destroy; override;
-      property DataCadastro      : TDateTime      read getFDataCadastro       write setFDataCadastro;
-      property DataCadastroString: String         read getDataCadastroString;
-      property TipoPessoa        : TTipoPessoa    read getFTipoPessoa         write setFTipoPessoa;
-      property PessoaFisica      : tPessoa_Fisica read FPessoaFisica          write FPessoaFisica;
-      property RamoAtividade     : String         read getFRamoAtividade      write setFRamoAtividade;
-      property Regiao            : String         read getFRegiao             write setFRegiao;
-      property Zona              : String         read getFZona               write setFZona;
-      property Endereco          : TEndereco      read FEndereco              write FEndereco;
-      property Contato           : TContato       read FContato               write FContato;
+      property DataCadastro      : TDateTime        read getFDataCadastro       write setFDataCadastro;
+      property DataCadastroString: String           read getDataCadastroString;
+      property TipoPessoa        : TTipoPessoa      read getFTipoPessoa         write setFTipoPessoa;
+      property PessoaFisica      : tPessoa_Fisica   read FPessoaFisica          write FPessoaFisica;
+      property PessoaJuridica    : tPessoa_Juridica read FPessoaJuridica        write FPessoaJuridica;
+      property RamoAtividade     : String           read getFRamoAtividade      write setFRamoAtividade;
+      property Regiao            : String           read getFRegiao             write setFRegiao;
+      property Zona              : String           read getFZona               write setFZona;
+      property Endereco          : TEndereco        read FEndereco              write FEndereco;
+      property Contato           : TContato         read FContato               write FContato;
       //property Municipio         : String         read getFCodigoMunicipio    write setFCodigoMunicipio;
 end;
 
@@ -99,6 +116,7 @@ end;
 	  FStatus            : Integer;  // CLI_STATUS INTEGER NOT NULL (0-ATIVO, 1-ATIVO BLOQUEADO, 2-INATIVO)
     FDetalhes          : tDetalhes_Cliente;
     FAlteracao         : TClienteAlteracao;
+    FObservacao        : TStringList;
     function getFStatus: TStatusCadastral;
     procedure setFStatus(const Value: TStatusCadastral);
     function  getFCodigo: String;
@@ -122,14 +140,37 @@ end;
     procedure Pegar_Endereco;
     procedure Pegar_Contato;
     procedure Pegar_Alteracoes;
+
+    procedure Pegar_Observacoes;
+    procedure Gravar_Observacoes;
+    //
     function Inserir_CLIENTE_CLI           :Boolean;
     function Inserir_CLIENTE_DETALHE_CLID  :Boolean;
     function Inserir_CLIENTE_ENDERECO_CLIE :Boolean;
     function Inserir_CLIENTE_CONTATO_CLIC  :Boolean;
+    //
     function Update_CLIENTE_CLI:Boolean;
+
     function Update_CLIENTE_DETALHE_CLID:Boolean;
+    function existe_CLIENTE_DETALHE_CLID:Boolean;
+    function alterar_CLIENTE_DETALHE_CLID:Boolean;
+
     function Update_CLIENTE_ENDERECO_CLIE:Boolean;
+    function existe_CLIENTE_ENDERECO_CLIE: Boolean;
+    function alterar_CLIENTE_ENDERECO_CLIE:BooleAn;
+
     function Update_CLIENTE_CONTATO_CLIC:Boolean;
+    function existe_CLIENTE_CONTATO_CLIC: Boolean;
+    function alterar_CLIENTE_CONTATO_CLIC: Boolean;
+
+    procedure RegistrarHistoricoDeAtivacao;
+    procedure RegistrarHistoricoDeBloqueio;
+    procedure RegistrarHistoricoDeDesBloqueio;
+    procedure RegistrarHistoricoDeInativacao;
+    procedure RegistrarHistorico(pEvento,pLog:String);
+    function getFObservacao: TStringList;
+    procedure setFObservacao(const Value: TStringList);
+
   public
     constructor Create;
     destructor Destroy; override;
@@ -140,15 +181,17 @@ end;
     Property Status        : TStatusCadastral  read getFStatus       write setFStatus;
     Property Detalhes      : tDetalhes_Cliente read getDetalhes      write setDetalhes;
     property Alteracao     : TClienteAlteracao read FAlteracao       write FAlteracao;
+    property Observacao    : TStringList       read getFObservacao   write setFObservacao;
     procedure Abrir;
     Function Gravar:Boolean;
 end;
 
 implementation
 
-uses Funcoes;
+uses Funcoes,
+     Classe_Nuvem;
 
-var qCliente: TFDQuery;
+var qCliente, qLocal: TFDQuery;
 
 { TCliente }
 
@@ -163,13 +206,17 @@ begin
     Pegar_Detalhes;
     Pegar_Endereco;
     Pegar_Contato;
+    Pegar_Observacoes;
 end;
 
 
 constructor TCliente.Create;
 begin
-   FDetalhes  := tDetalhes_Cliente.Create;
-   FAlteracao := TClienteAlteracao.Create;
+   FDetalhes   := tDetalhes_Cliente.Create;
+   FAlteracao  := TClienteAlteracao.Create;
+   FObservacao := TStringList.Create;
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName :='X';
 end;
 
 function TCliente.DadosCorretos: Boolean;
@@ -183,7 +230,45 @@ destructor TCliente.Destroy;
 begin
   FDetalhes.Free;
   Alteracao.Free;
+  FObservacao.Free;
+  qLocal.Free;
   inherited;
+end;
+
+function TCliente.existe_CLIENTE_DETALHE_CLID: Boolean;
+begin
+    qCliente.Close;
+    qCliente.SQL.Clear;
+    qCliente.SQL.Add('SELECT CLID_CODIGO               ');
+    qCliente.SQL.Add('  FROM CLIENTE_DETALHE_CLID      ');
+    qCliente.SQL.Add(' WHERE CLID_CODIGO = :CLID_CODIGO');
+    qCliente.ParamByName('CLID_CODIGO').AsString   := FCodigo;
+    qCliente.Open;
+    result := not qCliente.Eof;
+end;
+
+function TCliente.existe_CLIENTE_ENDERECO_CLIE: Boolean;
+begin
+    qCliente.Close;
+    qCliente.SQL.Clear;
+    qCliente.SQL.Add('SELECT CLIE_CODIGO               ');
+    qCliente.SQL.Add('  FROM CLIENTE_ENDERECO_CLIE      ');
+    qCliente.SQL.Add(' WHERE CLIE_CODIGO = :CLIE_CODIGO');
+    qCliente.ParamByName('CLIE_CODIGO').AsString   := FCodigo;
+    qCliente.Open;
+    result := not qCliente.Eof;
+end;
+
+function TCliente.existe_CLIENTE_CONTATO_CLIC: Boolean;
+begin
+    qCliente.Close;
+    qCliente.SQL.Clear;
+    qCliente.SQL.Add('SELECT CLIC_CODIGO               ');
+    qCliente.SQL.Add('  FROM CLIENTE_CONTATO_CLIC      ');
+    qCliente.SQL.Add(' WHERE CLIC_CODIGO = :CLIC_CODIGO');
+    qCliente.ParamByName('CLIC_CODIGO').AsString   := FCodigo;
+    qCliente.Open;
+    result := not qCliente.Eof;
 end;
 
 function TCliente.getDetalhes: tDetalhes_Cliente;
@@ -204,6 +289,11 @@ end;
 function TCliente.getFNomeFantasia: String;
 begin
    result := FNomeFantasia;
+end;
+
+function TCliente.getFObservacao: TStringList;
+begin
+   result := FObservacao;
 end;
 
 function TCliente.getFStatus: TStatusCadastral;
@@ -235,6 +325,35 @@ begin
    Result := True;
 end;
 
+procedure TCliente.Gravar_Observacoes;
+var i : Integer;
+begin
+   qCliente.Close;
+   qCliente.Sql.Clear;
+   qCliente.Sql.Add('DELETE FROM CLIENTE_OBS_CLIOBS ');
+   qCliente.Sql.Add(' WHERE CLIOBS_CODIGO = :COD    ');
+   qCliente.ParamByName('COD').AsString := FCodigo;
+   qCliente.ExecSql;
+
+   for i := 0 to FObservacao.count-1 do
+   begin
+      qCliente.close;
+      qCliente.sql.Clear;
+      qCliente.sql.Add('INSERT INTO CLIENTE_OBS_CLIOBS   ');
+      qCliente.sql.Add('     ( CLIOBS_CODIGO,            ');
+	    qCliente.sql.Add('       CLIOBS_LINHA,             ');
+      qCliente.sql.Add('       CLIOBS_TEXTO)             ');
+      qCliente.sql.Add('VALUES                           ');
+      qCliente.sql.Add('     (:CLIOBS_CODIGO,            ');
+	    qCliente.sql.Add('      :CLIOBS_LINHA,             ');
+      qCliente.sql.Add('      :CLIOBS_TEXTO)             ');
+      qCliente.ParamByName('CLIOBS_CODIGO').AsString := FCodigo;
+	    qCliente.ParamByName('CLIOBS_LINHA' ).AsInteger:= i;
+      qCliente.ParamByName('CLIOBS_TEXTO' ).AsString := FObservacao[i];
+      qCliente.ExecSql;
+   end;
+end;
+
 function TCliente.Insert: Boolean;
 begin
     result := False;
@@ -242,8 +361,9 @@ begin
     if not Inserir_CLIENTE_DETALHE_CLID  then exit;
     if not Inserir_CLIENTE_ENDERECO_CLIE then exit;
     if not Inserir_CLIENTE_CONTATO_CLIC  then exit;
+    Gravar_Observacoes;
     Result := True;
-    Log('Classe_Cliente','Incluiu cliente ' + FNomeFantasia);
+    Log('Classe_Cliente','Cadastrou cliente ' + FCodigo + '-' + FNomeFantasia);
 end;
 
 function TCliente.Inserir_CLIENTE_CLI: Boolean;
@@ -267,10 +387,11 @@ begin
         qCliente.SQL.Add('      :CLI_STATUS         ');
         qCliente.SQL.Add('     )                    ');
         Preencher_Parametros_CLIENTE_CLI(qCliente);
+        qCliente.ParamByname('CLI_STATUS').AsInteger := 0;
         qCliente.ExecSql;
         result := true
     except
-       ShowMessage('Erro ao incluir Cliente ' + FNomeFantasia);
+       Avisos.Avisar('Erro ao incluir Cliente ' + FNomeFantasia);
        LOGErros('Classe_Cliente','Erro ao incluir Cliente ' + FNomeFantasia);
     end;
 end;
@@ -303,21 +424,21 @@ begin
         qCliente.ExecSql;
         Result := true;
     except
-       ShowMessage('Erro ao incluir Cliente ' + FNomeFantasia);
+       Avisos.Avisar('Erro ao incluir Cliente ' + FNomeFantasia);
        LOGErros('Classe_Cliente','Erro ao incluir Cliente ' + FNomeFantasia);
     end;
 end;
 
 procedure TCliente.Preencher_Parametros_CLIENTE_CONTATO_CLIC(pQuery:TFDQuery);
 begin
-   qCliente.ParamByName('CLIC_CODIGO'  ).AsString := FCodigo;
-   qCliente.ParamByName('CLIC_NOME'    ).AsString := Detalhes.FContato.Nome;
-   qCliente.ParamByName('CLIC_FONE1'   ).AsString := Detalhes.FContato.Fone1;
-   qCliente.ParamByName('CLIC_FONE2'   ).AsString := Detalhes.FContato.Fone2;
-   qCliente.ParamByName('CLIC_CEL1'    ).AsString := Detalhes.FContato.Cel;
-   qCliente.ParamByName('CLIC_WHATSAPP').AsString := Detalhes.FContato.WhatsApp;
-   qCliente.ParamByName('CLIC_EMAIL1'  ).AsString := Detalhes.FContato.Email1;
-   qCliente.ParamByName('CLIC_EMAIL2'  ).AsString := Detalhes.FContato.Email2;
+   qCliente.ParamByName('CLIC_CODIGO'  ).AsString := self.FCodigo;
+   qCliente.ParamByName('CLIC_NOME'    ).AsString := self.FDetalhes.FContato.Nome;
+   qCliente.ParamByName('CLIC_FONE1'   ).AsString := SoNumeros(self.FDetalhes.FContato.Fone1);
+   qCliente.ParamByName('CLIC_FONE2'   ).AsString := SoNumeros(self.FDetalhes.FContato.Fone2);
+   qCliente.ParamByName('CLIC_CEL1'    ).AsString := SoNumeros(self.FDetalhes.FContato.Cel);
+   qCliente.ParamByName('CLIC_WHATSAPP').AsString := SoNumeros(self.FDetalhes.FContato.WhatsApp);
+   qCliente.ParamByName('CLIC_EMAIL1'  ).AsString := self.FDetalhes.FContato.Email1;
+   qCliente.ParamByName('CLIC_EMAIL2'  ).AsString := self.FDetalhes.FContato.Email2;
 end;
 
 function TCliente.Inserir_CLIENTE_DETALHE_CLID: Boolean;
@@ -332,6 +453,8 @@ begin
         qCliente.SQL.Add('       CLID_PESSOA_FJ,           ');
         qCliente.SQL.Add('       CLID_NUVEM_ATUALIZADO,    ');
         qCliente.SQL.Add('       CLID_CPF,                 ');
+        qCliente.SQL.Add('       CLID_CNPJ,                ');
+        qCliente.SQL.Add('       CLID_IE,                  ');
         qCliente.SQL.Add('       CLID_RG,                  ');
         qCliente.SQL.Add('       CLID_RG_EMISSOR,          ');
         qCliente.SQL.Add('       CLID_RG_DTEMISSAO,        ');
@@ -342,6 +465,8 @@ begin
         qCliente.SQL.Add('       CLID_ALT_HR,              ');
         qCliente.SQL.Add('       CLID_ALT_ESTACAO,         ');
         qCliente.SQL.Add('       CLID_ALT_DTBLOQUEADO,     ');
+        qCliente.SQL.Add('       CLID_ALT_DTLIBERADO,      ');
+        qCliente.SQL.Add('       CLID_ALT_DTINATIVO,       ');
         qCliente.SQL.Add('       CLID_CDRAMO,              ');
         qCliente.SQL.Add('       CLID_CDREGIAO,            ');
         qCliente.SQL.Add('       CLID_CDZONA,              ');
@@ -350,9 +475,11 @@ begin
         qCliente.SQL.Add('VALUES                           ');
         qCliente.SQL.Add('     (                           ');
         qCliente.SQL.Add('      :CLID_CODIGO,              ');
-        qCliente.SQL.Add('      :CLID_NUVEM_ATUALIZADO,    ');
         qCliente.SQL.Add('      :CLID_PESSOA_FJ,           ');
+        qCliente.SQL.Add('      :CLID_NUVEM_ATUALIZADO,    ');
         qCliente.SQL.Add('      :CLID_CPF,                 ');
+        qCliente.SQL.Add('      :CLID_CNPJ,                ');
+        qCliente.SQL.Add('      :CLID_IE,                  ');
         qCliente.SQL.Add('      :CLID_RG,                  ');
         qCliente.SQL.Add('      :CLID_RG_EMISSOR,          ');
         qCliente.SQL.Add('      :CLID_RG_DTEMISSAO,        ');
@@ -364,6 +491,7 @@ begin
         qCliente.SQL.Add('      :CLID_ALT_ESTACAO,         ');
         qCliente.SQL.Add('      :CLID_ALT_DTBLOQUEADO,     ');
         qCliente.SQL.Add('      :CLID_ALT_DTLIBERADO,      ');
+        qCliente.SQL.Add('      :CLID_ALT_DTINATIVO,       ');
         qCliente.SQL.Add('      :CLID_CDRAMO,              ');
         qCliente.SQL.Add('      :CLID_CDREGIAO,            ');
         qCliente.SQL.Add('      :CLID_CDZONA,              ');
@@ -371,34 +499,30 @@ begin
         qCliente.SQL.Add('     )                           ');
         qCliente.ParamByName('CLID_CODIGO'             ).AsString   := FCodigo;
         qCliente.ParamByName('CLID_NUVEM_ATUALIZADO'   ).AsInteger  := 0;
-        qCliente.ParamByName('CLID_PESSOA_FJ'          ).AsString   := Detalhes.FTipoPessoa;
-        qCliente.ParamByName('CLID_CPF'                ).AsString   := Detalhes.FPessoaFisica.FCPF;
-        qCliente.ParamByName('CLID_RG'                 ).AsString   := Detalhes.FPessoaFisica.FRG;
-        qCliente.ParamByName('CLID_RG_EMISSOR'         ).AsString   := Detalhes.FPessoaFisica.FRG_OrgaoEmissor;
-        qCliente.ParamByName('CLID_RG_DTEMISSAO'       ).AsDateTime := Detalhes.FPessoaFisica.FRG_DataEmissao;
-        qCliente.ParamByName('CLID_DTNASC'             ).AsDateTime := Detalhes.FPessoaFisica.FDataNascimento;
-        qCliente.ParamByName('CLID_SEXO'               ).AsString   := Detalhes.FPessoaFisica.FSexo;
+        qCliente.ParamByName('CLID_PESSOA_FJ'          ).AsString   := FDetalhes.FTipoPessoa;
+        qCliente.ParamByName('CLID_CPF'                ).AsString   := FDetalhes.FPessoaFisica.FCPF;
+        qCliente.ParamByName('CLID_CNPJ'               ).AsString   := FDetalhes.FPessoaJuridica.FCNPJ;
+        qCliente.ParamByName('CLID_IE'                 ).AsString   := FDetalhes.FPessoaJuridica.FIE;
+        qCliente.ParamByName('CLID_RG'                 ).AsString   := FDetalhes.FPessoaFisica.FRG;
+        qCliente.ParamByName('CLID_RG_EMISSOR'         ).AsString   := FDetalhes.FPessoaFisica.FRG_OrgaoEmissor;
+        qCliente.ParamByName('CLID_RG_DTEMISSAO'       ).AsDateTime := FDetalhes.FPessoaFisica.FRG_DataEmissao;
+        qCliente.ParamByName('CLID_DTNASC'             ).AsDateTime := FDetalhes.FPessoaFisica.FDataNascimento;
+        qCliente.ParamByName('CLID_SEXO'               ).AsString   := FDetalhes.FPessoaFisica.FSexo;
         qCliente.ParamByName('CLID_ALT_USU'            ).AsString   := Usuario.Codigo;
         qCliente.ParamByName('CLID_ALT_DT'             ).AsDateTime := DataServidor;
         qCliente.ParamByName('CLID_ALT_HR'             ).AsString   := HoraServidor;
         qCliente.ParamByName('CLID_ALT_ESTACAO'        ).AsString   := NomeComputador;
-        if FStatus = 1 then
-           qCliente.ParamByName('CLID_ALT_DTBLOQUEADO').AsDateTime := DataServidor
-        else
-           qCliente.ParamByName('CLID_ALT_DTBLOQUEADO').AsDateTime := 0;
-        //qCliente.ParamByName('CLID_CDCIDADE'           ).AsString:= FCodigoMunicipio;
-        if FStatus = 0 then
-           qCliente.ParamByName('CLID_ALT_DTLIBERADO').AsDateTime := DataServidor
-        else
-           qCliente.ParamByName('CLID_ALT_DTLIBERADO').AsDateTime := 0;
-        qCliente.ParamByName('CLID_CDRAMO'           ).AsString   := FDetalhes.RamoAtividade;
-        qCliente.ParamByName('CLID_CDREGIAO'         ).AsString   := FDetalhes.Regiao;
-        qCliente.ParamByName('CLID_CDZONA'           ).AsString   := FDetalhes.Zona;
+        qCliente.ParamByName('CLID_ALT_DTBLOQUEADO'    ).AsDateTime := 0;
+        qCliente.ParamByName('CLID_ALT_DTLIBERADO'     ).AsDateTime := 0;
+        qCliente.ParamByName('CLID_ALT_DTINATIVO'      ).AsDateTime := 0;
+        qCliente.ParamByName('CLID_CDRAMO'           ).AsString   := FDetalhes.FRamoAtividade;
+        qCliente.ParamByName('CLID_CDREGIAO'         ).AsString   := FDetalhes.FRegiao;
+        qCliente.ParamByName('CLID_CDZONA'           ).AsString   := FDetalhes.FZona;
         qCliente.ParamByName('CLID_DT'               ).AsDateTime := DataServidor;
         qCliente.ExecSql;
         Result := true;
     except
-       ShowMessage('Erro ao incluir Cliente ' + FNomeFantasia);
+       Avisos.Avisar('Erro ao incluir Cliente ' + FNomeFantasia);
        LOGErros('Classe_Cliente','Erro ao incluir Cliente ' + FNomeFantasia);
     end;
 end;
@@ -409,7 +533,7 @@ begin
     try
         qCliente.Close;
         qCliente.SQL.Clear;
-        qCliente.SQL.Add('INSERT INTO CLIENTE_ENDERECO_CLIE ');
+        qCliente.SQL.Add('INSERT INTO CLIENTE_ENDERECO_CLIE');
         qCliente.SQL.Add('     (                           ');
         qCliente.SQL.Add('       CLIE_CODIGO,              ');
         qCliente.SQL.Add('       CLIE_RUA,                 ');
@@ -430,16 +554,16 @@ begin
         qCliente.SQL.Add('      :CLIE_CEP                  ');
         qCliente.SQL.Add('     )                           ');
         qCliente.ParamByName('CLIE_CODIGO'     ).AsString   := FCodigo;
-        qCliente.ParamByName('CLIE_RUA'        ).AsString   := FDetalhes.Endereco.Rua;
-        qCliente.ParamByName('CLIE_NUMERO'     ).AsString   := FDetalhes.Endereco.Numero;
-        qCliente.ParamByName('CLIE_COMPLEMENTO').AsString   := FDetalhes.Endereco.Complemento;
-        qCliente.ParamByName('CLIE_CDCIDADE'   ).AsString   := FDetalhes.Endereco.Cidade;
-        qCliente.ParamByName('CLIE_BAIRRO'     ).AsString   := FDetalhes.Endereco.Bairro;
-        qCliente.ParamByName('CLIE_CEP'        ).AsString   := FDetalhes.Endereco.CEP;
+        qCliente.ParamByName('CLIE_RUA'        ).AsString   := FDetalhes.FEndereco.Rua;
+        qCliente.ParamByName('CLIE_NUMERO'     ).AsString   := FDetalhes.FEndereco.Numero;
+        qCliente.ParamByName('CLIE_COMPLEMENTO').AsString   := FDetalhes.FEndereco.Complemento;
+        qCliente.ParamByName('CLIE_CDCIDADE'   ).AsString   := FDetalhes.FEndereco.Cidade;
+        qCliente.ParamByName('CLIE_BAIRRO'     ).AsString   := FDetalhes.FEndereco.Bairro;
+        qCliente.ParamByName('CLIE_CEP'        ).AsString   := FDetalhes.FEndereco.CEP;
         qCliente.ExecSql;
         Result := true;
     except
-       ShowMessage('Erro ao incluir Cliente ' + FNomeFantasia);
+       Avisos.Avisar('Erro ao incluir Cliente ' + FNomeFantasia);
        LOGErros('Classe_Cliente','Erro ao incluir Cliente ' + FNomeFantasia);
     end;
 end;
@@ -462,6 +586,7 @@ begin
        Estacao       := qCliente.FieldByName('CLID_ALT_ESTACAO'    ).AsString;
        DataBloqueio  := qCliente.FieldByName('CLID_ALT_DTBLOQUEADO').AsString;
        DataLiberacao := qCliente.FieldByName('CLID_ALT_DTLIBERADO' ).AsString;
+       DataInativo   := qCliente.FieldByName('CLID_ALT_DTINATIVO'  ).AsString;
     end;
 end;
 
@@ -532,6 +657,11 @@ begin
        FSexo                     := qCliente.FieldByName('CLID_SEXO'               ).AsString;
        FDataNascimentoString     := BarrasSeDataNula(qCliente.FieldByName('CLID_DTNASC' ).AsString);
     end;
+    with Detalhes.FPessoaJuridica do
+    begin
+       FCNPJ                     := qCliente.FieldByName('CLID_CNPJ'               ).AsString;
+       FIE                       := qCliente.FieldByName('CLID_IE'                 ).AsString;
+    end;
     FDetalhes.RamoAtividade      := qCliente.FieldByName('CLID_CDRAMO'             ).AsString;
     FDetalhes.Regiao             := qCliente.FieldByName('CLID_CDREGIAO'           ).AsString;
     FDetalhes.Zona               := qCliente.FieldByName('CLID_CDZONA'             ).AsString;
@@ -559,6 +689,24 @@ begin
     FDetalhes.Endereco.CEP         := qCliente.FieldByName('CLIE_CEP'        ).AsString;
 end;
 
+procedure TCliente.Pegar_Observacoes;
+begin
+   FObservacao.Clear;
+   qCliente.Close;
+   qCliente.Sql.Clear;
+   qCliente.Sql.Add('SELECT CLIOBS_TEXTO          ');
+   qCliente.Sql.Add('  FROM CLIENTE_OBS_CLIOBS    ');
+   qCliente.Sql.Add(' WHERE CLIOBS_CODIGO = :COD  ');
+   qCliente.Sql.Add(' ORDER BY CLIOBS_LINHA       ');
+   qCliente.ParamByName('COD').AsString := FCodigo;
+   qCliente.Open;
+   while not qCliente.eof do
+   begin
+     FObservacao.add(qCliente.fieldbyname('CLIOBS_TEXTO').AsString);
+     qCliente.Next;
+   end;
+end;
+
 procedure TCliente.Preencher_Parametros_CLIENTE_CLI(pQuery: TFDQuery);
 begin
    pQuery.ParamByName('CLI_CODIGO'       ).AsString   := FCodigo;
@@ -573,7 +721,7 @@ var qProximo: TFDQuery;
     sCodigoCandidato:String;
 begin
     vCodigoCandidato := 1;
-    sCodigoCandidato := FormatFloat('0000000000',vCodigoCandidato);
+    sCodigoCandidato := '1';
     qProximo := TFDQuery.Create(nil);
     qProximo.ConnectionName :='X';
     qProximo.Close;
@@ -590,13 +738,13 @@ begin
     try
       vCodigoCandidato := StrToInt(qProximo.FieldByName('MAIOR').AsString)+1;
       vCodigoCandidato := vCodigoCandidato + 1;
-      sCodigoCandidato := FormatFloat('0000000000',vCodigoCandidato);
+      sCodigoCandidato := FormatFloat('#',vCodigoCandidato);
       result := sCodigoCandidato;
       qProximo.Free;
       exit;
     except
        vCodigoCandidato := 1;
-       sCodigoCandidato := FormatFloat('00000',vCodigoCandidato);
+       sCodigoCandidato := '1';
        qProximo.Close;
        qProximo.SQL.Clear;
        qProximo.SQL.Add('SELECT CLI_CODIGO              ');
@@ -608,7 +756,7 @@ begin
        begin
           qProximo.Close;
           inc(vCodigoCandidato);
-          sCodigoCandidato := FormatFloat('00000',vCodigoCandidato);
+          sCodigoCandidato := FormatFloat('#',vCodigoCandidato);
           qProximo.ParamByName('CLI_CODIGO').AsString := sCodigoCandidato;
           qProximo.Open;
        end;
@@ -616,6 +764,58 @@ begin
        result := sCodigoCandidato;
        exit;
     end;
+end;
+
+procedure TCliente.RegistrarHistorico(pEvento,pLog: String);
+begin
+   //Histórico de bloqueios e desbloqueios do cliente
+   qLocal.Close;
+   qLocal.Sql.Clear;
+   qLocal.Sql.Add('INSERT INTO CLIENTE_HISTORICO_BLOQUEIOS_CHB ');
+   qLocal.Sql.Add('     ( CHB_CLIENTE,                         ');
+   qLocal.Sql.Add('       CHB_EVENTO,                          ');
+   qLocal.Sql.Add('       CHB_DTEVENTO,                        ');
+   qLocal.Sql.Add('       CHB_HREVENTO,                        ');
+   qLocal.Sql.Add('       CHB_USUEVENTO,                       ');
+   qLocal.Sql.Add('       CHB_MAQEVENTO                        ');
+   qLocal.Sql.Add('     )                                      ');
+   qLocal.Sql.Add('VALUES                                      ');
+   qLocal.Sql.Add('     (:CHB_CLIENTE,                         ');
+   qLocal.Sql.Add('      :CHB_EVENTO,                          ');
+   qLocal.Sql.Add('      :CHB_DTEVENTO,                        ');
+   qLocal.Sql.Add('      :CHB_HREVENTO,                        ');
+   qLocal.Sql.Add('      :CHB_USUEVENTO,                       ');
+   qLocal.Sql.Add('      :CHB_MAQEVENTO                        ');
+   qLocal.Sql.Add('     )                                                                                                           ');
+   qLocal.ParamByName('CHB_CLIENTE'  ).AsString   := FCodigo;
+   qLocal.ParamByName('CHB_EVENTO'   ).AsString   := pEvento;
+   qLocal.ParamByName('CHB_DTEVENTO' ).AsDateTime := DataServidor;
+   qLocal.ParamByName('CHB_HREVENTO' ).AsString   := HoraServidor;
+   qLocal.ParamByName('CHB_USUEVENTO').AsString   := Usuario.Codigo;
+   qLocal.ParamByName('CHB_MAQEVENTO').AsString   := NomeComputador;
+   qLocal.ExecSql;
+
+   Log('Classe_Cliente',pLog+' cliente '+FCodigo+' - '+FNomeFantasia);
+end;
+
+procedure TCliente.RegistrarHistoricoDeAtivacao;
+begin
+   RegistrarHistorico('Ativado','Ativou');
+end;
+
+procedure TCliente.RegistrarHistoricoDeBloqueio;
+begin
+   RegistrarHistorico('Bloqueado','Bloqueou');
+end;
+
+procedure TCliente.RegistrarHistoricoDeDesBloqueio;
+begin
+   RegistrarHistorico('Desbloqueado','Desbloqueou');
+end;
+
+procedure TCliente.RegistrarHistoricoDeInativacao;
+begin
+   RegistrarHistorico('Inativado','Inativou');
 end;
 
 procedure TCliente.setDetalhes(const Value: tDetalhes_Cliente);
@@ -636,20 +836,42 @@ begin
    FNomeFantasia := UpperCase(Copy(Value,1,50));
 end;
 
+procedure TCliente.setFObservacao(const Value: TStringList);
+begin
+   FObservacao := Value;
+end;
+
 procedure TCliente.setFStatus(const Value: TStatusCadastral);
 begin
    Case value of
       sAtivo : begin
              if FStatus <> 0 then
+             begin
                 FAlteracao.DataLiberacao := sDataServidor;
+                RegistrarHistoricoDeAtivacao;
+             end;
+             if FStatus = 1 then
+             begin
+               RegistrarHistoricoDeDesBloqueio;
+             end;
           end;
       sAtivoBloqueado : begin
             if FStatus <> 1 then
+            begin
                FAlteracao.DataBloqueio := sDataServidor;
+               RegistrarHistoricoDeBloqueio;
+            end;
           end;
       sInativo : begin
             if FStatus <> 2 then
+            begin
                FAlteracao.DataInativo := sDataServidor;
+               RegistrarHistoricoDeInativacao;
+            end;
+            if FStatus = 1 then
+            begin
+              RegistrarHistoricoDeDesBloqueio;
+            end;
           end;
    End;
 
@@ -668,8 +890,9 @@ begin
     if not Update_CLIENTE_DETALHE_CLID  then exit;
     if not Update_CLIENTE_ENDERECO_CLIE then exit;
     if not Update_CLIENTE_CONTATO_CLIC  then exit;
+    Gravar_Observacoes;
     Result := True;
-    Log('Classe_Cliente','Alterou Cliente '+ FNomeFantasia);
+    Log('Classe_Cliente','Alterou cliente '+ FCodigo + ' - ' + FNomeFantasia);
 end;
 
 function TCliente.Update_CLIENTE_CLI:Boolean;
@@ -687,12 +910,20 @@ begin
         Log('Classe_Cliente','Alterou Cliente '+ FNomeFantasia);
         Result := True;
     except
-       ShowMessage('Erro ao alterar Cliente '+ FNomeFantasia);
+       Avisos.Avisar('Erro ao alterar Cliente '+ FNomeFantasia);
        LogErros('Classe_Cliente','Erro ao alterar Cliente '+ FNomeFantasia);
     end;
 end;
 
 function TCliente.Update_CLIENTE_CONTATO_CLIC: Boolean;
+begin
+    if existe_CLIENTE_CONTATO_CLIC then
+       result := alterar_CLIENTE_CONTATO_CLIC
+    else
+       result := inserir_CLIENTE_CONTATO_CLIC;
+end;
+
+function TCliente.alterar_CLIENTE_CONTATO_CLIC: Boolean;
 begin
     result := False;
     try
@@ -711,13 +942,22 @@ begin
         qCliente.ExecSql;
         Result := true;
     except
-       ShowMessage('Erro ao alterar Cliente ' + FNomeFantasia);
-       LOGErros('Classe_Cliente','Erro ao Alterar Cliente ' + FNomeFantasia);
+       Avisos.Avisar('Erro ao alterar Contatos do Cliente ' + FNomeFantasia);
+       LOGErros('Classe_Cliente','Erro ao Alterar Contatos do Cliente ' + FNomeFantasia);
     end;
 end;
 
 function TCliente.Update_CLIENTE_DETALHE_CLID:Boolean;
 begin
+    if existe_CLIENTE_DETALHE_CLID then
+       result := alterar_CLIENTE_DETALHE_CLID
+    else
+       result := inserir_CLIENTE_DETALHE_CLID;
+end;
+
+function TCliente.alterar_CLIENTE_DETALHE_CLID:Boolean;
+begin
+    result := false;
     try
         qCliente.Close;
         qCliente.SQL.Clear;
@@ -725,6 +965,8 @@ begin
         qCliente.SQL.Add('   SET CLID_PESSOA_FJ           = :CLID_PESSOA_FJ,           ');
         qCliente.SQL.Add('       CLID_NUVEM_ATUALIZADO    = :CLID_NUVEM_ATUALIZADO,    ');
         qCliente.SQL.Add('       CLID_CPF                 = :CLID_CPF,                 ');
+        qCliente.SQL.Add('       CLID_CNPJ                = :CLID_CNPJ,                ');
+        qCliente.SQL.Add('       CLID_IE                  = :CLID_IE,                  ');
         qCliente.SQL.Add('       CLID_RG                  = :CLID_RG,                  ');
         qCliente.SQL.Add('       CLID_RG_EMISSOR          = :CLID_RG_EMISSOR,          ');
         qCliente.SQL.Add('       CLID_RG_DTEMISSAO        = :CLID_RG_DTEMISSAO,        ');
@@ -736,39 +978,51 @@ begin
         qCliente.SQL.Add('       CLID_ALT_ESTACAO         = :CLID_ALT_ESTACAO,         ');
         qCliente.SQL.Add('       CLID_ALT_DTBLOQUEADO     = :CLID_ALT_DTBLOQUEADO,     ');
         qCliente.SQL.Add('       CLID_ALT_DTLIBERADO      = :CLID_ALT_DTLIBERADO,      ');
+        qCliente.SQL.Add('       CLID_ALT_DTINATIVO       = :CLID_ALT_DTINATIVO,       ');
         qCliente.SQL.Add('       CLID_CDRAMO              = :CLID_CDRAMO,              ');
         qCliente.SQL.Add('       CLID_CDREGIAO            = :CLID_CDREGIAO,            ');
         qCliente.SQL.Add('       CLID_CDZONA              = :CLID_CDZONA               ');
         qCliente.SQL.Add(' WHERE CLID_CODIGO              = :CLID_CODIGO               ');
         qCliente.ParamByName('CLID_CODIGO'          ).AsString   := FCodigo;
         qCliente.ParamByName('CLID_NUVEM_ATUALIZADO').AsInteger  := 0;
-        qCliente.ParamByName('CLID_PESSOA_FJ'       ).AsString   := Detalhes.FTipoPessoa;
-        qCliente.ParamByName('CLID_CPF'             ).AsString   := Detalhes.FPessoaFisica.FCPF;
-        qCliente.ParamByName('CLID_RG'              ).AsString   := Detalhes.FPessoaFisica.FRG;
-        qCliente.ParamByName('CLID_RG_EMISSOR'      ).AsString   := Detalhes.FPessoaFisica.FRG_OrgaoEmissor;
-        qCliente.ParamByName('CLID_RG_DTEMISSAO'    ).AsDateTime := Detalhes.FPessoaFisica.FRG_DataEmissao;
-        qCliente.ParamByName('CLID_DTNASC'          ).AsDateTime := Detalhes.FPessoaFisica.FDataNascimento;
-        qCliente.ParamByName('CLID_SEXO'            ).AsString   := Detalhes.FPessoaFisica.FSexo;
+        qCliente.ParamByName('CLID_PESSOA_FJ'       ).AsString   := FDetalhes.FTipoPessoa;
+        qCliente.ParamByName('CLID_CPF'             ).AsString   := FDetalhes.FPessoaFisica.FCPF;
+        qCliente.ParamByName('CLID_CNPJ'            ).AsString   := FDetalhes.FPessoaJuridica.FCNPJ;
+        qCliente.ParamByName('CLID_IE'              ).AsString   := FDetalhes.FPessoaJuridica.FIE;
+        qCliente.ParamByName('CLID_RG'              ).AsString   := FDetalhes.FPessoaFisica.FRG;
+        qCliente.ParamByName('CLID_RG_EMISSOR'      ).AsString   := FDetalhes.FPessoaFisica.FRG_OrgaoEmissor;
+        qCliente.ParamByName('CLID_RG_DTEMISSAO'    ).AsDateTime := FDetalhes.FPessoaFisica.FRG_DataEmissao;
+        qCliente.ParamByName('CLID_DTNASC'          ).AsDateTime := FDetalhes.FPessoaFisica.FDataNascimento;
+        qCliente.ParamByName('CLID_SEXO'            ).AsString   := FDetalhes.FPessoaFisica.FSexo;
         qCliente.ParamByName('CLID_ALT_USU'         ).AsString   := Usuario.Codigo;
         qCliente.ParamByName('CLID_ALT_DT'          ).AsDateTime := DataServidor;
         qCliente.ParamByName('CLID_ALT_HR'          ).AsString   := HoraServidor;
         qCliente.ParamByName('CLID_ALT_ESTACAO'     ).AsString   := NomeComputador;
-        qCliente.ParamByName('CLID_ALT_DTBLOQUEADO' ).AsDateTime := ZeroSeDataNula(Alteracao.DataBloqueio);
-        qCliente.ParamByName('CLID_ALT_DTLIBERADO'  ).AsDateTime := ZeroSeDataNula(Alteracao.DataLiberacao);
-        qCliente.ParamByName('CLID_CDRAMO'          ).AsString   := FDetalhes.RamoAtividade;
-        qCliente.ParamByName('CLID_CDREGIAO'        ).AsString   := FDetalhes.Regiao;
-        qCliente.ParamByName('CLID_CDZONA'          ).AsString   := FDetalhes.Zona;
+        qCliente.ParamByName('CLID_ALT_DTBLOQUEADO' ).AsDateTime := ZeroSeDataNula(FAlteracao.DataBloqueio);
+        qCliente.ParamByName('CLID_ALT_DTLIBERADO'  ).AsDateTime := ZeroSeDataNula(FAlteracao.DataLiberacao);
+        qCliente.ParamByName('CLID_ALT_DTINATIVO'   ).AsDateTime := ZeroSeDataNula(FAlteracao.DataInativo);
+        qCliente.ParamByName('CLID_CDRAMO'          ).AsString   := FDetalhes.FRamoAtividade;
+        qCliente.ParamByName('CLID_CDREGIAO'        ).AsString   := FDetalhes.FRegiao;
+        qCliente.ParamByName('CLID_CDZONA'          ).AsString   := FDetalhes.FZona;
         qCliente.ExecSql;
 
         Log('Classe_Cliente','Alterou Cliente '+ FNomeFantasia);
         Result := True;
     except
-       ShowMessage('Erro ao alterar Cliente '+ FNomeFantasia);
-       LogErros('Classe_Cliente','Erro ao alterar Cliente '+ FNomeFantasia);
+       Avisos.Avisar('Erro ao alterar Detalhes do Cliente '+ FNomeFantasia);
+       LogErros('Classe_Cliente','Erro ao alterar Detalhes do Cliente '+ FNomeFantasia);
     end;
 end;
 
 function TCliente.Update_CLIENTE_ENDERECO_CLIE:Boolean;
+begin
+    if existe_CLIENTE_ENDERECO_CLIE then
+       result := alterar_CLIENTE_ENDERECO_CLIE
+    else
+       result := inserir_CLIENTE_ENDERECO_CLIE;
+end;
+
+function TCliente.alterar_CLIENTE_ENDERECO_CLIE:Boolean;
 begin
    try
         qCliente.Close;
@@ -782,19 +1036,19 @@ begin
         qCliente.SQL.Add('       CLIE_CEP                 = :CLIE_CEP                  ');
         qCliente.SQL.Add(' WHERE CLIE_CODIGO              = :CLIE_CODIGO               ');
         qCliente.ParamByName('CLIE_CODIGO'          ).AsString   := FCodigo;
-        qCliente.ParamByName('CLIE_RUA'             ).AsString   := FDetalhes.Endereco.Rua;
-        qCliente.ParamByName('CLIE_NUMERO'          ).AsString   := FDetalhes.Endereco.Numero;
-        qCliente.ParamByName('CLIE_COMPLEMENTO'     ).AsString   := FDetalhes.Endereco.Complemento;
-        qCliente.ParamByName('CLIE_BAIRRO'          ).AsString   := FDetalhes.Endereco.Bairro;
-        qCliente.ParamByName('CLIE_CDCIDADE'        ).AsString   := FDetalhes.Endereco.Cidade;
-        qCliente.ParamByName('CLIE_CEP'             ).AsString   := FDetalhes.Endereco.CEP;
+        qCliente.ParamByName('CLIE_RUA'             ).AsString   := FDetalhes.FEndereco.Rua;
+        qCliente.ParamByName('CLIE_NUMERO'          ).AsString   := FDetalhes.FEndereco.Numero;
+        qCliente.ParamByName('CLIE_COMPLEMENTO'     ).AsString   := FDetalhes.FEndereco.Complemento;
+        qCliente.ParamByName('CLIE_BAIRRO'          ).AsString   := FDetalhes.FEndereco.Bairro;
+        qCliente.ParamByName('CLIE_CDCIDADE'        ).AsString   := FDetalhes.FEndereco.Cidade;
+        qCliente.ParamByName('CLIE_CEP'             ).AsString   := FDetalhes.FEndereco.CEP;
         qCliente.ExecSql;
 
         Log('Classe_Cliente','Alterou Cliente '+ FNomeFantasia);
         Result := True;
     except
-       ShowMessage('Erro ao alterar Cliente '+ FNomeFantasia);
-       LogErros('Classe_Cliente','Erro ao alterar Cliente '+ FNomeFantasia);
+       Avisos.Avisar('Erro ao alterar Endereço do Cliente '+ FNomeFantasia);
+       LogErros('Classe_Cliente','Erro ao alterar Endereço do Cliente '+ FNomeFantasia);
     end;
 end;
 
@@ -804,15 +1058,17 @@ constructor tDetalhes_Cliente.Create;
 begin
   qCliente := TFDQuery.Create(nil);
   qCliente.ConnectionName :='X';
-  FPessoaFisica := tPessoa_Fisica.Create;
-  FEndereco     := TEndereco.Create;
-  FContato      := TContato.Create;
+  FPessoaFisica  := tPessoa_Fisica.Create;
+  FPessoaJuridica:= tPessoa_Juridica.Create;
+  FEndereco      := TEndereco.Create;
+  FContato       := TContato.Create;
 end;
 
 destructor tDetalhes_Cliente.Destroy;
 begin
   qCliente.Free;
   FPessoaFisica.Free;
+  FPessoaJuridica.Free;
   FEndereco.Free;
   FContato.Free;
   inherited;
@@ -936,7 +1192,7 @@ end;
 
 procedure tPessoa_Fisica.setFRG(const Value: String);
 begin
-   FRG := Value;
+   FRG := SoNumerosOuISENTO(Value);
 end;
 
 procedure tPessoa_Fisica.setFRG_DataEmissaoString(const Value: String);
@@ -966,6 +1222,35 @@ end;
 function tPessoa_Fisica.getDataNascimentoString: String;
 begin
    result := self.FDataNascimentoString;
+end;
+
+{ tPessoa_Juridica }
+
+function tPessoa_Juridica.getFCNPJ: String;
+begin
+   if self.FCNPJ = '' then
+   begin
+     result := self.FCNPJ;
+     exit;
+   end;
+   self.FCNPJ :=Trim(self.FCNPJ);
+   if frmValidadorDeDocumentos.CNPJ_Valido(self.FCNPJ) then
+      result := vVDD_DocumentoFormatado;
+end;
+
+function tPessoa_Juridica.getFIE: String;
+begin
+  result := FIE;
+end;
+
+procedure tPessoa_Juridica.setFCNPJ(const Value: String);
+begin
+  FCNPJ  := Copy(SoNumeros(Value),1,14);
+end;
+
+procedure tPessoa_Juridica.setFIE(const Value: String);
+begin
+   FIE := SoNumerosOuISENTO(Value);
 end;
 
 end.
@@ -1163,6 +1448,7 @@ ALTER TABLE CLIENTE_DETALHE_CLID ADD		CLI_ATIVO int NULL
 ALTER TABLE CLIENTE_DETALHE_CLID ADD		CLI_IM varchar(20) NULL
 ALTER TABLE CLIENTE_DETALHE_CLID ADD		CLI_CPAIS int NULL
 ALTER TABLE CLIENTE_DETALHE_CLID ADD		CLI_SUFRAMA varchar(9) NULL
+
 
 
 

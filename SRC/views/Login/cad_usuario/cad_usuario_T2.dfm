@@ -1091,15 +1091,15 @@ object frm_cad_usuario_T2: Tfrm_cad_usuario_T2
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
-    Caption = 'T2'
+    Caption = '[ T2 ] '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 608
-    ExplicitWidth = 14
+    ExplicitLeft = 589
+    ExplicitWidth = 33
   end
   object bGravar: TcxButton
     Left = 240

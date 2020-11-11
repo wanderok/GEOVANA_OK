@@ -88,7 +88,8 @@ begin
 end;
 procedure TAlteracao.setDataInativo(const Value: String);
 begin
-   if Value = '  /  /  ' then
+   if (Value = '  /  /  ') or
+      (Value = ''        ) then
       FDataInativo := 0
    else
       FDataInativo := StrToDate(Value);

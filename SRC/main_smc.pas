@@ -316,6 +316,7 @@
     dxBarLargeButton123: TdxBarLargeButton;
     dxBarLargeButton124: TdxBarLargeButton;
     Image1: TImage;
+    dxBarLargeButton125: TdxBarLargeButton;
     procedure dxBarLargeButton12Click(Sender: TObject);
     procedure dxBarLargeButton18Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -365,6 +366,10 @@
     procedure dxBarButton21Click(Sender: TObject);
     procedure dxBarButton4Click(Sender: TObject);
     procedure dxBarLargeButton124Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure dxBarLargeButton125Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   
     private
       { Private declarations }
@@ -374,7 +379,7 @@
 
   var
     Frm_main: TFrm_main;
-
+    vPodeFechar:Boolean;
 
 implementation
 
@@ -384,11 +389,16 @@ uses
   reg_tributario_T4,
   cad_cliente_T6,
   auditoria_T10,
+  cad_fornecedor_T18,
   alterar_senha,
   //cadastro_produto,
-  cadastro_colaborador, cadastro_fornecedor, cad_transportadora, cad_motorista,
+  cadastro_colaborador,
+  LimpaBaseDeDados;
+
+  //cadastro_fornecedor, cad_transportadora,
+  //cad_motorista,
   //cad_veiculos,
-  cad_consultor;
+  //cad_consultor;
   //cad_contador,
   //cad_sistemas,
   //estoque_localizacao,
@@ -443,8 +453,8 @@ end;
 
 procedure TFrm_main.dxBarButton23Click(Sender: TObject);
 begin
-    Frm_consultor := TFrm_consultor.Create(nil);
-    Frm_consultor.showmodal;
+    //Frm_consultor := TFrm_consultor.Create(nil);
+    //Frm_consultor.showmodal;
 end;
 
 procedure TFrm_main.dxBarButton26Click(Sender: TObject);
@@ -575,8 +585,9 @@ end;
 
 procedure TFrm_main.dxBarButton5Click(Sender: TObject);
 begin
-    Frm_fornecedor := TFrm_fornecedor.Create(nil);
-    Frm_fornecedor.showmodal;
+    Frm_cad_fornecedor_T18 := TFrm_cad_fornecedor_T18.Create(nil);
+    Frm_cad_fornecedor_T18.showmodal;
+    Frm_cad_fornecedor_T18.Free;
 end;
 
 procedure TFrm_main.dxBarButton68Click(Sender: TObject);
@@ -617,8 +628,8 @@ end;
 
 procedure TFrm_main.dxBarButton81Click(Sender: TObject);
 begin
-    Frm_transportadora := TFrm_transportadora.Create(nil);
-    Frm_transportadora.showmodal;
+    //Frm_transportadora := TFrm_transportadora.Create(nil);
+    //Frm_transportadora.showmodal;
 end;
 
 procedure TFrm_main.dxBarButton82Click(Sender: TObject);
@@ -629,8 +640,8 @@ end;
 
 procedure TFrm_main.dxBarButton83Click(Sender: TObject);
 begin
-    Frm_motorista := TFrm_motorista.Create(nil);
-    Frm_motorista.showmodal;
+    //Frm_motorista := TFrm_motorista.Create(nil);
+    //Frm_motorista.showmodal;
 end;
 
 procedure TFrm_main.dxBarButton84Click(Sender: TObject);
@@ -690,9 +701,18 @@ begin
    frm_auditoria_T10.Free;
 end;
 
+procedure TFrm_main.dxBarLargeButton125Click(Sender: TObject);
+begin
+    FrmLimpaBaseDeDados := TFrmLimpaBaseDeDados.Create(nil);
+    FrmLimpaBaseDeDados.showmodal;
+    FrmLimpaBaseDeDados.Free;
+    dxRibbon1.ActiveTab := dxRibbon1Tab1;
+end;
+
 procedure TFrm_main.dxBarLargeButton12Click(Sender: TObject);
 begin
-Close;
+   vPodeFechar:=True;
+   Close;
 end;
 
 procedure TFrm_main.dxBarLargeButton18Click(Sender: TObject);
@@ -700,6 +720,21 @@ begin
     frm_cad_empresa_T3 := Tfrm_cad_empresa_T3.Create(nil);
     frm_cad_empresa_T3.showmodal;
     frm_cad_empresa_T3.Free;
+end;
+
+procedure TFrm_main.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+   canClose := vPodeFechar;
+end;
+
+procedure TFrm_main.FormCreate(Sender: TObject);
+begin
+   vPodeFechar:=False;
+end;
+
+procedure TFrm_main.FormShow(Sender: TObject);
+begin
+     dxRibbon1.ActiveTab := dxRibbon1Tab1;
 end;
 
 end.

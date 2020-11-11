@@ -256,13 +256,15 @@ begin
 
     if edEmpresa.Text = '' then
     begin
-      ShowMessage('Informe a empresa');
+      // ShowMessage('Informe a empresa');
+      Avisos.Avisar('Informe a empresa');
       exit;
     end;
 
     if edt_Usuario.Text = '' then
     begin
-      ShowMessage('Informe o usuário');
+      //ShowMessage('Informe o usuário');
+      Avisos.Avisar('Informe o usuário');
       exit;
     end;
 
@@ -270,7 +272,8 @@ begin
 
     if usuario.Senha <>  edt_Senha.Text then
     begin
-      ShowMessage('Senha inválida');
+      //ShowMessage('Senha inválida');
+      Avisos.SenhaInvalida;
       exit;
     end;
 
@@ -367,7 +370,8 @@ begin
 
   if edt_Senha.text <> Usuario.Senha then
   begin
-     ShowMessage('Senha inválida.');
+     Avisos.SenhaInvalida;
+     //ShowMessage('Senha inválida.');
      edt_Senha.SetFocus;
      exit;
   end;
@@ -400,7 +404,9 @@ begin
   if not Usuario.Existe(edt_Usuario.Text) then
   begin
      Usuario.Free;
-     ShowMessage('Usuário não cadastrado');
+     //ShowMessage('Usuário não cadastrado');
+     Avisos.Avisar('Usuário não cadastrado');
+
      edt_Usuario.SetFocus;
      exit;
   end;

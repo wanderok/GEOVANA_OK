@@ -39,15 +39,15 @@ object frm_cad_bairro_T8: Tfrm_cad_bairro_T8
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
-    Caption = 'T8 '
+    Caption = '[ T8 ] '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 273
-    ExplicitWidth = 17
+    ExplicitLeft = 257
+    ExplicitWidth = 33
   end
   object edFiltro: TEdit
     Left = 86
@@ -86,18 +86,6 @@ object frm_cad_bairro_T8: Tfrm_cad_bairro_T8
     OnDblClick = DBGrid2DblClick
     OnKeyDown = DBGrid2KeyDown
     Columns = <
-      item
-        Expanded = False
-        FieldName = 'BAI_CODIGO'
-        Title.Caption = 'C'#243'digo'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'Tahoma'
-        Title.Font.Style = [fsBold]
-        Width = 48
-        Visible = True
-      end
       item
         Expanded = False
         FieldName = 'BAI_DESCRICAO'
@@ -408,6 +396,7 @@ object frm_cad_bairro_T8: Tfrm_cad_bairro_T8
     OnClick = cxButton2Click
   end
   object ACBrEnterTab1: TACBrEnterTab
+    EnterAsTab = True
     Left = 253
     Top = 16
   end

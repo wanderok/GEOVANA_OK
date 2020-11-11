@@ -38,15 +38,15 @@ object frm_cad_ramo_atividade_T9: Tfrm_cad_ramo_atividade_T9
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
-    Caption = 'T9 '
+    Caption = '[ T9 ] '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 264
-    ExplicitWidth = 17
+    ExplicitLeft = 248
+    ExplicitWidth = 33
   end
   object edFiltro: TEdit
     Left = 86
@@ -66,7 +66,7 @@ object frm_cad_ramo_atividade_T9: Tfrm_cad_ramo_atividade_T9
   end
   object DBGrid2: TDBGrid
     Left = 13
-    Top = 46
+    Top = 40
     Width = 260
     Height = 150
     DataSource = DataSource1
@@ -393,11 +393,11 @@ object frm_cad_ramo_atividade_T9: Tfrm_cad_ramo_atividade_T9
     ParentFont = False
   end
   object ACBrEnterTab1: TACBrEnterTab
-    Left = 253
-    Top = 16
+    EnterAsTab = True
+    Left = 213
+    Top = 56
   end
   object qLocal: TFDQuery
-    Active = True
     Connection = DM.Database1
     SQL.Strings = (
       'select * FROM RAMOATIVIDADE_RAMO')

@@ -184,7 +184,7 @@ uses
    ValidadorDeDocumentos,
    reg_tributario_T4,
    U_Municipio_T5,
-   cad_bairro_T8,
+   //cad_bairro_T8,
    cad_regiao_T11,
    cad_zona_T12,
 
@@ -313,9 +313,9 @@ end;
 
 procedure Tfrm_cad_empresa_T3.bPesqBairroClick(Sender: TObject);
 begin
-    frm_cad_bairro_T8 := Tfrm_cad_bairro_T8.Create(nil);
+    {frm_cad_bairro_T8 := Tfrm_cad_bairro_T8.Create(nil);
     frm_cad_bairro_T8.showmodal;
-    frm_cad_bairro_T8.Free;
+    frm_cad_bairro_T8.Free;}
 end;
 
 procedure Tfrm_cad_empresa_T3.cxButton6Click(Sender: TObject);
@@ -405,7 +405,7 @@ end;
 
 procedure Tfrm_cad_empresa_T3.edCNPJExit(Sender: TObject);
 begin
-   if not CNPJValido((Sender as TEdit)) then
+   if not fCNPJValido((Sender as TEdit)) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -441,7 +441,7 @@ end;
 
 procedure Tfrm_cad_empresa_T3.edContadorCNPJExit(Sender: TObject);
 begin
-   if not CNPJValido((Sender as TEdit)) then
+   if not fCNPJValido((Sender as TEdit)) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -450,7 +450,7 @@ end;
 
 procedure Tfrm_cad_empresa_T3.edContadorCPFExit(Sender: TObject);
 begin
-   if not CPFValido((Sender as TEdit)) then
+   if not fCPFValido((Sender as TEdit)) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -459,18 +459,18 @@ end;
 
 procedure Tfrm_cad_empresa_T3.edDataCadastroExit(Sender: TObject);
 begin
-   if DataNoFuturo(edDataCadastro.Text) then
+   if DataNoFuturo((Sender as TMaskEdit)) then
    begin
-      edDataCadastro.SetFocus;
+      (Sender as TMaskEdit).SetFocus;
       exit;
    end;
 end;
 
 procedure Tfrm_cad_empresa_T3.edDataInicioAtividadesExit(Sender: TObject);
 begin
-   if DataNoFuturo(edDataInicioAtividades.Text) then
+   if DataNoFuturo((Sender as TMaskEdit)) then
    begin
-      edDataInicioAtividades.SetFocus;
+      (Sender as TMaskEdit).SetFocus;
       exit;
    end;
 end;

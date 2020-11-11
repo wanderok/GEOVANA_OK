@@ -674,7 +674,7 @@ begin
         Result := True;
     except
        qLocal.Free;
-       ShowMessage('Erro ao incluir Empresa '+ Empresa.FNomeFantasia);
+       Avisos.Avisar('Erro ao incluir Empresa '+ Empresa.FNomeFantasia);
        LOGErros('Classe_Empresa','Erro ao incluir Empresa '+ Empresa.FNomeFantasia);
     end;
 end;
@@ -741,7 +741,7 @@ begin
    Result := False;
    if pCampo = '' then
    begin
-     ShowMessage('Informe '+pDescricao);
+     Avisos.Avisar('Informe '+pDescricao);
      exit;
    end;
    Result := True;
@@ -997,7 +997,7 @@ begin
         Result := True;
     except
        qLocal.Free;
-       ShowMessage('Erro ao alterar Empresa '+ Empresa.FNomeFantasia);
+       Avisos.Avisar('Erro ao alterar Empresa '+ Empresa.FNomeFantasia);
        LogErros('Classe_Empresa','Erro ao alterar Empresa '+ Empresa.FNomeFantasia);
     end;
 end;

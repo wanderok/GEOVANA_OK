@@ -615,10 +615,6 @@ object Frm_fornecedor: TFrm_fornecedor
     TabOrder = 5
     object tsPessoaFisica: TTabSheet
       Caption = 'Pessoa F'#237'sica'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label25: TLabel
         Left = 10
         Top = 13

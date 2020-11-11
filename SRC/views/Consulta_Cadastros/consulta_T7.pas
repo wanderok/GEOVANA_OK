@@ -39,25 +39,12 @@ type
     tbfantasia: TcxGridDBColumn;
     tbcnpj: TcxGridDBColumn;
     tbcpf: TcxGridDBColumn;
-    tbstatus_cadastral: TcxGridDBColumn;
-    tbtelefone: TcxGridDBColumn;
-    tbcelular: TcxGridDBColumn;
-    tbemail: TcxGridDBColumn;
-    tbmunicipio: TcxGridDBColumn;
-    tbestado: TcxGridDBColumn;
     lv: TcxGridLevel;
     btn_relatorios_cli: TcxButton;
     edArgumentoDePesquisa: TEdit;
     Label24: TLabel;
     Label45: TLabel;
     cxButton21: TcxButton;
-    GroupBox1: TGroupBox;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    Label6: TLabel;
     lbNomeDaTela: TLabel;
     qLocal: TFDQuery;
     DataSource1: TDataSource;
@@ -150,29 +137,27 @@ procedure Tfrm_consulta_T7.Pesquisar_Clientes;
 begin
    qLocal.Close;
    qLocal.sql.Clear;
-   qLocal.SQL.Add('SELECT ''J''             AS pessoa_tipo,     ');
+   qLocal.SQL.Add('SELECT CLID_PESSOA_FJ    AS pessoa_tipo,     ');
    qLocal.SQL.Add('       CLI_CODIGO        AS codigo,          ');
    qLocal.SQL.Add('       CLI_RAZAO_SOCIAL  AS razao_social,    ');
    qLocal.SQL.Add('       CLI_NOME_FANTASIA AS fantasia,        ');
-   qLocal.SQL.Add('       ''''              AS cnpj,            ');
-   qLocal.SQL.Add('       ''''              AS cpf,             ');
-   qLocal.SQL.Add('       0                 AS status_cadastral,');
-   qLocal.SQL.Add('       ''''              AS telefone,        ');
-   qLocal.SQL.Add('       ''''              AS celular,         ');
-   qLocal.SQL.Add('       ''''              AS email,           ');
-   qLocal.SQL.Add('       ''''              AS municipio,       ');
-   qLocal.SQL.Add('       ''''              AS estado           ');
+   qLocal.SQL.Add('       CLID_CNPJ         AS cnpj,            ');
+   qLocal.SQL.Add('       CLID_CPF          AS cpf              ');
    qLocal.SQL.Add('  FROM CLIENTE_CLI                           ');
+   qLocal.SQL.Add('INNER JOIN CLIENTE_DETALHE_CLID              ');
+   qLocal.SQL.Add('        ON CLID_CODIGO = CLI_CODIGO          ');
    qLocal.SQL.Add(' WHERE CLI_CODIGO        LIKE :ARGUMENTO     ');
    qLocal.SQL.Add('    OR CLI_RAZAO_SOCIAL  LIKE :ARGUMENTO     ');
    qLocal.SQL.Add('    OR CLI_NOME_FANTASIA LIKE :ARGUMENTO     ');
-   qLocal.SQL.Add(' ORDER BY CLI_RAZAO_SOCIAL                   ');
+   qLocal.SQL.Add('    OR CLID_CPF          LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR CLID_CNPJ         LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add(' ORDER BY CLI_NOME_FANTASIA                  ');
    if cbQualquerParteDoNome.Checked then
       qLocal.ParamByName('ARGUMENTO').AsString := '%'+edArgumentoDePesquisa.Text + '%'
    else
-            qLocal.ParamByName('ARGUMENTO').AsString := edArgumentoDePesquisa.Text + '%';
+      qLocal.ParamByName('ARGUMENTO').AsString := edArgumentoDePesquisa.Text + '%';
    qLocal.open;
-   Label2.Caption := FormatFloat('#,##0',qLocal.RecordCount);
+   //Label2.Caption := FormatFloat('#,##0',qLocal.RecordCount);
 
 end;
 

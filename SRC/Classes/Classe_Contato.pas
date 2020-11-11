@@ -49,7 +49,7 @@ implementation
 
 function TContato.getFCel: String;
 begin
-   result := FCel1;
+   result := FormataFones(FCel1);
 end;
 
 function TContato.getFEmail1: String;
@@ -64,12 +64,12 @@ end;
 
 function TContato.getFFone1: String;
 begin
-   result := FFone1;
+   result := FormataFones(FFone1);
 end;
 
 function TContato.getFFone2: String;
 begin
-   result := FFone2;
+   result := FormataFones(FFone2);
 end;
 
 function TContato.getFNome: String;
@@ -79,12 +79,12 @@ end;
 
 function TContato.getFWhatsApp: String;
 begin
-   result := FWhatsApp;
+   result := FormataFones(FWhatsApp);
 end;
 
 procedure TContato.setFCel(const Value: String);
 begin
-   FCel1 := Copy(Value,1,9);
+   FCel1 := SoNumeros(Value);
 end;
 
 procedure TContato.setFEmail1(const Value: String);
@@ -99,12 +99,12 @@ end;
 
 procedure TContato.setFFone1(const Value: String);
 begin
-   FFone1 := Copy(Value,1,8);
+   FFone1 := SoNumeros(Value);
 end;
 
 procedure TContato.setFFone2(const Value: String);
 begin
-   FFone2 := Copy(Value,1,8);
+   FFone2 := SoNumeros(Value);
 end;
 
 procedure TContato.setFNome(const Value: String);
@@ -114,7 +114,7 @@ end;
 
 procedure TContato.setFWhatsApp(const Value: String);
 begin
-   FWhatsApp := Copy(Value,1,9);
+   FWhatsApp := SoNumeros(Value);
 end;
 
 end.

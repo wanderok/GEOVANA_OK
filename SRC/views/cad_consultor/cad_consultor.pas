@@ -141,7 +141,7 @@ implementation
 uses
   consultor_banco_comissoes,
   consulta_T7,
-  cad_bairro_T8,
+  //cad_bairro_T8,
   cad_regiao_T11,
   cad_zona_T12;
 
@@ -162,9 +162,10 @@ end;
 
 procedure TFrm_consultor.cxButton5Click(Sender: TObject);
 begin
-    frm_cad_bairro_T8 := Tfrm_cad_bairro_T8.Create(nil);
+    {frm_cad_bairro_T8 := Tfrm_cad_bairro_T8.Create(nil);
     frm_cad_bairro_T8.showmodal;
     frm_cad_bairro_T8.Free;
+}
 end;
 
 procedure TFrm_consultor.cxButton7Click(Sender: TObject);

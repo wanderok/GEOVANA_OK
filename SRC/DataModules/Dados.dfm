@@ -42,4 +42,11 @@ object DM: TDM
     Left = 256
     Top = 16
   end
+  object qCONFIG: TFDQuery
+    Connection = Database1
+    SQL.Strings = (
+      'select * from cliente')
+    Left = 216
+    Top = 48
+  end
 end

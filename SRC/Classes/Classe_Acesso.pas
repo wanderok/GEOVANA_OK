@@ -7,7 +7,8 @@ uses Classes, Dialogs, SysUtils, IniFiles,
      FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
      FireDAC.Comp.Client,
      FireDAC.Stan.Intf, FireDAC.Stan.Option,
-     Classe_Empresa;
+
+     Classe_empresa;
 
 type
    TAcesso = class
@@ -21,9 +22,11 @@ type
       function getNomeDaConexao: String;
       procedure setNomeDaConexao(const Value: String);
       procedure AtualizaBaseDeDados;
+      procedure AtualizaBaseDeDadosNuvem;
       procedure Alteracoes_Gerais;
       procedure Alteracoes_Cad_Empresa;
       procedure Alteracoes_Cad_Cliente;
+      procedure Alteracoes_Cad_Fornecedor;
       procedure Tratar_Cad_Bairro;
 
    public
@@ -38,7 +41,7 @@ implementation
 
 { TAcesso }
 
-uses Dados, Funcoes;
+uses Dados, DadosNuvem, Funcoes;
 
 function TAcesso.acessarBaseDeDados: Boolean;
 begin
@@ -47,6 +50,8 @@ begin
    if not carregarConfiguracaoDeAcesso then exit;
 
    AtualizaBaseDeDados;
+
+   Cria_Objetos_das_Classes;
 
    Empresa := TEmpresa.Create;
    Empresa.Abrir;
@@ -236,6 +241,27 @@ begin
    Executar_Script('ALTER TABLE CLIENTE_CONTATO_CLIC DROP COLUMN CLIC_CONTATO');
    Executar_Script('ALTER TABLE CLIENTE_CONTATO_CLIC DROP COLUMN CLIC_TELEFONE');
    Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_CDZONA VARCHAR(10) NULL FOREIGN KEY REFERENCES ZONA_ZON(ZON_CODIGO)');
+   Executar_Script('ALTER TABLE CLIENTE_CONTATO_CLIC ALTER COLUMN CLIC_FONE1 VARCHAR(10) NULL');
+   Executar_Script('ALTER TABLE CLIENTE_CONTATO_CLIC ALTER COLUMN CLIC_FONE2 VARCHAR(10) NULL');
+   Executar_Script('ALTER TABLE CLIENTE_CONTATO_CLIC ALTER COLUMN CLIC_CEL1 VARCHAR(11) NULL');
+   Executar_Script('ALTER TABLE CLIENTE_CONTATO_CLIC ALTER COLUMN CLIC_WHATSAPP VARCHAR(11) NULL');
+   Executar_Script('ALTER TABLE CLIENTE_ENDERECO_CLIE DROP COLUMN CLIE_TIPO_ENDERECO');
+
+   Executar_Script('ALTER TABLE CLIENTE_BLOQUEIOS_CLIB ADD CLIB_DTINATIVO TDATETIME NULL');
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_ALT_DTINATIVO DATETIME NULL');
+
+   if not Ja_Executou_Script('CLIENTE_OBS_CLIOBS.') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('CREATE TABLE CLIENTE_OBS_CLIOBS                        ');
+      dm.Query1.sql.Add('     ( CLIOBS_CODIGO VARCHAR(20)  NOT NULL,            ');
+	    dm.Query1.sql.Add('       CLIOBS_LINHA  INTEGER      NOT NULL,            ');
+      dm.Query1.sql.Add('       CLIOBS_TEXTO  VARCHAR(255)     NULL,            ');
+      dm.Query1.sql.Add('       CONSTRAINT PK_CLIOBS PRIMARY KEY (CLIOBS_CODIGO)');
+      dm.Query1.sql.Add('     )                                                 ');
+      dm.Query1.ExecSql;
+   end;
 
 {CREATE TABLE Orders (
     OrderID int NOT NULL PRIMARY KEY,
@@ -345,6 +371,142 @@ begin
    Executar_Script('ALTER TABLE EMPRESA_EMP ADD EMP_ALT_DTBLOQUEADO_SIM DATETIME NULL');
    Executar_Script('ALTER TABLE EMPRESA_EMP ADD EMP_ALT_DTBLOQUEADO_NAO DATETIME NULL');
 
+end;
+
+procedure TAcesso.Alteracoes_Cad_Fornecedor;
+begin
+   if not Ja_Executou_Script('Criar_FORNECEDOR_FOR..') then
+   begin
+      Executar_Script('DROP TABLE FORNECEDOR_FOR');
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('SELECT CLI_CODIGO         AS FOR_CODIGO,        ');
+      dm.Query1.sql.Add('       CLI_NOME_FANTASIA  AS FOR_NOME_FANTASIA, ');
+      dm.Query1.sql.Add('       CLI_RAZAO_SOCIAL   AS FOR_RAZAO_SOCIAL,  ');
+      dm.Query1.sql.Add('       CLI_STATUS         AS FOR_STATUS         ');
+      dm.Query1.sql.Add('  INTO FORNECEDOR_FOR FROM CLIENTE_CLI          ');
+      dm.Query1.sql.Add(' WHERE CLI_CODIGO <> CLI_CODIGO                 ');
+      dm.Query1.ExecSql;
+   end;
+   if not Ja_Executou_Script('Criar_FORNECEDOR_CONTATO_FORC..') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('SELECT CLIC_CODIGO   AS FORC_CODIGO,  ');
+      dm.Query1.sql.Add('       CLIC_NOME     AS FORC_NOME,    ');
+      dm.Query1.sql.Add('       CLIC_FONE1    AS FORC_FONE1,   ');
+      dm.Query1.sql.Add('       CLIC_FONE2    AS FORC_FONE2,   ');
+      dm.Query1.sql.Add('       CLIC_CEL1     AS FORC_CEL1,    ');
+      dm.Query1.sql.Add('       CLIC_WHATSAPP AS FORC_WHATSAPP,');
+      dm.Query1.sql.Add('       CLIC_EMAIL1   AS FORC_EMAIL1,  ');
+      dm.Query1.sql.Add('       CLIC_EMAIL2   AS FORC_EMAIL2   ');
+      dm.Query1.sql.Add('  INTO FORNECEDOR_CONTATO_FORC        ');
+      dm.Query1.sql.Add('  FROM CLIENTE_CONTATO_CLIC           ');
+      dm.Query1.sql.Add(' WHERE CLIC_CODIGO <> CLIC_CODIGO     ');
+      dm.Query1.ExecSql;
+   end;
+   if not Ja_Executou_Script('Criar_FORNECEDOR_DETALHE_FORD.') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('SELECT CLID_CODIGO            AS FORD_CODIGO,');
+      dm.Query1.sql.Add('       CLID_CNPJ_CPF          AS FORD_CNPJ_CPF,');
+      dm.Query1.sql.Add('       CLID_IE                AS FORD_IE,');
+      dm.Query1.sql.Add('       CLID_IM                AS FORD_IM,');
+      dm.Query1.sql.Add('       CLID_TELEFONE          AS FORD_TELEFONE,');
+      dm.Query1.sql.Add('       CLID_EMAIL             AS FORD_EMAIL,');
+      dm.Query1.sql.Add('       CLID_CDVENDEDOR        AS FORD_CDVENDEDOR,');
+      dm.Query1.sql.Add('       CLID_OBS               AS FORD_OBS,');
+      dm.Query1.sql.Add('       CLID_LIMITE_CREDITO    AS FORD_LIMITE_CREDITO,');
+      dm.Query1.sql.Add('       CLID_RG                AS FORD_RG,');
+      dm.Query1.sql.Add('       CLID_DTNASC            AS FORD_DTNASC,');
+      dm.Query1.sql.Add('       CLID_SEXO              AS FORD_SEXO,');
+      dm.Query1.sql.Add('       CLID_PESSOA_FJ         AS FORD_PESSOA_FJ,');
+      dm.Query1.sql.Add('       CLID_FORMAPG           AS FORD_FORMAPG,');
+      dm.Query1.sql.Add('       CLID_DT                AS FORD_DT,');
+      dm.Query1.sql.Add('       CLID_USU               AS FORD_USU,');
+      dm.Query1.sql.Add('       CLID_HR                AS FORD_HR,');
+      dm.Query1.sql.Add('       CLID_CDRAMO            AS FORD_CDRAMO,');
+      dm.Query1.sql.Add('       CLID_CDGRUPO           AS FORD_CDGRUPO,');
+      dm.Query1.sql.Add('       CLID_TRIBUTACAO_ICMS   AS FORD_TRIBUTACAO_ICMS,');
+      dm.Query1.sql.Add('       CLID_SALDO             AS FORD_SALDO,');
+      dm.Query1.sql.Add('       CLID_CDREGIAO          AS FORD_CDREGIAO,');
+      dm.Query1.sql.Add('       CLID_CONTRIBUINTE_ICMS AS FORD_CONTRIBUINTE_ICMS,');
+      dm.Query1.sql.Add('       CLID_EMAIL_XML         AS FORD_EMAIL_XML,');
+      dm.Query1.sql.Add('       CLID_INDICACAO_IE      AS FORD_INDICACAO_IE,');
+      dm.Query1.sql.Add('       CLID_WHATSAPP          AS FORD_WHATSAPP,');
+      dm.Query1.sql.Add('       CLID_NUVEM_ATUALIZADO  AS FORD_NUVEM_ATUALIZADO,');
+      dm.Query1.sql.Add('       CLID_NUVEM_DT          AS FORD_NUVEM_DT,');
+      dm.Query1.sql.Add('       CLID_NUVEM_HR          AS FORD_NUVEM_HR,');
+      dm.Query1.sql.Add('       CLID_SUFRAMA           AS FORD_SUFRAMA,');
+      dm.Query1.sql.Add('       CLID_CPF               AS FORD_CPF,');
+      dm.Query1.sql.Add('       CLID_CNPJ              AS FORD_CNPJ,');
+      dm.Query1.sql.Add('       CLID_RG_EMISSOR        AS FORD_RG_EMISSOR,');
+      dm.Query1.sql.Add('       CLID_RG_DTEMISSAO      AS FORD_RG_DTEMISSAO,');
+      dm.Query1.sql.Add('       CLID_ALT_USU           AS FORD_ALT_USU,');
+      dm.Query1.sql.Add('       CLID_ALT_DT            AS FORD_ALT_DT,');
+      dm.Query1.sql.Add('       CLID_ALT_HR            AS FORD_ALT_HR,');
+      dm.Query1.sql.Add('       CLID_ALT_ESTACAO       AS FORD_ALT_ESTACAO,');
+      dm.Query1.sql.Add('       CLID_ALT_DTBLOQUEADO   AS FORD_ALT_DTBLOQUEADO,');
+      dm.Query1.sql.Add('       CLID_ALT_DTLIBERADO    AS FORD_ALT_DTLIBERADO,');
+      dm.Query1.sql.Add('       CLID_CDCIDADE          AS FORD_CDCIDADE,');
+      dm.Query1.sql.Add('       CLID_CDZONA            AS FORD_CDZONA,');
+      dm.Query1.sql.Add('       CLID_ALT_DTINATIVO     AS FORD_ALT_DTINATIVO');
+      dm.Query1.sql.Add('  INTO FORNECEDOR_DETALHE_FORD                     ');
+      dm.Query1.sql.Add('  FROM CLIENTE_DETALHE_CLID                        ');
+      dm.Query1.sql.Add(' WHERE CLID_CODIGO <> CLID_CODIGO                  ');
+      dm.Query1.ExecSql;
+   end;
+   if not Ja_Executou_Script('Criar_FORNECEDOR_ENDERECO_FORE.') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('SELECT CLIE_CODIGO      AS FORE_CODIGO,');
+      dm.Query1.sql.Add('       CLIE_RUA         AS FORE_RUA,   ');
+      dm.Query1.sql.Add('       CLIE_NUMERO      AS FORE_NUMERO,');
+      dm.Query1.sql.Add('       CLIE_CEP         AS FORE_CEP,');
+      dm.Query1.sql.Add('       CLIE_BAIRRO      AS FORE_BAIRRO,');
+      dm.Query1.sql.Add('       CLIE_UF          AS FORE_UF,');
+      dm.Query1.sql.Add('       CLIE_UF_IBGE     AS FORE_UF_IBGE,');
+      dm.Query1.sql.Add('       CLIE_TELEFONE    AS FORE_TELEFONE,');
+      dm.Query1.sql.Add('       CLIE_OBS1        AS FORE_OBS1,');
+      dm.Query1.sql.Add('       CLIE_OBS2        AS FORE_OBS2,');
+      dm.Query1.sql.Add('       CLIE_CPAIS       AS FORE_CPAIS,');
+      dm.Query1.sql.Add('       CLIE_COMPLEMENTO AS FORE_COMPLEMENTO,');
+      dm.Query1.sql.Add('       CLIE_CDCIDADE    AS FORE_CDCIDADE ');
+      dm.Query1.sql.Add('  INTO FORNECEDOR_ENDERECO_FORE  ');
+      dm.Query1.sql.Add('  FROM CLIENTE_ENDERECO_CLIE     ');
+      dm.Query1.sql.Add(' WHERE CLIE_CODIGO <> CLIE_CODIGO');
+      dm.Query1.ExecSql;
+   end;
+
+   if not Ja_Executou_Script('Criar_FORNECEDOR_HISTORICO_BLOQUEIOS_FHB.') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('SELECT CHB_CLIENTE      AS FHB_FORNECEDOR,');
+      dm.Query1.sql.Add('       CHB_DTEVENTO     AS FHB_DTEVENTO,  ');
+      dm.Query1.sql.Add('       CHB_HREVENTO     AS FHB_HREVENTO,  ');
+      dm.Query1.sql.Add('       CHB_USUEVENTO    AS FHB_USUEVENTO, ');
+      dm.Query1.sql.Add('       CHB_MAQEVENTO    AS FHB_MAQEVENTO, ');
+      dm.Query1.sql.Add('       CHB_EVENTO       AS FHB_EVENTO     ');
+      dm.Query1.sql.Add('  INTO FORNECEDOR_HISTORICO_BLOQUEIOS_FHB ');
+      dm.Query1.sql.Add('  FROM CLIENTE_HISTORICO_BLOQUEIOS_CHB    ');
+      dm.Query1.sql.Add(' WHERE CHB_CLIENTE <> CHB_CLIENTE         ');
+      dm.Query1.ExecSql;
+   end;
+   if not Ja_Executou_Script('FORNECEDOR_OBS_FOROBS.') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('CREATE TABLE FORNECEDOR_OBS_FOROBS                     ');
+      dm.Query1.sql.Add('     ( FOROBS_CODIGO VARCHAR(20)  NOT NULL,            ');
+	    dm.Query1.sql.Add('       FOROBS_LINHA  INTEGER      NOT NULL,            ');
+      dm.Query1.sql.Add('       FOROBS_TEXTO  VARCHAR(255)     NULL,            ');
+      dm.Query1.sql.Add('       CONSTRAINT PK_FOROBS PRIMARY KEY (FOROBS_CODIGO)');
+      dm.Query1.sql.Add('     )                                                 ');
+      dm.Query1.ExecSql;
+   end;
 
 end;
 
@@ -375,6 +537,79 @@ begin
    Executar_Script('CREATE TABLE ZONA_ZON (ZON_CODIGO VARCHAR(10) NOT NULL PRIMARY KEY)');
    Executar_Script('ALTER TABLE ZONA_ZON ADD ZON_DESCRICAO VARCHAR(40) NOT NULL');
 
+   if not Ja_Executou_Script('Histórico de bloqueios ...') then
+   begin
+       //Histórico de bloqueios e desbloqueios do cliente
+       DM.Query1.Close;
+       DM.Query1.Sql.Clear;
+       DM.Query1.Sql.Add('CREATE TABLE CLIENTE_HISTORICO_BLOQUEIOS_CHB                        ');
+       DM.Query1.Sql.Add('     ( CHB_CLIENTE   VARCHAR(20)                          NOT NULL, ');
+       DM.Query1.Sql.Add('       CHB_EVENTO    VARCHAR(20)                          NOT NULL, '); //0=Bloqueio 1=Desbloqueio
+       DM.Query1.Sql.Add('       CHB_DTEVENTO  DATE                                 NOT NULL, ');
+       DM.Query1.Sql.Add('       CHB_HREVENTO  VARCHAR(05)                          NOT NULL, ');
+       DM.Query1.Sql.Add('       CHB_USUEVENTO VARCHAR(20)                          NOT NULL, ');
+       DM.Query1.Sql.Add('       CHB_MAQEVENTO VARCHAR(50)                          NOT NULL  ');
+       DM.Query1.Sql.Add('     )                                                                                                           ');
+       DM.Query1.ExecSql;
+   end;
+
+   if not Ja_Executou_Script('CONFIG_CFG') then
+   begin
+       DM.Query1.Close;
+       DM.Query1.Sql.Clear;
+       DM.Query1.Sql.Add('CREATE TABLE CONFIG_CFG                           ');
+       DM.Query1.Sql.Add('     ( CFG_TRATA_NUVEM INTEGER NOT NULL DEFAULT 1)');
+       DM.Query1.ExecSql;
+       DM.Query1.Close;
+       DM.Query1.Sql.Clear;
+       DM.Query1.Sql.Add('INSERT INTO CONFIG_CFG   ');
+       DM.Query1.Sql.Add('     ( CFG_TRATA_NUVEM ) ');
+       DM.Query1.Sql.Add('VALUES                   ');
+       DM.Query1.Sql.Add('     (1)                 ');
+       DM.Query1.ExecSql;
+   end;
+
+   if not Ja_Executou_Script('CONFIG_NUVEM_CFGN') then
+   begin
+       DM.Query1.Close;
+       DM.Query1.Sql.Clear;
+       DM.Query1.Sql.Add('CREATE TABLE CONFIG_NUVEM_CFGN                 ');
+       DM.Query1.Sql.Add('     ( CFGN_SERVIDOR     VARCHAR(30) NOT NULL, ');
+       DM.Query1.Sql.Add('       CFGN_BANCODEDADOS VARCHAR(30) NOT NULL, ');
+       DM.Query1.Sql.Add('       CFGN_PORTA        INTEGER     NOT NULL, ');
+       DM.Query1.Sql.Add('       CFGN_USUARIO      VARCHAR(30) NOT NULL, ');
+       DM.Query1.Sql.Add('       CFGN_SENHA        VARCHAR(30) NOT NULL) ');
+       DM.Query1.ExecSql;
+
+       DM.Query1.ExecSql;
+       DM.Query1.Close;
+       DM.Query1.Sql.Clear;
+       DM.Query1.Sql.Add('INSERT INTO CONFIG_NUVEM_CFGN   ');
+       DM.Query1.Sql.Add('     ( CFGN_SERVIDOR,           ');
+       DM.Query1.Sql.Add('       CFGN_BANCODEDADOS,       ');
+       DM.Query1.Sql.Add('       CFGN_PORTA,              ');
+       DM.Query1.Sql.Add('       CFGN_USUARIO,            ');
+       DM.Query1.Sql.Add('       CFGN_SENHA)              ');
+       DM.Query1.Sql.Add('VALUES                   ');
+       DM.Query1.Sql.Add('     (:CFGN_SERVIDOR,           ');
+       DM.Query1.Sql.Add('      :CFGN_BANCODEDADOS,       ');
+       DM.Query1.Sql.Add('      :CFGN_PORTA,              ');
+       DM.Query1.Sql.Add('      :CFGN_USUARIO,            ');
+       DM.Query1.Sql.Add('      :CFGN_SENHA)              ');
+       DM.Query1.ParamByName('CFGN_SERVIDOR'    ).AsString := Criptografar('45.34.12.247');
+       DM.Query1.ParamByName('CFGN_BANCODEDADOS').AsString := Criptografar('wander');
+       DM.Query1.ParamByName('CFGN_PORTA'       ).AsInteger:= 3306;
+       DM.Query1.ParamByName('CFGN_USUARIO'     ).AsString := Criptografar('sa');
+       DM.Query1.ParamByName('CFGN_SENHA'       ).AsString := Criptografar('93VYetFayUu_?gC*');
+       DM.Query1.ExecSql;
+   end;
+end;
+
+procedure TAcesso.AtualizaBaseDeDadosNuvem;
+begin
+   Executar_Script_Na_Nuvem('TRUNCATE TABLE CLIENTE_CLI');
+   Executar_Script_Na_Nuvem('ALTER TABLE CLIENTE_CLI ADD CLI_STATUS INTEGER NOT NULL DEFAULT 0');
+   Executar_Script_Na_Nuvem('ALTER TABLE CLIENTE_CLI ADD CLI_CELULAR VARCHAR(20) NULL');
 end;
 
 procedure TAcesso.AtualizaBaseDeDados;
@@ -385,10 +620,12 @@ begin
    Alteracoes_Gerais;
    Alteracoes_Cad_Empresa;
    Alteracoes_Cad_Cliente;
+   Alteracoes_Cad_Fornecedor;
    Tratar_Cad_Bairro;
 
-   globalFuncoes_Atualizado:='S';
+   AtualizaBaseDeDadosNuvem;
 
+   globalFuncoes_Atualizado:='S';
 end;
 
 function TAcesso.carregarConfiguracaoDeAcesso: Boolean;
@@ -469,14 +706,14 @@ begin
    result := false;
    if FNomeDaConexao = '' then
    begin
-     ShowMessage('Informe a Empresa (Banco de Dados) desejado.');
+     Avisos.Avisar('Informe a Empresa (Banco de Dados) desejado.');
      exit;
    end;
 
    vNomeDoArquivoINI := 'Arquivos\Conexoes\'+FNomeDaConexao+'.INI';
    if not FileExists(vNomeDoArquivoINI) then
    begin
-      ShowMessage('Execute o aplicativo ConfiguraBases para '+FNomedaConexao);
+      Avisos.Avisar('Execute o aplicativo ConfiguraBases para '+FNomedaConexao);
       exit;
    end;
 
@@ -507,34 +744,6 @@ end;
 end.
 
 
-UPDATE EMPRESA_EMP SET EMP_INICIOATIVIDADES    = '01/10/2019'
-UPDATE EMPRESA_EMP SET EMP_SUFRAMA             = 'EXSUFRAMA'
-UPDATE EMPRESA_EMP SET EMP_INSCRICAO_ESTADUAL  = 'EX IE'
-UPDATE EMPRESA_EMP SET EMP_INSCRICAO_MUNICIPAL = 'EX IM'
-UPDATE EMPRESA_EMP SET EMP_NIRE                = 'EX NIRE'
-UPDATE EMPRESA_EMP SET EMP_INSCRICAO_ESTADUAL_ST = 'EX IEST'
-UPDATE EMPRESA_EMP SET EMP_CONTRIBUINTE_IPI      = 1
-UPDATE EMPRESA_EMP SET EMP_CELULAR               = 'EX CEL'
-UPDATE EMPRESA_EMP SET EMP_WHATSAPP              = 'EX WHATS UP'
-UPDATE EMPRESA_EMP SET EMP_RESPONSAVEL_NOME      = 'EX RESP NOME'
-UPDATE EMPRESA_EMP SET EMP_RESPONSAVEL_TELEFONE  = 'EX RESP TEL'
-UPDATE EMPRESA_EMP SET EMP_RESPONSAVEL_CELULAR   = 'EX RESP CEL'
-UPDATE EMPRESA_EMP SET EMP_RESPONSAVEL_EMAIL     = 'EX RESP EMAIL'
-UPDATE EMPRESA_EMP SET EMP_CONTADOR_EMPRESA      = 'EX EMPRESA'
-UPDATE EMPRESA_EMP SET EMP_CONTADOR_RESPONSAVEL  = 'EX CONT RESP'
-UPDATE EMPRESA_EMP SET EMP_CONTADOR_CNPJ         = 'EX CONT CNPJ'
-UPDATE EMPRESA_EMP SET EMP_CONTADOR_CPF          = 'EX CONT CPF'
-UPDATE EMPRESA_EMP SET EMP_CONTADOR_TEL1         = 'EX CONT TEL1'
-UPDATE EMPRESA_EMP SET EMP_CONTADOR_TEL2         = 'EX CONT TEL2'
-UPDATE EMPRESA_EMP SET EMP_CONTADOR_CRC          = 'EX CONT CRC'
-UPDATE EMPRESA_EMP SET EMP_CONTADOR_CEL1         = 'EX CONT CEL1'
-UPDATE EMPRESA_EMP SET EMP_CONTADOR_CEL2         = 'EX CONT CEL2'
-UPDATE EMPRESA_EMP SET EMP_CONTADOR_EMAIL        = 'EX CONT EMAIL'
-UPDATE EMPRESA_EMP SET EMP_DT                    = '20/10/2020'
-UPDATE EMPRESA_EMP SET EMP_CONTRIBUINTE_IPI = 1
-UPDATE EMPRESA_EMP SET EMP_CELULAR = 'CEL TEST'
-UPDATE EMPRESA_EMP SET EMP_WHATSAPP = 'ZAP TEST'
-UPDATE EMPRESA_EMP SET EMP_PIS_ALIQUOTA = 1.65
 
 
 

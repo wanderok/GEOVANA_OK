@@ -15,6 +15,8 @@ type
     { Private declarations }
   public
     { Public declarations }
+   function TEditCNPJ_Valido(pCNPJ:TEdit):Boolean;
+   function TEditCPF_Valido(pCPF:TEdit):Boolean;
    function CNPJ_Valido(pCNPJ:String):Boolean;
    function CPF_Valido(pCPF:String):Boolean;
    function IE_Valida(pIE,pUF:String):Boolean;
@@ -63,6 +65,7 @@ begin
    result := false;
    ACBrValidador1.TipoDocto   := docCEP;
    ACBrValidador1.Documento   := pCEP;
+   ACBrValidador1.Complemento := '';
    vVDD_DocumentoFormatado := ACBrValidador1.Formatar;
    ACBrValidador1.PermiteVazio:=true;
    if not ACBrValidador1.Validar then
@@ -71,6 +74,20 @@ begin
      exit;
    end;
    result := true;
+end;
+
+function TfrmValidadorDeDocumentos.TEditCNPJ_Valido(pCNPJ:TEdit):Boolean;
+begin
+  result := CNPJ_Valido(pCNPJ.Text);
+  if result then
+     pCNPJ.Text := vVDD_DocumentoFormatado;
+end;
+
+function TfrmValidadorDeDocumentos.TEditCPF_Valido(pCPF:TEdit):Boolean;
+begin
+  result := CPF_Valido(pCPF.Text);
+  if result then
+     pCPF.Text := vVDD_DocumentoFormatado;
 end;
 
 function TfrmValidadorDeDocumentos.CNPJ_Valido(pCNPJ: String): Boolean;

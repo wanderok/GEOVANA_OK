@@ -144,12 +144,12 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\Classes\Classe_Empresa.pas"/>
-        <DCCReference Include="..\..\src\views\cad_bairro\cad_bairro_T8.pas">
-            <Form>frm_cad_bairro_T8</Form>
+        <DCCReference Include="..\..\SRC\views\Consulta_Cadastros\PesquisaF1_T16.pas">
+            <Form>frm_PesquisaF1_T16</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\views\cad_clientes\cad_cliente_T6.pas">
-            <Form>frm_cad_cliente_T6</Form>
+        <DCCReference Include="..\..\SRC\views\cad_fornecedores\cad_fornecedor_T18.pas">
+            <Form>frm_cad_fornecedor_T18</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\cad_colaborador\cad_comissoes.pas">
@@ -164,16 +164,8 @@
             <Form>Frm_tipo_colab</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\views\cad_consultor\cad_consultor.pas">
-            <Form>Frm_consultor</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="..\..\src\views\cad_consultor\consultor_banco_comissoes.pas">
             <Form>frm_consultor_comissoes_banco</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="..\..\src\views\cad_motorista\cad_motorista.pas">
-            <Form>Frm_motorista</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\cad_ramo_atividade\cad_ramo_atividade_T9.pas">
@@ -182,14 +174,6 @@
         </DCCReference>
         <DCCReference Include="..\..\src\views\cad_regiao\cad_regiao_T11.pas">
             <Form>frm_cad_regiao_T11</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="..\..\src\views\cad_transportadora\cad_transportadora.pas">
-            <Form>Frm_transportadora</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="..\..\src\views\cadastro_fornecedor\cadastro_fornecedor.pas">
-            <Form>Frm_fornecedor</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\configs\config_certificado.pas">
@@ -265,7 +249,6 @@
             <Form>frm_reg_tributario_T4</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\Classes\Classe_Cliente.pas"/>
         <DCCReference Include="..\..\src\Classes\Classe_Alteracao.pas"/>
         <DCCReference Include="..\..\src\Classes\Classe_Endereco.pas"/>
         <DCCReference Include="..\..\src\views\Auditoria\auditoria_T10.pas">
@@ -277,6 +260,76 @@
             <Form>frm_cad_zona_T12</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\..\src\views\Consulta_CNPJ\ConsultaCNPJ_T13.pas">
+            <Form>frmConsultaCNPJ_T13</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\Consulta_CPF\ConsultaCPF_T14.pas">
+            <Form>frmConsulta_CPFT14</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\cad_clientes\CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17.pas">
+            <Form>frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\Classes\Classe_Avisos.pas"/>
+        <DCCReference Include="..\..\src\Classes\Classe_Fornecedor.pas"/>
+        <DCCReference Include="..\..\src\Classes\Classe_Cliente.pas"/>
+        <DCCReference Include="..\..\src\views\cad_clientes\cad_cliente_T6.pas">
+            <Form>frm_cad_cliente_T6</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\aviso\Mensagem.pas">
+            <Form>frm_Mensagem</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\aviso\aviso_campos_sugeridos.pas">
+            <Form>frm_aviso_campos_sugeridos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\aviso\aviso_senha_invalida.pas">
+            <Form>frm_senha_invalida</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\aviso\aviso_campos_obrigatorios.pas">
+            <Form>frm_campos_obrigatorios</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\aviso\aviso_certificado_digital.pas">
+            <Form>frm_aviso_certificado_vencido</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\aviso\aviso_ie_existente.pas">
+            <Form>frm_aviso_ie_existente</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\aviso\aviso_cnpj_existente.pas">
+            <Form>frm_aviso_cnpj_existente</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\aviso\aviso_rg_existente.pas">
+            <Form>frm_aviso_rg_existente</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\aviso\aviso_cpf_existente.pas">
+            <Form>frm_aviso_cpf_existente</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\funcao\MostraMemo.pas">
+            <Form>frmMostraMemo</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\Funcoes\LimpaBaseDeDados\LimpaBaseDeDados.pas">
+            <Form>FrmLimpaBaseDeDados</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\DataModules\DadosNuvem.pas">
+            <Form>DMNuvem</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\..\src\Classes\Classe_Configuracoes.pas"/>
+        <DCCReference Include="..\..\src\Classes\Classe_Nuvem.pas"/>
         <None Include="ModelSupport_SMC_PLUS\default.txaPackage"/>
         <None Include="ModelSupport_SMC_PLUS\default.txvpck"/>
         <None Include="ModelSupport_SMC_PLUS\vw_Login\Class Diagram1.txvcls"/>

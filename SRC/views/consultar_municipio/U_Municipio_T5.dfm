@@ -105,6 +105,7 @@ object Frm_Municipio_T5: TFrm_Municipio_T5
     Top = 88
   end
   object ACBrEnterTab1: TACBrEnterTab
+    EnterAsTab = True
     Left = 256
     Top = 16
   end

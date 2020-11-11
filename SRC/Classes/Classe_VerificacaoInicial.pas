@@ -104,7 +104,7 @@ procedure TVerificacaoInicial.Verificar_Validade_Certificado_Digital;
 begin
 //Verificação da validade do certificado digital, 30 dias antes do vencimento
 //precisa começar a informar o cliente do vencimento, na abertura do sistema.
-  FValidadeCertificado := Date;
+  FValidadeCertificado := Date+50;
 end;
 
 end.
