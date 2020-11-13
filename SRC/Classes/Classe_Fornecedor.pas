@@ -51,7 +51,6 @@ type
     private
        FCNPJ                 : String;
        FIE                   : String;
-       FAlteracao            : TAlteracao;
     function getFCNPJ: String;
     function getFIE: String;
     procedure setFCNPJ(const Value: String);
@@ -68,12 +67,11 @@ type
       FPessoaFisica      : tPessoa_Fisica;
       FPessoaJuridica    : tPessoa_Juridica;
       FRamoAtividade     : String;
+      FProdutorRural     : Integer;
       FRegiao            : String;
       FZona              : String;
       FEndereco          : TEndereco;
       FContato           : TContato;
-      FAlteracao         : TAlteracao;
-      //
       function  getFDataCadastro: TDateTime;
       procedure setFDataCadastro(const Value: TDateTime);
       function  getDataCadastroString: String;
@@ -85,6 +83,8 @@ type
       procedure setFRegiao(const Value: String);
       function getFZona: String;
       procedure setFZona(const Value: String);
+    function getFProdutorRural: TSimOuNao;
+    procedure setFProdutorRural(const Value: TSimOuNao);
       //function getFCodigoMunicipio: String;
       //procedure setFCodigoMunicipio(const Value: String); // FORD_DT
 
@@ -97,6 +97,7 @@ type
       property PessoaFisica      : tPessoa_Fisica   read FPessoaFisica          write FPessoaFisica;
       property PessoaJuridica    : tPessoa_Juridica read FPessoaJuridica        write FPessoaJuridica;
       property RamoAtividade     : String           read getFRamoAtividade      write setFRamoAtividade;
+      property ProdutorRural     : TSimOuNao        read getFProdutorRural      write setFProdutorRural;
       property Regiao            : String           read getFRegiao             write setFRegiao;
       property Zona              : String           read getFZona               write setFZona;
       property Endereco          : TEndereco        read FEndereco              write FEndereco;
@@ -115,6 +116,7 @@ end;
 	  FStatus            : Integer;
     FDetalhes          : tDetalhes_Fornecedor;
     FAlteracao         : TFornecedorAlteracao;
+    FObservacao        : TStringList;
     function getFStatus: TStatusCadastral;
     procedure setFStatus(const Value: TStatusCadastral);
     function  getFCodigo: String;
@@ -138,6 +140,9 @@ end;
     procedure Pegar_Endereco;
     procedure Pegar_Contato;
     procedure Pegar_Alteracoes;
+
+    procedure Pegar_Observacoes;
+    procedure Gravar_Observacoes;
     //
     function Inserir_FORNECEDOR_FOR           :Boolean;
     function Inserir_FORNECEDOR_DETALHE_FORD  :Boolean;
@@ -163,6 +168,8 @@ end;
     procedure RegistrarHistoricoDeDesBloqueio;
     procedure RegistrarHistoricoDeInativacao;
     procedure RegistrarHistorico(pEvento,pLog:String);
+    function getFObservacao: TStringList;
+    procedure setFObservacao(const Value: TStringList);
 
   public
     constructor Create;
@@ -174,6 +181,7 @@ end;
     Property Status        : TStatusCadastral  read getFStatus       write setFStatus;
     Property Detalhes      : tDetalhes_Fornecedor read getDetalhes      write setDetalhes;
     property Alteracao     : TFornecedorAlteracao read FAlteracao       write FAlteracao;
+    property Observacao    : TStringList       read getFObservacao   write setFObservacao;
     procedure Abrir;
     Function Gravar:Boolean;
 end;
@@ -197,6 +205,7 @@ begin
     Pegar_Detalhes;
     Pegar_Endereco;
     Pegar_Contato;
+    Pegar_Observacoes;
 end;
 
 
@@ -204,6 +213,7 @@ constructor TFornecedor.Create;
 begin
    FDetalhes  := tDetalhes_Fornecedor.Create;
    FAlteracao := TFornecedorAlteracao.Create;
+   FObservacao := TStringList.Create;
    qLocal := TFDQuery.Create(nil);
    qLocal.ConnectionName :='X';
 end;
@@ -218,7 +228,8 @@ end;
 destructor TFornecedor.Destroy;
 begin
   FDetalhes.Free;
-  Alteracao.Free;
+  FAlteracao.Free;
+  FObservacao.Free;
   qLocal.Free;
   inherited;
 end;
@@ -279,6 +290,11 @@ begin
    result := FNomeFantasia;
 end;
 
+function TFornecedor.getFObservacao: TStringList;
+begin
+   result := FObservacao;
+end;
+
 function TFornecedor.getFStatus: TStatusCadastral;
 begin
    Result := IntToStatusCadastral(FStatus);
@@ -308,6 +324,35 @@ begin
    Result := True;
 end;
 
+procedure TFornecedor.Gravar_Observacoes;
+var i : Integer;
+begin
+   qFornecedor.Close;
+   qFornecedor.Sql.Clear;
+   qFornecedor.Sql.Add('DELETE FROM FORNECEDOR_OBS_FOROBS ');
+   qFornecedor.Sql.Add(' WHERE FOROBS_CODIGO = :COD    ');
+   qFornecedor.ParamByName('COD').AsString := FCodigo;
+   qFornecedor.ExecSql;
+
+   for i := 0 to FObservacao.count-1 do
+   begin
+      qFornecedor.close;
+      qFornecedor.sql.Clear;
+      qFornecedor.sql.Add('INSERT INTO FORNECEDOR_OBS_FOROBS   ');
+      qFornecedor.sql.Add('     ( FOROBS_CODIGO,            ');
+	    qFornecedor.sql.Add('       FOROBS_LINHA,             ');
+      qFornecedor.sql.Add('       FOROBS_TEXTO)             ');
+      qFornecedor.sql.Add('VALUES                           ');
+      qFornecedor.sql.Add('     (:FOROBS_CODIGO,            ');
+	    qFornecedor.sql.Add('      :FOROBS_LINHA,             ');
+      qFornecedor.sql.Add('      :FOROBS_TEXTO)             ');
+      qFornecedor.ParamByName('FOROBS_CODIGO').AsString := FCodigo;
+	    qFornecedor.ParamByName('FOROBS_LINHA' ).AsInteger:= i;
+      qFornecedor.ParamByName('FOROBS_TEXTO' ).AsString := FObservacao[i];
+      qFornecedor.ExecSql;
+   end;
+end;
+
 function TFornecedor.Insert: Boolean;
 begin
     result := False;
@@ -315,8 +360,9 @@ begin
     if not Inserir_FORNECEDOR_DETALHE_FORD  then exit;
     if not Inserir_FORNECEDOR_ENDERECO_FORE then exit;
     if not Inserir_FORNECEDOR_CONTATO_FORC  then exit;
+    Gravar_Observacoes;
     Result := True;
-    Log('Classe_Fornecedor','Cadastrou cliente ' + FCodigo + '-' + FNomeFantasia);
+    Log('Classe_Fornecedor','Cadastrou fornecedor ' + FCodigo + '-' + FNomeFantasia);
 end;
 
 function TFornecedor.Inserir_FORNECEDOR_FOR: Boolean;
@@ -420,6 +466,7 @@ begin
         qFornecedor.SQL.Add('       FORD_ALT_DTBLOQUEADO,     ');
         qFornecedor.SQL.Add('       FORD_ALT_DTLIBERADO,      ');
         qFornecedor.SQL.Add('       FORD_ALT_DTINATIVO,       ');
+        qFornecedor.SQL.Add('       FORD_PRODUTOR_RURAL,      ');
         qFornecedor.SQL.Add('       FORD_CDRAMO,              ');
         qFornecedor.SQL.Add('       FORD_CDREGIAO,            ');
         qFornecedor.SQL.Add('       FORD_CDZONA,              ');
@@ -445,6 +492,7 @@ begin
         qFornecedor.SQL.Add('      :FORD_ALT_DTBLOQUEADO,     ');
         qFornecedor.SQL.Add('      :FORD_ALT_DTLIBERADO,      ');
         qFornecedor.SQL.Add('      :FORD_ALT_DTINATIVO,       ');
+        qFornecedor.SQL.Add('      :FORD_PRODUTOR_RURAL,      ');
         qFornecedor.SQL.Add('      :FORD_CDRAMO,              ');
         qFornecedor.SQL.Add('      :FORD_CDREGIAO,            ');
         qFornecedor.SQL.Add('      :FORD_CDZONA,              ');
@@ -468,10 +516,11 @@ begin
         qFornecedor.ParamByName('FORD_ALT_DTBLOQUEADO'    ).AsDateTime := 0;
         qFornecedor.ParamByName('FORD_ALT_DTLIBERADO'     ).AsDateTime := 0;
         qFornecedor.ParamByName('FORD_ALT_DTINATIVO'      ).AsDateTime := 0;
-        qFornecedor.ParamByName('FORD_CDRAMO'           ).AsString   := FDetalhes.FRamoAtividade;
-        qFornecedor.ParamByName('FORD_CDREGIAO'         ).AsString   := FDetalhes.FRegiao;
-        qFornecedor.ParamByName('FORD_CDZONA'           ).AsString   := FDetalhes.FZona;
-        qFornecedor.ParamByName('FORD_DT'               ).AsDateTime := DataServidor;
+        qFornecedor.ParamByName('FORD_PRODUTOR_RURAL'     ).AsInteger  := FDetalhes.FProdutorRural;
+        qFornecedor.ParamByName('FORD_CDRAMO'             ).AsString   := FDetalhes.FRamoAtividade;
+        qFornecedor.ParamByName('FORD_CDREGIAO'           ).AsString   := FDetalhes.FRegiao;
+        qFornecedor.ParamByName('FORD_CDZONA'             ).AsString   := FDetalhes.FZona;
+        qFornecedor.ParamByName('FORD_DT'                 ).AsDateTime := DataServidor;
         qFornecedor.ExecSql;
         Result := true;
     except
@@ -548,7 +597,7 @@ begin
     qFornecedor.Close;
     qFornecedor.SQL.Clear;
     qFornecedor.SQL.Add('SELECT * FROM FORNECEDOR_CONTATO_FORC');
-    qFornecedor.SQL.Add(' WHERE FORC_CODIGO = :FORC_CODIGO ');
+    qFornecedor.SQL.Add(' WHERE FORC_CODIGO = :FORC_CODIGO    ');
     qFornecedor.ParamByName('FORC_CODIGO').AsString := FCodigo;
     qFornecedor.Open;
     if qFornecedor.eof then
@@ -569,7 +618,7 @@ procedure TFornecedor.Pegar_Dados_Basicos;
 begin
     qFornecedor.Close;
     qFornecedor.SQL.Clear;
-    qFornecedor.SQL.Add('SELECT * FROM FORNECEDOR_FOR      ');
+    qFornecedor.SQL.Add('SELECT * FROM FORNECEDOR_FOR   ');
     qFornecedor.SQL.Add(' WHERE FOR_CODIGO = :FOR_CODIGO');
     qFornecedor.ParamByName('FOR_CODIGO').AsString := FCodigo;
     qFornecedor.Open;
@@ -590,7 +639,7 @@ begin
     qFornecedor.Close;
     qFornecedor.SQL.Clear;
     qFornecedor.SQL.Add('SELECT * FROM FORNECEDOR_DETALHE_FORD');
-    qFornecedor.SQL.Add(' WHERE FORD_CODIGO = :FORD_CODIGO ');
+    qFornecedor.SQL.Add(' WHERE FORD_CODIGO = :FORD_CODIGO    ');
     qFornecedor.ParamByName('FORD_CODIGO').AsString := FCodigo;
     qFornecedor.Open;
     if qFornecedor.eof then
@@ -615,9 +664,10 @@ begin
        FCNPJ                     := qFornecedor.FieldByName('FORD_CNPJ'               ).AsString;
        FIE                       := qFornecedor.FieldByName('FORD_IE'                 ).AsString;
     end;
-    FDetalhes.RamoAtividade      := qFornecedor.FieldByName('FORD_CDRAMO'             ).AsString;
-    FDetalhes.Regiao             := qFornecedor.FieldByName('FORD_CDREGIAO'           ).AsString;
-    FDetalhes.Zona               := qFornecedor.FieldByName('FORD_CDZONA'             ).AsString;
+    FDetalhes.FRamoAtividade     := qFornecedor.FieldByName('FORD_CDRAMO'             ).AsString;
+    FDetalhes.FProdutorRural     := qFornecedor.FieldByName('FORD_PRODUTOR_RURAL'     ).AsInteger;
+    FDetalhes.FRegiao            := qFornecedor.FieldByName('FORD_CDREGIAO'           ).AsString;
+    FDetalhes.FZona              := qFornecedor.FieldByName('FORD_CDZONA'             ).AsString;
     FDetalhes.FDataCadastro      := qFornecedor.FieldByName('FORD_DT'                 ).AsDateTime;
     Pegar_Alteracoes;
 end;
@@ -640,6 +690,24 @@ begin
     FDetalhes.Endereco.Bairro      := qFornecedor.FieldByName('FORE_BAIRRO'     ).AsString;
     FDetalhes.Endereco.Cidade      := qFornecedor.FieldByName('FORE_CDCIDADE'   ).AsString;
     FDetalhes.Endereco.CEP         := qFornecedor.FieldByName('FORE_CEP'        ).AsString;
+end;
+
+procedure TFornecedor.Pegar_Observacoes;
+begin
+   FObservacao.Clear;
+   qFornecedor.Close;
+   qFornecedor.Sql.Clear;
+   qFornecedor.Sql.Add('SELECT FOROBS_TEXTO          ');
+   qFornecedor.Sql.Add('  FROM FORNECEDOR_OBS_FOROBS ');
+   qFornecedor.Sql.Add(' WHERE FOROBS_CODIGO = :COD  ');
+   qFornecedor.Sql.Add(' ORDER BY FOROBS_LINHA       ');
+   qFornecedor.ParamByName('COD').AsString := FCodigo;
+   qFornecedor.Open;
+   while not qFornecedor.eof do
+   begin
+     FObservacao.add(qFornecedor.fieldbyname('FOROBS_TEXTO').AsString);
+     qFornecedor.Next;
+   end;
 end;
 
 procedure TFornecedor.Preencher_Parametros_FORNECEDOR_FOR(pQuery: TFDQuery);
@@ -703,34 +771,34 @@ end;
 
 procedure TFornecedor.RegistrarHistorico(pEvento,pLog: String);
 begin
-   //Histórico de bloqueios e desbloqueios do cliente
+   //Histórico de bloqueios e desbloqueios do fornecedor
    qLocal.Close;
    qLocal.Sql.Clear;
-   qLocal.Sql.Add('INSERT INTO FORNECEDOR_HISTORICO_BLOQUEIOS_CHB ');
-   qLocal.Sql.Add('     ( CHB_FORNECEDOR,                         ');
-   qLocal.Sql.Add('       CHB_EVENTO,                          ');
-   qLocal.Sql.Add('       CHB_DTEVENTO,                        ');
-   qLocal.Sql.Add('       CHB_HREVENTO,                        ');
-   qLocal.Sql.Add('       CHB_USUEVENTO,                       ');
-   qLocal.Sql.Add('       CHB_MAQEVENTO                        ');
-   qLocal.Sql.Add('     )                                      ');
-   qLocal.Sql.Add('VALUES                                      ');
-   qLocal.Sql.Add('     (:CHB_FORNECEDOR,                         ');
-   qLocal.Sql.Add('      :CHB_EVENTO,                          ');
-   qLocal.Sql.Add('      :CHB_DTEVENTO,                        ');
-   qLocal.Sql.Add('      :CHB_HREVENTO,                        ');
-   qLocal.Sql.Add('      :CHB_USUEVENTO,                       ');
-   qLocal.Sql.Add('      :CHB_MAQEVENTO                        ');
+   qLocal.Sql.Add('INSERT INTO FORNECEDOR_HISTORICO_BLOQUEIOS_FHB ');
+   qLocal.Sql.Add('     ( FHB_FORNECEDOR,                         ');
+   qLocal.Sql.Add('       FHB_EVENTO,                             ');
+   qLocal.Sql.Add('       FHB_DTEVENTO,                           ');
+   qLocal.Sql.Add('       FHB_HREVENTO,                           ');
+   qLocal.Sql.Add('       FHB_USUEVENTO,                          ');
+   qLocal.Sql.Add('       FHB_MAQEVENTO                           ');
+   qLocal.Sql.Add('     )                                         ');
+   qLocal.Sql.Add('VALUES                                         ');
+   qLocal.Sql.Add('     (:FHB_FORNECEDOR,                         ');
+   qLocal.Sql.Add('      :FHB_EVENTO,                             ');
+   qLocal.Sql.Add('      :FHB_DTEVENTO,                           ');
+   qLocal.Sql.Add('      :FHB_HREVENTO,                           ');
+   qLocal.Sql.Add('      :FHB_USUEVENTO,                          ');
+   qLocal.Sql.Add('      :FHB_MAQEVENTO                           ');
    qLocal.Sql.Add('     )                                                                                                           ');
-   qLocal.ParamByName('CHB_FORNECEDOR'  ).AsString   := FCodigo;
-   qLocal.ParamByName('CHB_EVENTO'   ).AsString   := pEvento;
-   qLocal.ParamByName('CHB_DTEVENTO' ).AsDateTime := DataServidor;
-   qLocal.ParamByName('CHB_HREVENTO' ).AsString   := HoraServidor;
-   qLocal.ParamByName('CHB_USUEVENTO').AsString   := Usuario.Codigo;
-   qLocal.ParamByName('CHB_MAQEVENTO').AsString   := NomeComputador;
+   qLocal.ParamByName('FHB_FORNECEDOR').AsString   := FCodigo;
+   qLocal.ParamByName('FHB_EVENTO'    ).AsString   := pEvento;
+   qLocal.ParamByName('FHB_DTEVENTO'  ).AsDateTime := DataServidor;
+   qLocal.ParamByName('FHB_HREVENTO'  ).AsString   := HoraServidor;
+   qLocal.ParamByName('FHB_USUEVENTO' ).AsString   := Usuario.Codigo;
+   qLocal.ParamByName('FHB_MAQEVENTO' ).AsString   := NomeComputador;
    qLocal.ExecSql;
 
-   Log('Classe_Fornecedor',pLog+' cliente '+FCodigo+' - '+FNomeFantasia);
+   Log('Classe_Fornecedor',pLog+' fornecedor '+FCodigo+' - '+FNomeFantasia);
 end;
 
 procedure TFornecedor.RegistrarHistoricoDeAtivacao;
@@ -769,6 +837,11 @@ end;
 procedure TFornecedor.setFNomeFantasia(const Value: String);
 begin
    FNomeFantasia := UpperCase(Copy(Value,1,50));
+end;
+
+procedure TFornecedor.setFObservacao(const Value: TStringList);
+begin
+   FObservacao := Value;
 end;
 
 procedure TFornecedor.setFStatus(const Value: TStatusCadastral);
@@ -820,8 +893,9 @@ begin
     if not Update_FORNECEDOR_DETALHE_FORD  then exit;
     if not Update_FORNECEDOR_ENDERECO_FORE then exit;
     if not Update_FORNECEDOR_CONTATO_FORC  then exit;
+    Gravar_Observacoes;
     Result := True;
-    Log('Classe_Fornecedor','Alterou cliente '+ FCodigo + ' - ' + FNomeFantasia);
+    Log('Classe_Fornecedor','Alterou fornecedor '+ FCodigo + ' - ' + FNomeFantasia);
 end;
 
 function TFornecedor.Update_FORNECEDOR_FOR:Boolean;
@@ -908,6 +982,7 @@ begin
         qFornecedor.SQL.Add('       FORD_ALT_DTBLOQUEADO     = :FORD_ALT_DTBLOQUEADO,     ');
         qFornecedor.SQL.Add('       FORD_ALT_DTLIBERADO      = :FORD_ALT_DTLIBERADO,      ');
         qFornecedor.SQL.Add('       FORD_ALT_DTINATIVO       = :FORD_ALT_DTINATIVO,       ');
+        qFornecedor.SQL.Add('       FORD_PRODUTOR_RURAL      = :FORD_PRODUTOR_RURAL,      ');
         qFornecedor.SQL.Add('       FORD_CDRAMO              = :FORD_CDRAMO,              ');
         qFornecedor.SQL.Add('       FORD_CDREGIAO            = :FORD_CDREGIAO,            ');
         qFornecedor.SQL.Add('       FORD_CDZONA              = :FORD_CDZONA               ');
@@ -930,6 +1005,7 @@ begin
         qFornecedor.ParamByName('FORD_ALT_DTBLOQUEADO' ).AsDateTime := ZeroSeDataNula(FAlteracao.DataBloqueio);
         qFornecedor.ParamByName('FORD_ALT_DTLIBERADO'  ).AsDateTime := ZeroSeDataNula(FAlteracao.DataLiberacao);
         qFornecedor.ParamByName('FORD_ALT_DTINATIVO'   ).AsDateTime := ZeroSeDataNula(FAlteracao.DataInativo);
+        qFornecedor.ParamByName('FORD_PRODUTOR_RURAL'  ).AsInteger  := FDetalhes.FProdutorRural;
         qFornecedor.ParamByName('FORD_CDRAMO'          ).AsString   := FDetalhes.FRamoAtividade;
         qFornecedor.ParamByName('FORD_CDREGIAO'        ).AsString   := FDetalhes.FRegiao;
         qFornecedor.ParamByName('FORD_CDZONA'          ).AsString   := FDetalhes.FZona;
@@ -1018,6 +1094,11 @@ begin
    result := FDataCadastro;
 end;
 
+function tDetalhes_Fornecedor.getFProdutorRural: TSimOuNao;
+begin
+   result := intToSimOuNao(FProdutorRural);
+end;
+
 function tDetalhes_Fornecedor.getFRamoAtividade: String;
 begin
    result := FRamoAtividade;
@@ -1047,6 +1128,11 @@ end;
 procedure tDetalhes_Fornecedor.setFDataCadastro(const Value: TDateTime);
 begin
    FDataCadastro := Value;
+end;
+
+procedure tDetalhes_Fornecedor.setFProdutorRural(const Value: TSimOuNao);
+begin
+   FProdutorRural := SimOuNaoToInt(Value);
 end;
 
 procedure tDetalhes_Fornecedor.setFRamoAtividade(const Value: String);

@@ -148,16 +148,8 @@
             <Form>frm_PesquisaF1_T16</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\SRC\views\cad_fornecedores\cad_fornecedor_T18.pas">
-            <Form>frm_cad_fornecedor_T18</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="..\..\src\views\cad_colaborador\cad_comissoes.pas">
             <Form>fmr_comissao_colab</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="..\..\src\views\cad_colaborador\cadastro_colaborador.pas">
-            <Form>frm_colaborador</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\cad_colaborador\tipo_colab.pas">
@@ -268,15 +260,15 @@
             <Form>frmConsulta_CPFT14</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\SRC\views\cad_clientes\CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17.pas">
-            <Form>frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17</Form>
+        <DCCReference Include="..\..\SRC\views\cad_fornecedores\FORNECEDOR_HISTORICO_BLOQUEIOS_FHB_T18.pas">
+            <Form>frmFORNECEDOR_HISTORICO_BLOQUEIOS_FHB_T18</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\Classes\Classe_Avisos.pas"/>
         <DCCReference Include="..\..\src\Classes\Classe_Fornecedor.pas"/>
         <DCCReference Include="..\..\src\Classes\Classe_Cliente.pas"/>
-        <DCCReference Include="..\..\src\views\cad_clientes\cad_cliente_T6.pas">
-            <Form>frm_cad_cliente_T6</Form>
+        <DCCReference Include="..\..\SRC\views\cad_fornecedores\cad_fornecedor_T19.pas">
+            <Form>frm_cad_fornecedor_T19</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\SRC\aviso\Mensagem.pas">
@@ -330,6 +322,18 @@
         </DCCReference>
         <DCCReference Include="..\..\src\Classes\Classe_Configuracoes.pas"/>
         <DCCReference Include="..\..\src\Classes\Classe_Nuvem.pas"/>
+        <DCCReference Include="..\..\src\views\cad_clientes\cad_cliente_T6.pas">
+            <Form>frm_cad_cliente_T6</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\cad_clientes\CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17.pas">
+            <Form>frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\cad_colaborador\cad_colaborador_T20.pas">
+            <Form>frm_cad_colaborador_T20</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <None Include="ModelSupport_SMC_PLUS\default.txaPackage"/>
         <None Include="ModelSupport_SMC_PLUS\default.txvpck"/>
         <None Include="ModelSupport_SMC_PLUS\vw_Login\Class Diagram1.txvcls"/>

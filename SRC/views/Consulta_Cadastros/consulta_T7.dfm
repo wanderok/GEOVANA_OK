@@ -65,7 +65,6 @@ object frm_consulta_T7: Tfrm_consulta_T7
     Font.Style = [fsBold]
     ParentFont = False
     ExplicitLeft = 808
-    ExplicitTop = 417
     ExplicitWidth = 33
   end
   object gd: TcxGrid

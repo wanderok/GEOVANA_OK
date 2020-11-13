@@ -49,9 +49,8 @@ type
 
   tPessoa_Juridica = class
     private
-       FCNPJ                 : String;         // CLI_CPF VARCHAR(11)
+       FCNPJ                 : String;      // CLI_CPF VARCHAR(11)
        FIE                   : String;      // CLID_DTNASC
-       FAlteracao            : TAlteracao;
     function getFCNPJ: String;
     function getFIE: String;
     procedure setFCNPJ(const Value: String);
@@ -72,7 +71,6 @@ type
       FZona              : String;
       FEndereco          : TEndereco;
       FContato           : TContato;
-      FAlteracao         : TAlteracao;
       //FCodigoMunicipio   : String;           // CLID_CDCIDADE
       //
       function  getFDataCadastro: TDateTime;
@@ -229,7 +227,7 @@ end;
 destructor TCliente.Destroy;
 begin
   FDetalhes.Free;
-  Alteracao.Free;
+  FAlteracao.Free;
   FObservacao.Free;
   qLocal.Free;
   inherited;

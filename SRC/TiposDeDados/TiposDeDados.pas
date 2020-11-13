@@ -6,12 +6,16 @@ type
   TStatusInternet  = (tsiComConexao,tsiSemConexao);
   TStatusCadastral = (sAtivo, sAtivoBloqueado, sInativo);
   TTipoPessoa      = (tpFisica, tpJuridica, tpNone);
+  TSimOuNao        = (snNao,snSim);
 
   function StatusCadastralToInt(pStatus:TStatusCadastral):Integer;
   function IntToStatusCadastral(pStatus:Integer):TStatusCadastral;
 
   function TipoPessoaToString(pTipoPessoa:TTipoPessoa):String;
   function StringToTipoPessoa(pTipoPessoa:String):TTipoPessoa;
+
+  function SimOuNaoToInt(pSimOuNao:TSimOuNao):Integer;
+  function intToSimOuNao(pSimOuNao:Integer):TSimOuNao;
 
 implementation
 
@@ -44,6 +48,22 @@ begin
   else
      Result := '';
   end;
+end;
+
+function SimOuNaoToInt(pSimOuNao:TSimOuNao):Integer;
+begin
+   case pSimOuNao of
+      snNao : Result := 0;
+      snSim : Result := 1;
+   end;
+end;
+
+function intToSimOuNao(pSimOuNao:Integer):TSimOuNao;
+begin
+   case pSimOuNao of
+      0 : Result := snNao;
+      1 : Result := snSim;
+   end;
 end;
 
 function StringToTipoPessoa(pTipoPessoa:String):TTipoPessoa;

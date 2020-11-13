@@ -116,7 +116,12 @@ begin
 end;
 
 procedure Tfrm_consulta_T7.FormShow(Sender: TObject);
+var vTitulo:String;
 begin
+   vTitulo := rgConsultar.Items[rgConsultar.itemindex];
+   vTitulo := Copy(vTitulo,3,length(vTitulo));
+   vTitulo := 'Procurar | '+ vTitulo;
+   Caption := vTitulo;
    vfrm_consulta_T7_Codigo := '';
    edArgumentoDePesquisa.SetFocus;
 end;
@@ -178,9 +183,29 @@ end;
 
 procedure Tfrm_consulta_T7.Pesquisar_Fornecedor;
 begin
-//
-
-
+   qLocal.Close;
+   qLocal.sql.Clear;
+   qLocal.SQL.Add('SELECT FORD_PESSOA_FJ    AS pessoa_tipo,     ');
+   qLocal.SQL.Add('       FOR_CODIGO        AS codigo,          ');
+   qLocal.SQL.Add('       FOR_RAZAO_SOCIAL  AS razao_social,    ');
+   qLocal.SQL.Add('       FOR_NOME_FANTASIA AS fantasia,        ');
+   qLocal.SQL.Add('       FORD_CNPJ         AS cnpj,            ');
+   qLocal.SQL.Add('       FORD_CPF          AS cpf              ');
+   qLocal.SQL.Add('  FROM FORNECEDOR_FOR                        ');
+   qLocal.SQL.Add('INNER JOIN FORNECEDOR_DETALHE_FORD           ');
+   qLocal.SQL.Add('        ON FORD_CODIGO = FOR_CODIGO          ');
+   qLocal.SQL.Add(' WHERE FOR_CODIGO        LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR FOR_RAZAO_SOCIAL  LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR FOR_NOME_FANTASIA LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR FORD_CPF          LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR FORD_CNPJ         LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add(' ORDER BY FOR_NOME_FANTASIA                  ');
+   if cbQualquerParteDoNome.Checked then
+      qLocal.ParamByName('ARGUMENTO').AsString := '%'+edArgumentoDePesquisa.Text + '%'
+   else
+      qLocal.ParamByName('ARGUMENTO').AsString := edArgumentoDePesquisa.Text + '%';
+   qLocal.open;
+   //Label2.Caption := FormatFloat('#,##0',qLocal.RecordCount);
 end;
 
 procedure Tfrm_consulta_T7.Pesquisar_Motorista;

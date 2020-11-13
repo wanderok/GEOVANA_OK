@@ -1,9 +1,9 @@
-object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
+object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'Cadastro | Cliente'
+  Caption = 'Cadastro | Consultor'
   ClientHeight = 483
   ClientWidth = 968
   Color = clWhite
@@ -96,15 +96,15 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
-    Caption = '[ T6 ] '
+    Caption = '[ T21 ] '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 935
-    ExplicitWidth = 33
+    ExplicitLeft = 928
+    ExplicitWidth = 40
   end
   object Label1: TLabel
     Left = 3
@@ -810,10 +810,6 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
       Font.Style = [fsBold]
       ImageIndex = 1
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object lbl3: TLabel
         Left = 9
         Top = 79

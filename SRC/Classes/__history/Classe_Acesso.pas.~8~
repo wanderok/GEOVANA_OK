@@ -1574,11 +1574,6 @@ begin
    Alteracoes_Cad_Cliente;
    Alteracoes_Cad_Fornecedor;
    Alteracoes_Cad_Colaborador;
-   Alteracoes_Cad_Consultor;
-   Alteracoes_Cad_Vendedor;
-   Alteracoes_Cad_Motorista;
-   Alteracoes_Cad_Transportadora;
-   Alteracoes_Cad_Contador;
 
    Tratar_Cad_Bairro;
 

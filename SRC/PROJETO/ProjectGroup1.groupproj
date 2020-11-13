@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{CD14442D-3E69-48A2-90ED-C87119F0931E}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="SMC_PLUS.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="C:\Users\wande\Documents\Embarcadero\Studio\Projects\arcprogress.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="SMC_PLUS">
+        <MSBuild Projects="SMC_PLUS.dproj"/>
+    </Target>
+    <Target Name="SMC_PLUS:Clean">
+        <MSBuild Projects="SMC_PLUS.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SMC_PLUS:Make">
+        <MSBuild Projects="SMC_PLUS.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="arcprogress">
+        <MSBuild Projects="C:\Users\wande\Documents\Embarcadero\Studio\Projects\arcprogress.dproj"/>
+    </Target>
+    <Target Name="arcprogress:Clean">
+        <MSBuild Projects="C:\Users\wande\Documents\Embarcadero\Studio\Projects\arcprogress.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="arcprogress:Make">
+        <MSBuild Projects="C:\Users\wande\Documents\Embarcadero\Studio\Projects\arcprogress.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="SMC_PLUS;arcprogress"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="SMC_PLUS:Clean;arcprogress:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="SMC_PLUS:Make;arcprogress:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -1,6 +1,5 @@
-
 { v 13.10.20 09:30am }
-unit cad_cliente_T6;
+unit cad_fornecedor_T19;
 
 interface
 
@@ -33,10 +32,10 @@ uses
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue,
 
-  Classe_Cliente, ACBrBase, ACBrSocket, ACBrCEP, Vcl.Grids;
+  Classe_Fornecedor, ACBrBase, ACBrSocket, ACBrCEP, Vcl.Grids;
 
 type
-  Tfrm_cad_cliente_T6 = class(TForm)
+  Tfrm_cad_fornecedor_T19 = class(TForm)
     gpData: TGroupBox;
     Label13: TLabel;
     lbInativo: TLabel;
@@ -121,18 +120,14 @@ type
     edZonaDescricao: TEdit;
     edRegiao: TEdit;
     edRegiaoDescricao: TEdit;
-    Label1: TLabel;
-    edAtividadeCodigo: TEdit;
-    bPesqRamoAtividade: TcxButton;
-    edAtividadeNome: TEdit;
     cxButton2: TcxButton;
     ACBrCEP1: TACBrCEP;
     GroupBox1: TGroupBox;
     mmObservacoes: TMemo;
+    cbProdutorRural: TCheckBox;
     procedure bPesqZonaClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure bPesqBairroClick(Sender: TObject);
-    procedure bPesqRamoAtividadeClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Inicio;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -149,7 +144,7 @@ type
     procedure Preparar_Campos_da_Tela;
     procedure cxButton21Click(Sender: TObject);
     function DadosCorretos:Boolean;
-    function Gravar_Cliente:Boolean;
+    function Gravar_Fornecedor:Boolean;
     procedure Pesquisar;
     procedure Consultar;
     procedure pesquisar_CNPJ_na_SEFAZ;
@@ -167,11 +162,8 @@ type
     procedure edCNPJExit(Sender: TObject);
     procedure bPesqMunicipioClick(Sender: TObject);
     procedure PesquisaMunicipio;
-    procedure PesquisaAtividade;
     procedure PesquisaBairro;
-    procedure TrazerAtividade;
     procedure edEnderecoMunicipioIBGEExit(Sender: TObject);
-    procedure edAtividadeCodigoExit(Sender: TObject);
     procedure edCEPExit(Sender: TObject);
     procedure edCEPKeyPress(Sender: TObject; var Key: Char);
     procedure edCPFKeyPress(Sender: TObject; var Key: Char);
@@ -216,8 +208,8 @@ type
   end;
 
 var
-  frm_cad_cliente_T6: Tfrm_cad_cliente_T6;
-  Cliente           : TCliente;
+  frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19;
+  Fornecedor        : TFornecedor;
   vPodeFechar       : Boolean;
   vMemoLocal        : TMemo;
 implementation
@@ -235,18 +227,18 @@ uses
   cad_zona_T12,
   ConsultaCNPJ_T13,
   ConsultaCPF_T14,
-  CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17,
+  FORNECEDOR_HISTORICO_BLOQUEIOS_FHB_T18,
   Dados,
   Classe_Nuvem;
 
 {$R *.dfm}
 
-procedure Tfrm_cad_cliente_T6.cxButton1Click(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.cxButton1Click(Sender: TObject);
 begin
     pesquisar_CNPJ_na_SEFAZ;
 end;
 
-procedure Tfrm_cad_cliente_T6.pesquisar_CNPJ_na_SEFAZ;
+procedure Tfrm_cad_fornecedor_T19.pesquisar_CNPJ_na_SEFAZ;
 begin
     frmConsultaCNPJ_T13 := TfrmConsultaCNPJ_T13.CREATE(Application);
     frmConsultaCNPJ_T13.EditCNPJ.Text := edCNPJ.Text;
@@ -255,35 +247,37 @@ begin
     frmConsultaCNPJ_T13.Free;
 end;
 
-procedure Tfrm_cad_cliente_T6.cxButton21Click(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.cxButton21Click(Sender: TObject);
 var vNuvem: TNuvem;
 begin
    if not DadosCorretos then
       exit;
 
-   if not Gravar_Cliente then
+   if not Gravar_Fornecedor then
      exit;
 
+   {
    vNuvem:= TNuvem.Create;
    vNuvem.uploadCliente(Cliente);
    FreeAndNil(vNuvem);
+   }
 
-   Cliente.Free;
+   Fornecedor.Free;
    Inicio;
 end;
 
-procedure Tfrm_cad_cliente_T6.cxButton28Click(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.cxButton28Click(Sender: TObject);
 begin
    vPodeFechar:=True;
    Close;
 end;
 
-procedure Tfrm_cad_cliente_T6.cxButton2Click(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.cxButton2Click(Sender: TObject);
 begin
    pesquisar_CPF_na_SEFAZ;
 end;
 
-procedure Tfrm_cad_cliente_T6.pesquisar_CPF_na_SEFAZ;
+procedure Tfrm_cad_fornecedor_T19.pesquisar_CPF_na_SEFAZ;
 begin
   if trim(edCPF.text) = '' then
   begin
@@ -311,27 +305,22 @@ begin
   frmConsulta_CPFT14.Free;
 end;
 
-procedure Tfrm_cad_cliente_T6.bPesqMunicipioClick(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.bPesqMunicipioClick(Sender: TObject);
 begin
    PesquisaMunicipio;
 end;
 
-procedure Tfrm_cad_cliente_T6.bPesqRamoAtividadeClick(Sender: TObject);
-begin
-   PesquisaAtividade;
-end;
-
-procedure Tfrm_cad_cliente_T6.cxButton4Click(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.cxButton4Click(Sender: TObject);
 begin
     PesquisaRegiao;
 end;
 
-procedure Tfrm_cad_cliente_T6.cxButton8Click(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.cxButton8Click(Sender: TObject);
 begin
   Consultar;
 end;
 
-procedure Tfrm_cad_cliente_T6.PesquisaRegiao;
+procedure Tfrm_cad_fornecedor_T19.PesquisaRegiao;
 Begin
     if fPesquisarRegiao(edRegiao,edRegiaoDescricao) then
        edRegiaoExit(nil)
@@ -347,7 +336,7 @@ Begin
     }
 end;
 
-procedure Tfrm_cad_cliente_T6.PesquisaZona;
+procedure Tfrm_cad_fornecedor_T19.PesquisaZona;
 begin
     if fPesquisarZona(edZona,edZonaDescricao) then
        edZonaExit(nil)
@@ -363,7 +352,7 @@ begin
     edZonaExit(nil); }
 end;
 
-procedure Tfrm_cad_cliente_T6.ACBrCEP1BuscaEfetuada(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.ACBrCEP1BuscaEfetuada(Sender: TObject);
 var xBairro, vProximoBAI_CODIGO:String;
 begin
   if ACBrCEP1.Enderecos.Count = 0 then
@@ -411,7 +400,7 @@ begin
   end;
 end;
 
-procedure Tfrm_cad_cliente_T6.bHistoricoAlteracoesClick(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.bHistoricoAlteracoesClick(Sender: TObject);
 begin
    if trim(edCodigo.Text) = '' then
       exit;
@@ -421,9 +410,9 @@ begin
    begin
      Close;
      SQL.Clear;
-     SQL.Add('select * from log_log              ');
-     SQL.Add(' where log_historico like :Cliente ');
-     ParamByName('Cliente').AsString := '%' + 'cliente ' + edCodigo.Text + '%';
+     SQL.Add('select * from log_log                 ');
+     SQL.Add(' where log_historico like :Fornecedor ');
+     ParamByName('Fornecedor').AsString := '%' + 'Fornecedor ' + edCodigo.Text + '%';
      SQL.Add('ORDER BY LOG_DATA DESC, LOG_HORA DESC  ');
      Open;
    end;
@@ -433,51 +422,51 @@ begin
    frm_auditoria_T10.Free;
 end;
 
-procedure Tfrm_cad_cliente_T6.bPesqBairroClick(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.bPesqBairroClick(Sender: TObject);
 begin
     PesquisaBairro;
 end;
 
-procedure Tfrm_cad_cliente_T6.bPesqZonaClick(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.bPesqZonaClick(Sender: TObject);
 begin
    PesquisaZona;
 end;
 
-procedure Tfrm_cad_cliente_T6.btDetalhesBloqueioClick(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.btDetalhesBloqueioClick(Sender: TObject);
 begin
     if trim(edCodigo.Text) = '' then
        exit;
 
     // Mostra detalhes do bloqueio...
-    // Data, hora, usuário e estação onde ocorreu o bloqueio do cliente
+    // Data, hora, usuário e estação onde ocorreu o bloqueio do Fornecedor
     // ----------------------------------------------------------------------------
-    frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17 :=  TfrmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17.Create(Self);
-    with frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17.sql_CLIENTE_HISTORICO_BLOQUEIOS_CHB do
+    frmFORNECEDOR_HISTORICO_BLOQUEIOS_FHB_T18 :=  TfrmFORNECEDOR_HISTORICO_BLOQUEIOS_FHB_T18.Create(Self);
+    with frmFORNECEDOR_HISTORICO_BLOQUEIOS_FHB_T18.sql_FORNECEDOR_HISTORICO_BLOQUEIOS_FHB do
     begin
       Close;
       Sql.Clear;
-      Sql.Add('SELECT *                               ');
-      Sql.Add('  FROM CLIENTE_HISTORICO_BLOQUEIOS_CHB ');
-      Sql.Add(' WHERE CHB_CLIENTE = :CHB_CLIENTE      ');
-      Sql.Add(' ORDER BY  CHB_DTEVENTO DESC, CHB_HREVENTO DESC ');
-      ParamByName('CHB_CLIENTE').AsString := edCODIGO.text;
+      Sql.Add('SELECT *                                        ');
+      Sql.Add('  FROM FORNECEDOR_HISTORICO_BLOQUEIOS_FHB       ');
+      Sql.Add(' WHERE FHB_FORNECEDOR = :FHB_FORNECEDOR         ');
+      Sql.Add(' ORDER BY  FHB_DTEVENTO DESC, FHB_HREVENTO DESC ');
+      ParamByName('FHB_FORNECEDOR').AsString := edCODIGO.text;
       Open;
     end;
-    frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17.ShowModal;
-    frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17.Free;
+    frmFORNECEDOR_HISTORICO_BLOQUEIOS_FHB_T18.ShowModal;
+    frmFORNECEDOR_HISTORICO_BLOQUEIOS_FHB_T18.Free;
 end;
 
-procedure Tfrm_cad_cliente_T6.Consultar;
+procedure Tfrm_cad_fornecedor_T19.Consultar;
 begin
     frm_consulta_T7 := Tfrm_consulta_T7.Create(nil);
-    frm_consulta_T7.rgConsultar.itemindex := 0; //Cliente
+    frm_consulta_T7.rgConsultar.itemindex := 1; //Fornecedor
     frm_consulta_T7.showmodal;
     edCodigo.Text:= vfrm_consulta_T7_Codigo;
     frm_consulta_T7.Free;
     Pesquisar;
 end;
 
-function Tfrm_cad_cliente_T6.DadosCorretos: Boolean;
+function Tfrm_cad_fornecedor_T19.DadosCorretos: Boolean;
 const Campo_Obrigatorio     = 100;
       Campo_Nao_Obrigatorio =   0;
 begin
@@ -513,7 +502,7 @@ begin
       edIE.Tag                   := Campo_Obrigatorio;
    end;
 
-   if NaoPreencheuCamposObrigatoriosOuImportantes(frm_cad_cliente_T6) then
+   if NaoPreencheuCamposObrigatoriosOuImportantes(frm_cad_fornecedor_T19) then
       exit;
 
    if not FormataIE then
@@ -525,7 +514,7 @@ begin
    result := true;
 end;
 
-function Tfrm_cad_cliente_T6.FormataIE: Boolean;
+function Tfrm_cad_fornecedor_T19.FormataIE: Boolean;
 begin
    result := true;
    if edIE.Text = '' then exit;
@@ -539,12 +528,7 @@ begin
    edIE.Text := vVDD_DocumentoFormatado;
 end;
 
-procedure Tfrm_cad_cliente_T6.edAtividadeCodigoExit(Sender: TObject);
-begin
-  TrazerAtividade;
-end;
-
-procedure Tfrm_cad_cliente_T6.edBairroExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edBairroExit(Sender: TObject);
 begin
    if not SelectBairro(edBairro.Text,edBairroDescricao) then
    begin
@@ -554,7 +538,7 @@ begin
    end;
 end;
 
-procedure Tfrm_cad_cliente_T6.edCEPExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edCEPExit(Sender: TObject);
 var vQtdeEnderecos:integer;
 begin
    edRua.Text           := '';
@@ -588,22 +572,22 @@ begin
    SelectBairro(edBairro.Text,edBairroDescricao);
 end;
 
-procedure Tfrm_cad_cliente_T6.edCEPKeyPress(Sender: TObject; var Key: Char);
+procedure Tfrm_cad_fornecedor_T19.edCEPKeyPress(Sender: TObject; var Key: Char);
 begin
    key := SoNumero(key);
 end;
 
-procedure Tfrm_cad_cliente_T6.edCidadeExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edCidadeExit(Sender: TObject);
 begin
    TrataCidade;
 end;
 
-procedure Tfrm_cad_cliente_T6.edCNPJEnter(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edCNPJEnter(Sender: TObject);
 begin
    (Sender as TEdit).Text := SoNumerosOuISENTO((Sender as TEdit).Text);
 end;
 
-procedure Tfrm_cad_cliente_T6.edCNPJExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edCNPJExit(Sender: TObject);
 begin
    (Sender as TEdit).Text := Trim((Sender as TEdit).Text);
 
@@ -616,7 +600,7 @@ begin
       exit;
    end;
 
-   if Existe_Outro_CLIENTE_Com_Este_CNPJ((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_FORNECEDOR_Com_Este_CNPJ((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -626,24 +610,24 @@ begin
       pesquisar_CNPJ_na_SEFAZ;
 end;
 
-procedure Tfrm_cad_cliente_T6.edCNPJKeyPress(Sender: TObject; var Key: Char);
+procedure Tfrm_cad_fornecedor_T19.edCNPJKeyPress(Sender: TObject; var Key: Char);
 begin
    key := SoNumero(key);
 end;
 
-procedure Tfrm_cad_cliente_T6.edCodigoExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edCodigoExit(Sender: TObject);
 begin
    Pesquisar;
 end;
 
-procedure Tfrm_cad_cliente_T6.edCodigoKeyDown(Sender: TObject; var Key: Word;
+procedure Tfrm_cad_fornecedor_T19.edCodigoKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
    if key = vk_F1 then
      Consultar;
 end;
 
-procedure Tfrm_cad_cliente_T6.edCPFExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edCPFExit(Sender: TObject);
 begin
    if not fCPFValido((Sender as TEdit)) then
    begin
@@ -651,19 +635,19 @@ begin
       exit;
    end;
 
-   if Existe_Outro_CLIENTE_Com_Este_CPF((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_FORNECEDOR_Com_Este_CPF((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
    end;
 end;
 
-procedure Tfrm_cad_cliente_T6.edCPFKeyPress(Sender: TObject; var Key: Char);
+procedure Tfrm_cad_fornecedor_T19.edCPFKeyPress(Sender: TObject; var Key: Char);
 begin
    key := SoNumero(key);
 end;
 
-procedure Tfrm_cad_cliente_T6.edDataNascimentoExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edDataNascimentoExit(Sender: TObject);
 begin
    if DataNoFuturo((Sender as TMaskEdit)) then
       (Sender as TEdit).SetFocus;
@@ -671,7 +655,7 @@ begin
       pesquisar_CPF_na_SEFAZ;
 end;
 
-procedure Tfrm_cad_cliente_T6.edEmail1Exit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edEmail1Exit(Sender: TObject);
 begin
    if (sender as TEdit).Text = '' then
       exit;
@@ -683,12 +667,12 @@ begin
    (sender as TEdit).Text := vVDD_DocumentoFormatado;
 end;
 
-procedure Tfrm_cad_cliente_T6.edEnderecoMunicipioIBGEExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edEnderecoMunicipioIBGEExit(Sender: TObject);
 begin
     SelectMunicipio(edEnderecoMunicipioIBGE.text,edCidade);
 end;
 
-function Tfrm_cad_cliente_T6.SelectMunicipio(pMunicipio:String;pMunicipioNome:TEdit):Boolean;
+function Tfrm_cad_fornecedor_T19.SelectMunicipio(pMunicipio:String;pMunicipioNome:TEdit):Boolean;
 begin
   if bPesqMunicipio.Focused then
      exit;
@@ -720,7 +704,7 @@ begin
   edEnderecoUF.text     := dm.Query1.FieldByName('UF_SIGLA').AsString;
 end;
 
-procedure Tfrm_cad_cliente_T6.edIEExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edIEExit(Sender: TObject);
 begin
    edIE.text := UpperCase(Trim(edIE.text));
    if edIE.Text = 'ISENTO' then
@@ -731,14 +715,14 @@ begin
      exit;
    end;
    edIE.text := SoNumeros(edIE.text);
-   if Existe_Outro_CLIENTE_Com_Esta_IE((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_FORNECEDOR_Com_Esta_IE((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
    end
 end;
 
-procedure Tfrm_cad_cliente_T6.edIEKeyPress(Sender: TObject; var Key: Char);
+procedure Tfrm_cad_fornecedor_T19.edIEKeyPress(Sender: TObject; var Key: Char);
 begin
    if UpperCase(key) = 'I' then
    begin
@@ -747,28 +731,28 @@ begin
    end;
 end;
 
-procedure Tfrm_cad_cliente_T6.edCelKeyPress(Sender: TObject; var Key: Char);
+procedure Tfrm_cad_fornecedor_T19.edCelKeyPress(Sender: TObject; var Key: Char);
 begin
    key := SoNumero(key);
 end;
 
-procedure Tfrm_cad_cliente_T6.edFone1Exit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edFone1Exit(Sender: TObject);
 begin
    if not TelValido((Sender as TEdit)) then
       (Sender as TEdit).SetFocus;
 end;
 
-procedure Tfrm_cad_cliente_T6.edFone2KeyPress(Sender: TObject; var Key: Char);
+procedure Tfrm_cad_fornecedor_T19.edFone2KeyPress(Sender: TObject; var Key: Char);
 begin
    key := SoNumero(key);
 end;
 
-procedure Tfrm_cad_cliente_T6.edWhatsAppKeyPress(Sender: TObject; var Key: Char);
+procedure Tfrm_cad_fornecedor_T19.edWhatsAppKeyPress(Sender: TObject; var Key: Char);
 begin
    key := SoNumero(key);
 end;
 
-procedure Tfrm_cad_cliente_T6.edZonaExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edZonaExit(Sender: TObject);
 begin
 //   if not PesquisaF1.ExisteCodigo('ZONA_ZON',edZona.Text) then
 
@@ -780,7 +764,7 @@ begin
    end
 end;
 
-procedure Tfrm_cad_cliente_T6.edNOMEExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edNOMEExit(Sender: TObject);
 begin
    if Sender is TEdit then
    begin
@@ -788,17 +772,17 @@ begin
    end;
 end;
 
-procedure Tfrm_cad_cliente_T6.edNOMEKeyPress(Sender: TObject; var Key: Char);
+procedure Tfrm_cad_fornecedor_T19.edNOMEKeyPress(Sender: TObject; var Key: Char);
 begin
    key := fSemAcentos(key);
 end;
 
-procedure Tfrm_cad_cliente_T6.edNumeroKeyPress(Sender: TObject; var Key: Char);
+procedure Tfrm_cad_fornecedor_T19.edNumeroKeyPress(Sender: TObject; var Key: Char);
 begin
      key := fLetrasENumeros(key);
 end;
 
-procedure Tfrm_cad_cliente_T6.edRegiaoExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edRegiaoExit(Sender: TObject);
 begin
    if not SelectRegiao(edRegiao.Text,edRegiaoDescricao) then
    begin
@@ -808,7 +792,7 @@ begin
    end;
 end;
 
-procedure Tfrm_cad_cliente_T6.edRGExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edRGExit(Sender: TObject);
 begin
    edRG.text := UpperCase(Trim(edRG.text));
    if edRG.Text = 'ISENTO' then
@@ -819,37 +803,20 @@ begin
      exit;
    end;
    edRG.text := SoNumerosOuISENTO(edRG.text);
-   if Existe_Outro_CLIENTE_Com_Este_RG((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_FORNECEDOR_Com_Este_RG((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
    end
 end;
 
-procedure Tfrm_cad_cliente_T6.edRG_DataEmissaoExit(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.edRG_DataEmissaoExit(Sender: TObject);
 begin
    if DataNoFuturo((Sender as TMaskEdit)) then
       (Sender as TEdit).SetFocus;
 end;
 
-procedure Tfrm_cad_cliente_T6.PesquisaAtividade;
-begin
-
-    if fPesquisarAtividade(edAtividadeCodigo,edAtividadeNome) then
-       edAtividadeCodigoExit(nil)
-    else
-       edAtividadeCodigo.SetFocus;
-{
-    FRM_cad_ramo_atividade_T9 := TFRM_cad_ramo_atividade_T9.Create(nil);
-    FRM_cad_ramo_atividade_T9.showmodal;
-    edAtividadeCodigo.TEXT := vFRM_cad_ramo_atividade;
-    FRM_cad_ramo_atividade_T9.Free;
-    edAtividadeCodigo.SetFocus;
-    edAtividadeCodigoExit(nil);
- }
-end;
-
-procedure Tfrm_cad_cliente_T6.PesquisaBairro;
+procedure Tfrm_cad_fornecedor_T19.PesquisaBairro;
 begin
     if fPesquisarBairro(edBairro,edBairroDescricao) then
        edBairroExit(nil)
@@ -864,7 +831,7 @@ begin
     }
 end;
 
-procedure Tfrm_cad_cliente_T6.PesquisaMunicipio;
+procedure Tfrm_cad_fornecedor_T19.PesquisaMunicipio;
 begin
     Frm_Municipio_T5 := TFrm_Municipio_T5.Create(nil);
     Frm_Municipio_T5.Edit1.Text := Empresa.EnderecoMunicipio;
@@ -875,56 +842,56 @@ begin
     edEnderecoMunicipioIBGEExit(nil);
 end;
 
-procedure Tfrm_cad_cliente_T6.Pesquisar;
+procedure Tfrm_cad_fornecedor_T19.Pesquisar;
 var vCodigo:String;
 begin
    if edCodigo.Text = '' then
    begin
-      Limpar_os_campos_da_Tela(frm_cad_cliente_T6);
+      Limpar_os_campos_da_Tela(frm_cad_fornecedor_T19);
       //rgStatus.SetFocus;
       exit;
    end;
-   Cliente.Codigo := edCodigo.Text;
-   Cliente.Abrir;
-   if Cliente.Existe then
+   Fornecedor.Codigo := edCodigo.Text;
+   Fornecedor.Abrir;
+   if Fornecedor.Existe then
       Preencher_Campos_da_Tela
    else
    begin
       vCodigo := edCodigo.Text;
-      Limpar_os_campos_da_Tela(frm_cad_cliente_T6);
+      Limpar_os_campos_da_Tela(frm_cad_fornecedor_T19);
       edCodigo.Text := vCodigo;
       //rgStatus.SetFocus;
       exit;
    end;
 end;
 
-procedure Tfrm_cad_cliente_T6.FormClose(Sender: TObject;
+procedure Tfrm_cad_fornecedor_T19.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
    FreeAndNil(vMemoLocal);
-   Cliente.Free;
+   Fornecedor.Free;
 end;
 
-procedure Tfrm_cad_cliente_T6.FormCloseQuery(Sender: TObject;
+procedure Tfrm_cad_fornecedor_T19.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
    CanClose := vPodeFechar;
 end;
 
-procedure Tfrm_cad_cliente_T6.FormCreate(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.FormCreate(Sender: TObject);
 begin
    try
      if vMemoLocal = nil then
-        vMemoLocal:=TMemo.Create(frm_cad_cliente_T6)
+        vMemoLocal:=TMemo.Create(frm_cad_fornecedor_T19)
      else
      begin
         vMemoLocal.Free;
-        vMemoLocal:=TMemo.Create(frm_cad_cliente_T6);
+        vMemoLocal:=TMemo.Create(frm_cad_fornecedor_T19);
      end;
    except
      vMemoLocal.Free;
      try
-        vMemoLocal:=TMemo.Create(frm_cad_cliente_T6);
+        vMemoLocal:=TMemo.Create(frm_cad_fornecedor_T19);
      except
         vPodeFechar:=True;
         Close;
@@ -941,19 +908,18 @@ begin
    vPodeFechar:=False;
 end;
 
-procedure Tfrm_cad_cliente_T6.FormKeyDown(Sender: TObject; var Key: Word;
+procedure Tfrm_cad_fornecedor_T19.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
    if key = vk_f1 Then
    begin
            if edEnderecoMunicipioIBGE.Focused then PesquisaMunicipio
       else if edZona.Focused                  then PesquisaZona
-      else if edRegiao.Focused                then PesquisaRegiao
-      else if edAtividadeCodigo.Focused       then PesquisaAtividade;
+      else if edRegiao.Focused                then PesquisaRegiao;
    end;
 end;
 
-procedure Tfrm_cad_cliente_T6.FormKeyPress(Sender: TObject; var Key: Char);
+procedure Tfrm_cad_fornecedor_T19.FormKeyPress(Sender: TObject; var Key: Char);
 begin
      if Key = #13 then
      begin
@@ -966,22 +932,22 @@ begin
      end;
 end;
 
-procedure Tfrm_cad_cliente_T6.FormShow(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.FormShow(Sender: TObject);
 begin
    Inicio;
 end;
 
-function Tfrm_cad_cliente_T6.fPessoaFisica: Boolean;
+function Tfrm_cad_fornecedor_T19.fPessoaFisica: Boolean;
 begin
    result := (fTipoPessoa_JF = 'F');
 end;
 
-function Tfrm_cad_cliente_T6.fPessoaJuridica: Boolean;
+function Tfrm_cad_fornecedor_T19.fPessoaJuridica: Boolean;
 begin
    result := (fTipoPessoa_JF = 'J');
 end;
 
-function Tfrm_cad_cliente_T6.fPreencheu_Algum_Campo_Pessoa_Fisica: Boolean;
+function Tfrm_cad_fornecedor_T19.fPreencheu_Algum_Campo_Pessoa_Fisica: Boolean;
 begin
    Result := false;
    if (Trim(edNome.Text)            <> '') or
@@ -990,7 +956,7 @@ begin
       (Trim(edRG_OrgaoEmissor.Text) <> '') then Result := True;
 end;
 
-function Tfrm_cad_cliente_T6.fPreencheu_Algum_Campo_Pessoa_Juridica: Boolean;
+function Tfrm_cad_fornecedor_T19.fPreencheu_Algum_Campo_Pessoa_Juridica: Boolean;
 begin
    Result := false;
    if (Trim(edRazaoSocial.Text)     <> '') or
@@ -999,7 +965,7 @@ begin
       (Trim(edIE.Text)              <> '') then Result := True;
 end;
 
-function Tfrm_cad_cliente_T6.fTipoPessoa_JF: String;
+function Tfrm_cad_fornecedor_T19.fTipoPessoa_JF: String;
 begin
     Result := '';
     if fPreencheu_Algum_Campo_Pessoa_Juridica then
@@ -1029,18 +995,18 @@ begin
     end;
 end;
 
-function Tfrm_cad_cliente_T6.Gravar_Cliente: Boolean;
+function Tfrm_cad_fornecedor_T19.Gravar_Fornecedor: Boolean;
 var Lista : TStringList;
     i     : integer;
 begin
     Result := False;
     try
-        Cliente.Codigo                      := edCodigo.Text;
+        Fornecedor.Codigo                      := edCodigo.Text;
         if fPessoaFisica then
         begin
-           Cliente.NomeFantasia             := edNome.Text;
-           Cliente.RazaoSocial              := '';
-           with Cliente.Detalhes.PessoaFisica do
+           Fornecedor.NomeFantasia             := edNome.Text;
+           Fornecedor.RazaoSocial              := '';
+           with Fornecedor.Detalhes.PessoaFisica do
            begin
               CPF            := edCPF.Text;
               RG             := edRG.Text;
@@ -1052,9 +1018,9 @@ begin
         end
         else
         begin
-           Cliente.NomeFantasia             := edNomeFantasia.Text;
-           Cliente.RazaoSocial              := edRazaoSocial.Text;
-           with Cliente.Detalhes.PessoaFisica do
+           Fornecedor.NomeFantasia             := edNomeFantasia.Text;
+           Fornecedor.RazaoSocial              := edRazaoSocial.Text;
+           with Fornecedor.Detalhes.PessoaFisica do
            begin
               RG             := '';
               RG_OrgaoEmissor:= '';
@@ -1062,144 +1028,146 @@ begin
               DataNascimento := '  /  /  ';
               Sexo           := -1;
            end;
-           with Cliente.Detalhes.PessoaJuridica do
+           with Fornecedor.Detalhes.PessoaJuridica do
            begin
               CNPJ           := edCNPJ.Text;
               IE             := edIE.Text;
            end;
 
         end;
-        Cliente.Status                        := IntToStatusCadastral(rgStatus.ItemIndex);
-        Cliente.Detalhes.TipoPessoa           := StringToTipoPessoa(fTipoPessoa_JF);
+        Fornecedor.Status                        := IntToStatusCadastral(rgStatus.ItemIndex);
+        Fornecedor.Detalhes.TipoPessoa           := StringToTipoPessoa(fTipoPessoa_JF);
         if rgStatus.ItemIndex = -1 then
            rgStatus.ItemIndex := 0;
 
         if rgStatus.ItemIndex = 1 then
-           Cliente.Alteracao.DataBloqueio     := sDataServidor
+           Fornecedor.Alteracao.DataBloqueio     := sDataServidor
         else
-           Cliente.Alteracao.DataBloqueio     := '  /  /  ';
+           Fornecedor.Alteracao.DataBloqueio     := '  /  /  ';
         if rgStatus.ItemIndex = 2 then
-           Cliente.Alteracao.DataInativo    := sDataServidor
+           Fornecedor.Alteracao.DataInativo    := sDataServidor
         else
-           Cliente.Alteracao.DataInativo    := '  /  /  ';
+           Fornecedor.Alteracao.DataInativo    := '  /  /  ';
 
+        Fornecedor.Detalhes.Regiao               := edRegiao.Text;
+        Fornecedor.Detalhes.Zona                 := edZona.Text;
+        Fornecedor.Detalhes.Endereco.Rua         := edRua.Text;
+        Fornecedor.Detalhes.Endereco.Numero      := edNumero.Text;
+        Fornecedor.Detalhes.Endereco.Bairro      := edBairro.Text;
+        Fornecedor.Detalhes.Endereco.Complemento := edComplemento.Text;
+        Fornecedor.Detalhes.Endereco.Cidade      := edEnderecoMunicipioIBGE.Text;
+        Fornecedor.Detalhes.Endereco.CEP         := edCEP.Text;
 
-        Cliente.Detalhes.RamoAtividade        := edAtividadeCodigo.Text;
-        Cliente.Detalhes.Regiao               := edRegiao.Text;
-        Cliente.Detalhes.Zona                 := edZona.Text;
-        Cliente.Detalhes.Endereco.Rua         := edRua.Text;
-        Cliente.Detalhes.Endereco.Numero      := edNumero.Text;
-        Cliente.Detalhes.Endereco.Bairro      := edBairro.Text;
-        Cliente.Detalhes.Endereco.Complemento := edComplemento.Text;
-        Cliente.Detalhes.Endereco.Cidade      := edEnderecoMunicipioIBGE.Text;
-        Cliente.Detalhes.Endereco.CEP         := edCEP.Text;
+        Fornecedor.Detalhes.Contato.Fone1        := edFone1.Text;
+        Fornecedor.Detalhes.Contato.Fone2        := edFone2.Text;
+        Fornecedor.Detalhes.Contato.Nome         := edNomeContato.Text;
+        Fornecedor.Detalhes.Contato.Cel          := edCel.Text;
+        Fornecedor.Detalhes.Contato.WhatsApp     := edWhatsApp.Text;
+        Fornecedor.Detalhes.Contato.Email1       := edEmail1.Text;
+        Fornecedor.Detalhes.Contato.Email2       := edEmail2.Text;
 
-        Cliente.Detalhes.Contato.Fone1        := edFone1.Text;
-        Cliente.Detalhes.Contato.Fone2        := edFone2.Text;
-        Cliente.Detalhes.Contato.Nome         := edNomeContato.Text;
-        Cliente.Detalhes.Contato.Cel          := edCel.Text;
-        Cliente.Detalhes.Contato.WhatsApp     := edWhatsApp.Text;
-        Cliente.Detalhes.Contato.Email1       := edEmail1.Text;
-        Cliente.Detalhes.Contato.Email2       := edEmail2.Text;
+        if cbProdutorRural.checked then
+           Fornecedor.Detalhes.ProdutorRural     := snSim
+        else
+           Fornecedor.Detalhes.ProdutorRural     := snNao;
 
         Lista := TStringList.Create;
         for i := 0 to vMemoLocal.lines.count-1 do
             Lista.Add(vMemoLocal.lines[i]);
 
-        Cliente.Observacao                    := Lista;
-        result := Cliente.Gravar;
+        Fornecedor.Observacao                    := Lista;
+        result := Fornecedor.Gravar;
     Except
 
     end;
 end;
 
-procedure Tfrm_cad_cliente_T6.Inicio;
+procedure Tfrm_cad_fornecedor_T19.Inicio;
 begin
    Preparar_Campos_da_Tela;
-   Limpar_os_campos_da_Tela(frm_cad_cliente_T6);
-   Cliente := TCliente.Create;
+   Limpar_os_campos_da_Tela(frm_cad_fornecedor_T19);
+   Fornecedor := TFornecedor.Create;
    edCodigo.SetFocus;
 end;
 
-procedure Tfrm_cad_cliente_T6.mmObservacoesClick(Sender: TObject);
+procedure Tfrm_cad_fornecedor_T19.mmObservacoesClick(Sender: TObject);
 begin
    vMemoLocal.Text := mmObservacoes.text;
    MostrarMemo(vMemoLocal);
    mmObservacoes.text :=vMemoLocal.Text;
 end;
 
-procedure Tfrm_cad_cliente_T6.Preencher_Campos_da_Tela;
+procedure Tfrm_cad_fornecedor_T19.Preencher_Campos_da_Tela;
 begin
-   Limpar_os_campos_da_Tela(frm_cad_cliente_T6);
+   Limpar_os_campos_da_Tela(frm_cad_fornecedor_T19);
 
-   edCodigo.Text      := Cliente.Codigo;
-   rgStatus.ItemIndex := StatusCadastralToInt(Cliente.Status);
+   edCodigo.Text      := Fornecedor.Codigo;
+   rgStatus.ItemIndex := StatusCadastralToInt(Fornecedor.Status);
 
    Preencher_Dados_Pessoa;
    Preencher_Dados_Comuns;
    FormataIE;
 end;
 
-procedure Tfrm_cad_cliente_T6.Preencher_Contato;
+procedure Tfrm_cad_fornecedor_T19.Preencher_Contato;
 begin
-   edFone1.Text             := Cliente.Detalhes.Contato.Fone1;
-   edFone2.Text             := Cliente.Detalhes.Contato.Fone2;
-   edNomeContato.Text       := Cliente.Detalhes.Contato.Nome;
-   edCel.Text               := Cliente.Detalhes.Contato.Cel;
-   edWhatsApp.Text          := Cliente.Detalhes.Contato.WhatsApp;
-   edEmail1.Text            := Cliente.Detalhes.Contato.Email1;
-   edEmail2.Text            := Cliente.Detalhes.Contato.Email2;
+   edFone1.Text             := Fornecedor.Detalhes.Contato.Fone1;
+   edFone2.Text             := Fornecedor.Detalhes.Contato.Fone2;
+   edNomeContato.Text       := Fornecedor.Detalhes.Contato.Nome;
+   edCel.Text               := Fornecedor.Detalhes.Contato.Cel;
+   edWhatsApp.Text          := Fornecedor.Detalhes.Contato.WhatsApp;
+   edEmail1.Text            := Fornecedor.Detalhes.Contato.Email1;
+   edEmail2.Text            := Fornecedor.Detalhes.Contato.Email2;
 end;
 
-procedure Tfrm_cad_cliente_T6.Preencher_Dados_Comuns;
+procedure Tfrm_cad_fornecedor_T19.Preencher_Dados_Comuns;
 begin
-   edAtividadeCodigo.Text             := Cliente.Detalhes.RamoAtividade;
-   TrazerAtividade;
    Preencher_Endereco;
    Preencher_Contato;
    Preencher_Historicos;
    Preencher_Observacoes;
 end;
 
-procedure Tfrm_cad_cliente_T6.Preencher_Dados_Pessoa;
+procedure Tfrm_cad_fornecedor_T19.Preencher_Dados_Pessoa;
 begin
-   if Cliente.Detalhes.TipoPessoa = tpFisica then
+   if Fornecedor.Detalhes.TipoPessoa = tpFisica then
       Preencher_Dados_Pessoa_Fisica
    else
       Preencher_Dados_Pessoa_Juridica;
+   cbProdutorRural.checked := (Fornecedor.Detalhes.ProdutorRural = snSim);
 end;
 
-procedure Tfrm_cad_cliente_T6.Preencher_Dados_Pessoa_Fisica;
+procedure Tfrm_cad_fornecedor_T19.Preencher_Dados_Pessoa_Fisica;
 begin
    pgControlPessoa.ActivePage := tsPessoaFisica;
-   edNome.Text                := Cliente.NomeFantasia;
-   edCPF.Text                 := Cliente.Detalhes.PessoaFisica.CPF;
-   edRG.Text                  := Cliente.Detalhes.PessoaFisica.RG;
-   edRG_OrgaoEmissor.Text     := Cliente.Detalhes.PessoaFisica.RG_OrgaoEmissor;
-   edRG_DataEmissao.Text      := Cliente.Detalhes.PessoaFisica.RG_DataEmissao;
-   edDataNascimento.Text      := Cliente.Detalhes.PessoaFisica.DataNascimento;
-   cbSexo.ItemIndex           := Cliente.Detalhes.PessoaFisica.Sexo;
+   edNome.Text                := Fornecedor.NomeFantasia;
+   edCPF.Text                 := Fornecedor.Detalhes.PessoaFisica.CPF;
+   edRG.Text                  := Fornecedor.Detalhes.PessoaFisica.RG;
+   edRG_OrgaoEmissor.Text     := Fornecedor.Detalhes.PessoaFisica.RG_OrgaoEmissor;
+   edRG_DataEmissao.Text      := Fornecedor.Detalhes.PessoaFisica.RG_DataEmissao;
+   edDataNascimento.Text      := Fornecedor.Detalhes.PessoaFisica.DataNascimento;
+   cbSexo.ItemIndex           := Fornecedor.Detalhes.PessoaFisica.Sexo;
 end;
 
-procedure Tfrm_cad_cliente_T6.Preencher_Dados_Pessoa_Juridica;
+procedure Tfrm_cad_fornecedor_T19.Preencher_Dados_Pessoa_Juridica;
 begin
    pgControlPessoa.ActivePage := tsPessoaJuridica;
-   edCNPJ.Text                := Cliente.Detalhes.PessoaJuridica.CNPJ;
-   edIE.Text                  := Cliente.Detalhes.PessoaJuridica.IE;
-   edNomeFantasia.Text        := Cliente.NomeFantasia;
-   edRazaoSocial.Text         := Cliente.RazaoSocial;
+   edCNPJ.Text                := Fornecedor.Detalhes.PessoaJuridica.CNPJ;
+   edIE.Text                  := Fornecedor.Detalhes.PessoaJuridica.IE;
+   edNomeFantasia.Text        := Fornecedor.NomeFantasia;
+   edRazaoSocial.Text         := Fornecedor.RazaoSocial;
 end;
 
-procedure Tfrm_cad_cliente_T6.Preencher_Endereco;
+procedure Tfrm_cad_fornecedor_T19.Preencher_Endereco;
 begin
-   edRegiao.Text                      := Cliente.Detalhes.Regiao;
-   edZona.Text                        := Cliente.Detalhes.Zona;
-   edRua.Text                         := Cliente.Detalhes.Endereco.Rua;
-   edNumero.Text                      := Cliente.Detalhes.Endereco.Numero;
-   edBairro.Text                      := Cliente.Detalhes.Endereco.Bairro;
-   edComplemento.Text                 := Cliente.Detalhes.Endereco.Complemento;
-   edEnderecoMunicipioIBGE.Text       := Cliente.Detalhes.Endereco.Cidade;
-   edCEP.Text                         := Cliente.Detalhes.Endereco.CEP;
+   edRegiao.Text                      := Fornecedor.Detalhes.Regiao;
+   edZona.Text                        := Fornecedor.Detalhes.Zona;
+   edRua.Text                         := Fornecedor.Detalhes.Endereco.Rua;
+   edNumero.Text                      := Fornecedor.Detalhes.Endereco.Numero;
+   edBairro.Text                      := Fornecedor.Detalhes.Endereco.Bairro;
+   edComplemento.Text                 := Fornecedor.Detalhes.Endereco.Complemento;
+   edEnderecoMunicipioIBGE.Text       := Fornecedor.Detalhes.Endereco.Cidade;
+   edCEP.Text                         := Fornecedor.Detalhes.Endereco.CEP;
 
    SelectBairro(edBairro.Text,edBairroDescricao);
    SelectRegiao(edRegiao.Text,edRegiaoDescricao);
@@ -1207,24 +1175,24 @@ begin
    SelectMunicipio(edEnderecoMunicipioIBGE.Text,edCidade);
 end;
 
-procedure Tfrm_cad_cliente_T6.Preencher_Historicos;
+procedure Tfrm_cad_fornecedor_T19.Preencher_Historicos;
 begin
-   edDataCadastro.Text := Cliente.Detalhes.DataCadastroString;
-   edDataBloqueio.Text := Cliente.Alteracao.DataBloqueio;
-   edDataInativo.Text  := Cliente.Alteracao.DataInativo;
-   edUSU.Text          := Cliente.Alteracao.Usuario;
-   edDT.Text           := Cliente.Alteracao.Data;
-   edHR.Text           := Cliente.Alteracao.Hora;
-   edEstacao.Text      := Cliente.Alteracao.Estacao;
+   edDataCadastro.Text := Fornecedor.Detalhes.DataCadastroString;
+   edDataBloqueio.Text := Fornecedor.Alteracao.DataBloqueio;
+   edDataInativo.Text  := Fornecedor.Alteracao.DataInativo;
+   edUSU.Text          := Fornecedor.Alteracao.Usuario;
+   edDT.Text           := Fornecedor.Alteracao.Data;
+   edHR.Text           := Fornecedor.Alteracao.Hora;
+   edEstacao.Text      := Fornecedor.Alteracao.Estacao;
 end;
 
-procedure Tfrm_cad_cliente_T6.Preencher_Observacoes;
+procedure Tfrm_cad_fornecedor_T19.Preencher_Observacoes;
 var i     : Integer;
   ScrollMessage: TWMVScroll;
 begin
    mmObservacoes.lines.clear;
-   for i := 0 to Cliente.Observacao.count-1 do
-       mmObservacoes.lines.add(Cliente.Observacao[i]);
+   for i := 0 to Fornecedor.Observacao.count-1 do
+       mmObservacoes.lines.add(Fornecedor.Observacao[i]);
 
   ScrollMessage.Msg := WM_VSCROLL;
   mmObservacoes.Lines.BeginUpdate;
@@ -1241,7 +1209,7 @@ begin
 
 end;
 
-procedure Tfrm_cad_cliente_T6.Preencher_Tela_Com_Dados_da_Consulta_CNPJ;
+procedure Tfrm_cad_fornecedor_T19.Preencher_Tela_Com_Dados_da_Consulta_CNPJ;
 begin
     edCNPJ.Text                  := frmConsultaCNPJ_T13.EditCNPJ.Text;
     edRazaoSocial.Text           := frmConsultaCNPJ_T13.EditRazaoSocial.Text;
@@ -1257,7 +1225,7 @@ begin
     SelectMunicipio(edEnderecoMunicipioIBGE.Text,edCidade);
 end;
 
-procedure Tfrm_cad_cliente_T6.Preparar_Campos_da_Tela;
+procedure Tfrm_cad_fornecedor_T19.Preparar_Campos_da_Tela;
 begin
    edCodigo.MaxLength          := 10;
 
@@ -1266,7 +1234,6 @@ begin
 
    edCPF.MaxLength             := 11;
    edRG.MaxLength              := 20;
-   edAtividadeCodigo.MaxLength := 10;
 
    edCEP.MaxLength             := 8;
    edCEP.TabOrder              := 0;
@@ -1286,7 +1253,7 @@ begin
 
 end;
 
-procedure Tfrm_cad_cliente_T6.TrataCidade;
+procedure Tfrm_cad_fornecedor_T19.TrataCidade;
 var vCidadeIBGE: String;
 begin
   edEnderecoMunicipioIBGE.Text := '';
@@ -1337,43 +1304,6 @@ begin
   edEnderecoMunicipioIBGE.Text := dm.Query1.FieldByName('CID_CODIGO').AsString;
   edEnderecoUF.Text            := dm.Query1.FieldByName('UF_SIGLA'  ).AsString;
   edEnderecoUFIBGE.Text        := dm.Query1.FieldByName('UF_CODIGO' ).AsString;
-end;
-
-procedure Tfrm_cad_cliente_T6.TrazerAtividade;
-begin
-{  if edAtividadeCodigo.text = '' then
-     exit;
-
-  if not PesquisaF1.ExisteCodigo('RAMOATIVIDADE_RAMO', edAtividadeCodigo.text) then
-  Begin
-     ShowMessage('Ramo de Atividade inexistente...');
-     edAtividadeCodigo.SetFocus;
-     Exit;
-  End;
-  edAtividadeNome.Text := PesquisaF1.Descricao;
-
-}
-  edAtividadeNome.text     := '';
-  edAtividadeCodigo.Text := Trim(edAtividadeCodigo.Text);
-
-  if edAtividadeCodigo.text = '' then
-     exit;
-
-  dm.Query1.Close;
-  dm.Query1.Sql.Clear;
-  dm.Query1.Sql.Add('SELECT *                         ');
-  dm.Query1.Sql.Add('  FROM RAMOATIVIDADE_RAMO        ');
-  dm.Query1.Sql.Add(' WHERE RAMO_CODIGO = :RAMO_CODIGO');
-  dm.Query1.ParamByName('RAMO_CODIGO').AsString := edAtividadeCodigo.text;
-  dm.Query1.Open;
-  if dm.Query1.Eof Then
-  Begin
-     Avisos.Avisar('Ramo de Atividade inexistente...');
-     edAtividadeCodigo.SetFocus;
-     Exit;
-  End;
-  edAtividadeNome.Text := dm.Query1.FieldByName('RAMO_DESCRICAO').AsString;
-
 end;
 
 end.

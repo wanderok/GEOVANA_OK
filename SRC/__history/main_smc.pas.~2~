@@ -598,8 +598,8 @@ end;
 
 procedure TFrm_main.dxBarButton6Click(Sender: TObject);
 begin
-    frm_cad_colaborador_T20 := Tfrm_cad_colaborador_T20.Create(nil);
-    frm_cad_colaborador_T20.showmodal;
+    frm_colaborador := Tfrm_colaborador.Create(nil);
+    frm_colaborador.showmodal;
 end;
 
 procedure TFrm_main.dxBarButton70Click(Sender: TObject);

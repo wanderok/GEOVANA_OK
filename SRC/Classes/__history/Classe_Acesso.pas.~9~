@@ -1580,6 +1580,7 @@ begin
    Alteracoes_Cad_Transportadora;
    Alteracoes_Cad_Contador;
 
+
    Tratar_Cad_Bairro;
 
    AtualizaBaseDeDadosNuvem;

@@ -18,6 +18,7 @@ uses
   Classe_Empresa in '..\..\src\Classes\Classe_Empresa.pas',
   PesquisaF1_T16 in '..\..\SRC\views\Consulta_Cadastros\PesquisaF1_T16.pas' {frm_PesquisaF1_T16},
   cad_comissoes in '..\..\src\views\cad_colaborador\cad_comissoes.pas' {fmr_comissao_colab},
+  cadastro_colaborador in '..\..\src\views\cad_colaborador\cadastro_colaborador.pas' {frm_colaborador},
   tipo_colab in '..\..\src\views\cad_colaborador\tipo_colab.pas' {Frm_tipo_colab},
   consultor_banco_comissoes in '..\..\src\views\cad_consultor\consultor_banco_comissoes.pas' {frm_consultor_comissoes_banco},
   cad_ramo_atividade_T9 in '..\..\src\views\cad_ramo_atividade\cad_ramo_atividade_T9.pas' {frm_cad_ramo_atividade_T9},
@@ -71,8 +72,7 @@ uses
   Classe_Configuracoes in '..\..\src\Classes\Classe_Configuracoes.pas',
   Classe_Nuvem in '..\..\src\Classes\Classe_Nuvem.pas',
   cad_cliente_T6 in '..\..\src\views\cad_clientes\cad_cliente_T6.pas' {frm_cad_cliente_T6},
-  CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17 in '..\..\src\views\cad_clientes\CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17.pas' {frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17},
-  cad_colaborador_T20 in '..\..\src\views\cad_colaborador\cad_colaborador_T20.pas' {frm_cad_colaborador_T20};
+  CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17 in '..\..\src\views\cad_clientes\CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17.pas' {frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17};
 
 {$R *.res}
 
