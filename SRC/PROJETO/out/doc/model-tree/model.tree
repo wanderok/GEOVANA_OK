@@ -1,0 +1,14 @@
+node3 > NAME = Conectar, IMG = model-tree/ST_rc_Operation.gif, REF = Classe_Acesso/TAcesso.html#Conectar()->classFrame;
+node4 > NAME = Desconectar, IMG = model-tree/ST_rc_Operation.gif, REF = Classe_Acesso/TAcesso.html#Desconectar()->classFrame;
+node5 > NAME = nomeDaConexao, IMG = model-tree/ST_rc_Property.gif, REF = Classe_Acesso/TAcesso.html#nomeDaConexao->classFrame;
+node2 > NAME = TAcesso, IMG = model-tree/ST_rc_Class.gif, REF = Classe_Acesso/TAcesso.html->classFrame, CHILDS = node3:node4:node5;
+node6 > NAME = globals Classe_Acesso, IMG = model-tree/ST_rc_Module.gif, REF = Classe_Acesso/globals Classe_Acesso.html->classFrame;
+node9 > NAME = Conectar, IMG = model-tree/ST_rc_Operation.gif, REF = Classe_Acesso/TAcesso.html#Conectar()->classFrame;
+node10 > NAME = Desconectar, IMG = model-tree/ST_rc_Operation.gif, REF = Classe_Acesso/TAcesso.html#Desconectar()->classFrame;
+node11 > NAME = nomeDaConexao, IMG = model-tree/ST_rc_Property.gif, REF = Classe_Acesso/TAcesso.html#nomeDaConexao->classFrame;
+node8 > NAME = TAcesso, IMG = model-tree/ST_rc_Class.gif, REF = Classe_Acesso/TAcesso.html->classFrame, CHILDS = node9:node10:node11;
+node12 > NAME = globals Classe_Acesso, IMG = model-tree/ST_rc_Module.gif, REF = Classe_Acesso/globals Classe_Acesso.html->classFrame;
+node7 > NAME = Classe_Acesso, IMG = model-tree/ST_Package Diagram.gif, REF = Classe_Acesso/default.txvpck.html->classFrame, REF = Classe_Acesso/doc-files/default.txvpck.html->imageFrame, CHILDS = node8:node12;
+node1 > NAME = Classe_Acesso, IMG = model-tree/ST_rc_Namespace.gif, REF = Classe_Acesso/package-summary.html->classFrame, REF = Classe_Acesso/doc-files/default.txvpck.html->imageFrame, CHILDS = node2:node6:node7;
+node0 > NAME = SMC_PLUS_, IMG = model-tree/ST_Project.gif, REF = overview-summary.html->classFrame, CHILDS = node1;
+ROOT > CHILDS = node0

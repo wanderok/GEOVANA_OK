@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="duuavme7cut_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_nfe.TFrmconfig_NFe">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.grp_geral" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.GroupBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.edtNFeC_PastaNotas" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.btn_buscar_xml" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.GroupBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.cxComboBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.grp_sequencia_nfce" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.lbl1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.edt_NFeC_nNF" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.GroupBox3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.edt_NFeC_PathLogoMarca" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.cxButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.GroupBox5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.ACBrNFe1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.OpenDialog1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.Edit1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.Label3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton6" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.GroupBox4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.Label5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.UF" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.GroupBox6" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton8" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton9" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.GroupBox7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton10" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton11" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.GroupBox8" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton12" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.RadioButton13" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.cxButton23" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.cxButton24" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.cxButton25" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.Label4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.TFrmconfig_NFe.cxGroupBox2" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_nfe.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.@unitclass.SELDIRHELP" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfe.@unitclass.Frmconfig_NFe" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:config_nfe.@unitclass.Frmconfig_NFe" />
+    </reference>
+  </view>
+</nodeSet>

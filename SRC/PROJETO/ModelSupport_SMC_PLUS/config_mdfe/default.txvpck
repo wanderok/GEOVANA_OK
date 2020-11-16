@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="aaedlcyo1ft_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_mdfe.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.@unitclass.SELDIRHELP" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.@unitclass.Frm_config_MDFe" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:config_mdfe.@unitclass.Frm_config_MDFe" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.grp_sequencia_nfce" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.lbl1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.edt_NFeC_nNF" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.ACBrNFe1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.Edit1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.Label3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.GroupBox7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.RadioButton10" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.RadioButton11" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.cxButton23" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.cxButton24" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.cxButton25" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.Label4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.cxGroupBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.GroupBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.edtNFeC_PastaNotas" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.btn_buscar_xml" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.GroupBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.cxComboBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mdfe.TFrm_config_MDFe.OpenDialog1" />
+    </reference>
+  </view>
+</nodeSet>

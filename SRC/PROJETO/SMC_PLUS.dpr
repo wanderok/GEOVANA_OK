@@ -71,8 +71,22 @@ uses
   Classe_Configuracoes in '..\..\src\Classes\Classe_Configuracoes.pas',
   Classe_Nuvem in '..\..\src\Classes\Classe_Nuvem.pas',
   cad_cliente_T6 in '..\..\src\views\cad_clientes\cad_cliente_T6.pas' {frm_cad_cliente_T6},
+  CONSULTOR_HISTORICO_BLOQUEIOS_CHB_T23 in '..\..\SRC\views\cad_consultor\CONSULTOR_HISTORICO_BLOQUEIOS_CHB_T23.pas' {frmCONSULTOR_HISTORICO_BLOQUEIOS_CHB_T23},
+  cad_colaborador_T20 in '..\..\src\views\cad_colaborador\cad_colaborador_T20.pas' {frm_cad_colaborador_T20},
+  Classe_Consultor in '..\..\src\Classes\Classe_Consultor.pas',
+  cad_transportadora_T28 in '..\..\SRC\views\cad_transportadora\cad_transportadora_T28.pas' {frm_cad_transportadora_T28},
+  Classe_Colaborador in '..\..\src\Classes\Classe_Colaborador.pas',
   CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17 in '..\..\src\views\cad_clientes\CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17.pas' {frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17},
-  cad_colaborador_T20 in '..\..\src\views\cad_colaborador\cad_colaborador_T20.pas' {frm_cad_colaborador_T20};
+  TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB_T29 in '..\..\SRC\views\cad_transportadora\TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB_T29.pas' {frmTRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB_T29},
+  cad_consultor_T21 in '..\..\src\views\cad_consultor\cad_consultor_T21.pas' {frm_cad_consultor_T21},
+  COLABORADOR_HISTORICO_BLOQUEIOS_COLHB_T22 in '..\..\src\views\cad_colaborador\COLABORADOR_HISTORICO_BLOQUEIOS_COLHB_T22.pas' {frmCOLABORADOR_HISTORICO_BLOQUEIOS_COLHB_T22},
+  Classe_Contador in '..\..\src\Classes\Classe_Contador.pas',
+  cad_contador_T24 in '..\..\src\views\cad_contador\cad_contador_T24.pas' {frm_cad_contador_T24},
+  Classe_Motorista in '..\..\src\Classes\Classe_Motorista.pas',
+  CONTADOR_HISTORICO_BLOQUEIOS_CONTHB_T25 in '..\..\src\views\cad_contador\CONTADOR_HISTORICO_BLOQUEIOS_CONTHB_T25.pas' {frmCONTADOR_HISTORICO_BLOQUEIOS_CONTHB_T25},
+  cad_motorista_T26 in '..\..\src\views\cad_motorista\cad_motorista_T26.pas' {frm_cad_motorista_T26},
+  Classe_Transportadora in '..\..\src\Classes\Classe_Transportadora.pas',
+  MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27 in '..\..\src\views\cad_motorista\MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27.pas' {frmMOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27};
 
 {$R *.res}
 

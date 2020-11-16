@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="y0hzd1rnw8i_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.cxButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.cxButton2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.GroupBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.Label2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.Label4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.Label5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.Edit2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.Edit3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.Edit4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.Image2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.Label6" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.Edit5" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:alterar_senha.Tfrm_alterar_senha.FormClose(System.TObject,ref@System.UITypes.TCloseAction)" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:alterar_senha.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:alterar_senha.@unitclass.frm_alterar_senha" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:alterar_senha.@unitclass.frm_alterar_senha" />
+    </reference>
+  </view>
+</nodeSet>

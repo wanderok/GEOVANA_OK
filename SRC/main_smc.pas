@@ -1,15 +1,13 @@
-  unit main_smc;
+unit main_smc;
 
-  interface
+interface
 
-
-
-  uses
-    Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-    Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, Vcl.StdCtrls,
-    cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, cxButtons, cxScrollBar,
-    cxControls, cxScrollBox, dxRibbonSkins, dxRibbonCustomizationForm,
-    dxRibbonBackstageView, cxClasses, dxRibbon, dxBar, dxSkinsCore,
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, Vcl.StdCtrls,
+  cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, cxButtons, cxScrollBar,
+  cxControls, cxScrollBox, dxRibbonSkins, dxRibbonCustomizationForm,
+  dxRibbonBackstageView, cxClasses, dxRibbon, dxBar, dxSkinsCore,
   dxSkinsdxRibbonPainter, dxSkinsdxBarPainter, cxStyles, cxEdit,
   cxInplaceContainer, cxVGrid, cxOI,
   //vw_etiquetas,
@@ -38,7 +36,7 @@
       dxRibbon1Tab1: TdxRibbonTab;
       dxRibbon1: TdxRibbon;
       dxBarManager1: TdxBarManager;
-    Cadastro: TdxBar;
+      Cadastro: TdxBar;
       dxBarLargeButton1: TdxBarLargeButton;
       dxBarLargeButton2: TdxBarLargeButton;
       dxBarManager1Bar2: TdxBar;
@@ -384,22 +382,22 @@
 implementation
 
 uses
+  alterar_senha,
+  LimpaBaseDeDados,
   cad_usuario_T2,
   cad_empresa_T3,
   reg_tributario_T4,
   cad_cliente_T6,
   auditoria_T10,
   cad_fornecedor_T19,
-  alterar_senha,
-  //cadastro_produto,
   cad_colaborador_T20,
-  LimpaBaseDeDados;
+  cad_consultor_T21,
+  cad_contador_T24,
+  cad_motorista_T26,
+  cad_transportadora_T28;
 
   //cadastro_fornecedor, cad_transportadora,
-  //cad_motorista,
   //cad_veiculos,
-  //cad_consultor;
-  //cad_contador,
   //cad_sistemas,
   //estoque_localizacao,
   //movimenta_estoque,
@@ -434,8 +432,9 @@ end;
 
 procedure TFrm_main.dxBarButton20Click(Sender: TObject);
 begin
-    //frm_cadastro_contador := Tfrm_cadastro_contador.Create(nil);
-    //frm_cadastro_contador.showmodal;
+   frm_cad_contador_T24 := Tfrm_cad_contador_T24.Create(nil);
+   frm_cad_contador_T24.showmodal;
+   frm_cad_contador_T24.free;
 end;
 
 procedure TFrm_main.dxBarButton21Click(Sender: TObject);
@@ -453,8 +452,9 @@ end;
 
 procedure TFrm_main.dxBarButton23Click(Sender: TObject);
 begin
-    //Frm_consultor := TFrm_consultor.Create(nil);
-    //Frm_consultor.showmodal;
+    Frm_cad_consultor_T21 := TFrm_cad_consultor_T21.Create(nil);
+    Frm_cad_consultor_T21.showmodal;
+    Frm_cad_consultor_T21.Free;
 end;
 
 procedure TFrm_main.dxBarButton26Click(Sender: TObject);
@@ -600,6 +600,7 @@ procedure TFrm_main.dxBarButton6Click(Sender: TObject);
 begin
     frm_cad_colaborador_T20 := Tfrm_cad_colaborador_T20.Create(nil);
     frm_cad_colaborador_T20.showmodal;
+    frm_cad_colaborador_T20.Free;
 end;
 
 procedure TFrm_main.dxBarButton70Click(Sender: TObject);
@@ -628,8 +629,9 @@ end;
 
 procedure TFrm_main.dxBarButton81Click(Sender: TObject);
 begin
-    //Frm_transportadora := TFrm_transportadora.Create(nil);
-    //Frm_transportadora.showmodal;
+    Frm_cad_transportadora_T28 := TFrm_cad_transportadora_T28.Create(nil);
+    Frm_cad_transportadora_T28.showmodal;
+    Frm_cad_transportadora_T28.Free;
 end;
 
 procedure TFrm_main.dxBarButton82Click(Sender: TObject);
@@ -640,8 +642,9 @@ end;
 
 procedure TFrm_main.dxBarButton83Click(Sender: TObject);
 begin
-    //Frm_motorista := TFrm_motorista.Create(nil);
-    //Frm_motorista.showmodal;
+    Frm_cad_motorista_T26 := TFrm_cad_motorista_T26.Create(nil);
+    Frm_cad_motorista_T26.showmodal;
+    Frm_cad_motorista_T26.Free;
 end;
 
 procedure TFrm_main.dxBarButton84Click(Sender: TObject);

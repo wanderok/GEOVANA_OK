@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="wa0egtnpnen_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:reg_tributario_T4.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.@unitclass.frm_reg_tributaria" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:reg_tributario_T4.@unitclass.frm_reg_tributaria" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.Label1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.Edit1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.Edit2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.GroupBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.RadioButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.RadioButton2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.RadioButton3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.RadioButton4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.RadioButton5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.RadioButton6" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.RadioButton7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.RadioButton8" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.RadioButton9" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.RadioButton10" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.Label2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.Label3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.Label5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.Edit3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.Shape1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.Label4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:reg_tributario_T4.Tfrm_reg_tributario_T4.Label6" />
+    </reference>
+  </view>
+</nodeSet>

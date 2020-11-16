@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="st98wczu43p_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.grp_geral" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.grp11" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.chk_normal" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.chk_contingencia" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.grp14" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.chk_homologacao" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.chk_producao" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.GroupBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.edtPastaNotas" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.btn_buscar_xml" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.grp_impressora_nfce" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.cb_nfce_impressoras" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.GroupBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.cxComboBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.grp_sequencia_nfce" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.lbl1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.Label15" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.edt_ultima_nfce" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.grp_grupo_nfce" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.Label7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.Label8" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.nfce_lote" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.nfce_serie" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.Label4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.cxGroupBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.Edit1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.GroupBox3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.Edit2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.cxButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.grp_csc" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.Label1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.Label5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.id_token" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.id_csc" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.cxButton23" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.cxButton24" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.cxButton25" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:config_nfce.TFrm_Conf_Nfce.FormClose(System.TObject,ref@System.UITypes.TCloseAction)" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_nfce.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfce.@unitclass.Frm_Conf_Nfce" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:config_nfce.@unitclass.Frm_Conf_Nfce" />
+    </reference>
+  </view>
+</nodeSet>

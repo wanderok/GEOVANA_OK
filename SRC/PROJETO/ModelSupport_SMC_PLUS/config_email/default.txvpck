@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="u3qwe1z7i2j_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_email.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.@unitclass.frm_config_email" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:config_email.@unitclass.frm_config_email" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_email.Tfrm_config_email">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.Label2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.edSMTP" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.Label3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.edSMTP_PORTA" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.edSMTP_SENHA" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.Label5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.edSMTP_CONTA" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.Label4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.cxButton23" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.cxButton24" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.cxButton25" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.RadioButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.RadioButton2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.Label6" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_email.Tfrm_config_email.cxGroupBox1" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:config_email.Tfrm_config_email.FormClose(System.TObject,ref@System.UITypes.TCloseAction)" />
+    </reference>
+  </view>
+</nodeSet>

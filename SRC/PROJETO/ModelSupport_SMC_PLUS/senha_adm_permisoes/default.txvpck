@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="fly95dfiaon_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:senha_adm_permisoes.Tfrm_adm_libera">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:senha_adm_permisoes.Tfrm_adm_libera.Código" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:senha_adm_permisoes.Tfrm_adm_libera.cxDBTextEdit1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:senha_adm_permisoes.Tfrm_adm_libera.cxButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:senha_adm_permisoes.Tfrm_adm_libera.cxButton4" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:senha_adm_permisoes.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:senha_adm_permisoes.@unitclass.frm_adm_libera" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:senha_adm_permisoes.@unitclass.frm_adm_libera" />
+    </reference>
+  </view>
+</nodeSet>

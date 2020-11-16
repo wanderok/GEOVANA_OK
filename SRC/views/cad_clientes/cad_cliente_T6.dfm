@@ -535,6 +535,10 @@ object frm_cad_cliente_T6: Tfrm_cad_cliente_T6
     TabOrder = 2
     object tsPessoaFisica: TTabSheet
       Caption = 'Pessoa F'#237'sica'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label25: TLabel
         Left = 10
         Top = 46

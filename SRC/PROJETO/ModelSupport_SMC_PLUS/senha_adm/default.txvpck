@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="7nnn4k4449s_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:senha_adm.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:senha_adm.@unitclass.frm_senha_adm" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:senha_adm.@unitclass.frm_senha_adm" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:senha_adm.Tfrm_senha_adm">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:senha_adm.Tfrm_senha_adm.Código" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:senha_adm.Tfrm_senha_adm.cxDBTextEdit1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:senha_adm.Tfrm_senha_adm.cxButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:senha_adm.Tfrm_senha_adm.cxButton4" />
+    </reference>
+  </view>
+</nodeSet>

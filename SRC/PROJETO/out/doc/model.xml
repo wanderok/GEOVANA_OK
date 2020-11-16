@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Model name="SMC_PLUS_" id="SMC_PLUS_" language="delphi">
+  <Package name="Classe_Acesso" id="ID=14">
+    <Diagram name="Classe_Acesso" id="ID=151" metaclass="Namespace Diagram" file="default.txvpck.html">
+      <Property name="defaultDiagram">true</Property>
+      <DiagramReference id="ID=161" element="ID=149" metaclass="Class">
+        <Property name="Abstract">False</Property>
+        <Property name="Sealed">False</Property>
+        <Property name="Gradient color 2">255, 255, 255</Property>
+        <Property name="Persistent">False</Property>
+        <Property name="Gradient ON">False</Property>
+        <Property name="Gradient color 1">255, 255, 255</Property>
+        <Property name="Gradient Mode">Vertical</Property>
+        <Property name="Color Area">Whole Shape</Property>
+        <Property name="bounds">10,10,244,188</Property>
+      </DiagramReference>
+      <DiagramReference id="ID=162" element="ID=150" metaclass="Module">
+        <Property name="Color Area">Whole Shape</Property>
+        <Property name="Gradient color 2">255, 255, 255</Property>
+        <Property name="Gradient ON">False</Property>
+        <Property name="Gradient color 1">255, 255, 255</Property>
+        <Property name="Gradient Mode">Vertical</Property>
+      </DiagramReference>
+    </Diagram>
+    <Classifier name="TAcesso" id="ID=149" type="Class" visibility="public">
+      <Property name="Abstract">False</Property>
+      <Property name="Sealed">False</Property>
+      <Property name="Persistent">False</Property>
+      <Uses />
+      <Field fieldType="Field" elementName="nomeDaConexao" id="ID=158" type="String" isPrimitive="true" isProperty="true" visibility="public">
+        <Property name="Type">String</Property>
+        <Property name="Access">read/write</Property>
+        <Property name="Class">False</Property>
+      </Field>
+      <Method id="ID=156" name="Conectar" visibility="public">
+        <Property name="Reintroduce">False</Property>
+        <Property name="Virtual">False</Property>
+        <Property name="Override">False</Property>
+        <Property name="Abstract">False</Property>
+        <Property name="Class">False</Property>
+        <Property name="Returns">Boolean</Property>
+        <Property name="Final">False</Property>
+        <ReturnType id="ID=156" type="Boolean" systemType="Boolean" isPrimitive="false" />
+      </Method>
+      <Method id="ID=157" name="Desconectar" isSubroutine="true" visibility="public">
+        <Property name="Reintroduce">False</Property>
+        <Property name="Virtual">False</Property>
+        <Property name="Override">False</Property>
+        <Property name="Abstract">False</Property>
+        <Property name="Class">False</Property>
+        <Property name="Final">False</Property>
+        <ReturnType id="ID=157" type="" isPrimitive="true" />
+      </Method>
+    </Classifier>
+    <Classifier name="globals Classe_Acesso" id="ID=150" type="Module" visibility="public">
+      <Uses />
+    </Classifier>
+  </Package>
+</Model>

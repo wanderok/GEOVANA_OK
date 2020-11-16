@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="x48pp4ybslk_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:integracao_outros_bancos.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.@unitclass.frm_intagracao_outras_base_dados" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:integracao_outros_bancos.@unitclass.frm_intagracao_outras_base_dados" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.GroupBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.RadioButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.RadioButton2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.RadioButton3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.RadioButton4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.cxButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.Label1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.Edit1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.Label2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.Edit2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.Label4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.cxGroupBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:integracao_outros_bancos.Tfrm_intagracao_outras_base_dados.Label3" />
+    </reference>
+  </view>
+</nodeSet>

@@ -313,19 +313,21 @@ begin
      Executar_Script('ALTER TABLE COLABORADOR_COL ADD  DEFAULT ((0)) FOR COL_STATUS');
    end;
 
-   if not Ja_Executou_Script('CREATE TABLE COLABORADOR_CONTATO_COLC ') then
+   if not Ja_Executou_Script('CREATE TABLE COLABORADOR_CONTATO_COLC.') then
    begin
+     Executar_Script('DROP TABLE COLABORADOR_CONTATO_COLC');
      dm.Query1.close;
      dm.Query1.sql.Clear;
-     dm.Query1.sql.Add('CREATE TABLE COLABORADOR_CONTATO_COLC (   ');
-     dm.Query1.sql.Add('       COLC_NOME        varchar(50) NULL, ');
-     dm.Query1.sql.Add('       COLC_FONE1       varchar(10) NULL, ');
-	   dm.Query1.sql.Add('       COLC_FONE2       varchar(10) NULL, ');
-	   dm.Query1.sql.Add('       COLC_CEL1        varchar(11) NULL, ');
-   	 dm.Query1.sql.Add('       COLC_WHATSAPP    varchar(11) NULL, ');
-	   dm.Query1.sql.Add('       COLC_EMAIL1      varchar(30) NULL, ');
-	   dm.Query1.sql.Add('       COLC_EMAIL2      varchar(30) NULL  ');
-     dm.Query1.sql.Add(' )                                        ');
+     dm.Query1.sql.Add('CREATE TABLE COLABORADOR_CONTATO_COLC (      ');
+     dm.Query1.sql.Add('       COLC_CODIGO      varchar(10) NOT NULL,');
+     dm.Query1.sql.Add('       COLC_NOME        varchar(50) NULL,    ');
+     dm.Query1.sql.Add('       COLC_FONE1       varchar(10) NULL,    ');
+	   dm.Query1.sql.Add('       COLC_FONE2       varchar(10) NULL,    ');
+	   dm.Query1.sql.Add('       COLC_CEL1        varchar(11) NULL,    ');
+   	 dm.Query1.sql.Add('       COLC_WHATSAPP    varchar(11) NULL,    ');
+	   dm.Query1.sql.Add('       COLC_EMAIL1      varchar(30) NULL,    ');
+	   dm.Query1.sql.Add('       COLC_EMAIL2      varchar(30) NULL     ');
+     dm.Query1.sql.Add(' )                                           ');
      dm.Query1.ExecSql;
    end;
 
@@ -403,17 +405,18 @@ begin
      dm.Query1.ExecSql;
    end;
 
-   if not Ja_Executou_Script('CREATE TABLE COLABORADOR_HISTORICO_BLOQUEIOS_COLHB ') then
+   if not Ja_Executou_Script('CREATE TABLE COLABORADOR_HISTORICO_BLOQUEIOS_COLHB.') then
    begin
+     Executar_Script('DROP TABLE COLABORADOR_HISTORICO_BLOQUEIOS_COLHB');
      dm.Query1.close;
      dm.Query1.sql.Clear;
      dm.Query1.sql.Add('CREATE TABLE COLABORADOR_HISTORICO_BLOQUEIOS_COLHB ( ');
-	   dm.Query1.sql.Add('       COLHB_CLIENTE    varchar(20) NOT NULL,        ');
-	   dm.Query1.sql.Add('       COLHB_DTEVENTO   date        NOT NULL,        ');
-	   dm.Query1.sql.Add('       COLHB_HREVENTO   varchar(5)  NOT NULL,        ');
-	   dm.Query1.sql.Add('       COLHB_USUEVENTO  varchar(20) NOT NULL,        ');
-	   dm.Query1.sql.Add('       COLHB_MAQEVENTO  varchar(50) NOT NULL,        ');
-	   dm.Query1.sql.Add('       COLHB_EVENTO     varchar(20) NULL             ');
+	   dm.Query1.sql.Add('       COLHB_COLABORADOR varchar(20) NOT NULL,       ');
+	   dm.Query1.sql.Add('       COLHB_DTEVENTO    date        NOT NULL,       ');
+	   dm.Query1.sql.Add('       COLHB_HREVENTO    varchar(5)  NOT NULL,       ');
+	   dm.Query1.sql.Add('       COLHB_USUEVENTO   varchar(20) NOT NULL,       ');
+	   dm.Query1.sql.Add('       COLHB_MAQEVENTO   varchar(50) NOT NULL,       ');
+	   dm.Query1.sql.Add('       COLHB_EVENTO      varchar(20) NULL            ');
      dm.Query1.sql.Add(' )                                                   ');
      dm.Query1.ExecSql;
    end;
@@ -465,12 +468,14 @@ begin
      Executar_Script('ALTER TABLE CONSULTOR_CON ADD  DEFAULT ((0)) FOR CON_STATUS');
    end;
 
-   if not Ja_Executou_Script('CREATE TABLE CONSULTOR_CONTATO_CONC') then
+   if not Ja_Executou_Script('CREATE TABLE CONSULTOR_CONTATO_CONC.') then
    begin
+      Executar_Script('DROP TABLE CONSULTOR_CONTATO_CONC');
       dm.Query1.close;
       dm.Query1.sql.Clear;
       dm.Query1.sql.Add('CREATE TABLE CONSULTOR_CONTATO_CONC (     ');
       dm.Query1.sql.Add('       CONC_CODIGO   varchar(10) NOT NULL,');
+      dm.Query1.sql.Add('       CONC_NOME     varchar(50) NULL,    ');
       dm.Query1.sql.Add('       CONC_FONE1    varchar(10) NULL,    ');
       dm.Query1.sql.Add('       CONC_FONE2    varchar(10) NULL,    ');
       dm.Query1.sql.Add('       CONC_CEL1     varchar(11) NULL,    ');
@@ -535,7 +540,7 @@ begin
 
    if not Ja_Executou_Script('CREATE TABLE CONSULTOR_ENDERECO_CONE..') then
    begin
-       Executar_Script('DROP TABLE CONSULTOR_ENDERECO_CONE');
+      Executar_Script('DROP TABLE CONSULTOR_ENDERECO_CONE');
 
       dm.Query1.close;
       dm.Query1.sql.Clear;
@@ -606,27 +611,30 @@ begin
       dm.Query1.ExecSql;
    end;
 
-   if not Ja_Executou_Script('CREATE TABLE CONTADOR_CONTB') then
+   if not Ja_Executou_Script('CREATE TABLE CONTADOR_CONT') then
    begin
+     Executar_Script('DROP TABLE CONTADOR_CONTB');
      dm.Query1.close;
      dm.Query1.sql.Clear;
-     dm.Query1.sql.Add('CREATE TABLE CONTADOR_CONTB (                   ');
-     dm.Query1.sql.Add('       CONTB_CODIGO        varchar(10) NOT NULL,');
-     dm.Query1.sql.Add('       CONTB_NOME_FANTASIA varchar(50) NULL,    ');
-     dm.Query1.sql.Add('       CONTB_RAZAO_SOCIAL  varchar(50) NULL,    ');
-     dm.Query1.sql.Add('       CONTB_STATUS        int         NOT NULL ');
-     dm.Query1.sql.Add('    )                                           ');
+     dm.Query1.sql.Add('CREATE TABLE CONTADOR_CONT (                   ');
+     dm.Query1.sql.Add('       CONT_CODIGO        varchar(10) NOT NULL,');
+     dm.Query1.sql.Add('       CONT_NOME_FANTASIA varchar(50) NULL,    ');
+     dm.Query1.sql.Add('       CONT_RAZAO_SOCIAL  varchar(50) NULL,    ');
+     dm.Query1.sql.Add('       CONT_STATUS        int         NOT NULL ');
+     dm.Query1.sql.Add('    )                                          ');
      dm.Query1.ExecSql;
 
      Executar_Script('ALTER TABLE CONTADOR_CONT ADD  DEFAULT ((0)) FOR CONT_STATUS');
    end;
 
-   if not Ja_Executou_Script('CREATE TABLE CONTADOR_CONTATO_CONTC') then
+   if not Ja_Executou_Script('CREATE TABLE CONTADOR_CONTATO_CONTC.') then
    begin
+      Executar_Script('DROP TABLE CONTADOR_CONTATO_CONTC');
       dm.Query1.close;
       dm.Query1.sql.Clear;
-      dm.Query1.sql.Add('CREATE TABLE CONTADOR_CONTATO_CONTC (     ');
+      dm.Query1.sql.Add('CREATE TABLE CONTADOR_CONTATO_CONTC (      ');
       dm.Query1.sql.Add('       CONTC_CODIGO   varchar(10) NOT NULL,');
+      dm.Query1.sql.Add('       CONTC_NOME     varchar(50) NULL,    ');
       dm.Query1.sql.Add('       CONTC_FONE1    varchar(10) NULL,    ');
       dm.Query1.sql.Add('       CONTC_FONE2    varchar(10) NULL,    ');
       dm.Query1.sql.Add('       CONTC_CEL1     varchar(11) NULL,    ');
@@ -711,18 +719,19 @@ begin
       dm.Query1.ExecSql;
    end;
 
-   if not Ja_Executou_Script('CREATE TABLE CONTADOR_HISTORICO_BLOQUEIOS_CONTB') then
+   if not Ja_Executou_Script('CREATE TABLE CONTADOR_HISTORICO_BLOQUEIOS_CONTHB..') then
    begin
+      Executar_Script('DROP TABLE  CONTADOR_HISTORICO_BLOQUEIOS_CONTHB');
       dm.Query1.close;
       dm.Query1.sql.Clear;
-      dm.Query1.sql.Add('CREATE TABLE CONTADOR_HISTORICO_BLOQUEIOS_CONTB (');
-      dm.Query1.sql.Add('       CONTB_CONSULTOR varchar(20) NOT NULL,     ');
-      dm.Query1.sql.Add('       CONTB_DTEVENTO  date        NOT NULL,     ');
-      dm.Query1.sql.Add('       CONTB_HREVENTO  varchar(5)  NOT NULL,     ');
-      dm.Query1.sql.Add('       CONTB_USUEVENTO varchar(20) NOT NULL,     ');
-      dm.Query1.sql.Add('       CONTB_MAQEVENTO varchar(50) NOT NULL,     ');
-      dm.Query1.sql.Add('       CONTB_EVENTO    varchar(20) NULL          ');
-      dm.Query1.sql.Add('       )                                         ');
+      dm.Query1.sql.Add('CREATE TABLE CONTADOR_HISTORICO_BLOQUEIOS_CONTHB (');
+      dm.Query1.sql.Add('       CONTHB_CONTADOR  varchar(20) NOT NULL,     ');
+      dm.Query1.sql.Add('       CONTHB_DTEVENTO  date        NOT NULL,     ');
+      dm.Query1.sql.Add('       CONTHB_HREVENTO  varchar(5)  NOT NULL,     ');
+      dm.Query1.sql.Add('       CONTHB_USUEVENTO varchar(20) NOT NULL,     ');
+      dm.Query1.sql.Add('       CONTHB_MAQEVENTO varchar(50) NOT NULL,     ');
+      dm.Query1.sql.Add('       CONTHB_EVENTO    varchar(20) NULL          ');
+      dm.Query1.sql.Add('       )                                          ');
       dm.Query1.ExecSql;
    end;
 
@@ -1024,27 +1033,30 @@ begin
       dm.Query1.ExecSql;
    end;
 
-   if not Ja_Executou_Script('CREATE TABLE MOTORISTA_MOTB') then
+   if not Ja_Executou_Script('CREATE TABLE MOTORISTA_MOT.') then
    begin
+     Executar_Script('DROP TABLE MOTORISTA_MOTB');
      dm.Query1.close;
      dm.Query1.sql.Clear;
-     dm.Query1.sql.Add('CREATE TABLE MOTORISTA_MOTB (                        ');
-     dm.Query1.sql.Add('       MOTB_CODIGO        varchar(10) NOT NULL,      ');
-     dm.Query1.sql.Add('       MOTB_NOME_FANTASIA varchar(50) NULL,          ');
-     dm.Query1.sql.Add('       MOTB_RAZAO_SOCIAL  varchar(50) NULL,          ');
-     dm.Query1.sql.Add('       MOTB_STATUS        int         NOT NULL,      ');
+     dm.Query1.sql.Add('CREATE TABLE MOTORISTA_MOT (                        ');
+     dm.Query1.sql.Add('       MOT_CODIGO        varchar(10) NOT NULL,      ');
+     dm.Query1.sql.Add('       MOT_NOME_FANTASIA varchar(50) NULL,          ');
+     dm.Query1.sql.Add('       MOT_RAZAO_SOCIAL  varchar(50) NULL,          ');
+     dm.Query1.sql.Add('       MOT_STATUS        int         NOT NULL,      ');
      dm.Query1.sql.Add('    )                                                ');
      dm.Query1.ExecSql;
 
      Executar_Script('ALTER TABLE MOTORISTA_MOT ADD  DEFAULT ((0)) FOR MOT_STATUS');
    end;
 
-   if not Ja_Executou_Script('CREATE TABLE MOTORISTA_CONTATO_MOTC') then
+   if not Ja_Executou_Script('CREATE TABLE MOTORISTA_CONTATO_MOTC.') then
    begin
+      Executar_Script('DROP TABLE MOTORISTA_CONTATO_MOTC');
       dm.Query1.close;
       dm.Query1.sql.Clear;
       dm.Query1.sql.Add('CREATE TABLE MOTORISTA_CONTATO_MOTC (     ');
       dm.Query1.sql.Add('       MOTC_CODIGO   varchar(10) NOT NULL,');
+      dm.Query1.sql.Add('       MOTC_NOME     varchar(50) NULL,    ');
       dm.Query1.sql.Add('       MOTC_FONE1    varchar(10) NULL,    ');
       dm.Query1.sql.Add('       MOTC_FONE2    varchar(10) NULL,    ');
       dm.Query1.sql.Add('       MOTC_CEL1     varchar(11) NULL,    ');
@@ -1129,17 +1141,19 @@ begin
       dm.Query1.ExecSql;
    end;
 
-   if not Ja_Executou_Script('CREATE TABLE MOTORISTA_HISTORICO_BLOQUEIOS_MOTB') then
+   if not Ja_Executou_Script('CREATE TABLE MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB.') then
    begin
+      Executar_Script('DROP  TABLE MOTORISTA_HISTORICO_BLOQUEIOS_MOTB');
+
       dm.Query1.close;
       dm.Query1.sql.Clear;
-      dm.Query1.sql.Add('CREATE TABLE MOTORISTA_HISTORICO_BLOQUEIOS_MOTB (');
-      dm.Query1.sql.Add('       MOTB_CONSULTOR varchar(20) NOT NULL,      ');
-      dm.Query1.sql.Add('       MOTB_DTEVENTO  date        NOT NULL,      ');
-      dm.Query1.sql.Add('       MOTB_HREVENTO  varchar(5)  NOT NULL,      ');
-      dm.Query1.sql.Add('       MOTB_USUEVENTO varchar(20) NOT NULL,      ');
-      dm.Query1.sql.Add('       MOTB_MAQEVENTO varchar(50) NOT NULL,      ');
-      dm.Query1.sql.Add('       MOTB_EVENTO    varchar(20) NULL           ');
+      dm.Query1.sql.Add('CREATE TABLE MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB (');
+      dm.Query1.sql.Add('       MOTHB_MOTORISTA varchar(20) NOT NULL,      ');
+      dm.Query1.sql.Add('       MOTHB_DTEVENTO  date        NOT NULL,      ');
+      dm.Query1.sql.Add('       MOTHB_HREVENTO  varchar(5)  NOT NULL,      ');
+      dm.Query1.sql.Add('       MOTHB_USUEVENTO varchar(20) NOT NULL,      ');
+      dm.Query1.sql.Add('       MOTHB_MAQEVENTO varchar(50) NOT NULL,      ');
+      dm.Query1.sql.Add('       MOTHB_EVENTO    varchar(20) NULL           ');
       dm.Query1.sql.Add('       )                                         ');
       dm.Query1.ExecSql;
    end;
@@ -1176,27 +1190,31 @@ begin
       dm.Query1.ExecSql;
    end;
 
-   if not Ja_Executou_Script('CREATE TABLE TRANSPORTADORA_TRAB') then
+   if not Ja_Executou_Script('CREATE TABLE TRANSPORTADORA_TRA') then
    begin
+     Executar_Script('DROP TABLE TRANSPORTADORA_TRAB');
+
      dm.Query1.close;
      dm.Query1.sql.Clear;
-     dm.Query1.sql.Add('CREATE TABLE TRANSPORTADORA_TRAB (                            ');
-     dm.Query1.sql.Add('       TRAB_CODIGO        varchar(10) NOT NULL,               ');
-     dm.Query1.sql.Add('       TRAB_NOME_FANTASIA varchar(50) NULL,                   ');
-     dm.Query1.sql.Add('       TRAB_RAZAO_SOCIAL  varchar(50) NULL,                   ');
-     dm.Query1.sql.Add('       TRAB_STATUS        int         NOT NULL,               ');
-     dm.Query1.sql.Add('    )                                                         ');
+     dm.Query1.sql.Add('CREATE TABLE TRANSPORTADORA_TRA (                            ');
+     dm.Query1.sql.Add('       TRA_CODIGO        varchar(10) NOT NULL,               ');
+     dm.Query1.sql.Add('       TRA_NOME_FANTASIA varchar(50) NULL,                   ');
+     dm.Query1.sql.Add('       TRA_RAZAO_SOCIAL  varchar(50) NULL,                   ');
+     dm.Query1.sql.Add('       TRA_STATUS        int         NOT NULL                ');
+     dm.Query1.sql.Add('    )                                                        ');
      dm.Query1.ExecSql;
 
      Executar_Script('ALTER TABLE TRANSPORTADORA_TRA ADD  DEFAULT ((0)) FOR TRA_STATUS');
    end;
 
-   if not Ja_Executou_Script('CREATE TABLE TRANSPORTADORA_CONTATO_TRAC') then
+   if not Ja_Executou_Script('CREATE TABLE TRANSPORTADORA_CONTATO_TRAC.') then
    begin
+      Executar_Script('DROP TABLE TRANSPORTADORA_CONTATO_TRAC');
       dm.Query1.close;
       dm.Query1.sql.Clear;
       dm.Query1.sql.Add('CREATE TABLE TRANSPORTADORA_CONTATO_TRAC (     ');
       dm.Query1.sql.Add('       TRAC_CODIGO   varchar(10) NOT NULL,     ');
+      dm.Query1.sql.Add('       TRAC_NOME     varchar(50) NULL,         ');
       dm.Query1.sql.Add('       TRAC_FONE1    varchar(10) NULL,         ');
       dm.Query1.sql.Add('       TRAC_FONE2    varchar(10) NULL,         ');
       dm.Query1.sql.Add('       TRAC_CEL1     varchar(11) NULL,         ');
@@ -1259,6 +1277,8 @@ begin
       dm.Query1.ExecSql;
    end;
 
+   Executar_Script('ALTER TABLE TRANSPORTADORA_DETALHE_TRAD ADD TRAD_RNTC VARCHAR(20) NULL');
+
    if not Ja_Executou_Script('CREATE TABLE TRANSPORTADORA_ENDERECO_TRAE') then
    begin
       dm.Query1.close;
@@ -1281,18 +1301,19 @@ begin
       dm.Query1.ExecSql;
    end;
 
-   if not Ja_Executou_Script('CREATE TABLE TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAB') then
+   if not Ja_Executou_Script('CREATE TABLE TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB') then
    begin
+      Executar_Script('DROP TABLE TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAB');
       dm.Query1.close;
       dm.Query1.sql.Clear;
-      dm.Query1.sql.Add('CREATE TABLE TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAB (');
-      dm.Query1.sql.Add('       TRAB_CONSULTOR varchar(20) NOT NULL,           ');
-      dm.Query1.sql.Add('       TRAB_DTEVENTO  date        NOT NULL,           ');
-      dm.Query1.sql.Add('       TRAB_HREVENTO  varchar(5)  NOT NULL,           ');
-      dm.Query1.sql.Add('       TRAB_USUEVENTO varchar(20) NOT NULL,           ');
-      dm.Query1.sql.Add('       TRAB_MAQEVENTO varchar(50) NOT NULL,           ');
-      dm.Query1.sql.Add('       TRAB_EVENTO    varchar(20) NULL                ');
-      dm.Query1.sql.Add('       )                                              ');
+      dm.Query1.sql.Add('CREATE TABLE TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB (');
+      dm.Query1.sql.Add('       TRAHB_TRANSPORTADORA varchar(20) NOT NULL,      ');
+      dm.Query1.sql.Add('       TRAHB_DTEVENTO       date        NOT NULL,      ');
+      dm.Query1.sql.Add('       TRAHB_HREVENTO       varchar(5)  NOT NULL,      ');
+      dm.Query1.sql.Add('       TRAHB_USUEVENTO      varchar(20) NOT NULL,      ');
+      dm.Query1.sql.Add('       TRAHB_MAQEVENTO      varchar(50) NOT NULL,      ');
+      dm.Query1.sql.Add('       TRAHB_EVENTO         varchar(20) NULL           ');
+      dm.Query1.sql.Add('       )                                               ');
       dm.Query1.ExecSql;
    end;
 

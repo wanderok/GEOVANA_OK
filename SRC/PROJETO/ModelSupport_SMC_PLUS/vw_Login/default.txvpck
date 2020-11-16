@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="hkaok8fdx5bxw6b9n_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:vw_Login.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.@unitclass.frm_Login" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:vw_Login.@unitclass.frm_Login" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:vw_Login.Tfrm_Login">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="10,10,152,310" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.Tfrm_Login.btn_entrar" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.Tfrm_Login.GroupBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.Tfrm_Login.Label2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.Tfrm_Login.Label1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.Tfrm_Login.edt_usuario" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.Tfrm_Login.edt_senha" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.Tfrm_Login.bSair" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.Tfrm_Login.Image2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.Tfrm_Login.lbEmpresa" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.Tfrm_Login.edEmpresa" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.Tfrm_Login.cxButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:vw_Login.Tfrm_Login.lbNomeDaTela" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:vw_Login.Tfrm_Login.bSairClick(System.TObject)" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:vw_Login.Tfrm_Login.btn_entrarClick(System.TObject)" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:vw_Login.Tfrm_Login.btn_entrarExit(System.TObject)" />
+    </reference>
+    <reference referencedUin="design:view:::uweibq0tpx8ybm0fh_v">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="181,1,106,42" />
+    </reference>
+  </view>
+</nodeSet>

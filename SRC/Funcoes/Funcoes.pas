@@ -120,6 +120,18 @@ function Existe_Outro_FORNECEDOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
 function Existe_Outro_FORNECEDOR_Com_Esta_IE(pIE,pCliente:String):Boolean;
 function Existe_Outro_FORNECEDOR_Com_Este_RG(pRG,pCliente:String):Boolean;
 
+function Existe_Outro_COLABORADOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
+
+function Existe_Outro_CONSULTOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
+function Existe_Outro_CONSULTOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
+function Existe_Outro_CONSULTOR_Com_Esta_IE(pIE,pCliente:String):Boolean;
+function Existe_Outro_CONSULTOR_Com_Este_RG(pRG,pCliente:String):Boolean;
+
+function Existe_Outro_CONTADOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
+function Existe_Outro_CONTADOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
+function Existe_Outro_CONTADOR_Com_Esta_IE(pIE,pCliente:String):Boolean;
+function Existe_Outro_CONTADOR_Com_Este_RG(pRG,pCliente:String):Boolean;
+
 procedure Cria_Objetos_das_Classes;
 procedure Destroi_Objetos_das_Classes;
 //
@@ -254,6 +266,37 @@ begin
    result := true;
 end;
 
+function Existe_Outro_COLABORADOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pCPF = '' then
+      exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT COL_CODIGO, COL_NOME_FANTASIA ');
+   qLocal.sql.add('  FROM COLABORADOR_COL,              ');
+   qLocal.sql.add('       COLABORADOR_DETALHE_COLD      ');
+   qLocal.sql.add(' WHERE COLD_CODIGO =   COLD_CODIGO   ');
+   qLocal.sql.add('   AND COLD_CODIGO <> :COLD_CODIGO   ');
+   qLocal.sql.add('   AND COLD_CPF    =  :COLD_CPF      ');
+   qLocal.ParamByName('COL_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('COLD_CPF'  ).AsString := SoNumeros(pCPF);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.CPF_existente(qLocal.FieldByName('COL_NOME_FANTASIA').AsString,
+                        qLocal.FieldByName('COL_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
 function Existe_Outro_FORNECEDOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
 var qLocal : TFDQuery;
 begin
@@ -280,6 +323,36 @@ begin
    end;
    Avisos.CPF_existente(qLocal.FieldByName('FOR_NOME_FANTASIA').AsString,
                         qLocal.FieldByName('FOR_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+function Existe_Outro_CONSULTOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pCPF = '' then
+      exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT CON_CODIGO, CON_NOME_FANTASIA         ');
+   qLocal.sql.add('  FROM CONSULTOR_CON, CONSULTOR_DETALHE_COND ');
+   qLocal.sql.add(' WHERE COND_CODIGO = CON_CODIGO              ');
+   qLocal.sql.add('   AND CON_CODIGO  <> :CON_CODIGO            ');
+   qLocal.sql.add('   AND COND_CPF    =  :COND_CPF              ');
+   qLocal.ParamByName('CON_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('COND_CPF'  ).AsString := SoNumeros(pCPF);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.CPF_existente(qLocal.FieldByName('CON_NOME_FANTASIA').AsString,
+                        qLocal.FieldByName('CON_CODIGO').AsString);
    qLocal.Free;
    result := true;
 end;
@@ -348,6 +421,38 @@ begin
    result := true;
 end;
 
+function Existe_Outro_CONSULTOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pCNPJ = '' then
+      exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT CON_CODIGO,                       ');
+   qLocal.sql.add('       CON_NOME_FANTASIA,                ');
+   qLocal.sql.add('       CON_RAZAO_SOCIAL                  ');
+   qLocal.sql.add('  FROM CONSULTOR_CON, CONSULTOR_DETALHE_COND ');
+   qLocal.sql.add(' WHERE COND_CODIGO = CON_CODIGO          ');
+   qLocal.sql.add('   AND CON_CODIGO  <> :CON_CODIGO        ');
+   qLocal.sql.add('   AND COND_CNPJ   =  :COND_CNPJ         ');
+   qLocal.ParamByName('CON_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('COND_CNPJ' ).AsString := SoNumeros(pCNPJ);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.CNPJ_existente(qLocal.FieldByName('CON_NOME_FANTASIA').AsString,
+                         qLocal.FieldByName('CON_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
 function Existe_Outro_CLIENTE_Com_Esta_IE(pIE,pCliente:String):Boolean;
 var qLocal : TFDQuery;
 begin
@@ -408,6 +513,36 @@ begin
    result := true;
 end;
 
+function Existe_Outro_CONSULTOR_Com_Esta_IE(pIE,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pIE = ''       then exit;
+   if pIE = 'ISENTO' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT CON_CODIGO, CON_NOME_FANTASIA     ');
+   qLocal.sql.add('  FROM CONSULTOR_CON, CONSULTOR_DETALHE_COND ');
+   qLocal.sql.add(' WHERE COND_CODIGO = CON_CODIGO          ');
+   qLocal.sql.add('   AND CON_CODIGO  <> :CON_CODIGO        ');
+   qLocal.sql.add('   AND COND_IE     =  :COND_IE           ');
+   qLocal.ParamByName('CON_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('COND_IE'   ).AsString := SoNumerosOuISENTO(pIE);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.ie_existente(qLocal.FieldByName('CON_NOME_FANTASIA').AsString,
+                       qLocal.FieldByName('CON_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
 function Existe_Outro_CLIENTE_Com_Este_RG(pRG,pCliente:String):Boolean;
 var qLocal : TFDQuery;
 begin
@@ -464,6 +599,36 @@ begin
    end;
    Avisos.rg_existente(qLocal.FieldByName('FOR_NOME_FANTASIA').AsString,
                        qLocal.FieldByName('FOR_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+function Existe_Outro_CONSULTOR_Com_Este_RG(pRG,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pRG = ''       then exit;
+   if pRG = 'ISENTO' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT CON_CODIGO, CON_NOME_FANTASIA     ');
+   qLocal.sql.add('  FROM CONSULTOR_CON, CONSULTOR_DETALHE_COND ');
+   qLocal.sql.add(' WHERE COND_CODIGO = CON_CODIGO          ');
+   qLocal.sql.add('   AND CON_CODIGO  <> :CON_CODIGO        ');
+   qLocal.sql.add('   AND COND_RG     =  :COND_RG           ');
+   qLocal.ParamByName('CON_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('COND_RG'   ).AsString := SoNumerosOuISENTO(pRG);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.rg_existente(qLocal.FieldByName('CON_NOME_FANTASIA').AsString,
+                       qLocal.FieldByName('CON_CODIGO').AsString);
    qLocal.Free;
    result := true;
 end;
@@ -2528,6 +2693,128 @@ begin
    except
      Result := False;
    end;
+end;
+
+function Existe_Outro_CONTADOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pCPF = '' then
+      exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT CONT_CODIGO, CONT_NOME_FANTASIA         ');
+   qLocal.sql.add('  FROM CONTADOR_CONT, CONTADOR_DETALHE_CONTD ');
+   qLocal.sql.add(' WHERE CONTD_CODIGO = CONT_CODIGO              ');
+   qLocal.sql.add('   AND CONT_CODIGO  <> :CONT_CODIGO            ');
+   qLocal.sql.add('   AND CONTD_CPF    =  :CONTD_CPF              ');
+   qLocal.ParamByName('CONT_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('CONTD_CPF'  ).AsString := SoNumeros(pCPF);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.CPF_existente(qLocal.FieldByName('CONT_NOME_FANTASIA').AsString,
+                        qLocal.FieldByName('CONT_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+function Existe_Outro_CONTADOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pCNPJ = '' then
+      exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT CONT_CODIGO,                       ');
+   qLocal.sql.add('       CONT_NOME_FANTASIA,                ');
+   qLocal.sql.add('       CONT_RAZAO_SOCIAL                  ');
+   qLocal.sql.add('  FROM CONTADOR_CONT, CONTADOR_DETALHE_CONTD ');
+   qLocal.sql.add(' WHERE CONTD_CODIGO = CONT_CODIGO          ');
+   qLocal.sql.add('   AND CONT_CODIGO  <> :CONT_CODIGO        ');
+   qLocal.sql.add('   AND CONTD_CNPJ   =  :CONTD_CNPJ         ');
+   qLocal.ParamByName('CONT_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('CONTD_CNPJ' ).AsString := SoNumeros(pCNPJ);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.CNPJ_existente(qLocal.FieldByName('CONT_NOME_FANTASIA').AsString,
+                         qLocal.FieldByName('CONT_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+function Existe_Outro_CONTADOR_Com_Esta_IE(pIE,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pIE = ''       then exit;
+   if pIE = 'ISENTO' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT CONT_CODIGO, CONT_NOME_FANTASIA     ');
+   qLocal.sql.add('  FROM CONTADOR_CONT, CONTADOR_DETALHE_CONTD ');
+   qLocal.sql.add(' WHERE CONTD_CODIGO = CONT_CODIGO          ');
+   qLocal.sql.add('   AND CONT_CODIGO  <> :CONT_CODIGO        ');
+   qLocal.sql.add('   AND CONTD_IE     =  :CONTD_IE           ');
+   qLocal.ParamByName('CONT_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('CONTD_IE'   ).AsString := SoNumerosOuISENTO(pIE);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.ie_existente(qLocal.FieldByName('CONT_NOME_FANTASIA').AsString,
+                       qLocal.FieldByName('CONT_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+function Existe_Outro_CONTADOR_Com_Este_RG(pRG,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pRG = ''       then exit;
+   if pRG = 'ISENTO' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT CONT_CODIGO, CONT_NOME_FANTASIA     ');
+   qLocal.sql.add('  FROM CONTADOR_CONT, CONTADOR_DETALHE_CONTD ');
+   qLocal.sql.add(' WHERE CONTD_CODIGO = CONT_CODIGO          ');
+   qLocal.sql.add('   AND CONT_CODIGO  <> :CONT_CODIGO        ');
+   qLocal.sql.add('   AND CONTD_RG     =  :CONTD_RG           ');
+   qLocal.ParamByName('CONT_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('CONTD_RG'   ).AsString := SoNumerosOuISENTO(pRG);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.rg_existente(qLocal.FieldByName('CONT_NOME_FANTASIA').AsString,
+                       qLocal.FieldByName('CONT_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
 end;
 
 end.

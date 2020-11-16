@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="bd2yholt0n_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.grp_sequencia_nfce" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.lbl1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.edt_ultima_nfce" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.cxGroupBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.cxButton2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.cxButton3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Edit1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Edit3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.GroupBox4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.cxButton4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.cxButton5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Edit5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Edit4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label11" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label12" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.edSMTP_SENHA" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label13" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.cxGroupBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.cxComboBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.cxComboBox3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.cxComboBox4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label6" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label8" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label9" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Edit2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label10" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Edit6" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.GroupBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label14" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label15" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Edit7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Edit8" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.Label16" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.cxButton23" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.cxButton24" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.cxButton25" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:config_nfs.Tfrm_confi_nfs.FormClose(System.TObject,ref@System.UITypes.TCloseAction)" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_nfs.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_nfs.@unitclass.frm_confi_nfs" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:config_nfs.@unitclass.frm_confi_nfs" />
+    </reference>
+  </view>
+</nodeSet>

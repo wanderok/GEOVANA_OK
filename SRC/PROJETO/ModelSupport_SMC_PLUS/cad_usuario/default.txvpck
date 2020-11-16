@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="w620qahq4ss_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:cad_usuario_T2.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.@unitclass.frm_cad_usuario_T2" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:cad_usuario_T2.@unitclass.frm_cad_usuario_T2" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.cxButton23" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.cxButton25" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.GroupBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.Label22" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.Label3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.Label10" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.edt_confirma_senha" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.edt_senha" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.edt_usuario" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.btn_cons_usuario" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.chk_admin" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.Image2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.cxButton1" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.cxButton25Click(System.TObject)" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:cad_usuario_T2.Tfrm_cad_usuario_T2.FormClose(System.TObject,ref@System.UITypes.TCloseAction)" />
+    </reference>
+  </view>
+</nodeSet>

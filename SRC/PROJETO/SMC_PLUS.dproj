@@ -326,12 +326,53 @@
             <Form>frm_cad_cliente_T6</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\views\cad_clientes\CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17.pas">
-            <Form>frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17</Form>
+        <DCCReference Include="..\..\SRC\views\cad_consultor\CONSULTOR_HISTORICO_BLOQUEIOS_CHB_T23.pas">
+            <Form>frmCONSULTOR_HISTORICO_BLOQUEIOS_CHB_T23</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\cad_colaborador\cad_colaborador_T20.pas">
             <Form>frm_cad_colaborador_T20</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\Classes\Classe_Consultor.pas"/>
+        <DCCReference Include="..\..\SRC\views\cad_transportadora\cad_transportadora_T28.pas">
+            <Form>frm_cad_transportadora_T28</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\Classes\Classe_Colaborador.pas"/>
+        <DCCReference Include="..\..\src\views\cad_clientes\CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17.pas">
+            <Form>frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\cad_transportadora\TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB_T29.pas">
+            <Form>frmTRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB_T29</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\cad_consultor\cad_consultor_T21.pas">
+            <Form>frm_cad_consultor_T21</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\cad_colaborador\COLABORADOR_HISTORICO_BLOQUEIOS_COLHB_T22.pas">
+            <Form>frmCOLABORADOR_HISTORICO_BLOQUEIOS_COLHB_T22</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\Classes\Classe_Contador.pas"/>
+        <DCCReference Include="..\..\src\views\cad_contador\cad_contador_T24.pas">
+            <Form>frm_cad_contador_T24</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\Classes\Classe_Motorista.pas"/>
+        <DCCReference Include="..\..\src\views\cad_contador\CONTADOR_HISTORICO_BLOQUEIOS_CONTHB_T25.pas">
+            <Form>frmCONTADOR_HISTORICO_BLOQUEIOS_CONTHB_T25</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\cad_motorista\cad_motorista_T26.pas">
+            <Form>frm_cad_motorista_T26</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\Classes\Classe_Transportadora.pas"/>
+        <DCCReference Include="..\..\src\views\cad_motorista\MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27.pas">
+            <Form>frmMOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <None Include="ModelSupport_SMC_PLUS\default.txaPackage"/>

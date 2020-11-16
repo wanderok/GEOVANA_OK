@@ -64,7 +64,8 @@ type
     procedure Pesquisar_Consultor;
     procedure Pesquisar_Contador;
     procedure Pesquisar_Motorista;
-    procedure Pesquisar_Coaborador;
+    procedure Pesquisar_Colaborador;
+    procedure Pesquisar_Transportadora;
   public
     { Public declarations }
   end;
@@ -134,7 +135,8 @@ begin
        2 : Pesquisar_Consultor;
        3 : Pesquisar_Contador;
        4 : Pesquisar_Motorista;
-       5 : Pesquisar_Coaborador;
+       5 : Pesquisar_Colaborador;
+       6 : Pesquisar_Transportadora;
     End;
 end;
 
@@ -163,22 +165,84 @@ begin
       qLocal.ParamByName('ARGUMENTO').AsString := edArgumentoDePesquisa.Text + '%';
    qLocal.open;
    //Label2.Caption := FormatFloat('#,##0',qLocal.RecordCount);
-
 end;
 
-procedure Tfrm_consulta_T7.Pesquisar_Coaborador;
+procedure Tfrm_consulta_T7.Pesquisar_Colaborador;
 begin
-//
+   qLocal.Close;
+   qLocal.sql.Clear;
+   qLocal.SQL.Add('SELECT COLD_PESSOA_FJ    AS pessoa_tipo,     ');
+   qLocal.SQL.Add('       COL_CODIGO        AS codigo,          ');
+   qLocal.SQL.Add('       COL_RAZAO_SOCIAL  AS razao_social,    ');
+   qLocal.SQL.Add('       COL_NOME_FANTASIA AS fantasia,        ');
+   qLocal.SQL.Add('       COLD_CNPJ         AS cnpj,            ');
+   qLocal.SQL.Add('       COLD_CPF          AS cpf              ');
+   qLocal.SQL.Add('  FROM COLABORADOR_COL                       ');
+   qLocal.SQL.Add('INNER JOIN COLABORADOR_DETALHE_COLD          ');
+   qLocal.SQL.Add('        ON COLD_CODIGO = COL_CODIGO          ');
+   qLocal.SQL.Add(' WHERE COL_CODIGO        LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR COL_RAZAO_SOCIAL  LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR COL_NOME_FANTASIA LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR COLD_CPF          LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR COLD_CNPJ         LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add(' ORDER BY COL_NOME_FANTASIA                  ');
+   if cbQualquerParteDoNome.Checked then
+      qLocal.ParamByName('ARGUMENTO').AsString := '%'+edArgumentoDePesquisa.Text + '%'
+   else
+      qLocal.ParamByName('ARGUMENTO').AsString := edArgumentoDePesquisa.Text + '%';
+   qLocal.open;
 end;
 
 procedure Tfrm_consulta_T7.Pesquisar_Consultor;
 begin
-//
+   qLocal.Close;
+   qLocal.sql.Clear;
+   qLocal.SQL.Add('SELECT COND_PESSOA_FJ    AS pessoa_tipo,     ');
+   qLocal.SQL.Add('       CON_CODIGO        AS codigo,          ');
+   qLocal.SQL.Add('       CON_RAZAO_SOCIAL  AS razao_social,    ');
+   qLocal.SQL.Add('       CON_NOME_FANTASIA AS fantasia,        ');
+   qLocal.SQL.Add('       COND_CNPJ         AS cnpj,            ');
+   qLocal.SQL.Add('       COND_CPF          AS cpf              ');
+   qLocal.SQL.Add('  FROM CONSULTOR_CON                       ');
+   qLocal.SQL.Add('INNER JOIN CONSULTOR_DETALHE_COND          ');
+   qLocal.SQL.Add('        ON COND_CODIGO = CON_CODIGO          ');
+   qLocal.SQL.Add(' WHERE CON_CODIGO        LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR CON_RAZAO_SOCIAL  LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR CON_NOME_FANTASIA LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR COND_CPF          LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR COND_CNPJ         LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add(' ORDER BY CON_NOME_FANTASIA                  ');
+   if cbQualquerParteDoNome.Checked then
+      qLocal.ParamByName('ARGUMENTO').AsString := '%'+edArgumentoDePesquisa.Text + '%'
+   else
+      qLocal.ParamByName('ARGUMENTO').AsString := edArgumentoDePesquisa.Text + '%';
+   qLocal.open;
 end;
 
 procedure Tfrm_consulta_T7.Pesquisar_Contador;
 begin
-//
+   qLocal.Close;
+   qLocal.sql.Clear;
+   qLocal.SQL.Add('SELECT CONTD_PESSOA_FJ    AS pessoa_tipo,     ');
+   qLocal.SQL.Add('       CONT_CODIGO        AS codigo,          ');
+   qLocal.SQL.Add('       CONT_RAZAO_SOCIAL  AS razao_social,    ');
+   qLocal.SQL.Add('       CONT_NOME_FANTASIA AS fantasia,        ');
+   qLocal.SQL.Add('       CONTD_CNPJ         AS cnpj,            ');
+   qLocal.SQL.Add('       CONTD_CPF          AS cpf              ');
+   qLocal.SQL.Add('  FROM CONTADOR_CONT                       ');
+   qLocal.SQL.Add('INNER JOIN CONTADOR_DETALHE_CONTD          ');
+   qLocal.SQL.Add('        ON CONTD_CODIGO = CONT_CODIGO          ');
+   qLocal.SQL.Add(' WHERE CONT_CODIGO        LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR CONT_RAZAO_SOCIAL  LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR CONT_NOME_FANTASIA LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR CONTD_CPF          LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR CONTD_CNPJ         LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add(' ORDER BY CONT_NOME_FANTASIA                  ');
+   if cbQualquerParteDoNome.Checked then
+      qLocal.ParamByName('ARGUMENTO').AsString := '%'+edArgumentoDePesquisa.Text + '%'
+   else
+      qLocal.ParamByName('ARGUMENTO').AsString := edArgumentoDePesquisa.Text + '%';
+   qLocal.open;
 end;
 
 procedure Tfrm_consulta_T7.Pesquisar_Fornecedor;
@@ -210,7 +274,56 @@ end;
 
 procedure Tfrm_consulta_T7.Pesquisar_Motorista;
 begin
-//
+   qLocal.Close;
+   qLocal.sql.Clear;
+   qLocal.SQL.Add('SELECT MOTD_PESSOA_FJ    AS pessoa_tipo,     ');
+   qLocal.SQL.Add('       MOT_CODIGO        AS codigo,          ');
+   qLocal.SQL.Add('       MOT_RAZAO_SOCIAL  AS razao_social,    ');
+   qLocal.SQL.Add('       MOT_NOME_FANTASIA AS fantasia,        ');
+   qLocal.SQL.Add('       MOTD_CNPJ         AS cnpj,            ');
+   qLocal.SQL.Add('       MOTD_CPF          AS cpf              ');
+   qLocal.SQL.Add('  FROM MOTORISTA_MOT                        ');
+   qLocal.SQL.Add('INNER JOIN MOTORISTA_DETALHE_MOTD           ');
+   qLocal.SQL.Add('        ON MOTD_CODIGO = MOT_CODIGO          ');
+   qLocal.SQL.Add(' WHERE MOT_CODIGO        LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR MOT_RAZAO_SOCIAL  LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR MOT_NOME_FANTASIA LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR MOTD_CPF          LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR MOTD_CNPJ         LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add(' ORDER BY MOT_NOME_FANTASIA                  ');
+   if cbQualquerParteDoNome.Checked then
+      qLocal.ParamByName('ARGUMENTO').AsString := '%'+edArgumentoDePesquisa.Text + '%'
+   else
+      qLocal.ParamByName('ARGUMENTO').AsString := edArgumentoDePesquisa.Text + '%';
+   qLocal.open;
+   //Label2.Caption := FormatFloat('#,##0',qLocal.RecordCount);
+end;
+
+procedure Tfrm_consulta_T7.Pesquisar_Transportadora;
+begin
+   qLocal.Close;
+   qLocal.sql.Clear;
+   qLocal.SQL.Add('SELECT TRAD_PESSOA_FJ    AS pessoa_tipo,     ');
+   qLocal.SQL.Add('       TRA_CODIGO        AS codigo,          ');
+   qLocal.SQL.Add('       TRA_RAZAO_SOCIAL  AS razao_social,    ');
+   qLocal.SQL.Add('       TRA_NOME_FANTASIA AS fantasia,        ');
+   qLocal.SQL.Add('       TRAD_CNPJ         AS cnpj,            ');
+   qLocal.SQL.Add('       TRAD_CPF          AS cpf              ');
+   qLocal.SQL.Add('  FROM TRANSPORTADORA_TRA                    ');
+   qLocal.SQL.Add('INNER JOIN TRANSPORTADORA_DETALHE_TRAD F       ');
+   qLocal.SQL.Add('        ON TRAD_CODIGO = TRA_CODIGO          ');
+   qLocal.SQL.Add(' WHERE TRA_CODIGO        LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR TRA_RAZAO_SOCIAL  LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR TRA_NOME_FANTASIA LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR TRAD_CPF          LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add('    OR TRAD_CNPJ         LIKE :ARGUMENTO     ');
+   qLocal.SQL.Add(' ORDER BY TRA_NOME_FANTASIA                  ');
+   if cbQualquerParteDoNome.Checked then
+      qLocal.ParamByName('ARGUMENTO').AsString := '%'+edArgumentoDePesquisa.Text + '%'
+   else
+      qLocal.ParamByName('ARGUMENTO').AsString := edArgumentoDePesquisa.Text + '%';
+   qLocal.open;
+   //Label2.Caption := FormatFloat('#,##0',qLocal.RecordCount);
 end;
 
 end.

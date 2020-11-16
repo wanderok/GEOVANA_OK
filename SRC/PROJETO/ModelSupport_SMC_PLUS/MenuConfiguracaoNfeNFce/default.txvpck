@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="veja5vy5bco_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:MenuConfiguracaoNfeNFce.TfrmMenuConfiguracaoNfeNFce">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:MenuConfiguracaoNfeNFce.TfrmMenuConfiguracaoNfeNFce.Button1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:MenuConfiguracaoNfeNFce.TfrmMenuConfiguracaoNfeNFce.Button2" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:MenuConfiguracaoNfeNFce.TfrmMenuConfiguracaoNfeNFce.FormClose(System.TObject,ref@System.UITypes.TCloseAction)" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:MenuConfiguracaoNfeNFce.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:MenuConfiguracaoNfeNFce.@unitclass.frmMenuConfiguracaoNfeNFce" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:MenuConfiguracaoNfeNFce.@unitclass.frmMenuConfiguracaoNfeNFce" />
+    </reference>
+  </view>
+</nodeSet>

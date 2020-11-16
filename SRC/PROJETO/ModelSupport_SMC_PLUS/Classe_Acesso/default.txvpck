@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="89iq7fkf0eq_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:Classe_Acesso.TAcesso">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="10,10,234,178" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:Classe_Acesso.TAcesso.FNomeDaConexao" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:Classe_Acesso.TAcesso.conexaoExiste()" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:Classe_Acesso.TAcesso.carregarCofiguracaoDeAcesso()" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:Classe_Acesso.TAcesso.acessarBaseDeDados()" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:Classe_Acesso.TAcesso.Conectar()" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:Classe_Acesso.TAcesso.Desconectar()" />
+      <reference referencedUin="delphi:e_property:src:SMC_PLUS:Classe_Acesso.TAcesso.nomeDaConexao" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:Classe_Acesso.@unitclass">
+      <property name="$shortcutReference" value="true" />
+    </reference>
+  </view>
+</nodeSet>

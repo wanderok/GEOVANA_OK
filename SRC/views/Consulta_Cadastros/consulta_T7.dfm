@@ -543,7 +543,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
       '2-Consultor'
       '3-Contador'
       '4-Motorista'
-      '5-Coaborador'
+      '5-Colaborador'
       '6-Transportador')
     ParentFont = False
     TabOrder = 4

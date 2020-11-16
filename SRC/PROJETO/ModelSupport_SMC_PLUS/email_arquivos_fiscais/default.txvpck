@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="uz9d0l9pqxj_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:email_arquivos_fiscais.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.@unitclass.frm_config_email_fiscais" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:email_arquivos_fiscais.@unitclass.frm_config_email_fiscais" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.edSMTP_CONTA" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.cxButton23" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.cxButton24" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.cxButton25" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.DBEdit1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.DBEdit2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.DBEdit3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.Label7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.Label1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.DBEdit4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.DBEdit5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.Shape1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.Shape2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.Label2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.DBEdit6" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.DBEdit7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.Label4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.cxGroupBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:email_arquivos_fiscais.Tfrm_config_email_fiscais.Shape3" />
+    </reference>
+  </view>
+</nodeSet>

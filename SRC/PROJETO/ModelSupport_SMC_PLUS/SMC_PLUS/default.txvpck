@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="1vmil0s9bp_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:SMC_PLUS.Tmain">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarManager1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarLargeButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarLargeButton2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarLargeButton3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarLargeButton4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxScrollBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton8" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton6" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton12" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton11" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.PDV" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton9" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton16" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton15" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton14" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton13" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton20" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton21" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton18" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton19" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton10" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.cxButton17" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxRibbon1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxRibbon1Tab1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxRibbon1Tab2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarManager1Bar1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarLargeButton5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarSubItem1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarManager1Bar2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarManager1Bar3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarManager1Bar4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarManager1Bar5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarManager1Bar6" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarManager1Bar7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarManager1Bar8" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarManager1Bar9" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.Tmain.dxBarManager1Bar10" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:SMC_PLUS.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:SMC_PLUS.@unitclass.main" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:SMC_PLUS.@unitclass.main" />
+    </reference>
+  </view>
+</nodeSet>

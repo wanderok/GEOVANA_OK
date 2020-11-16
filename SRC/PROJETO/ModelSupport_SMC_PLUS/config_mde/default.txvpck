@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="2xoe4bb4noq_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_mde.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.@unitclass.Frm_Conf_mde" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:config_mde.@unitclass.Frm_Conf_mde" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_mde.TFrm_Conf_mde">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.Label4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.GroupBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.edtPastaNotas" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.btn_buscar_xml" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.cxGroupBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.GroupBox4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.cxCheckBox1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.cxCheckBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.GroupBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.Label2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.Label3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.Label1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.Label5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.Label6" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.Label7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.edSMTP" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.edSMTP_PORTA" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.edSMTP_CONTA" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.edSMTP_SENHA" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.edSMTP_REMETENTE" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.edSMTP_EMAIL" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.Label9" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.DBEdit1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.cxButton23" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.cxButton24" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_mde.TFrm_Conf_mde.cxButton25" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:config_mde.TFrm_Conf_mde.FormClose(System.TObject,ref@System.UITypes.TCloseAction)" />
+    </reference>
+  </view>
+</nodeSet>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="62m5hbumulm_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_certificado.Tfrm_config_certificado">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.grp_certificado" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.Label2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.Label3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cb_certificados" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cxButton23" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cxButton24" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cxButton25" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.lSSLLib" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.lCryptLib" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.lHttpLib" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.lXmlSign" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.Label104" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.Label105" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.Label25" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.Label1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cbSSLLib" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cbCryptLib" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cbHttpLib" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cbXmlSignLib" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.edtCaminho" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.edtSenha" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.edtNumSerie" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cbxSSLType" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cxButton2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cxButton1" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.Label4" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cxGroupBox2" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.Label5" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.Label6" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cxButton3" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.Label7" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.cxButton4" />
+      <reference referencedUin="delphi:e_method:src:SMC_PLUS:config_certificado.Tfrm_config_certificado.FormClose(System.TObject,ref@System.UITypes.TCloseAction)" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:SMC_PLUS:config_certificado.@unitclass">
+      <property name="$shortcutReference" value="true" />
+      <reference referencedUin="delphi:e_field:src:SMC_PLUS:config_certificado.@unitclass.frm_config_certificado" />
+      <reference referencedUin="delphi:l_ast:src:SMC_PLUS:config_certificado.@unitclass.frm_config_certificado" />
+    </reference>
+  </view>
+</nodeSet>
