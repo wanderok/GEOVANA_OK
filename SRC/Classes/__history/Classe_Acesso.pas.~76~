@@ -1602,7 +1602,6 @@ begin
    Alteracoes_Cad_Transportadora;
    Alteracoes_Cad_Contador;
    Comissoes_colaboradores;
-   Comissoes_consultor;
 
    Tratar_Cad_Bairro;
 

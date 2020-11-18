@@ -297,6 +297,7 @@ begin
   except
      Result := False;
   end;
+e
 end;
 
 procedure TComissao.setFCodigo(const Value: String);

@@ -230,7 +230,7 @@ uses
   COLABORADOR_HISTORICO_BLOQUEIOS_COLHB_T22,
   Dados,
   Classe_Nuvem,
-  cad_comissoes_T30;
+  cad_comissoes;
 
 {$R *.dfm}
 
@@ -326,13 +326,13 @@ begin
    if not Gravar_Colaborador then
       exit;
 
-   frm_cad_comissoes_T30:= Tfrm_cad_comissoes_T30.Create(nil);
+   frm_cad_comissoes:= Tfrm_cad_comissoes.Create(nil);
 
    Comissao.TipoComissao := tcColaborador;
    Comissao.Codigo       := Colaborador.Codigo;
 
-   frm_cad_comissoes_T30.ShowModal;
-   frm_cad_comissoes_T30.Free;
+   frm_cad_comissoes.ShowModal;
+   frm_cad_comissoes.Free;
 end;
 
 procedure Tfrm_cad_colaborador_T20.PesquisaRegiao;

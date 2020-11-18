@@ -148,8 +148,8 @@
             <Form>frm_PesquisaF1_T16</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\views\cad_colaborador\cad_comissoes.pas">
-            <Form>frm_cad_comissoes</Form>
+        <DCCReference Include="..\..\src\views\cad_colaborador\cad_comissoes_T30.pas">
+            <Form>frm_cad_comissoes_T30</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\cad_colaborador\tipo_colab.pas">

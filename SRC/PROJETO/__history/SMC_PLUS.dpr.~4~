@@ -17,7 +17,7 @@ uses
   Email in '..\..\src\EnviarEmail\Email.pas' {frmEmail},
   Classe_Empresa in '..\..\src\Classes\Classe_Empresa.pas',
   PesquisaF1_T16 in '..\..\SRC\views\Consulta_Cadastros\PesquisaF1_T16.pas' {frm_PesquisaF1_T16},
-  cad_comissoes_T30 in '..\..\src\views\cad_colaborador\cad_comissoes_T30.pas' {frm_cad_comissoes_T30},
+  cad_comissoes in '..\..\src\views\cad_colaborador\cad_comissoes.pas' {frm_cad_comissoes},
   tipo_colab in '..\..\src\views\cad_colaborador\tipo_colab.pas' {Frm_tipo_colab},
   consultor_banco_comissoes in '..\..\src\views\cad_consultor\consultor_banco_comissoes.pas' {frm_consultor_comissoes_banco},
   cad_ramo_atividade_T9 in '..\..\src\views\cad_ramo_atividade\cad_ramo_atividade_T9.pas' {frm_cad_ramo_atividade_T9},

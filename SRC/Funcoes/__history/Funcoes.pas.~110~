@@ -157,7 +157,7 @@ function SoValor(pCaracter:Char):Char;
 function SoLetra(pCaracter:Char):Char;
 
 procedure Inicio_Padrao_De_Todas_As_Telas_Do_Sistema;
-function fPercentualValido(pValor:String):Boolean;
+function PercentualValido(pValor:String):Boolean;
 function masctostr(numero:string):string;
 function f0ou1(pBoolean:Boolean):Integer;
 function SoNumeros(pnumero:String):String;
@@ -180,7 +180,7 @@ function ValorAsc(Letra: String): Byte;
 function DataServidor:tDateTime;
 function sDataServidor:String;
 function HoraServidor:String;
-function JaEnviouEmail(pDestinatario,pAssunto:String):Boolean;
+function  JaEnviouEmail(pDestinatario,pAssunto:String):Boolean;
 function INSERT_EMAIL_EMAIL(pDestinatario,pAssunto:String;pEMAIL_ENVIADO:Integer):Integer;
 Procedure INSERT_CORPOEMAIL_CEMAIL(pEMAIL_SEQUENCIAL,pCEMAIL_LINHA:Integer;pCEMAIL_TEXTO:String);
 function ProximoEMAIL_SEQUENCIAL:Integer;
@@ -1982,7 +1982,7 @@ begin
      i := i + 1;
 end;
 
-function fPercentualValido(pValor:String):Boolean;
+function PercentualValido(pValor:String):Boolean;
 var vPercentual : Real;
 begin
    result := false;

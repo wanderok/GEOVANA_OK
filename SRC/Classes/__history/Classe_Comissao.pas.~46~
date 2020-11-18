@@ -260,43 +260,6 @@ end;
 
 function TComissao.Gravar_Comissao_De_Consultor: Boolean;
 begin
- try
-     qComissao.close;
-     qComissao.sql.Clear;
-     qComissao.sql.Add('INSERT INTO CONSULTOR_COMISSAO_CONCOM (        ');
-     qComissao.sql.Add('       CONCOM_CODIGO,                          ');
-     qComissao.sql.Add('       CONCOM_SERVICOS,                        ');
-     qComissao.sql.Add('       CONCOM_HORATECNICA,                     ');
-     qComissao.sql.Add('       CONCOM_BALCAO,                          ');
-     qComissao.sql.Add('       CONCOM_EXTERNA,                         ');
-     qComissao.sql.Add('       CONCOM_USU,                             ');
-     qComissao.sql.Add('       CONCOM_DT,                              ');
-     qComissao.sql.Add('       CONCOM_HR                               ');
-     qComissao.sql.Add('       )                                       ');
-     qComissao.sql.Add('VALUES (                                       ');
-     qComissao.sql.Add('      :CONCOM_CODIGO,                          ');
-     qComissao.sql.Add('      :CONCOM_SERVICOS,                        ');
-     qComissao.sql.Add('      :CONCOM_HORATECNICA,                     ');
-     qComissao.sql.Add('      :CONCOM_BALCAO,                          ');
-     qComissao.sql.Add('      :CONCOM_EXTERNA,                         ');
-     qComissao.sql.Add('      :CONCOM_USU,                             ');
-     qComissao.sql.Add('      :CONCOM_DT,                              ');
-     qComissao.sql.Add('      :CONCOM_HR                               ');
-     qComissao.sql.Add('       )                                       ');
-     qComissao.ParamByName('CONCOM_CODIGO'     ).AsString   := Self.FCodigo;
-     qComissao.ParamByName('CONCOM_SERVICOS'   ).AsFloat    := Self.FServico.FServico;
-     qComissao.ParamByName('CONCOM_HORATECNICA').AsFloat    := Self.FServico.FHoraTecnica;
-     qComissao.ParamByName('CONCOM_BALCAO'     ).AsFloat    := Self.FVenda.FBalcao;
-     qComissao.ParamByName('CONCOM_EXTERNA'    ).AsFloat    := Self.FVenda.FExterna;
-     qComissao.ParamByName('CONCOM_USU'        ).AsString   := Usuario.Codigo;
-     qComissao.ParamByName('CONCOM_DT'         ).AsDateTime := DataServidor;
-     qComissao.ParamByName('CONCOM_HR'         ).AsString   := HoraServidor;
-     qComissao.ExecSql;
-     Log('Classe_Comissao','Definiu comissão do consultor ');
-     Result := True;
-  except
-     Result := False;
-  end;
 end;
 
 procedure TComissao.setFCodigo(const Value: String);

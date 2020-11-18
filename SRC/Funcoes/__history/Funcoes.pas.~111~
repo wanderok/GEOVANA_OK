@@ -157,7 +157,7 @@ function SoValor(pCaracter:Char):Char;
 function SoLetra(pCaracter:Char):Char;
 
 procedure Inicio_Padrao_De_Todas_As_Telas_Do_Sistema;
-function fPercentualValido(pValor:String):Boolean;
+function PercentualValido(pValor:String):Boolean;
 function masctostr(numero:string):string;
 function f0ou1(pBoolean:Boolean):Integer;
 function SoNumeros(pnumero:String):String;
@@ -1982,7 +1982,7 @@ begin
      i := i + 1;
 end;
 
-function fPercentualValido(pValor:String):Boolean;
+function PercentualValido(pValor:String):Boolean;
 var vPercentual : Real;
 begin
    result := false;

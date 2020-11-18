@@ -26,6 +26,7 @@ type
    function formataTelCel(numtexto:String):String;
    function formatelefone(numtexto:String):String;
    function formacelular(numtexto:String):String;
+   function percentualValido(pEdit:TEdit):Boolean;
 end;
 
 var
@@ -155,6 +156,34 @@ begin
      ShowMessage(ACBrValidador1.MsgErro);
      exit;
    end;
+   result := true;
+end;
+
+function TfrmValidadorDeDocumentos.percentualValido(pEdit: TEdit): Boolean;
+var vValor : Real;
+begin
+   result := true;
+   if pEdit.Text = '' then exit;
+
+   result := false;
+   try
+     vValor := strToFloat(mascToStr(pEdit.Text));
+     if vValor < 0 then
+     begin
+       ShowMessage('Percentual deve ser positivo.');
+       exit;
+     end;
+     if vValor > 100 then
+     begin
+       ShowMessage('Percentual deve ser menor que 100.');
+       exit;
+     end;
+     pEdit.Text := FormatFloat('#,#0.00',vValor);
+   except
+     ShowMessage('Valor inválido.');
+     exit;
+   end;
+
    result := true;
 end;
 

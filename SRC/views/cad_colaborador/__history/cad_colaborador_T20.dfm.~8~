@@ -522,10 +522,6 @@ object frm_cad_colaborador_T20: Tfrm_cad_colaborador_T20
     TabOrder = 2
     object tsPessoaFisica: TTabSheet
       Caption = 'Pessoa F'#237'sica'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label25: TLabel
         Left = 10
         Top = 46
@@ -801,10 +797,6 @@ object frm_cad_colaborador_T20: Tfrm_cad_colaborador_T20
       Font.Style = [fsBold]
       ImageIndex = 1
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object lbl3: TLabel
         Left = 9
         Top = 79

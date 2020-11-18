@@ -1,4 +1,4 @@
-object frm_cad_comissoes: Tfrm_cad_comissoes
+object frm_cad_comissoes_T30: Tfrm_cad_comissoes_T30
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]

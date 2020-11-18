@@ -1,4 +1,4 @@
-unit cad_comissoes;
+unit cad_comissoes_T30;
 
 interface
 
@@ -22,10 +22,10 @@ uses
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue,
 
-  Classe_Comissao;
+  Classe_Comissao, ACBrBase, ACBrEnterTab;
 
 type
-  Tfrm_cad_comissoes = class(TForm)
+  Tfrm_cad_comissoes_T30 = class(TForm)
     GroupBox12: TGroupBox;
     GroupBox20: TGroupBox;
     GroupBox7: TGroupBox;
@@ -43,12 +43,15 @@ type
     cxButton21: TcxButton;
     cxButton28: TcxButton;
     lbNomeDaTela: TLabel;
+    ACBrEnterTab1: TACBrEnterTab;
     procedure cxButton28Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure cxButton21Click(Sender: TObject);
+    procedure edSERVICOSKeyPress(Sender: TObject; var Key: Char);
+    procedure edSERVICOSExit(Sender: TObject);
   private
     { Private declarations }
     procedure Inicio;
@@ -60,7 +63,7 @@ type
   end;
 
 var
-  frm_cad_comissoes: Tfrm_cad_comissoes;
+  frm_cad_comissoes_T30: Tfrm_cad_comissoes_T30;
   vPodeFechar      : Boolean;
   Comissao         : TComissao;
 
@@ -68,9 +71,9 @@ implementation
 
 {$R *.dfm}
 
-uses TiposDeDados, Funcoes;
+uses TiposDeDados, Funcoes, ValidadorDeDocumentos;
 
-procedure Tfrm_cad_comissoes.cxButton21Click(Sender: TObject);
+procedure Tfrm_cad_comissoes_T30.cxButton21Click(Sender: TObject);
 begin
      if not DadosCorretos then
         exit;
@@ -78,48 +81,63 @@ begin
      Gravar_Comissao;
 end;
 
-procedure Tfrm_cad_comissoes.cxButton28Click(Sender: TObject);
+procedure Tfrm_cad_comissoes_T30.cxButton28Click(Sender: TObject);
 begin
    vPodeFechar:=True;
    Close;
 end;
 
-function Tfrm_cad_comissoes.DadosCorretos: Boolean;
+function Tfrm_cad_comissoes_T30.DadosCorretos: Boolean;
 begin
   result := false;
 
-  if not PercentualValido(edSERVICOS.Text)    then exit;
-  if not PercentualValido(edHORATECNICA.Text) then exit;
-  if not PercentualValido(edBALCAO.Text)      then exit;
-  if not PercentualValido(edEXTERNA.Text)     then exit;
+  if not fPercentualValido(edSERVICOS.Text)    then exit;
+  if not fPercentualValido(edHORATECNICA.Text) then exit;
+  if not fPercentualValido(edBALCAO.Text)      then exit;
+  if not fPercentualValido(edEXTERNA.Text)     then exit;
 
   result := true;
 end;
 
-procedure Tfrm_cad_comissoes.FormClose(Sender: TObject;
+procedure Tfrm_cad_comissoes_T30.edSERVICOSExit(Sender: TObject);
+begin
+   if not frmValidadorDeDocumentos.percentualValido((Sender as TEdit)) then
+   begin
+     (Sender as TEdit).SetFocus;
+     exit;
+   end;
+end;
+
+procedure Tfrm_cad_comissoes_T30.edSERVICOSKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := SoValor(Key);
+end;
+
+procedure Tfrm_cad_comissoes_T30.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
      FreeAndNil(Comissao);
 end;
 
-procedure Tfrm_cad_comissoes.FormCloseQuery(Sender: TObject;
+procedure Tfrm_cad_comissoes_T30.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
   CanClose := vPodeFechar;
 end;
 
-procedure Tfrm_cad_comissoes.FormCreate(Sender: TObject);
+procedure Tfrm_cad_comissoes_T30.FormCreate(Sender: TObject);
 begin
    vPodeFechar:=False;
    Comissao := TComissao.Create;
 end;
 
-procedure Tfrm_cad_comissoes.FormShow(Sender: TObject);
+procedure Tfrm_cad_comissoes_T30.FormShow(Sender: TObject);
 begin
    Inicio;
 end;
 
-procedure Tfrm_cad_comissoes.Gravar_Comissao;
+procedure Tfrm_cad_comissoes_T30.Gravar_Comissao;
 begin
    Comissao.Servico.Servico     := StrToFloat(MascToStr(edSERVICOS.Text));
    Comissao.Servico.HoraTecnica := StrToFloat(MascToStr(edHORATECNICA.Text));
@@ -134,15 +152,15 @@ begin
    close;
 end;
 
-procedure Tfrm_cad_comissoes.Inicio;
+procedure Tfrm_cad_comissoes_T30.Inicio;
 begin
-   Limpar_os_campos_da_Tela(frm_cad_comissoes);
+   Limpar_os_campos_da_Tela(frm_cad_comissoes_T30);
    if Comissao.Existe then
       Preenche_Tela;
    edSERVICOS.SetFocus;
 end;
 
-procedure Tfrm_cad_comissoes.Preenche_Tela;
+procedure Tfrm_cad_comissoes_T30.Preenche_Tela;
 begin
    edSERVICOS.Text    := FormatFloat('#,#0.00',Comissao.Servico.Servico);
    edHORATECNICA.Text := FormatFloat('#,#0.00',Comissao.Servico.HoraTecnica);

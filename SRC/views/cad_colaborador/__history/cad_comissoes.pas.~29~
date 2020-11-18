@@ -42,7 +42,6 @@ type
     edEXTERNA: TEdit;
     cxButton21: TcxButton;
     cxButton28: TcxButton;
-    lbNomeDaTela: TLabel;
     procedure cxButton28Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);

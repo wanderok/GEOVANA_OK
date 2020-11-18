@@ -35,7 +35,7 @@ type
       procedure Alteracoes_Cad_Transportadora;
       procedure Alteracoes_Cad_Contador;
       procedure Comissoes_colaboradores;
-      procedure Comissoes_consultor;
+
 
    public
       procedure Conectar;
@@ -1602,7 +1602,6 @@ begin
    Alteracoes_Cad_Transportadora;
    Alteracoes_Cad_Contador;
    Comissoes_colaboradores;
-   Comissoes_consultor;
 
    Tratar_Cad_Bairro;
 
@@ -1689,26 +1688,6 @@ begin
       dm.Query1.sql.Add('       COLCOM_USU         varchar(10) NULL,     ');
       dm.Query1.sql.Add('       COLCOM_DT          datetime    NULL,     ');
       dm.Query1.sql.Add('       COLCOM_HR          varchar(5)  NULL      ');
-      dm.Query1.sql.Add('       )                                        ');
-      dm.Query1.ExecSql;
-   end;
-end;
-
-procedure TAcesso.Comissoes_consultor;
-begin
-   if not Ja_Executou_Script('Criar_CONSULTOR_COMISSAO_CONCOM') then
-   begin
-      dm.Query1.close;
-      dm.Query1.sql.Clear;
-      dm.Query1.sql.Add('CREATE TABLE CONSULTOR_COMISSAO_CONCOM (        ');
-      dm.Query1.sql.Add('       CONCOM_CODIGO      varchar(10) NOT NULL, ');
-      dm.Query1.sql.Add('       CONCOM_SERVICOS    FLOAT       NULL,     ');
-      dm.Query1.sql.Add('       CONCOM_HORATECNICA FLOAT       NULL,     ');
-      dm.Query1.sql.Add('       CONCOM_BALCAO      FLOAT       NULL,     ');
-      dm.Query1.sql.Add('       CONCOM_EXTERNA     FLOAT       NULL,     ');
-      dm.Query1.sql.Add('       CONCOM_USU         varchar(10) NULL,     ');
-      dm.Query1.sql.Add('       CONCOM_DT          datetime    NULL,     ');
-      dm.Query1.sql.Add('       CONCOM_HR          varchar(5)  NULL      ');
       dm.Query1.sql.Add('       )                                        ');
       dm.Query1.ExecSql;
    end;

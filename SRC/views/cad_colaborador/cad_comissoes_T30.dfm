@@ -1,9 +1,9 @@
-object frm_cad_comissoes: Tfrm_cad_comissoes
+object frm_cad_comissoes_T30: Tfrm_cad_comissoes_T30
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'Comiss'#227'o '
+  Caption = 'Comiss'#227'o de Colaborador '
   ClientHeight = 254
   ClientWidth = 316
   Color = clWhite
@@ -116,6 +116,8 @@ object frm_cad_comissoes: Tfrm_cad_comissoes
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        OnExit = edSERVICOSExit
+        OnKeyPress = edSERVICOSKeyPress
       end
       object edHORATECNICA: TEdit
         Left = 29
@@ -129,6 +131,8 @@ object frm_cad_comissoes: Tfrm_cad_comissoes
         Font.Style = []
         ParentFont = False
         TabOrder = 2
+        OnExit = edSERVICOSExit
+        OnKeyPress = edSERVICOSKeyPress
       end
     end
     object GroupBox1: TGroupBox
@@ -189,6 +193,8 @@ object frm_cad_comissoes: Tfrm_cad_comissoes
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        OnExit = edSERVICOSExit
+        OnKeyPress = edSERVICOSKeyPress
       end
       object edEXTERNA: TEdit
         Left = 29
@@ -202,6 +208,8 @@ object frm_cad_comissoes: Tfrm_cad_comissoes
         Font.Style = []
         ParentFont = False
         TabOrder = 2
+        OnExit = edSERVICOSExit
+        OnKeyPress = edSERVICOSKeyPress
       end
     end
   end
@@ -500,5 +508,10 @@ object frm_cad_comissoes: Tfrm_cad_comissoes
     Font.Style = [fsBold]
     ParentFont = False
     OnClick = cxButton28Click
+  end
+  object ACBrEnterTab1: TACBrEnterTab
+    EnterAsTab = True
+    Left = 136
+    Top = 200
   end
 end
