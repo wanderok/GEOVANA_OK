@@ -124,7 +124,7 @@ type
     ACBrCEP1: TACBrCEP;
     GroupBox1: TGroupBox;
     mmObservacoes: TMemo;
-    cxButton9: TcxButton;
+    bComissoes: TcxButton;
     procedure bPesqZonaClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure bPesqBairroClick(Sender: TObject);
@@ -202,6 +202,7 @@ type
     procedure mmObservacoesClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
+    procedure bComissoesClick(Sender: TObject);
 
   public
     { Public declarations }
@@ -212,6 +213,7 @@ var
   Colaborador       : TColaborador;
   vPodeFechar       : Boolean;
   vMemoLocal        : TMemo;
+
 implementation
 
 uses
@@ -227,7 +229,8 @@ uses
   ConsultaCPF_T14,
   COLABORADOR_HISTORICO_BLOQUEIOS_COLHB_T22,
   Dados,
-  Classe_Nuvem;
+  Classe_Nuvem,
+  cad_comissoes;
 
 {$R *.dfm}
 
@@ -314,6 +317,22 @@ end;
 procedure Tfrm_cad_colaborador_T20.cxButton8Click(Sender: TObject);
 begin
   Consultar;
+end;
+
+procedure Tfrm_cad_colaborador_T20.bComissoesClick(Sender: TObject);
+begin
+   if not DadosCorretos then
+      exit;
+   if not Gravar_Colaborador then
+      exit;
+
+   frm_cad_comissoes:= Tfrm_cad_comissoes.Create(nil);
+
+   Comissao.TipoComissao := tcColaborador;
+   Comissao.Codigo       := Colaborador.Codigo;
+
+   frm_cad_comissoes.ShowModal;
+   frm_cad_comissoes.Free;
 end;
 
 procedure Tfrm_cad_colaborador_T20.PesquisaRegiao;

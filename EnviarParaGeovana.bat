@@ -5,6 +5,6 @@ CD \WANDER\OK\GEOVANA_OK
 git status
 git add .
 git status
-git commit -m "Unifei para Geovana"
+git commit -m "I7 para Geovana"
 git push origin master
 PAUSE

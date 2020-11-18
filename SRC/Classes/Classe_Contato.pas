@@ -43,6 +43,7 @@ type
        property Email1   : String read getFEmail1   write setFEmail1;
        property Email2   : String read getFEmail2   write setFEmail2;
    end;
+
 implementation
 
 { TContato }

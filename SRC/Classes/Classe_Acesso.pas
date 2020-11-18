@@ -34,6 +34,7 @@ type
       procedure Alteracoes_Cad_Motorista;
       procedure Alteracoes_Cad_Transportadora;
       procedure Alteracoes_Cad_Contador;
+      procedure Comissoes_colaboradores;
 
 
    public
@@ -1600,6 +1601,7 @@ begin
    Alteracoes_Cad_Motorista;
    Alteracoes_Cad_Transportadora;
    Alteracoes_Cad_Contador;
+   Comissoes_colaboradores;
 
    Tratar_Cad_Bairro;
 
@@ -1669,6 +1671,26 @@ begin
         FConectado:=False;
         exit;
      end;
+end;
+
+procedure TAcesso.Comissoes_colaboradores;
+begin
+   if not Ja_Executou_Script('Criar_COLABORADOR_COMISSAO_COLCOM') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('CREATE TABLE COLABORADOR_COMISSAO_COLCOM (      ');
+      dm.Query1.sql.Add('       COLCOM_CODIGO      varchar(10) NOT NULL, ');
+      dm.Query1.sql.Add('       COLCOM_SERVICOS    FLOAT       NULL,     ');
+      dm.Query1.sql.Add('       COLCOM_HORATECNICA FLOAT       NULL,     ');
+      dm.Query1.sql.Add('       COLCOM_BALCAO      FLOAT       NULL,     ');
+      dm.Query1.sql.Add('       COLCOM_EXTERNA     FLOAT       NULL,     ');
+      dm.Query1.sql.Add('       COLCOM_USU         varchar(10) NULL,     ');
+      dm.Query1.sql.Add('       COLCOM_DT          datetime    NULL,     ');
+      dm.Query1.sql.Add('       COLCOM_HR          varchar(5)  NULL      ');
+      dm.Query1.sql.Add('       )                                        ');
+      dm.Query1.ExecSql;
+   end;
 end;
 
 function TAcesso.Conectado: Boolean;

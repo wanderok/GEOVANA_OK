@@ -149,7 +149,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\cad_colaborador\cad_comissoes.pas">
-            <Form>fmr_comissao_colab</Form>
+            <Form>frm_cad_comissoes</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\cad_colaborador\tipo_colab.pas">
@@ -375,6 +375,7 @@
             <Form>frmMOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\..\src\Classes\Classe_Comissao.pas"/>
         <None Include="ModelSupport_SMC_PLUS\default.txaPackage"/>
         <None Include="ModelSupport_SMC_PLUS\default.txvpck"/>
         <None Include="ModelSupport_SMC_PLUS\vw_Login\Class Diagram1.txvcls"/>

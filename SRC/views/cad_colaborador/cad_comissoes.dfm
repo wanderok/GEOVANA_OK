@@ -1,4 +1,4 @@
-object fmr_comissao_colab: Tfmr_comissao_colab
+object frm_cad_comissoes: Tfrm_cad_comissoes
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
@@ -14,6 +14,11 @@ object fmr_comissao_colab: Tfmr_comissao_colab
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox12: TGroupBox
@@ -82,7 +87,7 @@ object fmr_comissao_colab: Tfmr_comissao_colab
         Height = 3
         TabOrder = 0
       end
-      object Edit27: TEdit
+      object edSERVICOS: TEdit
         Left = 29
         Top = 44
         Width = 69
@@ -94,9 +99,8 @@ object fmr_comissao_colab: Tfmr_comissao_colab
         Font.Style = []
         ParentFont = False
         TabOrder = 1
-        Text = 'Edit27'
       end
-      object Edit28: TEdit
+      object edHORATECNICA: TEdit
         Left = 29
         Top = 95
         Width = 69
@@ -108,7 +112,6 @@ object fmr_comissao_colab: Tfmr_comissao_colab
         Font.Style = []
         ParentFont = False
         TabOrder = 2
-        Text = 'Edit27'
       end
     end
     object GroupBox1: TGroupBox
@@ -157,7 +160,7 @@ object fmr_comissao_colab: Tfmr_comissao_colab
         Height = 3
         TabOrder = 0
       end
-      object Edit1: TEdit
+      object edBALCAO: TEdit
         Left = 29
         Top = 44
         Width = 69
@@ -169,9 +172,8 @@ object fmr_comissao_colab: Tfmr_comissao_colab
         Font.Style = []
         ParentFont = False
         TabOrder = 1
-        Text = 'Edit27'
       end
-      object Edit2: TEdit
+      object edEXTERNA: TEdit
         Left = 29
         Top = 95
         Width = 69
@@ -183,7 +185,6 @@ object fmr_comissao_colab: Tfmr_comissao_colab
         Font.Style = []
         ParentFont = False
         TabOrder = 2
-        Text = 'Edit27'
       end
     end
   end
@@ -333,6 +334,7 @@ object fmr_comissao_colab: Tfmr_comissao_colab
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = cxButton21Click
   end
   object cxButton28: TcxButton
     Left = 200
@@ -480,5 +482,6 @@ object fmr_comissao_colab: Tfmr_comissao_colab
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = cxButton28Click
   end
 end

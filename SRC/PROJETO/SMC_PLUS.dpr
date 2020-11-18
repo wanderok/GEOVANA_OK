@@ -17,7 +17,7 @@ uses
   Email in '..\..\src\EnviarEmail\Email.pas' {frmEmail},
   Classe_Empresa in '..\..\src\Classes\Classe_Empresa.pas',
   PesquisaF1_T16 in '..\..\SRC\views\Consulta_Cadastros\PesquisaF1_T16.pas' {frm_PesquisaF1_T16},
-  cad_comissoes in '..\..\src\views\cad_colaborador\cad_comissoes.pas' {fmr_comissao_colab},
+  cad_comissoes in '..\..\src\views\cad_colaborador\cad_comissoes.pas' {frm_cad_comissoes},
   tipo_colab in '..\..\src\views\cad_colaborador\tipo_colab.pas' {Frm_tipo_colab},
   consultor_banco_comissoes in '..\..\src\views\cad_consultor\consultor_banco_comissoes.pas' {frm_consultor_comissoes_banco},
   cad_ramo_atividade_T9 in '..\..\src\views\cad_ramo_atividade\cad_ramo_atividade_T9.pas' {frm_cad_ramo_atividade_T9},
@@ -86,7 +86,8 @@ uses
   CONTADOR_HISTORICO_BLOQUEIOS_CONTHB_T25 in '..\..\src\views\cad_contador\CONTADOR_HISTORICO_BLOQUEIOS_CONTHB_T25.pas' {frmCONTADOR_HISTORICO_BLOQUEIOS_CONTHB_T25},
   cad_motorista_T26 in '..\..\src\views\cad_motorista\cad_motorista_T26.pas' {frm_cad_motorista_T26},
   Classe_Transportadora in '..\..\src\Classes\Classe_Transportadora.pas',
-  MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27 in '..\..\src\views\cad_motorista\MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27.pas' {frmMOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27};
+  MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27 in '..\..\src\views\cad_motorista\MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27.pas' {frmMOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27},
+  Classe_Comissao in '..\..\src\Classes\Classe_Comissao.pas';
 
 {$R *.res}
 

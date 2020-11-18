@@ -7,6 +7,10 @@ type
   TStatusCadastral = (sAtivo, sAtivoBloqueado, sInativo);
   TTipoPessoa      = (tpFisica, tpJuridica, tpNone);
   TSimOuNao        = (snNao,snSim);
+  TTipoComissao    = (tcColaborador, tcConsultor);
+
+  function TipoComissaoToInt(pTipo:TTipoComissao):Integer;
+  function IntToTipoComissao(pTipo:Integer):TTipoComissao;
 
   function StatusCadastralToInt(pStatus:TStatusCadastral):Integer;
   function IntToStatusCadastral(pStatus:Integer):TStatusCadastral;
@@ -36,6 +40,22 @@ begin
       1 : Result := sAtivoBloqueado;
    else
       Result := sInativo;
+   end;
+end;
+
+function TipoComissaoToInt(pTipo:TTipoComissao):Integer;
+begin
+  case pTipo of
+     tcColaborador : Result := 0;
+     tcConsultor   : Result := 1;
+  end;
+end;
+
+function IntToTipoComissao(pTipo:Integer):TTipoComissao;
+begin
+   case pTipo of
+      0 : Result := tcColaborador;
+      1 : Result := tcConsultor;
    end;
 end;
 
