@@ -1696,20 +1696,28 @@ end;
 
 procedure TAcesso.Comissoes_consultor;
 begin
-   if not Ja_Executou_Script('Criar_CONSULTOR_COMISSAO_CONCOM') then
+   if not Ja_Executou_Script('Criar_CONSULTOR_BANCO_COMISSAO_CONBC') then
    begin
+      Executar_Script('DROP TABLE CONSULTOR_COMISSAO_CONCOM');
       dm.Query1.close;
       dm.Query1.sql.Clear;
-      dm.Query1.sql.Add('CREATE TABLE CONSULTOR_COMISSAO_CONCOM (        ');
-      dm.Query1.sql.Add('       CONCOM_CODIGO      varchar(10) NOT NULL, ');
-      dm.Query1.sql.Add('       CONCOM_SERVICOS    FLOAT       NULL,     ');
-      dm.Query1.sql.Add('       CONCOM_HORATECNICA FLOAT       NULL,     ');
-      dm.Query1.sql.Add('       CONCOM_BALCAO      FLOAT       NULL,     ');
-      dm.Query1.sql.Add('       CONCOM_EXTERNA     FLOAT       NULL,     ');
-      dm.Query1.sql.Add('       CONCOM_USU         varchar(10) NULL,     ');
-      dm.Query1.sql.Add('       CONCOM_DT          datetime    NULL,     ');
-      dm.Query1.sql.Add('       CONCOM_HR          varchar(5)  NULL      ');
-      dm.Query1.sql.Add('       )                                        ');
+      dm.Query1.sql.Add('CREATE TABLE CONSULTOR_BANCO_COMISSAO_CONBC (           ');
+      dm.Query1.sql.Add('       CONBC_CODIGO      varchar(10) NOT NULL,          ');
+      dm.Query1.sql.Add('       CONBC_BANCO       VARCHAR(40) NULL,              ');
+      dm.Query1.sql.Add('       CONBC_AGENCIA     VARCHAR(10) NULL,              ');
+      dm.Query1.sql.Add('       CONBC_AGENCIA_DIG VARCHAR(1)  NULL,              ');
+      dm.Query1.sql.Add('       CONBC_OPERACAO    varchar(3)  NULL,              ');
+      dm.Query1.sql.Add('       CONBC_CONTA       varchar(20) NULL,              ');
+      dm.Query1.sql.Add('       CONBC_CONTA_DIG   varchar(1)  NULL,              ');
+      dm.Query1.sql.Add('       CONBC_COMISSAO    FLOAT       NULL,              ');
+      // STATUS --------------------------------------------------------------------
+      dm.Query1.sql.Add('       CONBC_STATUS      INTEGER     NOT NULL DEFAULT 1,');
+      // CONTROLE ------------------------------------------------------------------
+      dm.Query1.sql.Add('       CONBC_ESTACAO     varchar(40) NULL,              ');
+      dm.Query1.sql.Add('       CONBC_USU         varchar(3)  NULL,              ');
+      dm.Query1.sql.Add('       CONBC_DT          datetime    NULL,              ');
+      dm.Query1.sql.Add('       CONBC_HR          varchar(5)  NULL               ');
+      dm.Query1.sql.Add('       )                                                ');
       dm.Query1.ExecSql;
    end;
 end;

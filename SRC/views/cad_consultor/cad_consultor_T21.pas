@@ -202,6 +202,7 @@ type
     procedure mmObservacoesClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
+    procedure cxButton9Click(Sender: TObject);
 
   public
     { Public declarations }
@@ -212,6 +213,7 @@ var
   Consultor         : TConsultor;
   vPodeFechar       : Boolean;
   vMemoLocal        : TMemo;
+
 implementation
 
 uses
@@ -227,6 +229,7 @@ uses
   ConsultaCNPJ_T13,
   ConsultaCPF_T14,
   CONSULTOR_HISTORICO_BLOQUEIOS_CHB_T23,
+  Consultor_Banco_Comissoes_T31,
   Dados,
   Classe_Nuvem;
 
@@ -247,7 +250,6 @@ begin
 end;
 
 procedure Tfrm_cad_consultor_T21.cxButton21Click(Sender: TObject);
-var vNuvem: TNuvem;
 begin
    if not DadosCorretos then
       exit;
@@ -255,11 +257,6 @@ begin
    if not Gravar_Consultor then
      exit;
 
-   {
-   vNuvem:= TNuvem.Create;
-   vNuvem.uploadConsultor(Consultor);
-   FreeAndNil(vNuvem);
-   }
    Consultor.Free;
    Inicio;
 end;
@@ -316,6 +313,21 @@ end;
 procedure Tfrm_cad_consultor_T21.cxButton8Click(Sender: TObject);
 begin
   Consultar;
+end;
+
+procedure Tfrm_cad_consultor_T21.cxButton9Click(Sender: TObject);
+begin
+   if not DadosCorretos then
+      exit;
+
+   if not Gravar_Consultor then
+     exit;
+
+   frmConsultor_Banco_Comissoes_T31 := TfrmConsultor_Banco_Comissoes_T31.Create(nil);
+   //Comissao.TipoComissao := tcColaborador;
+   //Comissao.Codigo       := Colaborador.Codigo;
+   frmConsultor_Banco_Comissoes_T31.ShowModal;
+   frmConsultor_Banco_Comissoes_T31.Free;
 end;
 
 procedure Tfrm_cad_consultor_T21.PesquisaRegiao;

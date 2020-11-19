@@ -2435,6 +2435,7 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = cxButton9Click
     end
   end
   object GroupBox1: TGroupBox

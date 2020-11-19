@@ -1,4 +1,4 @@
-object frm_consultor_comissoes_banco: Tfrm_consultor_comissoes_banco
+object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
@@ -15,6 +15,8 @@ object frm_consultor_comissoes_banco: Tfrm_consultor_comissoes_banco
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -23,6 +25,23 @@ object frm_consultor_comissoes_banco: Tfrm_consultor_comissoes_banco
     Width = 31
     Height = 13
     Caption = 'Label1'
+  end
+  object lbNomeDaTela: TLabel
+    Left = 0
+    Top = 342
+    Width = 538
+    Height = 13
+    Align = alBottom
+    Alignment = taRightJustify
+    Caption = '[ T31 ] '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ExplicitLeft = 498
+    ExplicitWidth = 40
   end
   object gpBanco: TGroupBox
     Left = -3
@@ -584,6 +603,7 @@ object frm_consultor_comissoes_banco: Tfrm_consultor_comissoes_banco
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = cxButton21Click
   end
   object cxButton28: TcxButton
     Left = 409
@@ -731,5 +751,6 @@ object frm_consultor_comissoes_banco: Tfrm_consultor_comissoes_banco
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = cxButton28Click
   end
 end

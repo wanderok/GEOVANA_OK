@@ -1,4 +1,4 @@
-unit consultor_banco_comissoes;
+unit Consultor_Banco_Comissoes_T31;
 
 interface
 
@@ -27,7 +27,7 @@ uses
   dxSkinXmas2008Blue;
 
 type
-  Tfrm_consultor_comissoes_banco = class(TForm)
+  TfrmConsultor_Banco_Comissoes_T31 = class(TForm)
     gpBanco: TGroupBox;
     cxGrid2: TcxGrid;
     cxGridDBTableView2: TcxGridDBTableView;
@@ -51,6 +51,11 @@ type
     edConta: TEdit;
     edDigitoConta: TEdit;
     edComissao: TEdit;
+    lbNomeDaTela: TLabel;
+    procedure cxButton28Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure cxButton21Click(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     { Private declarations }
   public
@@ -58,10 +63,34 @@ type
   end;
 
 var
-  frm_consultor_comissoes_banco: Tfrm_consultor_comissoes_banco;
+  frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31;
+  vPodeFechar : Boolean;
 
 implementation
 
 {$R *.dfm}
+
+procedure TfrmConsultor_Banco_Comissoes_T31.cxButton21Click(Sender: TObject);
+begin
+   vPodeFechar := True;
+   Close;
+end;
+
+procedure TfrmConsultor_Banco_Comissoes_T31.cxButton28Click(Sender: TObject);
+begin
+  vPodeFechar:=True;
+  Close;
+end;
+
+procedure TfrmConsultor_Banco_Comissoes_T31.FormCloseQuery(Sender: TObject;
+  var CanClose: Boolean);
+begin
+  CanClose := vPodeFechar;
+end;
+
+procedure TfrmConsultor_Banco_Comissoes_T31.FormCreate(Sender: TObject);
+begin
+   vPodeFechar := False;
+end;
 
 end.
