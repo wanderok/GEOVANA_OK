@@ -326,7 +326,10 @@ begin
    frmConsultor_Banco_Comissoes_T31 := TfrmConsultor_Banco_Comissoes_T31.Create(nil);
    //Comissao.TipoComissao := tcColaborador;
    //Comissao.Codigo       := Colaborador.Codigo;
+   Consultor_T31 := Consultor;
    frmConsultor_Banco_Comissoes_T31.ShowModal;
+   Consultor := Consultor_T31;
+   //FreeAndNil(Consultor_T31);
    frmConsultor_Banco_Comissoes_T31.Free;
 end;
 

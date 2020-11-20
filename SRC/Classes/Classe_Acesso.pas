@@ -538,6 +538,7 @@ begin
       dm.Query1.sql.Add('       )                                           ');
       dm.Query1.ExecSql;
    end;
+   Executar_Script('ALTER TABLE CONSULTOR_DETALHE_COND ADD COND_COMISSAO FLOAT NOT NULL DEFAULT 0');
 
    if not Ja_Executou_Script('CREATE TABLE CONSULTOR_ENDERECO_CONE..') then
    begin
@@ -1720,6 +1721,7 @@ begin
       dm.Query1.sql.Add('       )                                                ');
       dm.Query1.ExecSql;
    end;
+   Executar_Script('ALTER TABLE CONSULTOR_COMISSAO_CONCOM DROP COLUMN CONBC_COMISSAO');
 end;
 
 function TAcesso.Conectado: Boolean;

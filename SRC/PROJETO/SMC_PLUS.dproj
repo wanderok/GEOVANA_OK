@@ -156,10 +156,6 @@
             <Form>Frm_tipo_colab</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\views\cad_consultor\consultor_banco_comissoes.pas">
-            <Form>frm_consultor_comissoes_banco</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="..\..\src\views\cad_ramo_atividade\cad_ramo_atividade_T9.pas">
             <Form>frm_cad_ramo_atividade_T9</Form>
             <FormType>dfm</FormType>
@@ -376,6 +372,11 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\Classes\Classe_Comissao.pas"/>
+        <DCCReference Include="..\..\src\views\cad_consultor\Consultor_Banco_Comissoes_T31.pas">
+            <Form>frmConsultor_Banco_Comissoes_T31</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\Controles\Telas_Numeros.pas"/>
         <None Include="ModelSupport_SMC_PLUS\default.txaPackage"/>
         <None Include="ModelSupport_SMC_PLUS\default.txvpck"/>
         <None Include="ModelSupport_SMC_PLUS\vw_Login\Class Diagram1.txvcls"/>

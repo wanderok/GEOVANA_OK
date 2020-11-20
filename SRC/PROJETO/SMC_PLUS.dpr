@@ -19,7 +19,6 @@ uses
   PesquisaF1_T16 in '..\..\SRC\views\Consulta_Cadastros\PesquisaF1_T16.pas' {frm_PesquisaF1_T16},
   cad_comissoes_T30 in '..\..\src\views\cad_colaborador\cad_comissoes_T30.pas' {frm_cad_comissoes_T30},
   tipo_colab in '..\..\src\views\cad_colaborador\tipo_colab.pas' {Frm_tipo_colab},
-  consultor_banco_comissoes in '..\..\src\views\cad_consultor\consultor_banco_comissoes.pas' {frm_consultor_comissoes_banco},
   cad_ramo_atividade_T9 in '..\..\src\views\cad_ramo_atividade\cad_ramo_atividade_T9.pas' {frm_cad_ramo_atividade_T9},
   cad_regiao_T11 in '..\..\src\views\cad_regiao\cad_regiao_T11.pas' {frm_cad_regiao_T11},
   config_certificado in '..\..\src\views\configs\config_certificado.pas' {frm_config_certificado},
@@ -87,7 +86,9 @@ uses
   cad_motorista_T26 in '..\..\src\views\cad_motorista\cad_motorista_T26.pas' {frm_cad_motorista_T26},
   Classe_Transportadora in '..\..\src\Classes\Classe_Transportadora.pas',
   MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27 in '..\..\src\views\cad_motorista\MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27.pas' {frmMOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27},
-  Classe_Comissao in '..\..\src\Classes\Classe_Comissao.pas';
+  Classe_Comissao in '..\..\src\Classes\Classe_Comissao.pas',
+  Consultor_Banco_Comissoes_T31 in '..\..\src\views\cad_consultor\Consultor_Banco_Comissoes_T31.pas' {frmConsultor_Banco_Comissoes_T31},
+  Telas_Numeros in '..\..\src\Controles\Telas_Numeros.pas';
 
 {$R *.res}
 

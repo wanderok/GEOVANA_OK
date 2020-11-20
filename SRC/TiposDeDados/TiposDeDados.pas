@@ -5,6 +5,7 @@ interface
 type
   TStatusInternet  = (tsiComConexao,tsiSemConexao);
   TStatusCadastral = (sAtivo, sAtivoBloqueado, sInativo);
+  TStatusCadastralAI = (scAtivo, scInativo);
   TTipoPessoa      = (tpFisica, tpJuridica, tpNone);
   TSimOuNao        = (snNao,snSim);
   TTipoComissao    = (tcColaborador, tcConsultor);
@@ -14,6 +15,9 @@ type
 
   function StatusCadastralToInt(pStatus:TStatusCadastral):Integer;
   function IntToStatusCadastral(pStatus:Integer):TStatusCadastral;
+
+  function StatusCadastralAIToInt(pStatus:TStatusCadastralAI):Integer;
+  function IntToStatusCadastralAI(pStatus:Integer):TStatusCadastralAI;
 
   function TipoPessoaToString(pTipoPessoa:TTipoPessoa):String;
   function StringToTipoPessoa(pTipoPessoa:String):TTipoPessoa;
@@ -40,6 +44,22 @@ begin
       1 : Result := sAtivoBloqueado;
    else
       Result := sInativo;
+   end;
+end;
+
+function StatusCadastralAIToInt(pStatus:TStatusCadastralAI):Integer;
+begin
+  case pStatus of
+     scAtivo  : Result := 1;
+     scInativo: Result := 0;
+  end;
+end;
+
+function IntToStatusCadastralAI(pStatus:Integer):TStatusCadastralAI;
+begin
+   case pStatus of
+      0 : Result := scInativo;
+      1 : Result := scAtivo;
    end;
 end;
 

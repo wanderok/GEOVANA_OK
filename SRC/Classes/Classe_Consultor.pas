@@ -60,6 +60,39 @@ type
        property IE               : String     read getFIE                   write setFIE;
   end;
 
+  tBanco = class
+    private
+      FBanco,
+      FAgencia,
+      FAgencia_Digito,
+      FOperacao,
+      FConta,
+      FConta_Digito      : String;
+      FStatus            : TStatusCadastralAI;
+    function getFAgencia: String;
+    function getFAgencia_Digito: String;
+    function getFBanco: String;
+    function getFConta: String;
+    function getFConta_Digito: String;
+    function getFOperacao: String;
+    procedure SetFAgencia(const Value: String);
+    procedure SetFAgencia_Digito(const Value: String);
+    procedure SetFBanco(const Value: String);
+    procedure SetFConta(const Value: String);
+    procedure SetFConta_Digito(const Value: String);
+    procedure SetFOperacao(const Value: String);
+    function getFStatus: TStatusCadastralAI;
+    procedure SetFStatus(const Value: TStatusCadastralAI);
+    public
+      property Banco             : String             read getFBanco              write SetFBanco;
+      property Agencia           : String             read getFAgencia            write SetFAgencia;
+      property Agencia_Digito    : String             read getFAgencia_Digito     write SetFAgencia_Digito;
+      property Operacao          : String             read getFOperacao           write SetFOperacao;
+      property Conta             : String             read getFConta              write SetFConta;
+      property Conta_Digito      : String             read getFConta_Digito       write SetFConta_Digito;
+      property Status            : TStatusCadastralAI read getFStatus             write SetFStatus;
+  end;
+
   tDetalhes_Consultor = class
     private
       FDataCadastro      : TDateTime;
@@ -71,6 +104,8 @@ type
       FZona              : String;
       FEndereco          : TEndereco;
       FContato           : TContato;
+      FBanco             : TBanco;
+      FComissao          : Real;
       //
       function  getFDataCadastro: TDateTime;
       procedure setFDataCadastro(const Value: TDateTime);
@@ -83,6 +118,8 @@ type
       procedure setFRegiao(const Value: String);
       function getFZona: String;
       procedure setFZona(const Value: String);
+      function getFComissao: Real;
+      procedure SetFComissao(const Value: Real);
 
     public
       constructor Create;
@@ -97,6 +134,9 @@ type
       property Zona              : String           read getFZona               write setFZona;
       property Endereco          : TEndereco        read FEndereco              write FEndereco;
       property Contato           : TContato         read FContato               write FContato;
+      property Banco             : TBanco           read FBanco                 write FBanco;
+      property Comissao          : Real             read getFComissao           write SetFComissao;
+
 end;
 
   TConsultorAlteracao = class(TAlteracao);
@@ -134,14 +174,18 @@ end;
     procedure Pegar_Endereco;
     procedure Pegar_Contato;
     procedure Pegar_Alteracoes;
+    procedure Pegar_Comissoes;
 
     procedure Pegar_Observacoes;
     procedure Gravar_Observacoes;
     //
-    function Inserir_CONSULTOR_CON           :Boolean;
-    function Inserir_CONSULTOR_DETALHE_COND  :Boolean;
-    function Inserir_CONSULTOR_ENDERECO_CONE :Boolean;
-    function Inserir_CONSULTOR_CONTATO_CONC  :Boolean;
+    function Inserir_CONSULTOR_CON                  : Boolean;
+    function Inserir_CONSULTOR_DETALHE_COND         : Boolean;
+    function Inserir_CONSULTOR_ENDERECO_CONE        : Boolean;
+    function Inserir_CONSULTOR_CONTATO_CONC         : Boolean;
+    function Inserir_CONSULTOR_BANCO_COMISSAO_CONBC : Boolean;
+    function Existe_CONSULTOR_BANCO_COMISSAO_CONBC : Boolean;
+    function Alterar_CONSULTOR_BANCO_COMISSAO_CONBC : Boolean;
     //
     function Update_CONSULTOR_CON:Boolean;
 
@@ -168,16 +212,17 @@ end;
   public
     constructor Create;
     destructor Destroy; override;
-    property Existe        : Boolean           read getFExiste;
-    Property Codigo        : String            read getFCodigo       write setFCodigo;
-    Property NomeFantasia  : String            read getFNomeFantasia write setFNomeFantasia;
-    Property RazaoSocial   : String            read getRazaoSocial   write setRazaoSocial;
-    Property Status        : TStatusCadastral  read getFStatus       write setFStatus;
+    property Existe        : Boolean             read getFExiste;
+    Property Codigo        : String              read getFCodigo       write setFCodigo;
+    Property NomeFantasia  : String              read getFNomeFantasia write setFNomeFantasia;
+    Property RazaoSocial   : String              read getRazaoSocial   write setRazaoSocial;
+    Property Status        : TStatusCadastral    read getFStatus       write setFStatus;
     Property Detalhes      : tDetalhes_Consultor read getDetalhes      write setDetalhes;
     property Alteracao     : TConsultorAlteracao read FAlteracao       write FAlteracao;
-    property Observacao    : TStringList       read getFObservacao   write setFObservacao;
+    property Observacao    : TStringList         read getFObservacao   write setFObservacao;
     procedure Abrir;
     Function Gravar:Boolean;
+    function GravarBancoComissao:Boolean;
 end;
 
 implementation
@@ -227,6 +272,30 @@ begin
   FObservacao.Free;
   qLocal.Free;
   inherited;
+end;
+
+function TConsultor.Existe_CONSULTOR_BANCO_COMISSAO_CONBC: Boolean;
+begin
+    qConsultor.Close;
+    qConsultor.SQL.Clear;
+    qConsultor.SQL.Add('SELECT CONBC_CODIGO                          ');
+    qConsultor.SQL.Add('  FROM CONSULTOR_BANCO_COMISSAO_CONBC        ');
+    qConsultor.SQL.Add(' WHERE CONBC_CODIGO      = :CONBC_CODIGO     ');
+    qConsultor.SQL.Add('   AND CONBC_BANCO       = :CONBC_BANCO      ');
+    qConsultor.SQL.Add('   AND CONBC_AGENCIA     = :CONBC_AGENCIA    ');
+    qConsultor.SQL.Add('   AND CONBC_AGENCIA_DIG = :CONBC_AGENCIA_DIG');
+    qConsultor.SQL.Add('   AND CONBC_OPERACAO    = :CONBC_OPERACAO   ');
+    qConsultor.SQL.Add('   AND CONBC_CONTA       = :CONBC_CONTA      ');
+    qConsultor.SQL.Add('   AND CONBC_CONTA_DIG   = :CONBC_CONTA_DIG  ');
+    qConsultor.ParamByName('CONBC_CODIGO'     ).AsString  := FCodigo;
+    qConsultor.ParamByName('CONBC_BANCO'      ).AsString  := FDetalhes.FBanco.FBanco;
+    qConsultor.ParamByName('CONBC_AGENCIA'    ).AsString  := FDetalhes.FBanco.FAgencia;
+    qConsultor.ParamByName('CONBC_AGENCIA_DIG').AsString  := FDetalhes.FBanco.FAgencia_Digito;
+    qConsultor.ParamByName('CONBC_OPERACAO'   ).AsString  := FDetalhes.FBanco.FOperacao;
+    qConsultor.ParamByName('CONBC_CONTA'      ).AsString  := FDetalhes.FBanco.FConta;
+    qConsultor.ParamByName('CONBC_CONTA_DIG'  ).AsString  := FDetalhes.FBanco.FConta_Digito;
+    qConsultor.Open;
+    Result := not qConsultor.Eof;
 end;
 
 function TConsultor.existe_CONSULTOR_DETALHE_COND: Boolean;
@@ -319,6 +388,14 @@ begin
    Result := True;
 end;
 
+function TConsultor.GravarBancoComissao: Boolean;
+begin
+   if not Existe_CONSULTOR_BANCO_COMISSAO_CONBC then
+      result := Inserir_CONSULTOR_BANCO_COMISSAO_CONBC
+   else
+      result := Alterar_CONSULTOR_BANCO_COMISSAO_CONBC;
+end;
+
 procedure TConsultor.Gravar_Observacoes;
 var i : Integer;
 begin
@@ -351,13 +428,71 @@ end;
 function TConsultor.Insert: Boolean;
 begin
     result := False;
-    if not Inserir_CONSULTOR_CON           then exit;
-    if not Inserir_CONSULTOR_DETALHE_COND  then exit;
-    if not Inserir_CONSULTOR_ENDERECO_CONE then exit;
-    if not Inserir_CONSULTOR_CONTATO_CONC  then exit;
+    if not Inserir_CONSULTOR_CON                  then exit;
+    if not Inserir_CONSULTOR_DETALHE_COND         then exit;
+    if not Inserir_CONSULTOR_ENDERECO_CONE        then exit;
+    if not Inserir_CONSULTOR_CONTATO_CONC         then exit;
+    //if not Inserir_CONSULTOR_BANCO_COMISSAO_CONBC then exit;
+
     Gravar_Observacoes;
     Result := True;
     Log('Classe_Consultor','Cadastrou consultor ' + FCodigo + '-' + FNomeFantasia);
+end;
+
+function TConsultor.Inserir_CONSULTOR_BANCO_COMISSAO_CONBC: Boolean;
+begin
+    result := False;
+    try
+        qConsultor.Close;
+        qConsultor.SQL.Clear;
+        qConsultor.SQL.Add('INSERT INTO CONSULTOR_BANCO_COMISSAO_CONBC');
+        qConsultor.SQL.Add('     (                      ');
+        qConsultor.SQL.Add('       CONBC_CODIGO,        ');
+        qConsultor.SQL.Add('       CONBC_BANCO,         ');
+        qConsultor.SQL.Add('       CONBC_AGENCIA,       ');
+        qConsultor.SQL.Add('       CONBC_AGENCIA_DIG,   ');
+        qConsultor.SQL.Add('       CONBC_OPERACAO,      ');
+        qConsultor.SQL.Add('       CONBC_CONTA,         ');
+        qConsultor.SQL.Add('       CONBC_CONTA_DIG,     ');
+        qConsultor.SQL.Add('       CONBC_STATUS,        ');
+        qConsultor.SQL.Add('       CONBC_ESTACAO,       ');
+        qConsultor.SQL.Add('       CONBC_USU,           ');
+        qConsultor.SQL.Add('       CONBC_DT,            ');
+        qConsultor.SQL.Add('       CONBC_HR             ');
+        qConsultor.SQL.Add('     )                      ');
+        qConsultor.SQL.Add('VALUES                      ');
+        qConsultor.SQL.Add('     (                      ');
+        qConsultor.SQL.Add('      :CONBC_CODIGO,        ');
+        qConsultor.SQL.Add('      :CONBC_BANCO,         ');
+        qConsultor.SQL.Add('      :CONBC_AGENCIA,       ');
+        qConsultor.SQL.Add('      :CONBC_AGENCIA_DIG,   ');
+        qConsultor.SQL.Add('      :CONBC_OPERACAO,      ');
+        qConsultor.SQL.Add('      :CONBC_CONTA,         ');
+        qConsultor.SQL.Add('      :CONBC_CONTA_DIG,     ');
+        qConsultor.SQL.Add('      :CONBC_STATUS,        ');
+        qConsultor.SQL.Add('      :CONBC_ESTACAO,       ');
+        qConsultor.SQL.Add('      :CONBC_USU,           ');
+        qConsultor.SQL.Add('      :CONBC_DT,            ');
+        qConsultor.SQL.Add('      :CONBC_HR             ');
+        qConsultor.SQL.Add('     )                      ');
+        qConsultor.ParamByName('CONBC_CODIGO'     ).AsString  := FCodigo;
+        qConsultor.ParamByName('CONBC_BANCO'      ).AsString  := FDetalhes.FBanco.FBanco;
+        qConsultor.ParamByName('CONBC_AGENCIA'    ).AsString  := FDetalhes.FBanco.FAgencia;
+        qConsultor.ParamByName('CONBC_AGENCIA_DIG').AsString  := FDetalhes.FBanco.FAgencia_Digito;
+        qConsultor.ParamByName('CONBC_OPERACAO'   ).AsString  := FDetalhes.FBanco.FOperacao;
+        qConsultor.ParamByName('CONBC_CONTA'      ).AsString  := FDetalhes.FBanco.FConta;
+        qConsultor.ParamByName('CONBC_CONTA_DIG'  ).AsString  := FDetalhes.FBanco.FConta_Digito;
+        qConsultor.ParamByName('CONBC_STATUS'     ).AsInteger := 1; // StatusCadastralAIToInt(FDetalhes.FBanco.FStatus);
+        qConsultor.ParamByName('CONBC_ESTACAO'    ).AsString  := NomeComputador;
+        qConsultor.ParamByName('CONBC_USU'        ).AsString  := Usuario.Codigo;
+        qConsultor.ParamByName('CONBC_DT'         ).AsDateTime:= DataServidor;
+        qConsultor.ParamByName('CONBC_HR'         ).AsString  := HoraServidor;
+        qConsultor.ExecSql;
+        result := true
+    except
+       Avisos.Avisar('Erro ao incluir consultor ' + FNomeFantasia);
+       LOGErros('Classe_Consultor','Erro ao incluir Consultor ' + FNomeFantasia);
+    end;
 end;
 
 function TConsultor.Inserir_CONSULTOR_CON: Boolean;
@@ -464,6 +599,7 @@ begin
         qConsultor.SQL.Add('       COND_CDRAMO,              ');
         qConsultor.SQL.Add('       COND_CDREGIAO,            ');
         qConsultor.SQL.Add('       COND_CDZONA,              ');
+        qConsultor.SQL.Add('       COND_COMISSAO,            ');
         qConsultor.SQL.Add('       COND_DT                   ');
         qConsultor.SQL.Add('     )                           ');
         qConsultor.SQL.Add('VALUES                           ');
@@ -489,6 +625,7 @@ begin
         qConsultor.SQL.Add('      :COND_CDRAMO,              ');
         qConsultor.SQL.Add('      :COND_CDREGIAO,            ');
         qConsultor.SQL.Add('      :COND_CDZONA,              ');
+        qConsultor.SQL.Add('      :COND_COMISSAO,            ');
         qConsultor.SQL.Add('      :COND_DT                   ');
         qConsultor.SQL.Add('     )                           ');
         qConsultor.ParamByName('COND_CODIGO'             ).AsString   := FCodigo;
@@ -509,10 +646,11 @@ begin
         qConsultor.ParamByName('COND_ALT_DTBLOQUEADO'    ).AsDateTime := 0;
         qConsultor.ParamByName('COND_ALT_DTLIBERADO'     ).AsDateTime := 0;
         qConsultor.ParamByName('COND_ALT_DTINATIVO'      ).AsDateTime := 0;
-        qConsultor.ParamByName('COND_CDRAMO'           ).AsString   := FDetalhes.FRamoAtividade;
-        qConsultor.ParamByName('COND_CDREGIAO'         ).AsString   := FDetalhes.FRegiao;
-        qConsultor.ParamByName('COND_CDZONA'           ).AsString   := FDetalhes.FZona;
-        qConsultor.ParamByName('COND_DT'               ).AsDateTime := DataServidor;
+        qConsultor.ParamByName('COND_CDRAMO'             ).AsString   := FDetalhes.FRamoAtividade;
+        qConsultor.ParamByName('COND_CDREGIAO'           ).AsString   := FDetalhes.FRegiao;
+        qConsultor.ParamByName('COND_CDZONA'             ).AsString   := FDetalhes.FZona;
+        qConsultor.ParamByName('COND_COMISSAO'           ).AsFloat    := FDetalhes.FComissao;
+        qConsultor.ParamByName('COND_DT'                 ).AsDateTime := DataServidor;
         qConsultor.ExecSql;
         Result := true;
     except
@@ -582,6 +720,26 @@ begin
        DataLiberacao := qConsultor.FieldByName('COND_ALT_DTLIBERADO' ).AsString;
        DataInativo   := qConsultor.FieldByName('COND_ALT_DTINATIVO'  ).AsString;
     end;
+end;
+
+procedure TConsultor.Pegar_Comissoes;
+begin
+    qConsultor.Close;
+    qConsultor.SQL.Clear;
+    qConsultor.SQL.Add('SELECT *                             ');
+    qConsultor.SQL.Add('  FROM CONSULTOR_BANCO_COMISSAO_CONBC');
+    qConsultor.SQL.Add(' WHERE CONBC_CODIGO = :CONBC_CODIGO  ');
+    qConsultor.ParamByName('CONBC_CODIGO').AsString := FCodigo;
+    qConsultor.Open;
+    if qConsultor.eof then
+       exit;
+
+    FDetalhes.FBanco.FBanco          := qConsultor.FieldByName('CONBC_BANCO'      ).AsString;
+    FDetalhes.FBanco.FAgencia        := qConsultor.FieldByName('CONBC_AGENCIA'    ).AsString;
+    FDetalhes.FBanco.FAgencia_Digito := qConsultor.FieldByName('CONBC_AGENCIA_DIG').AsString;
+    FDetalhes.FBanco.FOperacao       := qConsultor.FieldByName('CONBC_OPERACAO'   ).AsString;
+    FDetalhes.FBanco.FConta          := qConsultor.FieldByName('CONBC_CONTA'      ).AsString;
+    FDetalhes.FBanco.FConta_Digito   := qConsultor.FieldByName('CONBC_CONTA_DIG'  ).AsString;
 end;
 
 procedure TConsultor.Pegar_Contato;
@@ -659,8 +817,10 @@ begin
     FDetalhes.RamoAtividade      := qConsultor.FieldByName('COND_CDRAMO'             ).AsString;
     FDetalhes.Regiao             := qConsultor.FieldByName('COND_CDREGIAO'           ).AsString;
     FDetalhes.Zona               := qConsultor.FieldByName('COND_CDZONA'             ).AsString;
+    FDetalhes.Comissao           := qConsultor.FieldByName('COND_COMISSAO'           ).AsFloat;
     FDetalhes.FDataCadastro      := qConsultor.FieldByName('COND_DT'                 ).AsDateTime;
     Pegar_Alteracoes;
+    Pegar_Comissoes;
 end;
 
 procedure TConsultor.Pegar_Endereco;
@@ -880,10 +1040,11 @@ end;
 function TConsultor.Update: Boolean;
 begin
     result := false;
-    if not Update_CONSULTOR_CON           then exit;
-    if not Update_CONSULTOR_DETALHE_COND  then exit;
-    if not Update_CONSULTOR_ENDERECO_CONE then exit;
-    if not Update_CONSULTOR_CONTATO_CONC  then exit;
+    if not Update_CONSULTOR_CON                   then exit;
+    if not Update_CONSULTOR_DETALHE_COND          then exit;
+    if not Update_CONSULTOR_ENDERECO_CONE         then exit;
+    if not Update_CONSULTOR_CONTATO_CONC          then exit;
+    //if not Inserir_CONSULTOR_BANCO_COMISSAO_CONBC then exit;
     Gravar_Observacoes;
     Result := True;
     Log('Classe_Consultor','Alterou consultor '+ FCodigo + ' - ' + FNomeFantasia);
@@ -915,6 +1076,38 @@ begin
        result := alterar_CONSULTOR_CONTATO_CONC
     else
        result := inserir_CONSULTOR_CONTATO_CONC;
+end;
+
+function TConsultor.Alterar_CONSULTOR_BANCO_COMISSAO_CONBC: Boolean;
+begin
+    qConsultor.Close;
+    qConsultor.SQL.Clear;
+    qConsultor.SQL.Add('UPDATE CONSULTOR_BANCO_COMISSAO_CONBC        ');
+    qConsultor.SQL.Add('   SET CONBC_STATUS      = :CONBC_STATUS,    ');
+    qConsultor.SQL.Add('       CONBC_ESTACAO     = :CONBC_ESTACAO,   ');
+    qConsultor.SQL.Add('       CONBC_USU         = :CONBC_USU,       ');
+    qConsultor.SQL.Add('       CONBC_DT          = :CONBC_DT,        ');
+    qConsultor.SQL.Add('       CONBC_HR          = :CONBC_HR         ');
+    qConsultor.SQL.Add(' WHERE CONBC_CODIGO      = :CONBC_CODIGO     ');
+    qConsultor.SQL.Add('   AND CONBC_BANCO       = :CONBC_BANCO      ');
+    qConsultor.SQL.Add('   AND CONBC_AGENCIA     = :CONBC_AGENCIA    ');
+    qConsultor.SQL.Add('   AND CONBC_AGENCIA_DIG = :CONBC_AGENCIA_DIG');
+    qConsultor.SQL.Add('   AND CONBC_OPERACAO    = :CONBC_OPERACAO   ');
+    qConsultor.SQL.Add('   AND CONBC_CONTA       = :CONBC_CONTA      ');
+    qConsultor.SQL.Add('   AND CONBC_CONTA_DIG   = :CONBC_CONTA_DIG  ');
+    qConsultor.ParamByName('CONBC_CODIGO'     ).AsString  := FCodigo;
+    qConsultor.ParamByName('CONBC_BANCO'      ).AsString  := FDetalhes.FBanco.FBanco;
+    qConsultor.ParamByName('CONBC_AGENCIA'    ).AsString  := FDetalhes.FBanco.FAgencia;
+    qConsultor.ParamByName('CONBC_AGENCIA_DIG').AsString  := FDetalhes.FBanco.FAgencia_Digito;
+    qConsultor.ParamByName('CONBC_OPERACAO'   ).AsString  := FDetalhes.FBanco.FOperacao;
+    qConsultor.ParamByName('CONBC_CONTA'      ).AsString  := FDetalhes.FBanco.FConta;
+    qConsultor.ParamByName('CONBC_CONTA_DIG'  ).AsString  := FDetalhes.FBanco.FConta_Digito;
+    qConsultor.ParamByName('CONBC_STATUS'     ).AsInteger := StatusCadastralAIToInt(FDetalhes.FBanco.FStatus);
+    qConsultor.ParamByName('CONBC_ESTACAO'    ).AsString  := NomeComputador;
+    qConsultor.ParamByName('CONBC_USU'        ).AsString  := Usuario.Codigo;
+    qConsultor.ParamByName('CONBC_DT'         ).AsDateTime:= DataServidor;
+    qConsultor.ParamByName('CONBC_HR'         ).AsString  := HoraServidor;
+    qConsultor.ExecSql;
 end;
 
 function TConsultor.alterar_CONSULTOR_CONTATO_CONC: Boolean;
@@ -975,8 +1168,9 @@ begin
         qConsultor.SQL.Add('       COND_ALT_DTINATIVO       = :COND_ALT_DTINATIVO,       ');
         qConsultor.SQL.Add('       COND_CDRAMO              = :COND_CDRAMO,              ');
         qConsultor.SQL.Add('       COND_CDREGIAO            = :COND_CDREGIAO,            ');
-        qConsultor.SQL.Add('       COND_CDZONA              = :COND_CDZONA               ');
-        qConsultor.SQL.Add(' WHERE COND_CODIGO              = :COND_CODIGO               ');
+        qConsultor.SQL.Add('       COND_CDZONA              = :COND_CDZONA,              ');
+        qConsultor.SQL.Add('       COND_COMISSAO            = :COND_COMISSAO             ');
+        qConsultor.SQL.Add(' WHERE COND_CODIGO              = :COND_CODIGO              ');
         qConsultor.ParamByName('COND_CODIGO'          ).AsString   := FCodigo;
         qConsultor.ParamByName('COND_NUVEM_ATUALIZADO').AsInteger  := 0;
         qConsultor.ParamByName('COND_PESSOA_FJ'       ).AsString   := FDetalhes.FTipoPessoa;
@@ -998,6 +1192,7 @@ begin
         qConsultor.ParamByName('COND_CDRAMO'          ).AsString   := FDetalhes.FRamoAtividade;
         qConsultor.ParamByName('COND_CDREGIAO'        ).AsString   := FDetalhes.FRegiao;
         qConsultor.ParamByName('COND_CDZONA'          ).AsString   := FDetalhes.FZona;
+        qConsultor.ParamByName('COND_COMISSAO'        ).AsFloat    := FDetalhes.FComissao;
         qConsultor.ExecSql;
 
         Log('Classe_Consultor','Alterou Consultor '+ FNomeFantasia);
@@ -1056,6 +1251,7 @@ begin
   FPessoaJuridica:= tPessoa_Juridica.Create;
   FEndereco      := TEndereco.Create;
   FContato       := TContato.Create;
+  FBanco         := TBanco.Create;
 end;
 
 destructor tDetalhes_Consultor.Destroy;
@@ -1065,6 +1261,7 @@ begin
   FPessoaJuridica.Free;
   FEndereco.Free;
   FContato.Free;
+  FBanco.Free;
   inherited;
 end;
 
@@ -1078,9 +1275,49 @@ begin
    result := FCodigoMunicipio;
 end;
 }
+function tBanco.getFAgencia: String;
+begin
+   Result := self.FAgencia;
+end;
+
+function tBanco.getFAgencia_Digito: String;
+begin
+   Result := self.FAgencia_Digito;
+end;
+
+function tBanco.getFBanco: String;
+begin
+   Result := self.FBanco;
+end;
+
+function tDetalhes_Consultor.getFComissao: Real;
+begin
+   Result := self.FComissao;
+end;
+
+function tBanco.getFConta: String;
+begin
+   Result := self.FConta;
+end;
+
+function tBanco.getFConta_Digito: String;
+begin
+   Result := self.FConta_Digito;
+end;
+
 function tDetalhes_Consultor.getFDataCadastro: TDateTime;
 begin
    result := FDataCadastro;
+end;
+
+function tBanco.getFOperacao: String;
+begin
+   Result := self.FOperacao;
+end;
+
+function tBanco.getFStatus: TStatusCadastralAI;
+begin
+   result := self.FStatus;
 end;
 
 function tDetalhes_Consultor.getFRamoAtividade: String;
@@ -1103,6 +1340,36 @@ begin
    Result := FZona;
 end;
 
+procedure tBanco.SetFAgencia(const Value: String);
+begin
+   self.FAgencia := Copy(Value,1,10);
+end;
+
+procedure tBanco.SetFAgencia_Digito(const Value: String);
+begin
+   self.FAgencia_Digito := Copy(Value,1,1);
+end;
+
+procedure tBanco.SetFBanco(const Value: String);
+begin
+   self.FBanco := Copy(Value,1,30);
+end;
+
+procedure tDetalhes_Consultor.SetFComissao(const Value: Real);
+begin
+   self.FComissao := Value;
+end;
+
+procedure tBanco.SetFConta(const Value: String);
+begin
+   self.FConta := Copy(Value,1,10);
+end;
+
+procedure tBanco.SetFConta_Digito(const Value: String);
+begin
+   self.FConta_Digito := Copy(Value,1,1);
+end;
+
 {
 procedure tDetalhes_Consultor.setFCodigoMunicipio(const Value: String);
 begin
@@ -1112,6 +1379,16 @@ end;
 procedure tDetalhes_Consultor.setFDataCadastro(const Value: TDateTime);
 begin
    FDataCadastro := Value;
+end;
+
+procedure tBanco.SetFOperacao(const Value: String);
+begin
+   self.FOperacao := Copy(Value,1,3);
+end;
+
+procedure tBanco.SetFStatus(const Value: TStatusCadastralAI);
+begin
+   self.FStatus := Value;
 end;
 
 procedure tDetalhes_Consultor.setFRamoAtividade(const Value: String);

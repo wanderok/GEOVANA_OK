@@ -1,11 +1,12 @@
 object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Consultor | Comiss'#245'es e Banco'
-  ClientHeight = 355
-  ClientWidth = 538
+  ClientHeight = 383
+  ClientWidth = 631
   Color = clWhite
   DefaultMonitor = dmMainForm
   Font.Charset = DEFAULT_CHARSET
@@ -17,37 +18,49 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
   Position = poMainFormCenter
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
-    Left = 256
-    Top = 184
-    Width = 31
-    Height = 13
-    Caption = 'Label1'
-  end
   object lbNomeDaTela: TLabel
     Left = 0
-    Top = 342
-    Width = 538
+    Top = 370
+    Width = 631
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
-    Caption = '[ T31 ] '
+    Caption = '[ T31 ]'
+    Color = clWhite
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    ParentColor = False
     ParentFont = False
-    ExplicitLeft = 498
-    ExplicitWidth = 40
+    Transparent = True
+    ExplicitLeft = 594
+    ExplicitWidth = 37
+  end
+  object TLabel
+    Left = 141
+    Top = 359
+    Width = 321
+    Height = 13
+    Caption = 'Use duplo clique na conta banc'#225'ria do grid para alter'#225'-la.'
+    Color = clWhite
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
   end
   object gpBanco: TGroupBox
-    Left = -3
+    Left = 0
     Top = 0
-    Width = 548
-    Height = 273
+    Width = 631
+    Height = 319
     Color = clHighlightText
     Font.Charset = ANSI_CHARSET
     Font.Color = clBtnHighlight
@@ -62,7 +75,7 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
     Touch.TabletOptions = [toPressAndHold]
     object TLabel
       Left = 374
-      Top = 15
+      Top = 42
       Width = 40
       Height = 18
       Caption = 'D'#237'gito:'
@@ -75,7 +88,7 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
     end
     object TLabel
       Left = 463
-      Top = 16
+      Top = 43
       Width = 26
       Height = 17
       Caption = 'OP:'
@@ -88,7 +101,7 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
     end
     object TLabel
       Left = 270
-      Top = 53
+      Top = 80
       Width = 40
       Height = 18
       Caption = 'D'#237'gito:'
@@ -101,7 +114,7 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
     end
     object TLabel
       Left = 13
-      Top = 53
+      Top = 80
       Width = 43
       Height = 18
       Caption = 'Conta:'
@@ -114,7 +127,7 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
     end
     object TLabel
       Left = 257
-      Top = 15
+      Top = 42
       Width = 55
       Height = 18
       Caption = 'Ag'#234'ncia:'
@@ -127,7 +140,7 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
     end
     object TLabel
       Left = 13
-      Top = 15
+      Top = 42
       Width = 45
       Height = 18
       Caption = 'Banco:'
@@ -138,9 +151,71 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
       Font.Style = []
       ParentFont = False
     end
+    object Label3: TLabel
+      Left = 56
+      Top = 328
+      Width = 96
+      Height = 18
+      Caption = 'CONBC_USU'
+    end
+    object Label4: TLabel
+      Left = 56
+      Top = 376
+      Width = 84
+      Height = 18
+      Caption = 'CONBC_DT'
+    end
+    object Label5: TLabel
+      Left = 56
+      Top = 424
+      Width = 86
+      Height = 18
+      Caption = 'CONBC_HR'
+    end
     object TLabel
-      Left = 358
-      Top = 50
+      Left = 5
+      Top = 295
+      Width = 62
+      Height = 13
+      Caption = 'Definido por:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label1: TLabel
+      Left = 561
+      Top = 52
+      Width = 39
+      Height = 18
+      Caption = 'Ativa'
+      Color = clGreen
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGreen
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label2: TLabel
+      Left = 561
+      Top = 76
+      Width = 54
+      Height = 18
+      Caption = 'Inativa'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clRed
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object TLabel
+      Left = 430
+      Top = 0
       Width = 107
       Height = 24
       Caption = 'Comiss'#227'o: '
@@ -151,202 +226,10 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object cxGrid2: TcxGrid
-      AlignWithMargins = True
-      Left = 13
-      Top = 90
-      Width = 516
-      Height = 159
-      Touch.ParentTabletOptions = False
-      Touch.TabletOptions = []
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 7
-      LookAndFeel.NativeStyle = False
-      LookAndFeel.SkinName = 'Office2013White'
-      object cxGridDBTableView2: TcxGridDBTableView
-        Navigator.Buttons.CustomButtons = <>
-        DataController.Summary.DefaultGroupSummaryItems = <>
-        DataController.Summary.FooterSummaryItems = <>
-        DataController.Summary.SummaryGroups = <>
-        OptionsView.NoDataToDisplayInfoText = '...'
-        OptionsView.GroupByBox = False
-        object cxGridDB_ID: TcxGridDBColumn
-          DataBinding.FieldName = 'id'
-          Visible = False
-          HeaderAlignmentHorz = taCenter
-        end
-        object cxGridDB_BANCO: TcxGridDBColumn
-          Caption = 'Banco'
-          DataBinding.FieldName = 'BANCO'
-          PropertiesClassName = 'TcxLabelProperties'
-          FooterAlignmentHorz = taCenter
-          GroupSummaryAlignment = taCenter
-          HeaderAlignmentHorz = taCenter
-          MinWidth = 197
-          Options.Editing = False
-          Options.FilteringWithFindPanel = False
-          Options.IgnoreTimeForFiltering = False
-          Options.IncSearch = False
-          Options.FilteringAddValueItems = False
-          Options.FilteringFilteredItemsList = False
-          Options.FilteringMRUItemsList = False
-          Options.FilteringPopup = False
-          Options.FilteringPopupMultiSelect = False
-          Options.GroupFooters = False
-          Options.Grouping = False
-          Options.HorzSizing = False
-          Width = 197
-        end
-        object cxGridDB_AGENCIA: TcxGridDBColumn
-          Caption = 'Ag'#234'ncia'
-          DataBinding.FieldName = 'AGENCIA'
-          PropertiesClassName = 'TcxMaskEditProperties'
-          FooterAlignmentHorz = taCenter
-          GroupSummaryAlignment = taCenter
-          HeaderAlignmentHorz = taCenter
-          MinWidth = 55
-          Options.Editing = False
-          Options.Filtering = False
-          Options.FilteringWithFindPanel = False
-          Options.Focusing = False
-          Options.IgnoreTimeForFiltering = False
-          Options.IncSearch = False
-          Options.FilteringAddValueItems = False
-          Options.FilteringFilteredItemsList = False
-          Options.FilteringMRUItemsList = False
-          Options.FilteringPopup = False
-          Options.FilteringPopupMultiSelect = False
-          Options.GroupFooters = False
-          Options.Grouping = False
-          Options.HorzSizing = False
-          Width = 55
-        end
-        object cxGridDB_AG_DIGITO: TcxGridDBColumn
-          Caption = 'D'#237'gito'
-          DataBinding.FieldName = 'DIGITO_AG'
-          PropertiesClassName = 'TcxLabelProperties'
-          HeaderAlignmentHorz = taCenter
-          MinWidth = 45
-          Options.Editing = False
-          Options.Filtering = False
-          Options.FilteringWithFindPanel = False
-          Options.Focusing = False
-          Options.IgnoreTimeForFiltering = False
-          Options.IncSearch = False
-          Options.FilteringAddValueItems = False
-          Options.FilteringFilteredItemsList = False
-          Options.FilteringMRUItemsList = False
-          Options.FilteringPopup = False
-          Options.FilteringPopupMultiSelect = False
-          Options.GroupFooters = False
-          Options.Grouping = False
-          Options.HorzSizing = False
-          Width = 45
-        end
-        object cxGridDB_OP: TcxGridDBColumn
-          Caption = 'OP'
-          DataBinding.FieldName = 'OPERACAO'
-          PropertiesClassName = 'TcxLabelProperties'
-          Properties.Alignment.Horz = taCenter
-          Properties.Alignment.Vert = taBottomJustify
-          FooterAlignmentHorz = taCenter
-          GroupSummaryAlignment = taCenter
-          HeaderAlignmentHorz = taCenter
-          MinWidth = 35
-          Options.Editing = False
-          Options.Filtering = False
-          Options.FilteringWithFindPanel = False
-          Options.Focusing = False
-          Options.IgnoreTimeForFiltering = False
-          Options.IncSearch = False
-          Options.FilteringAddValueItems = False
-          Options.FilteringFilteredItemsList = False
-          Options.FilteringMRUItemsList = False
-          Options.FilteringPopup = False
-          Options.FilteringPopupMultiSelect = False
-          Options.GroupFooters = False
-          Options.Grouping = False
-          Options.HorzSizing = False
-          Width = 35
-        end
-        object cxGridDB_CONTA: TcxGridDBColumn
-          Caption = 'Conta'
-          DataBinding.FieldName = 'CONTA'
-          PropertiesClassName = 'TcxLabelProperties'
-          HeaderAlignmentHorz = taCenter
-          MinWidth = 60
-          Options.Editing = False
-          Options.Filtering = False
-          Options.FilteringWithFindPanel = False
-          Options.Focusing = False
-          Options.IgnoreTimeForFiltering = False
-          Options.IncSearch = False
-          Options.FilteringAddValueItems = False
-          Options.FilteringFilteredItemsList = False
-          Options.FilteringMRUItemsList = False
-          Options.FilteringPopup = False
-          Options.FilteringPopupMultiSelect = False
-          Options.GroupFooters = False
-          Options.Grouping = False
-          Options.HorzSizing = False
-          Width = 60
-        end
-        object cxGridDB_DIGITO: TcxGridDBColumn
-          Caption = 'D'#237'gito'
-          DataBinding.FieldName = 'DIGITO'
-          PropertiesClassName = 'TcxMaskEditProperties'
-          Properties.Alignment.Horz = taCenter
-          FooterAlignmentHorz = taCenter
-          GroupSummaryAlignment = taCenter
-          HeaderAlignmentHorz = taCenter
-          MinWidth = 45
-          Options.Editing = False
-          Options.Filtering = False
-          Options.FilteringWithFindPanel = False
-          Options.Focusing = False
-          Options.IgnoreTimeForFiltering = False
-          Options.IncSearch = False
-          Options.FilteringAddValueItems = False
-          Options.FilteringFilteredItemsList = False
-          Options.FilteringMRUItemsList = False
-          Options.FilteringPopup = False
-          Options.FilteringPopupMultiSelect = False
-          Options.GroupFooters = False
-          Options.Grouping = False
-          Options.HorzSizing = False
-          Width = 45
-        end
-        object cxGridDB_COMISSOES: TcxGridDBColumn
-          Caption = 'Comiss'#245'es'
-          DataBinding.FieldName = 'COMISSAO'
-          PropertiesClassName = 'TcxMaskEditProperties'
-          Properties.EditMask = '###%;1;_'
-          FooterAlignmentHorz = taCenter
-          GroupSummaryAlignment = taCenter
-          HeaderAlignmentHorz = taCenter
-          Width = 75
-        end
-      end
-      object cxGrid2DBTableView1: TcxGridDBTableView
-        Navigator.Buttons.CustomButtons = <>
-        DataController.DetailKeyFieldNames = 'NOME'
-        DataController.KeyFieldNames = 'NOME'
-        DataController.Summary.DefaultGroupSummaryItems = <>
-        DataController.Summary.FooterSummaryItems = <>
-        DataController.Summary.SummaryGroups = <>
-      end
-      object cxGridLevel2: TcxGridLevel
-        GridView = cxGridDBTableView2
-      end
-    end
     object edBanco: TEdit
+      Tag = 100
       Left = 63
-      Top = 12
+      Top = 39
       Width = 187
       Height = 26
       AutoSize = False
@@ -360,9 +243,10 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
       ParentFont = False
       TabOrder = 0
     end
-    object Edit1: TEdit
+    object edAgencia: TEdit
+      Tag = 100
       Left = 314
-      Top = 12
+      Top = 39
       Width = 55
       Height = 26
       AutoSize = False
@@ -377,8 +261,9 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
       TabOrder = 1
     end
     object edDigitoAgencia: TEdit
+      Tag = 200
       Left = 416
-      Top = 12
+      Top = 39
       Width = 35
       Height = 26
       AutoSize = False
@@ -393,8 +278,9 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
       TabOrder = 2
     end
     object edOperacao: TEdit
+      Tag = 200
       Left = 490
-      Top = 12
+      Top = 39
       Width = 41
       Height = 26
       AutoSize = False
@@ -409,8 +295,9 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
       TabOrder = 3
     end
     object edConta: TEdit
+      Tag = 100
       Left = 63
-      Top = 49
+      Top = 76
       Width = 187
       Height = 26
       AutoSize = False
@@ -425,8 +312,9 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
       TabOrder = 4
     end
     object edDigitoConta: TEdit
+      Tag = 200
       Left = 314
-      Top = 49
+      Top = 76
       Width = 35
       Height = 26
       AutoSize = False
@@ -440,9 +328,251 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
       ParentFont = False
       TabOrder = 5
     end
+    object DBGrid1: TDBGrid
+      Left = 3
+      Top = 105
+      Width = 625
+      Height = 188
+      Hint = 'Duplo clique na conta para alterar'
+      DataSource = DataSource1
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgTitleClick, dgTitleHotTrack]
+      ParentShowHint = False
+      ReadOnly = True
+      ShowHint = True
+      TabOrder = 6
+      TitleFont.Charset = ANSI_CHARSET
+      TitleFont.Color = clBtnHighlight
+      TitleFont.Height = -15
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = [fsBold]
+      OnDrawColumnCell = DBGrid1DrawColumnCell
+      OnDblClick = DBGrid1DblClick
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'CONBC_BANCO'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Title.Caption = 'Banco'
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clBlack
+          Title.Font.Height = -11
+          Title.Font.Name = 'Tahoma'
+          Title.Font.Style = [fsBold]
+          Width = 228
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CONBC_AGENCIA'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Title.Caption = 'Ag'#234'ncia'
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clBlack
+          Title.Font.Height = -11
+          Title.Font.Name = 'Tahoma'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'CONBC_AGENCIA_DIG'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Title.Alignment = taCenter
+          Title.Caption = 'D'#237'gito'
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clBlack
+          Title.Font.Height = -11
+          Title.Font.Name = 'Tahoma'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'CONBC_OPERACAO'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Title.Alignment = taCenter
+          Title.Caption = 'OP'
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clBlack
+          Title.Font.Height = -11
+          Title.Font.Name = 'Tahoma'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CONBC_CONTA'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Title.Caption = 'Conta'
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clBlack
+          Title.Font.Height = -11
+          Title.Font.Name = 'Tahoma'
+          Title.Font.Style = [fsBold]
+          Width = 120
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          FieldName = 'CONBC_CONTA_DIG'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Title.Alignment = taCenter
+          Title.Caption = 'D'#237'gito'
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clBlack
+          Title.Font.Height = -11
+          Title.Font.Name = 'Tahoma'
+          Title.Font.Style = [fsBold]
+          Width = 39
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'STATUS'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Title.Caption = 'Status'
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clBlack
+          Title.Font.Height = -11
+          Title.Font.Name = 'Tahoma'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end>
+    end
+    object cxDBTextEdit1: TcxDBTextEdit
+      Left = 67
+      Top = 294
+      TabStop = False
+      AutoSize = False
+      DataBinding.DataField = 'CONBC_ESTACAO'
+      DataBinding.DataSource = DataSource1
+      ParentFont = False
+      Properties.ReadOnly = True
+      Style.Color = clSilver
+      Style.Font.Charset = DEFAULT_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -11
+      Style.Font.Name = 'Tahoma'
+      Style.Font.Style = [fsBold]
+      Style.IsFontAssigned = True
+      TabOrder = 7
+      Height = 21
+      Width = 99
+    end
+    object cxDBTextEdit2: TcxDBTextEdit
+      Left = 165
+      Top = 294
+      TabStop = False
+      AutoSize = False
+      DataBinding.DataField = 'CONBC_DT'
+      DataBinding.DataSource = DataSource1
+      ParentFont = False
+      Properties.ReadOnly = True
+      Style.Color = clSilver
+      Style.Font.Charset = DEFAULT_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -11
+      Style.Font.Name = 'Tahoma'
+      Style.Font.Style = [fsBold]
+      Style.IsFontAssigned = True
+      TabOrder = 8
+      Height = 21
+      Width = 87
+    end
+    object cxDBTextEdit3: TcxDBTextEdit
+      Left = 252
+      Top = 294
+      TabStop = False
+      AutoSize = False
+      DataBinding.DataField = 'CONBC_HR'
+      DataBinding.DataSource = DataSource1
+      ParentFont = False
+      Properties.ReadOnly = True
+      Style.Color = clSilver
+      Style.Font.Charset = DEFAULT_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -11
+      Style.Font.Name = 'Tahoma'
+      Style.Font.Style = [fsBold]
+      Style.IsFontAssigned = True
+      TabOrder = 9
+      Height = 21
+      Width = 42
+    end
+    object cxDBTextEdit4: TcxDBTextEdit
+      Left = 292
+      Top = 294
+      TabStop = False
+      AutoSize = False
+      DataBinding.DataField = 'CONBC_ESTACAO'
+      DataBinding.DataSource = DataSource1
+      ParentFont = False
+      Properties.ReadOnly = True
+      Style.Color = clSilver
+      Style.Font.Charset = DEFAULT_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -11
+      Style.Font.Name = 'Tahoma'
+      Style.Font.Style = [fsBold]
+      Style.IsFontAssigned = True
+      TabOrder = 10
+      Height = 21
+      Width = 336
+    end
+    object rgStatus: TRadioGroup
+      Left = 538
+      Top = 30
+      Width = 89
+      Height = 73
+      Caption = 'Status'
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      Items.Strings = (
+        ''
+        '')
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 11
+    end
     object edComissao: TEdit
-      Left = 466
-      Top = 52
+      Tag = 200
+      Left = 538
+      Top = 2
       Width = 63
       Height = 26
       AutoSize = False
@@ -454,12 +584,14 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
       Font.Style = [fsBold]
       MaxLength = 5
       ParentFont = False
-      TabOrder = 6
+      TabOrder = 12
+      OnExit = edComissaoExit
+      OnKeyPress = edComissaoKeyPress
     end
   end
   object cxButton21: TcxButton
-    Left = 21
-    Top = 287
+    Left = 3
+    Top = 319
     Width = 105
     Height = 48
     Caption = 'Gravar'
@@ -606,8 +738,8 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
     OnClick = cxButton21Click
   end
   object cxButton28: TcxButton
-    Left = 409
-    Top = 288
+    Left = 524
+    Top = 320
     Width = 105
     Height = 48
     Caption = 'Sair'
@@ -752,5 +884,102 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
     Font.Style = [fsBold]
     ParentFont = False
     OnClick = cxButton28Click
+  end
+  object FDQuery1: TFDQuery
+    Connection = DM.Database1
+    SQL.Strings = (
+      'SELECT CONBC_CODIGO,'
+      '       CONBC_BANCO,'
+      '       CONBC_AGENCIA,'
+      '       CONBC_AGENCIA_DIG,'
+      '       CONBC_OPERACAO,'
+      '       CONBC_CONTA,'
+      '       CONBC_CONTA_DIG,'
+      '       CONBC_STATUS,'
+      '       CASE CONBC_STATUS WHEN 1  THEN '#39'Ativo'#39
+      
+        '                                            WHEN 0  THEN '#39'Inativ' +
+        'o'#39
+      '                                            ELSE  '#39'Inativo'#39
+      '       END AS STATUS,'
+      '       -- IF(CONBC_STATUS = 1 ? '#39'Ativo'#39' : '#39'Inativo'#39') AS STATUS,'
+      '       CONBC_ESTACAO,'
+      '       CONBC_USU,'
+      '       CONBC_DT,'
+      '       CONBC_HR'
+      ' FROM CONSULTOR_BANCO_COMISSAO_CONBC')
+    Left = 37
+    Top = 112
+    object FDQuery1CONBC_CODIGO: TStringField
+      FieldName = 'CONBC_CODIGO'
+      Origin = 'CONBC_CODIGO'
+      Required = True
+      Size = 10
+    end
+    object FDQuery1CONBC_BANCO: TStringField
+      FieldName = 'CONBC_BANCO'
+      Origin = 'CONBC_BANCO'
+      Size = 40
+    end
+    object FDQuery1CONBC_AGENCIA: TStringField
+      FieldName = 'CONBC_AGENCIA'
+      Origin = 'CONBC_AGENCIA'
+      Size = 10
+    end
+    object FDQuery1CONBC_AGENCIA_DIG: TStringField
+      FieldName = 'CONBC_AGENCIA_DIG'
+      Origin = 'CONBC_AGENCIA_DIG'
+      Size = 1
+    end
+    object FDQuery1CONBC_OPERACAO: TStringField
+      FieldName = 'CONBC_OPERACAO'
+      Origin = 'CONBC_OPERACAO'
+      Size = 3
+    end
+    object FDQuery1CONBC_CONTA: TStringField
+      FieldName = 'CONBC_CONTA'
+      Origin = 'CONBC_CONTA'
+    end
+    object FDQuery1CONBC_CONTA_DIG: TStringField
+      FieldName = 'CONBC_CONTA_DIG'
+      Origin = 'CONBC_CONTA_DIG'
+      Size = 1
+    end
+    object FDQuery1CONBC_STATUS: TIntegerField
+      FieldName = 'CONBC_STATUS'
+      Origin = 'CONBC_STATUS'
+      Required = True
+    end
+    object FDQuery1CONBC_ESTACAO: TStringField
+      FieldName = 'CONBC_ESTACAO'
+      Origin = 'CONBC_ESTACAO'
+      Size = 40
+    end
+    object FDQuery1CONBC_USU: TStringField
+      FieldName = 'CONBC_USU'
+      Origin = 'CONBC_USU'
+      Size = 3
+    end
+    object FDQuery1CONBC_DT: TSQLTimeStampField
+      FieldName = 'CONBC_DT'
+      Origin = 'CONBC_DT'
+    end
+    object FDQuery1CONBC_HR: TStringField
+      FieldName = 'CONBC_HR'
+      Origin = 'CONBC_HR'
+      Size = 5
+    end
+    object FDQuery1STATUS: TStringField
+      FieldName = 'STATUS'
+      Origin = 'STATUS'
+      ReadOnly = True
+      Required = True
+      Size = 7
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = FDQuery1
+    Left = 125
+    Top = 120
   end
 end
