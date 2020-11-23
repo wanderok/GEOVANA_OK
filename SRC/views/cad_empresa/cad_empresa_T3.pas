@@ -189,7 +189,7 @@ uses
    cad_zona_T12,
 
    config_certificado, config_email,
-   config_nfe, config_mde, config_nfs,
+   config_nfe_T32, config_mde, config_nfs,
    email_arquivos_fiscais,
    integracao_outros_bancos, config_mdfe;
 
@@ -239,8 +239,8 @@ end;
 
 procedure Tfrm_cad_empresa_T3.BtnNFEClick(Sender: TObject);
 begin
-    Frmconfig_NFe := TFrmconfig_NFe.Create(nil);
-    Frmconfig_NFe.showmodal;
+    FrmConfig_nfe_T32 := TFrmConfig_nfe_T32.Create(nil);
+    FrmConfig_nfe_T32.showmodal;
 end;
 
 procedure Tfrm_cad_empresa_T3.BtnNFSEClick(Sender: TObject);

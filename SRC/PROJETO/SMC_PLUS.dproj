@@ -184,10 +184,6 @@
             <Form>Frm_Conf_Nfce</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\views\configs\config_nfe.pas">
-            <Form>Frmconfig_NFe</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="..\..\src\views\configs\config_nfs.pas">
             <Form>frm_confi_nfs</Form>
             <FormType>dfm</FormType>
@@ -377,6 +373,10 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\Controles\Telas_Numeros.pas"/>
+        <DCCReference Include="..\..\SRC\views\configs\config_nfe_T32.pas">
+            <Form>frmConfig_NFe_T32</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <None Include="ModelSupport_SMC_PLUS\default.txaPackage"/>
         <None Include="ModelSupport_SMC_PLUS\default.txvpck"/>
         <None Include="ModelSupport_SMC_PLUS\vw_Login\Class Diagram1.txvcls"/>

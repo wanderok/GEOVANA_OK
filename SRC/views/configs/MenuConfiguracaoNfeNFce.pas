@@ -26,12 +26,12 @@ implementation
 
 {$R *.dfm}
 
-uses config_nfe, config_nfce;
+uses config_NFe_T32, config_nfce;
 
 {
 procedure TfrmMenuConfiguracaoNfeNFce.Button1Click(Sender: TObject);
 begin
-  if not verificaaberta(Frmconfig_NFe) then
+  if not verificaaberta(Frmconfig_NFe_T32) then
   begin
     Frmconfig_NFe := TFrmconfig_nfe.Create(nil);
     Frmconfig_NFe.showmodal;

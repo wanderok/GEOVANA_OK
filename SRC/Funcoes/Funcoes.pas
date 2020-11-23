@@ -101,6 +101,18 @@ var Acesso            : TAcesso;
     xxxAtualizado,
     globalFuncoes_Atualizado:String;
 
+procedure ApagaRegistroDeDadosDaTela(pTela:String);
+//Apaga os registros de controle contendo os dados da tela
+procedure ComparaDadosDaTela(pFrase:String;pTela:Tobject);
+//Compara os dados da tela atual com o salvo antes (anterior)
+procedure VerificaSeMudouDadoDaTela(pFrase,pTela,pNome,pValor:String);
+//Compara os dados da tela atual com o salvo antes (anterior)
+procedure SalvaDadosDaTela(Tela:TObject);
+//Salva todos os campos da tela
+procedure Salvar_DadosDaTela(pTela,pNome,pValor:String);
+//028 salva um registro de campo da tela
+function UsuarioMASTER:Boolean;
+procedure AcessoExclusivoMaster;
 procedure MostrarMemo(pMemo:TMemo);
 function RemoveAcento(const pText: string): string;
 function RemoverObsCorreios(const pText: string): string;
@@ -2816,6 +2828,180 @@ begin
    qLocal.Free;
    result := true;
 end;
+
+function UsuarioMASTER:Boolean;
+begin
+  result := (Usuario.Codigo = 'MASTER');
+end;
+
+procedure AcessoExclusivoMaster;
+begin
+  Avisos.Avisar('Acesso exclusivo do MASTER.');
+end;
+
+procedure SalvaDadosDaTela(Tela:TObject);
+var xNome, xValor:String;
+    i, item : integer;
+begin
+   // Recebe uma tela e salva o conteuo de todos os seus
+   // edits, maskedits, radiogroup
+   //---------------------------------------------
+   for i := 0 to (Tela as tForm).ComponentCount - 1 Do
+   begin
+     xNome:='';
+     // Edits
+     if ((Tela as tForm).Components[i] is tEdit) then
+     begin
+        xNome  := ((Tela as tForm).Components[i] as tEdit).Name;
+        xValor := ((Tela as tForm).Components[i] as tEdit).Text;
+     end;
+     // MaskEdits
+     if ((Tela as tForm).Components[i] is tMaskEdit) then
+     begin
+        xNome  := ((Tela as tForm).Components[i] as tMaskEdit).Name;
+        xValor := ((Tela as tForm).Components[i] as tMaskEdit).Text;
+     end;
+     // RadioGroups
+     if ((Tela as tForm).Components[i] is tRadioGroup) then
+     begin
+        xNome  := ((Tela as tForm).Components[i] as tRadioGroup).Caption;
+        item   := ((Tela as tForm).Components[i] as tRadioGroup).ItemIndex;
+        if item = -1 then
+           xValor := 'Não informado'
+        else
+           xValor := ((Tela as tForm).Components[i] as tRadioGroup).Items[item];
+     end;
+     // Checkboxes
+     if ((Tela as tForm).Components[i] is TCheckbox) then
+     begin
+        xNome  := ((Tela as tForm).Components[i] as TCheckbox).Caption;
+        if ((Tela as tForm).Components[i] as TCheckbox).Checked then
+           xValor := 'Marcado'
+        else
+           xValor := 'Desmarcado';
+     end;
+
+     if xNome <> '' then
+        Salvar_DadosDaTela((Tela as tForm).Name,xNome,xValor);
+   end;
+end;
+
+procedure Salvar_DadosDaTela(pTela,pNome,pValor:String);
+begin
+  // Salva um registro de dado da tela
+  DM.Query1.Close;
+  DM.Query1.Sql.Clear;
+  DM.Query1.Sql.Add('INSERT INTO DADOSTELA_DT');
+  DM.Query1.Sql.Add('    ( DT_USUARIO,       ');
+  DM.Query1.Sql.Add('      DT_ESTACAO,       ');
+  DM.Query1.Sql.Add('      DT_TELA,          ');
+  DM.Query1.Sql.Add('      DT_NOME,          ');
+  DM.Query1.Sql.Add('      DT_VALOR)         ');
+  DM.Query1.Sql.Add('VALUES                  ');
+  DM.Query1.Sql.Add('    (:DT_USUARIO,       ');
+  DM.Query1.Sql.Add('     :DT_ESTACAO,       ');
+  DM.Query1.Sql.Add('     :DT_TELA,          ');
+  DM.Query1.Sql.Add('     :DT_NOME,          ');
+  DM.Query1.Sql.Add('     :DT_VALOR)         ');
+  DM.Query1.ParamByName('DT_USUARIO').AsString := Usuario.Codigo;
+  DM.Query1.ParamByName('DT_ESTACAO').AsString := NomeComputador;
+  DM.Query1.ParamByName('DT_NOME'   ).AsString := pNome;
+  DM.Query1.ParamByName('DT_VALOR'  ).AsString := pValor;
+  DM.Query1.ParamByName('DT_TELA'   ).AsString := pTela;
+  DM.Query1.ExecSql;
+end;
+
+procedure ComparaDadosDaTela(pFrase:String;pTela:Tobject);
+var xNome, xValor, xNomeDaTela:String;
+    i : integer;
+begin
+   xNomeDaTela := (pTela as tForm).Name;
+
+   for i := 0 to (pTela as tForm).ComponentCount - 1 Do
+   begin
+     xNome:='';
+     // Edits
+     if ((pTela as tForm).Components[i] is tEdit) then
+     begin
+        xNome  := ((pTela as tForm).Components[i] as tEdit).Name;
+        xValor := ((pTela as tForm).Components[i] as tEdit).Text;
+     end;
+     // MaskEdits
+     if ((pTela as tForm).Components[i] is tMaskEdit) then
+     begin
+        xNome  := ((pTela as tForm).Components[i] as tMaskEdit).Name;
+        xValor := ((pTela as tForm).Components[i] as tMaskEdit).Text;
+     end;
+     // RadioGroups
+     if ((pTela as tForm).Components[i] is tRadioGroup) then
+     begin
+        xNome  := ((pTela as tForm).Components[i] as tRadioGroup).Name;
+        xValor := IntToStr(((pTela as tForm).Components[i] as tRadioGroup).ItemIndex);
+     end;
+     // Checkboxes
+     if ((pTela as tForm).Components[i] is TCheckbox) then
+     begin
+        xNome  := ((pTela as tForm).Components[i] as TCheckbox).Name;
+        if ((pTela as tForm).Components[i] as TCheckbox).Checked then
+           xValor := 'Marcado'
+        else
+           xValor := 'Desmarcado';
+     end;
+
+     VerificaSeMudouDadoDaTela(pFrase,xNomeDaTela,xNome,xValor)
+   end;
+   ApagaRegistroDeDadosDaTela(xNomeDaTela);
+end;
+
+procedure VerificaSeMudouDadoDaTela(pFrase,pTela,pNome,pValor:String);
+var vValorAntesDeAlterar:String;
+begin
+  DM.Query1.Close;
+  DM.Query1.Sql.Clear;
+  DM.Query1.Sql.Add('SELECT DT_VALOR                 ');
+  DM.Query1.Sql.Add('  FROM DADOSTELA_DT             ');
+  DM.Query1.Sql.Add(' WHERE DT_USUARIO = :DT_USUARIO ');
+  DM.Query1.Sql.Add('   AND DT_ESTACAO = :DT_ESTACAO ');
+  DM.Query1.Sql.Add('   AND DT_TELA    = :DT_TELA    ');
+  DM.Query1.Sql.Add('   AND DT_NOME    = :DT_NOME    ');
+  DM.Query1.ParamByName('DT_USUARIO').AsString := Usuario.Codigo;
+  DM.Query1.ParamByName('DT_ESTACAO').AsString := NomeComputador;
+  DM.Query1.ParamByName('DT_NOME'   ).AsString := pNome;
+  DM.Query1.ParamByName('DT_TELA'   ).AsString := pTela;
+  DM.Query1.Open;
+  if DM.Query1.eof then
+     exit;
+
+  vValorAntesDeAlterar := DM.Query1.FieldByName('DT_VALOR').AsString;
+  if vValorAntesDeAlterar  = pValor then
+     exit;
+
+  // Houve mudancas - registrar
+  if Trim(vValorAntesDeAlterar) = '' then
+     vValorAntesDeAlterar := '(vazio)';
+
+  if Trim(pValor) = '' then
+     pValor := '(vazio)';
+
+  Log(pTela,'Alterou '+pFrase+ ', '+pNome + ' de ' + vValorAntesDeAlterar
+             + ' para ' + pValor +'( '+pTela+' )');
+end;
+
+procedure ApagaRegistroDeDadosDaTela(pTela:String);
+begin
+  // Apaga os registros de controle contendo os dados da tela
+  DM.Query1.Close;
+  DM.Query1.Sql.Clear;
+  DM.Query1.Sql.Add('DELETE FROM DADOSTELA_DT        ');
+  DM.Query1.Sql.Add(' WHERE DT_USUARIO = :DT_USUARIO ');
+  DM.Query1.Sql.Add('   AND DT_ESTACAO = :DT_ESTACAO ');
+  DM.Query1.Sql.Add('   AND DT_TELA    = :DT_TELA    ');
+  DM.Query1.ParamByName('DT_USUARIO').AsString := Usuario.Codigo;
+  DM.Query1.ParamByName('DT_ESTACAO').AsString := NomeComputador;
+  DM.Query1.ParamByName('DT_TELA'   ).AsString := pTela;
+  DM.Query1.ExecSql;
+end;
+
 
 end.
 

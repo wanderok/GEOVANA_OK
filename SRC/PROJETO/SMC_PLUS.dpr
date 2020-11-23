@@ -26,7 +26,6 @@ uses
   config_mde in '..\..\src\views\configs\config_mde.pas' {Frm_Conf_mde},
   config_mdfe in '..\..\src\views\configs\config_mdfe.pas' {Frm_config_MDFe},
   config_nfce in '..\..\src\views\configs\config_nfce.pas' {Frm_Conf_Nfce},
-  config_nfe in '..\..\src\views\configs\config_nfe.pas' {Frmconfig_NFe},
   config_nfs in '..\..\src\views\configs\config_nfs.pas' {frm_confi_nfs},
   email_arquivos_fiscais in '..\..\src\views\configs\email_arquivos_fiscais.pas' {frm_config_email_fiscais},
   integracao_outros_bancos in '..\..\src\views\configs\integracao_outros_bancos.pas' {frm_intagracao_outras_base_dados},
@@ -88,7 +87,8 @@ uses
   MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27 in '..\..\src\views\cad_motorista\MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27.pas' {frmMOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27},
   Classe_Comissao in '..\..\src\Classes\Classe_Comissao.pas',
   Consultor_Banco_Comissoes_T31 in '..\..\src\views\cad_consultor\Consultor_Banco_Comissoes_T31.pas' {frmConsultor_Banco_Comissoes_T31},
-  Telas_Numeros in '..\..\src\Controles\Telas_Numeros.pas';
+  Telas_Numeros in '..\..\src\Controles\Telas_Numeros.pas',
+  config_nfe_T32 in '..\..\SRC\views\configs\config_nfe_T32.pas' {frmConfig_NFe_T32};
 
 {$R *.res}
 

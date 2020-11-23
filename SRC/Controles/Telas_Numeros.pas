@@ -3,6 +3,7 @@ unit Telas_Numeros;
 ====================================================================================================
 |tela |unit                                        |form                                           |
 |-----|--------------------------------------------|-----------------------------------------------|
+|T32  |config_nfe_T32                              |frmConfig_NFe_T32                              |
 |T31  |Consultor_Banco_Comissoes_T31               |frmConsultor_Banco_Comissoes_T31               |
 |T30  |cad_comissoes_T30                           |frm_cad_comissoes_T30                          |
 |T29  |TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB_T29|frmTRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB_T29|

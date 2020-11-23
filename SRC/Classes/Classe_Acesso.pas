@@ -36,6 +36,9 @@ type
       procedure Alteracoes_Cad_Contador;
       procedure Comissoes_colaboradores;
       procedure Comissoes_consultor;
+      procedure Configuracoes_NFe;
+      procedure DadosDaTela;
+      procedure NotasFiscais;
 
    public
       procedure Conectar;
@@ -1604,6 +1607,9 @@ begin
    Alteracoes_Cad_Contador;
    Comissoes_colaboradores;
    Comissoes_consultor;
+   Configuracoes_NFe;
+   DadosDaTela;
+   NotasFiscais;
 
    Tratar_Cad_Bairro;
 
@@ -1753,6 +1759,127 @@ begin
    result := true;
 end;
 
+procedure TAcesso.Configuracoes_NFe;
+begin
+  if not Ja_Executou_Script('NFe_Configuracao') then
+  begin
+      DM.Query1.Close;
+      DM.Query1.Sql.Clear;
+      DM.Query1.Sql.Add('CREATE TABLE NFe_Configuracao      ');
+      DM.Query1.Sql.Add('    ( NFeC_SERIE INTEGER NOT NULL, '); // Número de Série da NFe (tamanho 3)
+      DM.Query1.Sql.Add('      NFeC_nNF   INTEGER NOT NULL) '); // Número Sequencial da NFe
+      DM.Query1.ExecSql;
+
+      DM.Query1.Close;
+      DM.Query1.Sql.Clear;
+      DM.Query1.Sql.Add('INSERT INTO NFE_Configuracao');
+      DM.Query1.Sql.Add('    ( NFeC_SERIE,           ');
+      DM.Query1.Sql.Add('      NFeC_nNF)             ');
+      DM.Query1.Sql.Add('VALUES                      ');
+      DM.Query1.Sql.Add('    (:NFeC_SERIE,           ');
+      DM.Query1.Sql.Add('     :NFeC_nNF)             ');
+      DM.Query1.ParamByName('NFeC_SERIE').AsInteger := 0;
+      DM.Query1.ParamByName('NFeC_nNF'  ).AsInteger := 0;
+      DM.Query1.ExecSql;
+  end;
+  // Incluir coluna-flag que define se o usuário deseja visualizar mensagens
+  // do webservice ao emitir NFe
+  if not Ja_Executou_Script('Criada coluna NFeC_VerMsgWS') then
+  begin
+     // Deseja visualizar msg do WS
+     //   0 = Não
+     //   1 = Sim
+     Executar('ALTER TABLE NFe_Configuracao ADD NFeC_VerMsgWS INTEGER NULL');
+     // Setar como 1-Sim, por padrão
+     Executar('UPDATE NFe_Configuracao SET NFeC_VerMsgWS = 1 WHERE NFeC_VerMsgWS IS NULL');
+  end;
+
+  // Incluir colunas de Layout do Danfe
+  if not Ja_Executou_Script('Criada coluna NFeC_LayoutDanfe') then
+  begin
+     // Layout do DANFE
+     //   0 = Retrato
+     //   1 = paisagem
+     Executar('ALTER TABLE NFe_Configuracao ADD NFeC_LayoutDanfe INTEGER NULL');
+     // Setar como 0-Retrato, por padrão
+     Executar('UPDATE NFe_Configuracao SET NFeC_LayoutDanfe = 0 WHERE NFeC_LayoutDanfe IS NULL');
+  end;
+
+  // Incluir colunas de PAth do arquivo da Logomarca no DANFE
+  if not Ja_Executou_Script('Criada coluna NFeC_PathLogoMarca') then
+     Executar('ALTER TABLE NFe_Configuracao ADD NFeC_PathLogoMarca vARCHAR(255) NULL');
+
+  // Pasta onde os xml de NFe deverão ser salvos
+  if not Ja_Executou_Script('Criada Coluna NFe_Configuracao.NFeC_PastaNotas...') then
+     Executar('ALTER TABLE NFe_Configuracao ADD NFeC_PastaNotas varchar(255) null');
+
+  // Tipo do Nivel de Seguranca do Certificado Digital para emissão de NFe
+  if not Ja_Executou_Script('Criada Coluna config_notas.SSLType...') then
+  begin
+     Executar('ALTER TABLE config_notas ADD SSLType integer NULL');
+     Executar('UPDATE config_notas SET SSLType = -1 Where SSLType is NULL');
+  end;
+
+  // Mostrar ou não preview da NFe
+  if not Ja_Executou_Script('Criada Coluna NFe_Configuracao.MostraPreview...') then
+  begin
+     Executar('ALTER TABLE NFe_Configuracao ADD NFe_MostraPreview integer NULL');
+     Executar('UPDATE NFe_Configuracao SET NFe_MostraPreview = 1 Where NFe_MostraPreview is NULL');
+  end;
+  Executar_Script('ALTER TABLE NFe_Configuracao DROP COLUMN NFe_MostraPreview');
+  Executar_Script('ALTER TABLE NFe_Configuracao ADD NFeC_MostraPreview integer NULL');
+  Executar_Script('UPDATE NFe_Configuracao SET NFeC_MostraPreview = 1 Where NFeC_MostraPreview is NULL');
+
+  // Incluir parâmetro de Ambiente na tabela de Configuracao de NFe
+  if not Ja_Executou_Script('NFeC_Ambiente') then
+  begin
+     // Ambiente de emissão da NFe:
+     //   0 = Produção
+     //   1 = Homogação
+     Executar('ALTER TABLE NFe_Configuracao ADD NFeC_Ambiente INTEGER NULL');
+     // Setar como 1-Homologação, por padrão
+     Executar('UPDATE NFe_Configuracao SET NFeC_Ambiente = 1 WHERE NFeC_Ambiente IS NULL');
+  end;
+
+  // Incluir parâmetro de Forma de Emissao da NFe na tabela de Configuracao de NFe:
+  if not Ja_Executou_Script('NFeC_FormaEmissao') then
+  begin
+     // Define a Forma de Emissão da NFe
+     // 0 = Normal
+     // 1 = Contingência
+     // 2 = SCAN
+     // 3 = DPEC
+     // 4 = FSDA
+     //----------------------------------------------------------------------------
+     Executar('ALTER TABLE NFe_Configuracao ADD NFeC_FormaEmissao INTEGER NULL');
+     // Setar como 0-Normal, por padrão
+     Executar('UPDATE NFe_Configuracao SET NFeC_FormaEmissao = 0 WHERE NFeC_FormaEmissao IS NULL');
+  end;
+
+end;
+
+procedure TAcesso.DadosDaTela;
+begin
+  if not Ja_Executou_Script('DADOSTELA_DT') then
+  begin
+     // Salva os dados da tela para verificar o que foi alterado
+     //----------------------------------------------------------------------------
+      DM.Query1.Close;
+      DM.Query1.Sql.Clear;
+      DM.Query1.Sql.Add('CREATE TABLE DADOSTELA_DT          ');
+      DM.Query1.Sql.Add('    ( DT_USUARIO VARCHAR(020) NULL,');
+      DM.Query1.Sql.Add('      DT_ESTACAO VARCHAR(050) NULL,');
+      DM.Query1.Sql.Add('      DT_NOME    VARCHAR(255) NULL,');
+      DM.Query1.Sql.Add('      DT_VALOR   VARCHAR(255) NULL)');
+      DM.Query1.ExecSql;
+  end;
+
+  // Incluir coluna DT_TELA (nome da tela) na tabela DADOSTELA_DT (de dados da tela)
+  if not Ja_Executou_Script('DT_TELA') then
+     Executar('ALTER TABLE DADOSTELA_DT ADD DT_TELA VARCHAR(255) NULL');
+
+end;
+
 procedure TAcesso.Desconectar;
 begin
   dm.Database1.Close;
@@ -1761,6 +1888,241 @@ end;
 function TAcesso.getNomeDaConexao: String;
 begin
    result := self.FNomeDaConexao;
+end;
+
+procedure TAcesso.NotasFiscais;
+begin
+  //Cria Tabela de NFe Emitida pelo Sistema
+  if not Ja_Executou_Script('Criada Tabela NOTAFISCAL55_NFE55') then
+  begin
+      DM.Query1.Close;
+      DM.Query1.Sql.Clear;
+      DM.Query1.Sql.Add('CREATE TABLE NOTAFISCAL55_NFE55 (                       ');
+      DM.Query1.Sql.Add('       NFE55_NUMERO                   VARCHAR(8)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_SERIE                    VARCHAR(5)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_NUMEROINT                INTEGER        NULL, ');
+      DM.Query1.Sql.Add('       NFE55_PEDIDO                   VARCHAR(8)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CDCLIENTE                VARCHAR(10)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CORRIGECLI               VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CDVENDEDOR               VARCHAR(8)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_PESOBR                   NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_PESOLIQ                  NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_QTDVOL                   NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_VALTOTNF                 NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_VALTOTDES                NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_DTEMISSAO                DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFE55_DTENTREGA                DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFE55_STATUSDUP                VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_BASEICMS                 NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_VALICMS                  NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_DTCANCELA                DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFE55_MEIOTRANSP               VARCHAR(3)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CORRIGEENDC              VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CORRIGECGC               VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CORRIGEIE                VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CORRIGETRANS             VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CORRIGEENDT              VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CORRIGEDAD               VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_ABATIMENTO               NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_ACRESCIMO                NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_OBS                      VARCHAR(200)   NULL, ');
+      DM.Query1.Sql.Add('       NFE55_STACOMISSAO              VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_DTCOMISSAO               DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFE55_DTATUALIZA               DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFE55_DTEXPORTACAO             DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFE55_HREXPORTACAO             VARCHAR(5)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_USUEXPORTACAO            VARCHAR(10)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_USUCANCELA               VARCHAR(10)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_HRCANCELA                VARCHAR(5)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CANCELADA                VARCHAR(3)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_EXPORTADA                VARCHAR(3)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_STATUS                   VARCHAR(10)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_BASEIPI                  NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_VALIPI                   NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CARTACORRECAO            VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_USUCARTA                 VARCHAR(10)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_DTCARTA                  DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFE55_HRCARTA                  VARCHAR(5)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_MOTIVOCANCELA            VARCHAR(10)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CODFISCAL                VARCHAR(4)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_VALLIQNF                 NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_VALDESCONTORESOLUCAOICMS NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_VALORORIGINAL            NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_NATOPE                   VARCHAR(4)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_TRANSP_ENDERECO          VARCHAR(50)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CLI_UF                   VARCHAR(2)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CLI_IE                   VARCHAR(20)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CLI_CIDADE               VARCHAR(20)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_TRANSP_NOME              VARCHAR(50)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_TRANSP_CODIGO            VARCHAR(20)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_BASE_ICMS_SUBST_TRIBUT   NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_LOTE                     VARCHAR(20)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_VALTOTPROD               NUMERIC(12, 6) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_VALICMSSUBST             NUMERIC(12, 6) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_ANTT                     VARCHAR(20)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_PROTOCOLO                VARCHAR(50)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_RECIBO                   VARCHAR(50)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_CHAVENFE                 VARCHAR(50)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_SERIE5                   VARCHAR(5)     NULL, ');
+      DM.Query1.Sql.Add('       NFE55_ARQUIVOXML               VARCHAR(255)   NULL, ');
+      DM.Query1.Sql.Add('       NFE55_LOTENF                   INTEGER        NULL, ');
+      DM.Query1.Sql.Add('       NFE55_TOTALNFAUX               NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFE55_INFRESPTEC_IDCSRT       INTEGER        NULL, ');
+      DM.Query1.Sql.Add('       NFE55_INFRESPTEC_CNPJ         VARCHAR(20)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_INFRESPTEC_XCONTATO     VARCHAR(40)    NULL, ');
+      DM.Query1.Sql.Add('       NFE55_INFRESPTEC_EMAIL        VARCHAR(40)    NULL) ');
+      DM.Query1.ExecSql;
+  end;
+
+  //Cria Tabela de NFe Emitida pelo Sistema
+  if not Ja_Executou_Script('Criada Tabela NOTAFISCAL65_NFE65') then
+  begin
+      DM.Query1.Close;
+      DM.Query1.Sql.Clear;
+      DM.Query1.Sql.Add('CREATE TABLE NOTAFISCAL65_NFCE65 (                       ');
+      DM.Query1.Sql.Add('       NFCE65_NUMERO                   VARCHAR(8)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_SERIE                    VARCHAR(5)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_NUMEROINT                INTEGER        NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_PEDIDO                   VARCHAR(8)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CDCLIENTE                VARCHAR(10)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CORRIGECLI               VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CDVENDEDOR               VARCHAR(8)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_PESOBR                   NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_PESOLIQ                  NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_QTDVOL                   NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_VALTOTNF                 NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_VALTOTDES                NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_DTEMISSAO                DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_DTENTREGA                DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_STATUSDUP                VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_BASEICMS                 NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_VALICMS                  NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_DTCANCELA                DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_MEIOTRANSP               VARCHAR(3)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CORRIGEENDC              VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CORRIGECGC               VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CORRIGEIE                VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CORRIGETRANS             VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CORRIGEENDT              VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CORRIGEDAD               VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_ABATIMENTO               NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_ACRESCIMO                NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_OBS                      VARCHAR(200)   NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_STACOMISSAO              VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_DTCOMISSAO               DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_DTATUALIZA               DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_DTEXPORTACAO             DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_HREXPORTACAO             VARCHAR(5)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_USUEXPORTACAO            VARCHAR(10)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_USUCANCELA               VARCHAR(10)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_HRCANCELA                VARCHAR(5)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CANCELADA                VARCHAR(3)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_EXPORTADA                VARCHAR(3)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_STATUS                   VARCHAR(10)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_BASEIPI                  NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_VALIPI                   NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CARTACORRECAO            VARCHAR(1)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_USUCARTA                 VARCHAR(10)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_DTCARTA                  DATETIME       NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_HRCARTA                  VARCHAR(5)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_MOTIVOCANCELA            VARCHAR(10)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CODFISCAL                VARCHAR(4)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_VALLIQNF                 NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_VALDESCONTORESOLUCAOICMS NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_VALORORIGINAL            NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_NATOPE                   VARCHAR(4)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_TRANSP_ENDERECO          VARCHAR(50)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CLI_UF                   VARCHAR(2)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CLI_IE                   VARCHAR(20)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CLI_CIDADE               VARCHAR(20)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_TRANSP_NOME              VARCHAR(50)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_TRANSP_CODIGO            VARCHAR(20)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_BASE_ICMS_SUBST_TRIBUT   NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_LOTE                     VARCHAR(20)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_VALTOTPROD               NUMERIC(12, 6) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_VALICMSSUBST             NUMERIC(12, 6) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_ANTT                     VARCHAR(20)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_PROTOCOLO                VARCHAR(50)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_RECIBO                   VARCHAR(50)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_CHAVENFE                 VARCHAR(50)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_SERIE5                   VARCHAR(5)     NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_ARQUIVOXML               VARCHAR(265)   NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_LOTENF                   INTEGER        NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_TOTALNFAUX               NUMERIC(12, 2) NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_INFRESPTEC_IDCSRT       INTEGER        NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_INFRESPTEC_CNPJ         VARCHAR(20)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_INFRESPTEC_XCONTATO     VARCHAR(40)    NULL, ');
+      DM.Query1.Sql.Add('       NFCE65_INFRESPTEC_EMAIL        VARCHAR(40)    NULL) ');
+      DM.Query1.ExecSql;
+  end;
+    if not Ja_Executou_Script('Criada Tabela SERIENFe_SNFe') then
+    begin
+       // Controle da numerãção sequencial de séries de NFe
+       DM.Query1.Close;
+       DM.Query1.Sql.Clear;
+       DM.Query1.SQL.Add('CREATE TABLE SERIENFe_SNFe         ');
+       DM.Query1.SQL.Add('     ( SNFe_CODIGO    INTEGER NULL,');
+       DM.Query1.SQL.Add('       SNFe_SEQUENCIA INTEGER NULL)');
+       DM.Query1.ExecSql;
+    end;
+    if not Ja_Executou_Script('Criada Tabela config_notas') then
+    begin
+       DM.Query1.Close;
+       DM.Query1.Sql.Clear;
+       DM.Query1.SQL.Add('CREATE TABLE config_notas                   ');
+       DM.Query1.SQL.Add('     ( SENHA_CERTIFICADO VARCHAR(255) NULL )');
+       DM.Query1.ExecSql;
+    end;
+
+    if not Ja_Executou_Script('Excluir Coluna config_notas.SERIE_CERTIFICADO...') then
+       Executar('ALTER TABLE config_notas drop column SERIE_CERTIFICADO');
+
+    Executar_Script('ALTER TABLE config_notas ADD NUMERO_SERIE_CERTIFICADO VARCHAR(40) NULL');
+
+    if not Ja_Executou_Script('Criada Coluna config_notas.CryptLib...') then
+    begin
+       Executar('ALTER TABLE config_notas ADD CryptLib integer NULL');
+       Executar('UPDATE config_notas SET CryptLib = -1 Where CryptLib is NULL');
+    end;
+
+    if not Ja_Executou_Script('Criada Coluna config_notas.HttpLib...') then
+    begin
+       Executar('ALTER TABLE config_notas ADD HttpLib integer NULL');
+       Executar('UPDATE config_notas SET HttpLib = -1 Where HttpLib is NULL');
+    end;
+    if not Ja_Executou_Script('Criada Coluna config_notas.SSLLib...') then
+    begin
+       Executar('ALTER TABLE config_notas ADD SSLLib integer NULL');
+       Executar('UPDATE config_notas SET SSLLib = -1 Where SSLLib is NULL');
+    end;
+    if not Ja_Executou_Script('Criada Coluna config_notas.XmlSignLib...') then
+    begin
+       Executar('ALTER TABLE config_notas ADD XmlSignLib integer NULL');
+       Executar('UPDATE config_notas SET XmlSignLib = -1 Where XmlSignLib is NULL');
+    end;
+    if not Ja_Executou_Script('Criada Coluna config_notas.ArquivoPFX...') then
+       Executar('ALTER TABLE config_notas ADD ArquivoPFX VARCHAR(255) NULL');
+
+    // 26/02/20 22:57
+    if not Ja_Executou_Script('Criada Coluna config_notas.PosPrinterModelo...') then
+    begin
+       Executar('ALTER TABLE config_notas ADD PosPrinterModelo Integer null');
+       Executar('UPDATE config_notas set PosPrinterModelo = -1 where PosPrinterModelo is null');
+    end;
+    if not Ja_Executou_Script('Criada Coluna config_notas.PaginaDeCodigo...') then
+    begin
+       Executar('ALTER TABLE config_notas ADD PaginaDeCodigo Integer null');
+       Executar('UPDATE config_notas set PaginaDeCodigo = -1 where PaginaDeCodigo is null');
+    end;
+    if not Ja_Executou_Script('Criada Coluna config_notas.Porta...') then
+       Executar('ALTER TABLE config_notas ADD Porta varchar(255) null');
+
+    if not Ja_Executou_Script('Criada Coluna config_notas.ModeloPosPrinter...') then
+    begin
+       Executar('ALTER TABLE config_notas ADD ModeloPosPrinter Integer null');
+       Executar('UPDATE config_notas set ModeloPosPrinter = -1 where ModeloPosPrinter is null');
+    end;
+
 end;
 
 procedure TAcesso.setNomeDaConexao(const Value: String);
