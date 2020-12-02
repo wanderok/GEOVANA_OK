@@ -447,7 +447,7 @@ begin
       Sql.Add('  FROM TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB    ');
       Sql.Add(' WHERE TRAHB_TRANSPORTADORA = :TRAHB_TRANSPORTADORA');
       Sql.Add(' ORDER BY TRAHB_DTEVENTO DESC, TRAHB_HREVENTO DESC ');
-      ParamByName('MOTHB_MOTORISTA').AsString := edCODIGO.text;
+      ParamByName('TRAHB_TRANSPORTADORA').AsString := edCODIGO.text;
       Open;
     end;
     frmTRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB_T29.ShowModal;
@@ -598,7 +598,7 @@ begin
       exit;
    end;
 
-   if Existe_Outro_CONTADOR_Com_Este_CNPJ((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_TRANSPORTADOR_Com_Este_CNPJ((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -633,7 +633,7 @@ begin
       exit;
    end;
 
-   if Existe_Outro_CONTADOR_Com_Este_CPF((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_TRANSPORTADOR_Com_Este_CPF((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -649,8 +649,6 @@ procedure Tfrm_cad_transportadora_T28.edDataNascimentoExit(Sender: TObject);
 begin
    if DataNoFuturo((Sender as TMaskEdit)) then
       (Sender as TEdit).SetFocus;
-   if edNome.Text = '' then
-      pesquisar_CPF_na_SEFAZ;
 end;
 
 procedure Tfrm_cad_transportadora_T28.edEmail1Exit(Sender: TObject);
@@ -713,7 +711,7 @@ begin
      exit;
    end;
    edIE.text := SoNumeros(edIE.text);
-   if Existe_Outro_CONTADOR_Com_Esta_IE((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_TRANSPORTADOR_Com_Esta_IE((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -801,7 +799,7 @@ begin
      exit;
    end;
    edRG.text := SoNumerosOuISENTO(edRG.text);
-   if Existe_Outro_CONTADOR_Com_Este_RG((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_TRANSPORTADOR_Com_Este_RG((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -873,7 +871,7 @@ end;
 procedure Tfrm_cad_transportadora_T28.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-   CanClose := vPodeFechar;
+   //CanClose := vPodeFechar;
 end;
 
 procedure Tfrm_cad_transportadora_T28.FormCreate(Sender: TObject);

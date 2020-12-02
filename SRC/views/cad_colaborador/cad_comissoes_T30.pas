@@ -123,7 +123,7 @@ end;
 procedure Tfrm_cad_comissoes_T30.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-  CanClose := vPodeFechar;
+  //CanClose := vPodeFechar;
 end;
 
 procedure Tfrm_cad_comissoes_T30.FormCreate(Sender: TObject);

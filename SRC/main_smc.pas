@@ -368,6 +368,8 @@ uses
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure dxBarLargeButton125Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure dxBarLargeButton23Click(Sender: TObject);
+    procedure dxBarLargeButton26Click(Sender: TObject);
   
     private
       { Private declarations }
@@ -394,8 +396,9 @@ uses
   cad_consultor_T21,
   cad_contador_T24,
   cad_motorista_T26,
-  cad_transportadora_T28;
-
+  cad_transportadora_T28,
+  config_nfe_T32, config_nfce_T34,
+  cadastro_produto;
   //cadastro_fornecedor, cad_transportadora,
   //cad_veiculos,
   //cad_sistemas,
@@ -426,8 +429,9 @@ end;
 
 procedure TFrm_main.cxButton8Click(Sender: TObject);
 begin
-    //Frm_Produto := TFrm_Produto.Create(nil);
-    //Frm_Produto.showmodal;
+    Frm_Produto := TFrm_Produto.Create(nil);
+    Frm_Produto.showmodal;
+    Frm_Produto.free;
 end;
 
 procedure TFrm_main.dxBarButton20Click(Sender: TObject);
@@ -662,8 +666,9 @@ end;
 
 procedure TFrm_main.dxBarLargeButton106Click(Sender: TObject);
 begin
-    //Frm_Produto := TFrm_Produto.Create(nil);
-    //Frm_Produto.showmodal;
+    Frm_Produto := TFrm_Produto.Create(nil);
+    Frm_Produto.showmodal;
+    Frm_Produto.Free;
 end;
 
 procedure TFrm_main.dxBarLargeButton109Click(Sender: TObject);
@@ -725,9 +730,24 @@ begin
     frm_cad_empresa_T3.Free;
 end;
 
+procedure TFrm_main.dxBarLargeButton23Click(Sender: TObject);
+begin
+    FrmConfig_nfe_T32 := TFrmConfig_nfe_T32.Create(nil);
+    FrmConfig_nfe_T32.showmodal;
+    FrmConfig_nfe_T32.Free;
+    dxRibbon1.ActiveTab := dxRibbon1Tab1;
+end;
+
+procedure TFrm_main.dxBarLargeButton26Click(Sender: TObject);
+begin
+    Frm_config_nfce_T34 := TFrm_config_nfce_T34.Create(nil);
+    Frm_config_nfce_T34.showmodal;
+    Frm_config_nfce_T34.Free;
+end;
+
 procedure TFrm_main.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
-   canClose := vPodeFechar;
+   //canClose := vPodeFechar;
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);

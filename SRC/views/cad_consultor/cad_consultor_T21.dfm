@@ -221,7 +221,7 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 0
       TabStop = False
       OnClick = btDetalhesBloqueioClick
@@ -501,7 +501,7 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 4
       TabStop = False
       OnClick = bHistoricoAlteracoesClick
@@ -512,7 +512,7 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
     Top = 95
     Width = 620
     Height = 139
-    ActivePage = tsPessoaFisica
+    ActivePage = tsPessoaJuridica
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -15
@@ -614,7 +614,7 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
         ParentFont = False
       end
       object edRG: TEdit
-        Left = 60
+        Left = 61
         Top = 76
         Width = 165
         Height = 26
@@ -684,7 +684,7 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
         OnKeyPress = edCPFKeyPress
       end
       object edDataNascimento: TMaskEdit
-        Left = 324
+        Left = 325
         Top = 11
         Width = 83
         Height = 26
@@ -742,7 +742,6 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
         Top = 10
         Width = 25
         Height = 26
-        Hint = 'Pesquisa Ramo de Atividade'
         LookAndFeel.Kind = lfOffice11
         LookAndFeel.NativeStyle = False
         LookAndFeel.SkinName = 'Metropolis'
@@ -782,7 +781,7 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
           000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
           1F3E000000060000000100000000000000000000000000000000}
         ParentShowHint = False
-        ShowHint = True
+        ShowHint = False
         TabOrder = 7
         TabStop = False
         OnClick = cxButton2Click
@@ -850,7 +849,7 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
         ParentFont = False
       end
       object edCNPJ: TEdit
-        Left = 119
+        Left = 118
         Top = 11
         Width = 166
         Height = 26
@@ -1157,7 +1156,7 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 9
       TabStop = False
       OnClick = bPesqBairroClick
@@ -1167,7 +1166,6 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
       Top = 21
       Width = 25
       Height = 26
-      Hint = 'Pesquisa CEP'
       LookAndFeel.Kind = lfOffice11
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Metropolis'
@@ -1207,7 +1205,7 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 10
       TabStop = False
       Visible = False
@@ -1217,7 +1215,6 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
       Top = 166
       Width = 25
       Height = 26
-      Hint = 'Pesquisa Regi'#227'o'
       LookAndFeel.Kind = lfOffice11
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Metropolis'
@@ -1257,17 +1254,16 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 11
       TabStop = False
       OnClick = cxButton4Click
     end
     object bPesqMunicipio: TcxButton
       Left = 355
-      Top = 136
+      Top = 137
       Width = 25
       Height = 26
-      Hint = 'Pesquisa Munic'#237'pio'
       LookAndFeel.Kind = lfOffice11
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Metropolis'
@@ -1307,7 +1303,7 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 12
       TabStop = False
       OnClick = bPesqMunicipioClick
@@ -1317,7 +1313,6 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
       Top = 166
       Width = 25
       Height = 26
-      Hint = 'Pesquisa Zona'
       LookAndFeel.Kind = lfOffice11
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Metropolis'
@@ -1357,7 +1352,7 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 13
       TabStop = False
       OnClick = bPesqZonaClick
@@ -1605,8 +1600,8 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
     end
   end
   object cxButton8: TcxButton
-    Left = 634
-    Top = 422
+    Left = 631
+    Top = 423
     Width = 110
     Height = 44
     Caption = 'Consultar'
@@ -1744,6 +1739,8 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
       0000000000010000000100000001000000010000000100000001000000010000
       0001000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000}
+    ParentShowHint = False
+    ShowHint = False
     TabOrder = 5
     TabStop = False
     Font.Charset = DEFAULT_CHARSET
@@ -1893,6 +1890,8 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000}
+    ParentShowHint = False
+    ShowHint = False
     TabOrder = 6
     TabStop = False
     Font.Charset = ANSI_CHARSET
@@ -2042,6 +2041,8 @@ object frm_cad_consultor_T21: Tfrm_cad_consultor_T21
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000}
+    ParentShowHint = False
+    ShowHint = False
     TabOrder = 7
     TabStop = False
     Font.Charset = ANSI_CHARSET

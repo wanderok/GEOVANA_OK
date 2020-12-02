@@ -69,6 +69,7 @@ type
       FRamoAtividade     : String;
       FRegiao            : String;
       FZona              : String;
+      FTipo              : String;
       FEndereco          : TEndereco;
       FContato           : TContato;
       //
@@ -83,6 +84,8 @@ type
       procedure setFRegiao(const Value: String);
       function getFZona: String;
       procedure setFZona(const Value: String);
+      function getFTipo: String;
+      procedure setFTipo(const Value: String);
 
     public
       constructor Create;
@@ -95,6 +98,7 @@ type
       property RamoAtividade     : String           read getFRamoAtividade      write setFRamoAtividade;
       property Regiao            : String           read getFRegiao             write setFRegiao;
       property Zona              : String           read getFZona               write setFZona;
+      property Tipo              : String           read getFTipo               write setFTipo;
       property Endereco          : TEndereco        read FEndereco              write FEndereco;
       property Contato           : TContato         read FContato               write FContato;
 end;
@@ -464,6 +468,7 @@ begin
         qColaborador.SQL.Add('       COLD_CDRAMO,              ');
         qColaborador.SQL.Add('       COLD_CDREGIAO,            ');
         qColaborador.SQL.Add('       COLD_CDZONA,              ');
+        qColaborador.SQL.Add('       COLD_TIPO,                ');
         qColaborador.SQL.Add('       COLD_DT                   ');
         qColaborador.SQL.Add('     )                           ');
         qColaborador.SQL.Add('VALUES                           ');
@@ -489,6 +494,7 @@ begin
         qColaborador.SQL.Add('      :COLD_CDRAMO,              ');
         qColaborador.SQL.Add('      :COLD_CDREGIAO,            ');
         qColaborador.SQL.Add('      :COLD_CDZONA,              ');
+        qColaborador.SQL.Add('      :COLD_TIPO,                ');
         qColaborador.SQL.Add('      :COLD_DT                   ');
         qColaborador.SQL.Add('     )                           ');
         qColaborador.ParamByName('COLD_CODIGO'             ).AsString   := FCodigo;
@@ -509,10 +515,11 @@ begin
         qColaborador.ParamByName('COLD_ALT_DTBLOQUEADO'    ).AsDateTime := 0;
         qColaborador.ParamByName('COLD_ALT_DTLIBERADO'     ).AsDateTime := 0;
         qColaborador.ParamByName('COLD_ALT_DTINATIVO'      ).AsDateTime := 0;
-        qColaborador.ParamByName('COLD_CDRAMO'           ).AsString   := FDetalhes.FRamoAtividade;
-        qColaborador.ParamByName('COLD_CDREGIAO'         ).AsString   := FDetalhes.FRegiao;
-        qColaborador.ParamByName('COLD_CDZONA'           ).AsString   := FDetalhes.FZona;
-        qColaborador.ParamByName('COLD_DT'               ).AsDateTime := DataServidor;
+        qColaborador.ParamByName('COLD_CDRAMO'             ).AsString   := FDetalhes.FRamoAtividade;
+        qColaborador.ParamByName('COLD_CDREGIAO'           ).AsString   := FDetalhes.FRegiao;
+        qColaborador.ParamByName('COLD_CDZONA'             ).AsString   := FDetalhes.FZona;
+        qColaborador.ParamByName('COLD_TIPO'               ).AsString   := FDetalhes.FTipo;
+        qColaborador.ParamByName('COLD_DT'                 ).AsDateTime := DataServidor;
         qColaborador.ExecSql;
         Result := true;
     except
@@ -659,6 +666,7 @@ begin
     FDetalhes.RamoAtividade      := qColaborador.FieldByName('COLD_CDRAMO'             ).AsString;
     FDetalhes.Regiao             := qColaborador.FieldByName('COLD_CDREGIAO'           ).AsString;
     FDetalhes.Zona               := qColaborador.FieldByName('COLD_CDZONA'             ).AsString;
+    FDetalhes.Tipo               := qColaborador.FieldByName('COLD_TIPO'               ).AsString;
     FDetalhes.FDataCadastro      := qColaborador.FieldByName('COLD_DT'                 ).AsDateTime;
     Pegar_Alteracoes;
 end;
@@ -975,7 +983,8 @@ begin
         qColaborador.SQL.Add('       COLD_ALT_DTINATIVO       = :COLD_ALT_DTINATIVO,       ');
         qColaborador.SQL.Add('       COLD_CDRAMO              = :COLD_CDRAMO,              ');
         qColaborador.SQL.Add('       COLD_CDREGIAO            = :COLD_CDREGIAO,            ');
-        qColaborador.SQL.Add('       COLD_CDZONA              = :COLD_CDZONA               ');
+        qColaborador.SQL.Add('       COLD_CDZONA              = :COLD_CDZONA,              ');
+        qColaborador.SQL.Add('       COLD_TIPO                = :COLD_TIPO                 ');
         qColaborador.SQL.Add(' WHERE COLD_CODIGO              = :COLD_CODIGO               ');
         qColaborador.ParamByName('COLD_CODIGO'          ).AsString   := FCodigo;
         qColaborador.ParamByName('COLD_NUVEM_ATUALIZADO').AsInteger  := 0;
@@ -998,6 +1007,7 @@ begin
         qColaborador.ParamByName('COLD_CDRAMO'          ).AsString   := FDetalhes.FRamoAtividade;
         qColaborador.ParamByName('COLD_CDREGIAO'        ).AsString   := FDetalhes.FRegiao;
         qColaborador.ParamByName('COLD_CDZONA'          ).AsString   := FDetalhes.FZona;
+        qColaborador.ParamByName('COLD_TIPO'            ).AsString   := FDetalhes.FTipo;
         qColaborador.ExecSql;
 
         Log('Classe_Colaborador','Alterou Colaborador '+ FNomeFantasia);
@@ -1093,6 +1103,11 @@ begin
    Result := FRegiao;
 end;
 
+function tDetalhes_Colaborador.getFTipo: String;
+begin
+  Result := FTipo;
+end;
+
 function tDetalhes_Colaborador.getFTipoPessoa: TTipoPessoa;
 begin
    Result := StringToTipoPessoa(FTipoPessoa);
@@ -1122,6 +1137,11 @@ end;
 procedure tDetalhes_Colaborador.setFRegiao(const Value: String);
 begin
    FRegiao := Copy(Value,1,10);
+end;
+
+procedure tDetalhes_Colaborador.setFTipo(const Value: String);
+begin
+   FTipo := Copy(Value,1,10);
 end;
 
 procedure tDetalhes_Colaborador.setFTipoPessoa(const Value: TTipoPessoa);

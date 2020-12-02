@@ -62,7 +62,8 @@ var
 
 implementation
 
-{$R *.dfm}uses Dados, Funcoes;
+{$R *.dfm}
+uses Dados, Funcoes;
 
 procedure Tfrm_cad_zona_T12.Pesquisar;
 begin

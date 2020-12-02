@@ -1,18 +1,5 @@
-//Verificado automaticamente em 16/06/2020 09:27
-{$I ACBr.inc}
-unit config_nfe_T32;
-{
+unit config_nfce_T34;
 
-================================================================================
-| ITEM|DATA  HR|UNIT                |HISTORICO                                 |
-|-----|--------|--------------------|------------------------------------------|
-|  179|23/05/20|wander              |Aplicados os botões de Controle padrão    |
-|     |   20:12|config_nfe          |                                          |
-================================================================================
-
-OBS: Outras alterações foram feitas por Wander mas não documentadas aqui.
-
-}
 interface
 
 uses
@@ -36,65 +23,67 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, Vcl.ExtCtrls,
-  ACBrBase, ACBrDFe, ACBrNFe, ACBrDFeSSL, ACBrPosPrinter, ACBrUtil,
+  dxSkinXmas2008Blue, Vcl.ExtCtrls, ACBrBase, ACBrDFe, ACBrNFe,
+  ACBrDFeSSL, ACBrPosPrinter, ACBrUtil,
   pcnConversao, pcnConversaoNFe, pcnNFe, pcnNFeRTXT,
-  blcksock,  System.TypInfo,
-  Vcl.Buttons, FileCtrl, ACBrEnterTab;
+  ACBrEnterTab,
+  Vcl.FileCtrl,
+  System.TypInfo;
 
 type
-  TfrmConfig_NFe_T32 = class(TForm)
+  TFrm_config_nfce_T34 = class(TForm)
     Label4: TLabel;
-    GroupBox2: TGroupBox;
-    cxComboBox1: TcxComboBox;
     cxGroupBox2: TcxGroupBox;
-    GroupBox3: TGroupBox;
-    edt_NFeC_PathLogoMarca: TEdit;
-    cxButton1: TcxButton;
-    ACBrNFe1: TACBrNFe;
-    OpenDialog1: TOpenDialog;
-    Image1: TImage;
-    pnControles: TPanel;
-    bControleCancelar: TcxButton;
-    bControleGravar: TcxButton;
+    grp_csc: TGroupBox;
+    Label1: TLabel;
+    Label5: TLabel;
+    edCSC_ID: TEdit;
+    edCSC: TEdit;
     lbNomeDaTela: TLabel;
-    ACBrEnterTab1: TACBrEnterTab;
-    GroupBox4: TGroupBox;
-    rgNFeC_VerMsgWS: TRadioGroup;
     GroupBox7: TGroupBox;
     rgNFeC_Ambiente: TRadioGroup;
     GroupBox6: TGroupBox;
     cbFormaEmissao: TComboBox;
     GroupBox8: TGroupBox;
-    Label1: TLabel;
+    Label2: TLabel;
     Label3: TLabel;
     edt_NFeC_SERIE: TEdit;
     edt_NFeC_nNF: TEdit;
     cxButton3: TcxButton;
+    GroupBox4: TGroupBox;
+    rgNFeC_VerMsgWS: TRadioGroup;
     GroupBox9: TGroupBox;
     rgNFeC_LayoutDanfe: TRadioGroup;
-    GroupBox10: TGroupBox;
-    edtNFeC_PastaNotas: TEdit;
-    btn_buscar_xml: TcxButton;
+    GroupBox5: TGroupBox;
     Label22: TLabel;
     Label102: TLabel;
+    cxComboBox1: TcxComboBox;
     cbxModeloPosPrinter: TComboBox;
-    cbxPagCodigo: TComboBox;
     rgNFeC_MostraPreview: TRadioGroup;
+    cbxPagCodigo: TComboBox;
+    GroupBox10: TGroupBox;
+    edtNFeC_PastaNotas: TEdit;
+    cxButton2: TcxButton;
+    GroupBox11: TGroupBox;
+    edt_NFeC_PathLogoMarca: TEdit;
+    cxButton4: TcxButton;
+    pnControles: TPanel;
+    bControleCancelar: TcxButton;
+    bControleGravar: TcxButton;
+    Image1: TImage;
+    ACBrNFe1: TACBrNFe;
+    ACBrEnterTab1: TACBrEnterTab;
+    OpenDialog1: TOpenDialog;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormShow(Sender: TObject);
-    procedure cxButton1Click(Sender: TObject);
-    procedure cxButton3Click(Sender: TObject);
-    procedure btn_buscar_xmlClick(Sender: TObject);
-    procedure edt_NFeC_PathLogoMarcaChange(Sender: TObject);
     procedure bControleGravarClick(Sender: TObject);
     procedure bControleCancelarClick(Sender: TObject);
-    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure cxButton3Click(Sender: TObject);
+    procedure cxButton2Click(Sender: TObject);
+    procedure cxButton4Click(Sender: TObject);
   private
     { Private declarations }
-    procedure MostraDados_NFe_Configuracao;
+    procedure MostraDados_NFCe_Configuracao;
     procedure MostraDados_CONFIG_NOTAS;
-
     function DadosCorretos:Boolean;
     procedure Registra_Logs;
     procedure Preenche_itens_dos_CheckBoxes;
@@ -107,21 +96,20 @@ const
   SELDIRHELP = 1000;
 
 var
-  frmConfig_NFe_T32: TfrmConfig_NFe_T32;
-  vPodeFechar      : Boolean;
+  Frm_config_nfce_T34: TFrm_config_nfce_T34;
+
 implementation
 
 {$R *.dfm}
 
 uses funcoes, Dados, Classe_Avisos;
 
-procedure TfrmConfig_NFe_T32.bControleCancelarClick(Sender: TObject);
+procedure TFrm_config_nfce_T34.bControleCancelarClick(Sender: TObject);
 begin
-   vPodeFechar := True;
    Close;
 end;
 
-procedure TfrmConfig_NFe_T32.bControleGravarClick(Sender: TObject);
+procedure TFrm_config_nfce_T34.bControleGravarClick(Sender: TObject);
 var vNFeC_SERIE : Integer;
 begin
   {if not UsuarioMASTER then
@@ -136,25 +124,29 @@ begin
   // Gravar as Configuracoes de emissão de NFe
   DM.Query1.Close;
   DM.Query1.Sql.Clear;
-  DM.Query1.Sql.Add('UPDATE NFe_Configuracao                        ');
-  DM.Query1.Sql.Add('   SET NFeC_SERIE        = :NFeC_SERIE,        ');
-  DM.Query1.Sql.Add('       NFeC_nNF          = :NFeC_nNF,          ');
-  DM.Query1.Sql.Add('       NFeC_FormaEmissao = :NFeC_FormaEmissao, ');
-  DM.Query1.SQL.add('       NFeC_MostraPreview= :NFeC_MostraPreview,');
-  DM.Query1.Sql.Add('       NFeC_Ambiente     = :NFeC_Ambiente,     ');
-  DM.Query1.Sql.Add('       NFeC_VerMsgWS     = :NFeC_VerMsgWS,     ');
-  DM.Query1.Sql.Add('       NFeC_LayoutDanfe  = :NFeC_LayoutDanfe,  ');
-  DM.Query1.Sql.Add('       NFeC_PathLogoMarca= :NFeC_PathLogoMarca,');
-  DM.Query1.Sql.Add('       NFeC_PastaNotas   = :NFeC_PastaNotas    ');
-  DM.Query1.ParamByName('NFeC_SERIE'        ).AsInteger := StrToInt(edt_NFeC_SERIE.Text);
-  DM.Query1.ParamByName('NFeC_nNF'          ).AsInteger := StrToInt(edt_NFeC_nNF.Text);
-  DM.Query1.ParamByName('NFeC_FormaEmissao' ).AsInteger := cbFormaEmissao.ItemIndex;
-  DM.Query1.ParamByName('NFeC_MostraPreview').AsInteger := rgNFeC_MostraPreview.ItemIndex;
-  DM.Query1.ParamByName('NFeC_Ambiente'     ).AsInteger := rgNFeC_Ambiente.ItemIndex;
-  DM.Query1.ParamByName('NFeC_VerMsgWS'     ).AsInteger := rgNFeC_VerMsgWS.ItemIndex;
-  DM.Query1.ParamByName('NFeC_LayoutDanfe'  ).AsInteger := rgNFeC_LayoutDanfe.ItemIndex;
-  DM.Query1.ParamByName('NFeC_PathLogoMarca').AsString  := edt_NFeC_PathLogoMarca.Text;
-  DM.Query1.ParamByName('NFeC_PastaNotas'   ).AsString  := edtNFeC_PastaNotas.Text;
+  DM.Query1.Sql.Add('UPDATE NFCe_Configuracao                         ');
+  DM.Query1.Sql.Add('   SET NFCeC_SERIE        = :NFCeC_SERIE,        ');
+  DM.Query1.Sql.Add('       NFCeC_nNF          = :NFCeC_nNF,          ');
+  DM.Query1.Sql.Add('       NFCeC_FormaEmissao = :NFCeC_FormaEmissao, ');
+  DM.Query1.SQL.add('       NFCeC_MostraPreview= :NFCeC_MostraPreview,');
+  DM.Query1.Sql.Add('       NFCeC_Ambiente     = :NFCeC_Ambiente,     ');
+  DM.Query1.Sql.Add('       NFCeC_VerMsgWS     = :NFCeC_VerMsgWS,     ');
+  DM.Query1.Sql.Add('       NFCeC_LayoutDanfe  = :NFCeC_LayoutDanfe,  ');
+  DM.Query1.Sql.Add('       NFCeC_PathLogoMarca= :NFCeC_PathLogoMarca,');
+  DM.Query1.Sql.Add('       NFCeC_PastaNotas   = :NFCeC_PastaNotas,   ');
+  DM.Query1.Sql.Add('       NFCeC_CSCID        = :NFCeC_CSCID,        ');
+  DM.Query1.Sql.Add('       NFCeC_CSC          = :NFCeC_CSC           ');
+  DM.Query1.ParamByName('NFCeC_SERIE'        ).AsInteger := StrToInt(edt_NFeC_SERIE.Text);
+  DM.Query1.ParamByName('NFCeC_nNF'          ).AsInteger := StrToInt(edt_NFeC_nNF.Text);
+  DM.Query1.ParamByName('NFCeC_FormaEmissao' ).AsInteger := cbFormaEmissao.ItemIndex;
+  DM.Query1.ParamByName('NFCeC_MostraPreview').AsInteger := rgNFeC_MostraPreview.ItemIndex;
+  DM.Query1.ParamByName('NFCeC_Ambiente'     ).AsInteger := rgNFeC_Ambiente.ItemIndex;
+  DM.Query1.ParamByName('NFCeC_VerMsgWS'     ).AsInteger := rgNFeC_VerMsgWS.ItemIndex;
+  DM.Query1.ParamByName('NFCeC_LayoutDanfe'  ).AsInteger := rgNFeC_LayoutDanfe.ItemIndex;
+  DM.Query1.ParamByName('NFCeC_PathLogoMarca').AsString  := edt_NFeC_PathLogoMarca.Text;
+  DM.Query1.ParamByName('NFCeC_PastaNotas'   ).AsString  := edtNFeC_PastaNotas.Text;
+  DM.Query1.ParamByName('NFCeC_CSCID'        ).AsString  := edCSC_ID.Text;
+  DM.Query1.ParamByName('NFCeC_CSC'          ).AsString  := edCSC.Text;
   DM.Query1.ExecSql;
 
   // Gravar as Configuracoes do Certificado Digital
@@ -167,19 +159,13 @@ begin
   DM.Query1.ParamByName('PaginaDeCodigo'          ).AsInteger := cbxPagCodigo.ItemIndex;
   DM.Query1.ExecSql;
 
-  ComparaDadosDaTela('Configuracao da NFe',Frmconfig_NFe_T32);
+  ComparaDadosDaTela('Configuracao da NFCe',Frm_config_nfce_T34);
 
   Avisos.Avisar('Configuração atualizada!');
-  vPodeFechar := True;
   Close;
 end;
 
-procedure TfrmConfig_NFe_T32.Registra_Logs;
-begin
-
-end;
-
-procedure TfrmConfig_NFe_T32.btn_buscar_xmlClick(Sender: TObject);
+procedure TFrm_config_nfce_T34.cxButton2Click(Sender: TObject);
 var
   Dir: string;
 begin
@@ -192,19 +178,7 @@ begin
     edtNFeC_PastaNotas.Text := Dir;
 end;
 
-procedure TfrmConfig_NFe_T32.cxButton1Click(Sender: TObject);
-begin
-  OpenDialog1.Title := 'Selecione o Logo';
-  OpenDialog1.DefaultExt := '*.bmp';
-  OpenDialog1.Filter := 'Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
-  if OpenDialog1.Execute then
-  begin
-    edt_NFeC_PathLogoMarca.Text := OpenDialog1.FileName;
-  end;
-end;
-
-procedure TfrmConfig_NFe_T32.cxButton3Click(Sender: TObject);
+procedure TFrm_config_nfce_T34.cxButton3Click(Sender: TObject);
 var vNFeC_SERIE, vNFe_SEQUENCIA: Integer;
 begin
   if not UsuarioMASTER then
@@ -245,15 +219,15 @@ begin
    // com número superior ao que está sendo definido....
    DM.Query1.Close;
    DM.Query1.Sql.Clear;
-   DM.Query1.SQL.Add('SELECT 1 from NOTAFISCAL55_NFE55     ');
-   DM.Query1.SQL.Add('  WHERE NFE55_NUMERO > :NFE55_NUMERO ');
-   DM.Query1.SQL.Add('    AND NFE55_SERIE  = :NFE55_SERIE  ');
-   DM.Query1.ParamByName('NFE55_SERIE' ).AsInteger := vNFeC_SERIE;
-   DM.Query1.ParamByName('NFE55_NUMERO').AsInteger := vNFe_SEQUENCIA;
+   DM.Query1.SQL.Add('SELECT 1 from NOTAFISCAL65_NFCE65      ');
+   DM.Query1.SQL.Add('  WHERE NFCE65_NUMERO > :NFCE65_NUMERO ');
+   DM.Query1.SQL.Add('    AND NFCE65_SERIE  = :NFCE65_SERIE  ');
+   DM.Query1.ParamByName('NFCE65_SERIE' ).AsInteger := vNFeC_SERIE;
+   DM.Query1.ParamByName('NFCE65_NUMERO').AsInteger := vNFe_SEQUENCIA;
    DM.Query1.Open;
    if not DM.Query1.eof then
    begin
-     Avisos.Avisar('Existe NFe emitida com número superior a este.');
+     Avisos.Avisar('Existe NFCe emitida com número superior a este.');
      edt_NFeC_SERIE.SetFocus;
      exit;
    end;
@@ -265,9 +239,9 @@ begin
   //----------------------------------------------------
     DM.Query1.Close;
     DM.Query1.Sql.Clear;
-    DM.Query1.SQL.Add('SELECT SNFe_SEQUENCIA         ');
-    DM.Query1.SQL.Add('  FROM SERIENFe_SNFe          ');
-    DM.Query1.SQL.Add('  WHERE SNFe_CODIGO = :CODIGO ');
+    DM.Query1.SQL.Add('SELECT SNFCe_SEQUENCIA         ');
+    DM.Query1.SQL.Add('  FROM SERIENFCe_SNFCe         ');
+    DM.Query1.SQL.Add('  WHERE SNFCe_CODIGO = :CODIGO ');
     DM.Query1.ParamByName('CODIGO').AsInteger :=  vNFeC_SERIE;
     DM.Query1.Open;
     if DM.Query1.eof then
@@ -304,7 +278,19 @@ begin
     end;
 end;
 
-function TfrmConfig_NFe_T32.DadosCorretos:Boolean;
+procedure TFrm_config_nfce_T34.cxButton4Click(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Logo';
+  OpenDialog1.DefaultExt := '*.bmp';
+  OpenDialog1.Filter := 'Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edt_NFeC_PathLogoMarca.Text := OpenDialog1.FileName;
+  end;
+end;
+
+function TFrm_config_nfce_T34.DadosCorretos: Boolean;
 var vNumero : Integer;
 begin
    // retorna true se os dados a serem gravados estão corretos
@@ -312,7 +298,7 @@ begin
    //---------------------------------------------------------------------------
    result := false;
 
-   if NaoPreencheuCamposObrigatoriosOuImportantes(frmConfig_NFe_T32) then
+   if NaoPreencheuCamposObrigatoriosOuImportantes(Frm_config_nfce_T34) then
       exit;
 
    // A Série da NFe é uma informação obrigatória
@@ -413,87 +399,37 @@ begin
    result := true;
 end;
 
-procedure TfrmConfig_NFe_T32.edt_NFeC_PathLogoMarcaChange(Sender: TObject);
-begin
-   MostraLogo(edt_NFeC_PathLogoMarca.Text);
-end;
-
-procedure TfrmConfig_NFe_T32.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TFrm_config_nfce_T34.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := cafree;
   self := nil;
 end;
 
-procedure TfrmConfig_NFe_T32.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TFrm_config_nfce_T34.MostraDados_CONFIG_NOTAS;
 begin
-//   CanClose := vPodeFechar;
+  // Preencher dados de configuracao de Certificado
+  cbxModeloPosPrinter.ItemIndex := DM.Query1.FieldByName('ModeloPosPrinter'        ).AsInteger;
+  cbxPagCodigo.ItemIndex        := DM.Query1.FieldByName('PaginaDeCodigo'          ).AsInteger;
 end;
 
-procedure TfrmConfig_NFe_T32.FormShow(Sender: TObject);
-var vNFeC_SERIE : integer;
-begin
-  vPodeFechar := False;
-  // Preenche itens dos CheckBoxes
-  Preenche_itens_dos_CheckBoxes;
-  // Recuperar Configuracao de NFe
-  DM.Query1.Close;
-  DM.Query1.Sql.Clear;
-  DM.Query1.Sql.Add('SELECT * fROM NFe_Configuracao');
-  DM.Query1.Open;
-  MostraDados_NFe_Configuracao;
-
-  // Recuperar Configuracao de Certificado
-  DM.Query1.Close;
-  DM.Query1.Sql.Clear;
-  DM.Query1.Sql.Add('SELECT * fROM CONFIG_NOTAS');
-  DM.Query1.Open;
-
-  MostraDados_CONFIG_NOTAS;
-  {
-  if edt_NFeC_SERIE.Text <> '' then
-  begin
-     try
-        vNFeC_SERIE := StrToInt(edt_NFeC_SERIE.Text);
-
-        edt_NFeC_nNF.Text := '';
-        if edt_NFeC_SERIE.Text <> '' then
-        begin
-            DM.Query1.Close;
-            DM.Query1.Sql.Clear;
-            DM.Query1.SQL.Add('SELECT SNFe_SEQUENCIA             ');
-            DM.Query1.SQL.Add('  FROM SERIENFe_SNFe              ');
-            DM.Query1.SQL.Add(' WHERE SNFe_CODIGO = :SNFe_CODIGO ');
-            DM.Query1.ParamByName('SNFe_CODIGO'   ).AsInteger := vNFeC_SERIE;
-            DM.Query1.Open;
-            if not DM.Query1.Eof then
-               edt_NFeC_nNF.Text := DM.Query1.FieldByName('SNFe_SEQUENCIA').AsString;
-        end;
-    except
-    end;
-  end;  }
-
-  // Salva estes dados para serem comparados ao serem gravados
-  // a fim de registrar no log de eventos todas as alerações feitas pelo usuário
-  SalvaDadosDaTela(Frmconfig_NFe_T32);
-end;
-
-procedure TfrmConfig_NFe_T32.MostraDados_NFe_Configuracao;
+procedure TFrm_config_nfce_T34.MostraDados_NFCe_Configuracao;
 begin
   // Preenche a tela com os dados recuperados do banco de dados
   //----------------------------------------------------------------------------
   Image1.Visible := false;
-  edt_NFeC_SERIE.Text           := FormatFloat('000'     ,DM.Query1.FieldByName('NFeC_SERIE').AsInteger);
-  edt_NFeC_nNF.Text             := FormatFloat('00000000',DM.Query1.FieldByName('NFeC_nNF'  ).AsInteger);
-  cbFormaEmissao.ItemIndex      := DM.Query1.FieldByName('NFeC_FormaEmissao' ).AsInteger;
-  rgNFeC_MostraPreview.ItemIndex:= DM.Query1.FieldByName('NFeC_MostraPreview').AsInteger;
-  rgNFeC_Ambiente.ItemIndex     := DM.Query1.FieldByName('NFeC_Ambiente'     ).AsInteger;
-  rgNFeC_LayoutDanfe.ItemIndex  := DM.Query1.FieldByName('NFeC_LayoutDanfe'  ).AsInteger;
-  edt_NFeC_PathLogoMarca.Text   := DM.Query1.FieldByName('NFeC_PathLogoMarca').AsString;
-  edtNFeC_PastaNotas.Text       := DM.Query1.FieldByName('NFeC_PastaNotas'   ).AsString;
+  edt_NFeC_SERIE.Text           := FormatFloat('000'     ,DM.Query1.FieldByName('NFCeC_SERIE').AsInteger);
+  edt_NFeC_nNF.Text             := FormatFloat('00000000',DM.Query1.FieldByName('NFCeC_nNF'  ).AsInteger);
+  cbFormaEmissao.ItemIndex      := DM.Query1.FieldByName('NFCeC_FormaEmissao' ).AsInteger;
+  rgNFeC_MostraPreview.ItemIndex:= DM.Query1.FieldByName('NFCeC_MostraPreview').AsInteger;
+  rgNFeC_Ambiente.ItemIndex     := DM.Query1.FieldByName('NFCeC_Ambiente'     ).AsInteger;
+  rgNFeC_LayoutDanfe.ItemIndex  := DM.Query1.FieldByName('NFCeC_LayoutDanfe'  ).AsInteger;
+  edt_NFeC_PathLogoMarca.Text   := DM.Query1.FieldByName('NFCeC_PathLogoMarca').AsString;
+  edtNFeC_PastaNotas.Text       := DM.Query1.FieldByName('NFCeC_PastaNotas'   ).AsString;
+  edCSC_ID.Text                 := DM.Query1.FieldByName('NFCeC_CSCID'        ).AsString;
+  edCSC.Text                    := DM.Query1.FieldByName('NFCeC_CSC'          ).AsString;
 end;
 
-procedure TfrmConfig_NFe_T32.MostraLogo(pArquivoImagem: String);
+procedure TFrm_config_nfce_T34.MostraLogo(pArquivoImagem: String);
 begin
   if pArquivoImagem <> '' then
   begin
@@ -502,14 +438,7 @@ begin
   end;
 end;
 
-procedure TfrmConfig_NFe_T32.MostraDados_CONFIG_NOTAS;
-begin
-  // Preencher dados de configuracao de Certificado
-  cbxModeloPosPrinter.ItemIndex := DM.Query1.FieldByName('ModeloPosPrinter'        ).AsInteger;
-  cbxPagCodigo.ItemIndex        := DM.Query1.FieldByName('PaginaDeCodigo'          ).AsInteger;
-end;
-
-procedure TfrmConfig_NFe_T32.Preenche_itens_dos_CheckBoxes;
+procedure TFrm_config_nfce_T34.Preenche_itens_dos_CheckBoxes;
 VAR w : Integer;
   T: TSSLLib;
   I: TpcnTipoEmissao;
@@ -518,7 +447,7 @@ VAR w : Integer;
   U: TSSLCryptLib;
   V: TSSLHttpLib;
   X: TSSLXmlSignLib;
-  Y: TSSLType;
+//  Y: TSSLType;
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;
   l: Integer;
@@ -538,5 +467,9 @@ begin
   cbFormaEmissao.ItemIndex := 0;
 end;
 
-end.
+procedure TFrm_config_nfce_T34.Registra_Logs;
+begin
 
+end;
+
+end.

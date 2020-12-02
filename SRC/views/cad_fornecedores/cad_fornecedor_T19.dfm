@@ -221,7 +221,7 @@ object frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 0
       TabStop = False
       OnClick = btDetalhesBloqueioClick
@@ -501,7 +501,7 @@ object frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 4
       TabStop = False
       OnClick = bHistoricoAlteracoesClick
@@ -742,7 +742,6 @@ object frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19
         Top = 10
         Width = 25
         Height = 26
-        Hint = 'Pesquisa Ramo de Atividade'
         LookAndFeel.Kind = lfOffice11
         LookAndFeel.NativeStyle = False
         LookAndFeel.SkinName = 'Metropolis'
@@ -782,7 +781,7 @@ object frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19
           000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
           1F3E000000060000000100000000000000000000000000000000}
         ParentShowHint = False
-        ShowHint = True
+        ShowHint = False
         TabOrder = 7
         TabStop = False
         OnClick = cxButton2Click
@@ -1157,17 +1156,16 @@ object frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 9
       TabStop = False
       OnClick = bPesqBairroClick
     end
     object bPesqCEP: TcxButton
-      Left = 199
-      Top = 21
+      Left = 204
+      Top = 17
       Width = 25
       Height = 26
-      Hint = 'Pesquisa CEP'
       LookAndFeel.Kind = lfOffice11
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Metropolis'
@@ -1207,7 +1205,7 @@ object frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 10
       TabStop = False
       Visible = False
@@ -1217,7 +1215,6 @@ object frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19
       Top = 166
       Width = 25
       Height = 26
-      Hint = 'Pesquisa Regi'#227'o'
       LookAndFeel.Kind = lfOffice11
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Metropolis'
@@ -1257,7 +1254,7 @@ object frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 11
       TabStop = False
       OnClick = cxButton4Click
@@ -1267,7 +1264,6 @@ object frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19
       Top = 136
       Width = 25
       Height = 26
-      Hint = 'Pesquisa Munic'#237'pio'
       LookAndFeel.Kind = lfOffice11
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Metropolis'
@@ -1307,7 +1303,7 @@ object frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 12
       TabStop = False
       OnClick = bPesqMunicipioClick
@@ -1317,7 +1313,6 @@ object frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19
       Top = 166
       Width = 25
       Height = 26
-      Hint = 'Pesquisa Zona'
       LookAndFeel.Kind = lfOffice11
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'Metropolis'
@@ -1357,7 +1352,7 @@ object frm_cad_fornecedor_T19: Tfrm_cad_fornecedor_T19
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 13
       TabStop = False
       OnClick = bPesqZonaClick

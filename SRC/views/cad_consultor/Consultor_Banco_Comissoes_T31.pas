@@ -216,7 +216,7 @@ end;
 procedure TfrmConsultor_Banco_Comissoes_T31.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-  CanClose := vPodeFechar;
+  //CanClose := vPodeFechar;
 end;
 
 procedure TfrmConsultor_Banco_Comissoes_T31.FormCreate(Sender: TObject);

@@ -442,9 +442,9 @@ begin
     begin
       Close;
       Sql.Clear;
-      Sql.Add('SELECT *                                              ');
-      Sql.Add('  FROM MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB            ');
-      Sql.Add(' WHERE MOTHB_MOTORISTA = :MOTHB_MOTORISTA             ');
+      Sql.Add('SELECT *                                            ');
+      Sql.Add('  FROM MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB          ');
+      Sql.Add(' WHERE MOTHB_MOTORISTA = :MOTHB_MOTORISTA           ');
       Sql.Add(' ORDER BY  MOTHB_DTEVENTO DESC, MOTHB_HREVENTO DESC ');
       ParamByName('MOTHB_MOTORISTA').AsString := edCODIGO.text;
       Open;
@@ -597,7 +597,7 @@ begin
       exit;
    end;
 
-   if Existe_Outro_CONTADOR_Com_Este_CNPJ((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_MOTORISTA_Com_Este_CNPJ((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -632,7 +632,7 @@ begin
       exit;
    end;
 
-   if Existe_Outro_CONTADOR_Com_Este_CPF((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_MOTORISTA_Com_Este_CPF((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -648,8 +648,6 @@ procedure Tfrm_cad_motorista_T26.edDataNascimentoExit(Sender: TObject);
 begin
    if DataNoFuturo((Sender as TMaskEdit)) then
       (Sender as TEdit).SetFocus;
-   if edNome.Text = '' then
-      pesquisar_CPF_na_SEFAZ;
 end;
 
 procedure Tfrm_cad_motorista_T26.edEmail1Exit(Sender: TObject);
@@ -712,7 +710,7 @@ begin
      exit;
    end;
    edIE.text := SoNumeros(edIE.text);
-   if Existe_Outro_CONTADOR_Com_Esta_IE((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_MOTORISTA_Com_Esta_IE((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -800,7 +798,7 @@ begin
      exit;
    end;
    edRG.text := SoNumerosOuISENTO(edRG.text);
-   if Existe_Outro_CONTADOR_Com_Este_RG((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_MOTORISTA_Com_Este_RG((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -872,7 +870,7 @@ end;
 procedure Tfrm_cad_motorista_T26.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-   CanClose := vPodeFechar;
+   //CanClose := vPodeFechar;
 end;
 
 procedure Tfrm_cad_motorista_T26.FormCreate(Sender: TObject);

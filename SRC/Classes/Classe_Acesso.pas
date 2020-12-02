@@ -24,21 +24,22 @@ type
       procedure AtualizaBaseDeDados;
       procedure AtualizaBaseDeDadosNuvem;
       procedure Alteracoes_Gerais;
-      procedure Alteracoes_Cad_Empresa;
-      procedure Alteracoes_Cad_Cliente;
-      procedure Alteracoes_Cad_Fornecedor;
-      procedure Alteracoes_Cad_Colaborador;
+      procedure Cad_Empresa;
+      procedure Cad_Cliente;
+      procedure Cad_Fornecedor;
+      procedure Cad_Colaborador;
       procedure Tratar_Cad_Bairro;
-      procedure Alteracoes_Cad_Consultor;
-      procedure Alteracoes_Cad_Vendedor;
-      procedure Alteracoes_Cad_Motorista;
-      procedure Alteracoes_Cad_Transportadora;
-      procedure Alteracoes_Cad_Contador;
+      procedure Cad_Consultor;
+      procedure Cad_Vendedor;
+      procedure Cad_Motorista;
+      procedure Cad_Transportadora;
+      procedure Cad_Contador;
       procedure Comissoes_colaboradores;
       procedure Comissoes_consultor;
       procedure Configuracoes_NFe;
       procedure DadosDaTela;
       procedure NotasFiscais;
+      procedure Produtos;
 
    public
       procedure Conectar;
@@ -69,7 +70,7 @@ begin
    result := true;
 end;
 
-procedure TAcesso.Alteracoes_Cad_Cliente;
+procedure TAcesso.Cad_Cliente;
 begin
    Executar_Script('SELECT * INTO CLIENTE_CLI_OLD FROM CLIENTE_CLI');
    Executar_Script('DROP TABLE CLIENTE_CLI');
@@ -274,6 +275,9 @@ begin
       dm.Query1.ExecSql;
    end;
 
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_CDCONTADOR  VARCHAR(10) NULL');
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_CDCONSULTOR VARCHAR(10) NULL');
+
 {CREATE TABLE Orders (
     OrderID int NOT NULL PRIMARY KEY,
     OrderNumber int NOT NULL,
@@ -283,7 +287,7 @@ begin
 
 end;
 
-procedure TAcesso.Alteracoes_Cad_Colaborador;
+procedure TAcesso.Cad_Colaborador;
 begin
    if not Ja_Executou_Script('Criar_COLABORADOR_DETALHE_CLID...') then
    begin
@@ -436,9 +440,27 @@ begin
      dm.Query1.sql.Add(' )                                             ');
      dm.Query1.ExecSql;
    end;
+
+   if not Ja_Executou_Script('Criar_TIPOCOLABORADOR_TPCOL') then
+   begin
+      dm.Query1.close;
+      dm.Query1.sql.Clear;
+      dm.Query1.sql.Add('CREATE TABLE TIPOCOLABORADOR_TPCOL (   ');
+      dm.Query1.sql.Add('       TPCOL_CODIGO  varchar(10) NULL, ');
+      dm.Query1.sql.Add('       TPCOL_NOME    varchar(40) NULL, ');
+      dm.Query1.sql.Add('       TPCOL_ESTACAO varchar(20) null, ');
+      dm.Query1.sql.Add('       TPCOL_USU     varchar(10) NULL, ');
+      dm.Query1.sql.Add('       TPCOL_DT      datetime    NULL, ');
+      dm.Query1.sql.Add('       TPCOL_HR      varchar(5)  NULL  ');
+      dm.Query1.sql.Add(' )                                    ');
+      dm.Query1.ExecSql;
+   end;
+
+   Executar_Script('ALTER TABLE COLABORADOR_DETALHE_COLD ADD COLD_TIPO VARCHAR(10) NULL');
+
 end;
 
-procedure TAcesso.Alteracoes_Cad_Consultor;
+procedure TAcesso.Cad_Consultor;
 begin
    if not Ja_Executou_Script('Criar_CONSULTOR') then
    begin
@@ -598,7 +620,7 @@ begin
 
 end;
 
-procedure TAcesso.Alteracoes_Cad_Contador;
+procedure TAcesso.Cad_Contador;
 begin
    if not Ja_Executou_Script('Criar_CONTADOR') then
    begin
@@ -754,7 +776,7 @@ begin
 
 end;
 
-procedure TAcesso.Alteracoes_Cad_Empresa;
+procedure TAcesso.Cad_Empresa;
 begin
    Executar_Script('ALTER TABLE EMPRESA_EMP DROP COLUMN CLID_ALT_USU VARCHAR(10) NULL');
    Executar_Script('ALTER TABLE EMPRESA_EMP DROP COLUMN CLID_ALT_DT  DATETIME    NULL');
@@ -855,7 +877,7 @@ begin
 
 end;
 
-procedure TAcesso.Alteracoes_Cad_Fornecedor;
+procedure TAcesso.Cad_Fornecedor;
 begin
    if not Ja_Executou_Script('Criar_FORNECEDOR_FOR...') then
    begin
@@ -1020,7 +1042,7 @@ begin
 
 end;
 
-procedure TAcesso.Alteracoes_Cad_Motorista;
+procedure TAcesso.Cad_Motorista;
 begin
    if not Ja_Executou_Script('Criar_MOTORISTA') then
    begin
@@ -1177,7 +1199,7 @@ begin
 
 end;
 
-procedure TAcesso.Alteracoes_Cad_Transportadora;
+procedure TAcesso.Cad_Transportadora;
 begin
    if not Ja_Executou_Script('Criar_TRANSPORTADORA') then
    begin
@@ -1336,7 +1358,7 @@ begin
 
 end;
 
-procedure TAcesso.Alteracoes_Cad_Vendedor;
+procedure TAcesso.Cad_Vendedor;
 begin
     if not Ja_Executou_Script('Criar_VENDEDOR_BLOQUEIOS_VENDB..') then
     begin
@@ -1596,20 +1618,21 @@ begin
       EXIT;
 
    Alteracoes_Gerais;
-   Alteracoes_Cad_Empresa;
-   Alteracoes_Cad_Cliente;
-   Alteracoes_Cad_Fornecedor;
-   Alteracoes_Cad_Colaborador;
-   Alteracoes_Cad_Consultor;
-   Alteracoes_Cad_Vendedor;
-   Alteracoes_Cad_Motorista;
-   Alteracoes_Cad_Transportadora;
-   Alteracoes_Cad_Contador;
+   Cad_Empresa;
+   Cad_Cliente;
+   Cad_Fornecedor;
+   Cad_Colaborador;
+   Cad_Consultor;
+   Cad_Vendedor;
+   Cad_Motorista;
+   Cad_Transportadora;
+   Cad_Contador;
    Comissoes_colaboradores;
    Comissoes_consultor;
    Configuracoes_NFe;
    DadosDaTela;
    NotasFiscais;
+   Produtos;
 
    Tratar_Cad_Bairro;
 
@@ -1856,6 +1879,50 @@ begin
      Executar('UPDATE NFe_Configuracao SET NFeC_FormaEmissao = 0 WHERE NFeC_FormaEmissao IS NULL');
   end;
 
+  if not Ja_Executou_Script('NFCe_Configuracao.') then
+  begin
+      DM.Query1.Close;
+      DM.Query1.Sql.Clear;
+      DM.Query1.Sql.Add('CREATE TABLE NFCe_Configuracao                         ');
+      DM.Query1.Sql.Add('    ( NFCeC_SERIE         INTEGER      NOT NULL,       ');
+      DM.Query1.Sql.Add('      NFCeC_nNF           INTEGER      NOT NULL,       ');
+      DM.Query1.Sql.Add('      NFCeC_VerMsgWS      INTEGER      NULL DEFAULT 1, ');
+      DM.Query1.Sql.Add('      NFCeC_LayoutDanfe   INTEGER      NULL DEFAULT 0, ');
+      DM.Query1.Sql.Add('      NFCeC_PathLogoMarca vARCHAR(255) NULL,           ');
+      DM.Query1.Sql.Add('      NFCeC_PastaNotas    varchar(255) NULL,           ');
+      DM.Query1.Sql.Add('      SSLType             integer      NULL DEFAULT -1,');
+      DM.Query1.Sql.Add('      NFCe_MostraPreview  integer      NULL DEFAULT  1,');
+      DM.Query1.Sql.Add('      NFCeC_Ambiente      INTEGER      NULL DEFAULT -1,');
+      DM.Query1.Sql.Add('      NFCeC_FormaEmissao  INTEGER      NULL DEFAULT  0,');
+      DM.Query1.Sql.Add('      NFCeC_CSCID         VARCHAR(10)  NULL,           ');
+      DM.Query1.Sql.Add('      NFCeC_CSC           VARCHAR(255) NULL)           ');
+      DM.Query1.ExecSql;
+  end;
+
+  if not Ja_Executou_Script('NFCe_Configuracao1') then
+  begin
+    DM.Query1.Close;
+    DM.Query1.Sql.Clear;
+    DM.Query1.Sql.Add('INSERT INTO NFCE_Configuracao');
+    DM.Query1.Sql.Add('    ( NFCeC_SERIE,           ');
+    DM.Query1.Sql.Add('      NFCeC_nNF)             ');
+    DM.Query1.Sql.Add('VALUES                      ');
+    DM.Query1.Sql.Add('    (:NFCeC_SERIE,           ');
+    DM.Query1.Sql.Add('     :NFCeC_nNF)             ');
+    DM.Query1.ParamByName('NFCeC_SERIE').AsInteger := 0;
+    DM.Query1.ParamByName('NFCeC_nNF'  ).AsInteger := 0;
+    DM.Query1.ExecSql;
+  end;
+  if not Ja_Executou_Script('Criada Tabela SERIENFCe_SNFCe') then
+  begin
+     // Controle da numerãção sequencial de séries de NFCe
+     DM.Query1.Close;
+     DM.Query1.Sql.Clear;
+     DM.Query1.SQL.Add('CREATE TABLE SERIENFCe_SNFCe         ');
+     DM.Query1.SQL.Add('     ( SNFCe_CODIGO    INTEGER NULL,');
+     DM.Query1.SQL.Add('       SNFCe_SEQUENCIA INTEGER NULL)');
+     DM.Query1.ExecSql;
+  end;
 end;
 
 procedure TAcesso.DadosDaTela;
@@ -2122,6 +2189,21 @@ begin
        Executar('ALTER TABLE config_notas ADD ModeloPosPrinter Integer null');
        Executar('UPDATE config_notas set ModeloPosPrinter = -1 where ModeloPosPrinter is null');
     end;
+
+end;
+
+procedure TAcesso.Produtos;
+begin
+  if not Ja_Executou_Script('Criada Tabela PRODUTOMARCA_PM') then
+  begin
+      DM.Query1.Close;
+      DM.Query1.Sql.Clear;
+      DM.Query1.Sql.Add('CREATE TABLE PRODUTOMARCA_PM (         ');
+      DM.Query1.Sql.Add('        PM_CODIGO    VARCHAR(10) NULL, ');
+      DM.Query1.Sql.Add('        PM_DESCRICAO VARCHAR(40) NULL  ');
+      DM.Query1.Sql.Add('     )                                 ');
+      DM.Query1.ExecSql;
+  end;
 
 end;
 

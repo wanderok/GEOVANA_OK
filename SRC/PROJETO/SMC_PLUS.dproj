@@ -152,8 +152,8 @@
             <Form>frm_cad_comissoes_T30</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\views\cad_colaborador\tipo_colab.pas">
-            <Form>Frm_tipo_colab</Form>
+        <DCCReference Include="..\..\SRC\views\cad_colaborador\tipo_colaborador_T8.pas">
+            <Form>Frm_tipo_colaborador_T8</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\cad_ramo_atividade\cad_ramo_atividade_T9.pas">
@@ -164,8 +164,8 @@
             <Form>frm_cad_regiao_T11</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\views\configs\config_certificado.pas">
-            <Form>frm_config_certificado</Form>
+        <DCCReference Include="..\..\SRC\views\configs\config_certificado_T33.pas">
+            <Form>frm_config_certificado_T33</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\configs\config_email.pas">
@@ -180,8 +180,8 @@
             <Form>Frm_config_MDFe</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\views\configs\config_nfce.pas">
-            <Form>Frm_Conf_Nfce</Form>
+        <DCCReference Include="..\..\SRC\views\configs\config_nfce_T34.pas">
+            <Form>Frm_config_nfce_T34</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\configs\config_nfs.pas">
@@ -375,6 +375,19 @@
         <DCCReference Include="..\..\src\Controles\Telas_Numeros.pas"/>
         <DCCReference Include="..\..\SRC\views\configs\config_nfe_T32.pas">
             <Form>frmConfig_NFe_T32</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\cad_clientes\cad_cliente_SMC_T35.pas">
+            <Form>Frm_cad_cliente_SMC_T35</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\Classes\Classe_Colaborador_Tipo.pas"/>
+        <DCCReference Include="..\..\SRC\views\Produto\cad_marca\cad_marca.pas">
+            <Form>Frm_Marca</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\Produto\cadastro_produto.pas">
+            <Form>Frm_Produto</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <None Include="ModelSupport_SMC_PLUS\default.txaPackage"/>

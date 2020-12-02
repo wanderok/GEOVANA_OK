@@ -129,6 +129,7 @@ type
     ACBrCEP1: TACBrCEP;
     GroupBox1: TGroupBox;
     mmObservacoes: TMemo;
+    bSMC: TcxButton;
     procedure bPesqZonaClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure bPesqBairroClick(Sender: TObject);
@@ -210,6 +211,7 @@ type
     procedure mmObservacoesClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
+    procedure bSMCClick(Sender: TObject);
 
   public
     { Public declarations }
@@ -236,6 +238,7 @@ uses
   ConsultaCNPJ_T13,
   ConsultaCPF_T14,
   CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17,
+  cad_cliente_SMC_T35,
   Dados,
   Classe_Nuvem;
 
@@ -441,6 +444,26 @@ end;
 procedure Tfrm_cad_cliente_T6.bPesqZonaClick(Sender: TObject);
 begin
    PesquisaZona;
+end;
+
+procedure Tfrm_cad_cliente_T6.bSMCClick(Sender: TObject);
+begin
+   if not DadosCorretos then
+      exit;
+
+   if not Gravar_Cliente then
+     exit;
+
+   Frm_cad_cliente_SMC_T35 := TFrm_cad_cliente_SMC_T35.Create(nil);
+   Cliente_T35.Codigo := Cliente.Codigo;
+   Cliente_T35.Abrir;
+   Frm_cad_cliente_SMC_T35.ShowModal;
+   Frm_cad_cliente_SMC_T35.Free;
+   Cliente.Abrir;
+     //Cliente.Detalhes.Contador  := Cliente_T35.Detalhes.Contador;
+     //Cliente.Detalhes.Consultor := Cliente_T35.Detalhes.Consultor;
+     //Cliente.Gravar;
+     //Cliente_T35.Free;
 end;
 
 procedure Tfrm_cad_cliente_T6.btDetalhesBloqueioClick(Sender: TObject);
@@ -667,8 +690,6 @@ procedure Tfrm_cad_cliente_T6.edDataNascimentoExit(Sender: TObject);
 begin
    if DataNoFuturo((Sender as TMaskEdit)) then
       (Sender as TEdit).SetFocus;
-   if edNome.Text = '' then
-      pesquisar_CPF_na_SEFAZ;
 end;
 
 procedure Tfrm_cad_cliente_T6.edEmail1Exit(Sender: TObject);
@@ -908,7 +929,7 @@ end;
 procedure Tfrm_cad_cliente_T6.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-   CanClose := vPodeFechar;
+   //CanClose := vPodeFechar;
 end;
 
 procedure Tfrm_cad_cliente_T6.FormCreate(Sender: TObject);
@@ -1102,6 +1123,7 @@ begin
         Cliente.Detalhes.Contato.Email1       := edEmail1.Text;
         Cliente.Detalhes.Contato.Email2       := edEmail2.Text;
 
+
         Lista := TStringList.Create;
         for i := 0 to vMemoLocal.lines.count-1 do
             Lista.Add(vMemoLocal.lines[i]);
@@ -1284,6 +1306,8 @@ begin
    edBairro.TabOrder           := 3;
    edBairro.Tag                := 100;
 
+   bSMC.Visible := UniSystem;
+
 end;
 
 procedure Tfrm_cad_cliente_T6.TrataCidade;
@@ -1373,7 +1397,14 @@ begin
      Exit;
   End;
   edAtividadeNome.Text := dm.Query1.FieldByName('RAMO_DESCRICAO').AsString;
-
 end;
 
+
+{ ESTAVA NO SMS LIGHT ORIGINAL COM TITULO "SINTEGRA"
+  begin
+    ShellExecute(GetDesktopWindow, 'open',
+      pchar('https://portalcontribuinte.sefin.ro.gov.br/Publico/parametropublica.jsp'),
+      nil, nil, sw_ShowNormal);
+  end;
+}
 end.

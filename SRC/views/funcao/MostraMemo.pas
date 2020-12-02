@@ -79,7 +79,7 @@ end;
 
 procedure TfrmMostraMemo.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
-   canClose := vPodeFechar;
+   //canClose := vPodeFechar;
 end;
 
 procedure TfrmMostraMemo.FormCreate(Sender: TObject);

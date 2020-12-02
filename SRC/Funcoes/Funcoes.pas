@@ -101,6 +101,7 @@ var Acesso            : TAcesso;
     xxxAtualizado,
     globalFuncoes_Atualizado:String;
 
+function UniSystem:Boolean;
 procedure ApagaRegistroDeDadosDaTela(pTela:String);
 //Apaga os registros de controle contendo os dados da tela
 procedure ComparaDadosDaTela(pFrase:String;pTela:Tobject);
@@ -120,7 +121,9 @@ function PesquisarCadastro(pTabela:String;pFiltro,pDescricao:TEdit):Boolean;
 function fPesquisarBairro(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarRegiao(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarZona(pCodigo,pDescricao:TEdit):Boolean;
+function fPesquisarMarca(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarAtividade(pCodigo,pDescricao:TEdit):Boolean;
+function fPesquisarTpColaborador(pCodigo,pDescricao:TEdit):Boolean;
 function fCaption(pTabela:String):String;
 
 function Existe_Outro_CLIENTE_Com_Este_CPF(pCPF,pCliente:String):Boolean;
@@ -132,7 +135,10 @@ function Existe_Outro_FORNECEDOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
 function Existe_Outro_FORNECEDOR_Com_Esta_IE(pIE,pCliente:String):Boolean;
 function Existe_Outro_FORNECEDOR_Com_Este_RG(pRG,pCliente:String):Boolean;
 
+function Existe_Outro_COLABORADOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
 function Existe_Outro_COLABORADOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
+function Existe_Outro_COLABORADOR_Com_Esta_IE(pIE,pCliente:String):Boolean;
+function Existe_Outro_COLABORADOR_Com_Este_RG(pRG,pCliente:String):Boolean;
 
 function Existe_Outro_CONSULTOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
 function Existe_Outro_CONSULTOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
@@ -143,6 +149,16 @@ function Existe_Outro_CONTADOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
 function Existe_Outro_CONTADOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
 function Existe_Outro_CONTADOR_Com_Esta_IE(pIE,pCliente:String):Boolean;
 function Existe_Outro_CONTADOR_Com_Este_RG(pRG,pCliente:String):Boolean;
+
+function Existe_Outro_TRANSPORTADOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
+function Existe_Outro_TRANSPORTADOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
+function Existe_Outro_TRANSPORTADOR_Com_Esta_IE(pIE,pCliente:String):Boolean;
+function Existe_Outro_TRANSPORTADOR_Com_Este_RG(pRG,pCliente:String):Boolean;
+
+function Existe_Outro_MOTORISTA_Com_Este_CPF(pCPF,pCliente:String):Boolean;
+function Existe_Outro_MOTORISTA_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
+function Existe_Outro_MOTORISTA_Com_Esta_IE(pIE,pCliente:String):Boolean;
+function Existe_Outro_MOTORISTA_Com_Este_RG(pRG,pCliente:String):Boolean;
 
 procedure Cria_Objetos_das_Classes;
 procedure Destroi_Objetos_das_Classes;
@@ -158,6 +174,8 @@ function fCNPJValido(pCNPJ:TEdit):Boolean;
 function SelectBairro(pBairro:String;pBairroDescricao:Tedit):Boolean;
 function SelectRegiao(pRegiao:String;pRegiaoDescricao:Tedit):Boolean;
 function SelectZona(pZona:String;pZonaDescricao:Tedit):Boolean;
+function SelectTpColaborador(pTpColaborador:String;pTpColaboradorDescricao:Tedit):Boolean;
+function SelectMarca(pMarca:String;pMarcaDescricao:Tedit):Boolean;
 function ZeroSeDataNula(pData:String):TDatetime;
 function BarrasSeDataNula(pData:String):String;
 function DataNoFuturo(pData:TMaskEdit):Boolean;
@@ -201,6 +219,8 @@ function ProximoBAI_CODIGO:String;
 function ProximoREG_CODIGO:String;
 function ProximoZON_CODIGO:String;
 function ProximoRAMO_CODIGO:String;
+function ProximoTPCOL_CODIGO:String;
+function ProximoPM_CODIGO:String;
 //
 Function DataDoExecutavel:String;
 
@@ -292,8 +312,8 @@ begin
    qLocal.sql.add('SELECT COL_CODIGO, COL_NOME_FANTASIA ');
    qLocal.sql.add('  FROM COLABORADOR_COL,              ');
    qLocal.sql.add('       COLABORADOR_DETALHE_COLD      ');
-   qLocal.sql.add(' WHERE COLD_CODIGO =   COLD_CODIGO   ');
-   qLocal.sql.add('   AND COLD_CODIGO <> :COLD_CODIGO   ');
+   qLocal.sql.add(' WHERE COLD_CODIGO =   COL_CODIGO    ');
+   qLocal.sql.add('   AND COL_CODIGO <>  :COL_CODIGO   ');
    qLocal.sql.add('   AND COLD_CPF    =  :COLD_CPF      ');
    qLocal.ParamByName('COL_CODIGO').AsString := pCliente;
    qLocal.ParamByName('COLD_CPF'  ).AsString := SoNumeros(pCPF);
@@ -465,6 +485,38 @@ begin
    result := true;
 end;
 
+function Existe_Outro_COLABORADOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pCNPJ = '' then
+      exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT COL_CODIGO,                       ');
+   qLocal.sql.add('       COL_NOME_FANTASIA,                ');
+   qLocal.sql.add('       COL_RAZAO_SOCIAL                  ');
+   qLocal.sql.add('  FROM COLABORADOR_COL, COLABORADOR_DETALHE_COLD ');
+   qLocal.sql.add(' WHERE COLD_CODIGO = COL_CODIGO          ');
+   qLocal.sql.add('   AND COL_CODIGO  <> :COL_CODIGO        ');
+   qLocal.sql.add('   AND COLD_CNPJ   =  :COLD_CNPJ         ');
+   qLocal.ParamByName('COL_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('COLD_CNPJ' ).AsString := SoNumeros(pCNPJ);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.CNPJ_existente(qLocal.FieldByName('COL_NOME_FANTASIA').AsString,
+                         qLocal.FieldByName('COL_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
 function Existe_Outro_CLIENTE_Com_Esta_IE(pIE,pCliente:String):Boolean;
 var qLocal : TFDQuery;
 begin
@@ -555,6 +607,36 @@ begin
    result := true;
 end;
 
+function Existe_Outro_COLABORADOR_Com_Esta_IE(pIE,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pIE = ''       then exit;
+   if pIE = 'ISENTO' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT COL_CODIGO, COL_NOME_FANTASIA     ');
+   qLocal.sql.add('  FROM COLABORADOR_COL, COLABORADOR_DETALHE_COLD ');
+   qLocal.sql.add(' WHERE COLD_CODIGO = COL_CODIGO          ');
+   qLocal.sql.add('   AND COL_CODIGO  <> :COL_CODIGO        ');
+   qLocal.sql.add('   AND COLD_IE     =  :COLD_IE           ');
+   qLocal.ParamByName('COL_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('COLD_IE'   ).AsString := SoNumerosOuISENTO(pIE);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.ie_existente(qLocal.FieldByName('COL_NOME_FANTASIA').AsString,
+                       qLocal.FieldByName('COL_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
 function Existe_Outro_CLIENTE_Com_Este_RG(pRG,pCliente:String):Boolean;
 var qLocal : TFDQuery;
 begin
@@ -641,6 +723,36 @@ begin
    end;
    Avisos.rg_existente(qLocal.FieldByName('CON_NOME_FANTASIA').AsString,
                        qLocal.FieldByName('CON_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+function Existe_Outro_COLABORADOR_Com_Este_RG(pRG,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pRG = ''       then exit;
+   if pRG = 'ISENTO' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT COL_CODIGO, COL_NOME_FANTASIA     ');
+   qLocal.sql.add('  FROM COLABORADOR_COL, COLABORADOR_DETALHE_COLD ');
+   qLocal.sql.add(' WHERE COLD_CODIGO = COL_CODIGO          ');
+   qLocal.sql.add('   AND COL_CODIGO  <> :COL_CODIGO        ');
+   qLocal.sql.add('   AND COLD_RG     =  :COLD_RG           ');
+   qLocal.ParamByName('COL_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('COLD_RG'   ).AsString := SoNumerosOuISENTO(pRG);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.rg_existente(qLocal.FieldByName('COL_NOME_FANTASIA').AsString,
+                       qLocal.FieldByName('COL_CODIGO').AsString);
    qLocal.Free;
    result := true;
 end;
@@ -1377,6 +1489,47 @@ begin
     q.Free;
 end;
 
+function ProximoTPCOL_CODIGO:String;
+var Q : TFDQuery;
+    i : Integer;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+  try
+      Q.Close;
+      Q.Sql.Clear;
+      Q.SQL.Add('SELECT MAX(TPCOL_CODIGO) AS MAIOR ');
+      Q.SQL.Add('  FROM TIPOCOLABORADOR_TPCOL      ');
+      Q.open;
+      if Q.eof then
+           result := '1'
+      else
+         if Q.FieldByName('MAIOR').AsString = '' then
+             result := '1'
+         else
+             result := FormatFloat('#',Q.FieldByName('MAIOR').AsInteger + 1);
+   except
+        i := 1;
+        Q.Close;
+        Q.Sql.Clear;
+        Q.SQL.Add('SELECT TPCOL_CODIGO          ');
+        Q.SQL.Add('  FROM TIPOCOLABORADOR_TPCOL ');
+        Q.SQL.Add(' WHERE TPCOL_CODIGO = :COD   ');
+        Q.ParamByName('COD').AsString := FormatFloat('#',i);
+        Q.open;
+        while not Q.eof do
+        begin
+          q.Close;
+          Inc(i);
+          Q.ParamByName('COD').AsString := FormatFloat('#',i);
+          Q.open;
+        end;
+        result:= FormatFloat('#',i);
+     end;
+    q.Free;
+end;
+
 function ProximoZON_CODIGO:String;
 var Q : TFDQuery;
     i : Integer;
@@ -1404,6 +1557,47 @@ begin
         Q.SQL.Add('SELECT *                 ');
         Q.SQL.Add('  FROM ZONA_ZON          ');
         Q.SQL.Add(' WHERE ZON_CODIGO = :COD ');
+        Q.ParamByName('COD').AsString := FormatFloat('#',i);
+        Q.open;
+        while not Q.eof do
+        begin
+          Inc(i);
+          Q.Close;
+          Q.ParamByName('COD').AsString := FormatFloat('#',i);
+          Q.open;
+        end;
+        result:= FormatFloat('#',i);
+     end;
+    q.Free;
+end;
+
+function ProximoPM_CODIGO:String;
+var Q : TFDQuery;
+    i : Integer;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+  try
+    Q.Close;
+    Q.Sql.Clear;
+    Q.SQL.Add('SELECT MAX(PM_CODIGO) AS MAIOR ');
+    Q.SQL.Add('  FROM PRODUTOMARCA_PM         ');
+    Q.open;
+    if Q.eof then
+       result := '1'
+    else
+       if Q.FieldByName('MAIOR').AsString = '' then
+           result := '1'
+       else
+           result := FormatFloat('#',Q.FieldByName('MAIOR').AsInteger + 1);
+   except
+        i := 1;
+        Q.Close;
+        Q.Sql.Clear;
+        Q.SQL.Add('SELECT *                ');
+        Q.SQL.Add('  FROM PRODUTOMARCA_PM  ');
+        Q.SQL.Add(' WHERE PM_CODIGO = :COD ');
         Q.ParamByName('COD').AsString := FormatFloat('#',i);
         Q.open;
         while not Q.eof do
@@ -1624,6 +1818,19 @@ begin
             end
             else
               (pTela.Components[vComponent] as tMaskEdit).Color := clWhite;
+         end;
+      end;
+      if pTela.Components[vComponent] is tComboBox then
+      begin
+         if (pTela.Components[vComponent] as tComboBox).Tag = 100 then
+         begin
+            if (pTela.Components[vComponent] as tComboBox).Text = '' then
+            begin
+               Result := True;
+               (pTela.Components[vComponent] as tComboBox).Color := clAqua;
+            end
+            else
+              (pTela.Components[vComponent] as tComboBox).Color := clWhite;
          end;
       end;
    end;
@@ -2233,7 +2440,7 @@ begin
    qLocal.close;
    qLocal.sql.clear;
    qLocal.sql.add('SELECT ZON_DESCRICAO           ');
-   qLocal.sql.add('  FROM ZONA_ZON              ');
+   qLocal.sql.add('  FROM ZONA_ZON                ');
    qLocal.sql.add(' WHERE ZON_CODIGO = :ZON_CODIGO');
    qLocal.ParamByName('ZON_CODIGO').AsString := pZona;
    qLocal.Open;
@@ -2243,6 +2450,68 @@ begin
      exit;
    end;
    pZonaDescricao.Text := qlocal.FieldByName('ZON_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
+function SelectMarca(pMarca:String;pMarcaDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   Result := True;
+   pMarcaDescricao.Text := '';
+   if pMarca = '' then
+   begin
+      exit;
+   end;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT PM_DESCRICAO          ');
+   qLocal.sql.add('  FROM PRODUTOMARCA_PM       ');
+   qLocal.sql.add(' WHERE PM_CODIGO = :PM_CODIGO');
+   qLocal.ParamByName('PM_CODIGO').AsString := pMarca;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+   pMarcaDescricao.Text := qlocal.FieldByName('PM_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
+function SelectTpColaborador(pTpColaborador:String;pTpColaboradorDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   Result := True;
+   pTpColaboradorDescricao.Text := '';
+   if pTpColaborador = '' then
+   begin
+      exit;
+   end;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT TPCOL_NOME             ');
+   qLocal.sql.add('  FROM TIPOCOLABORADOR_TPCOL  ');
+   qLocal.sql.add(' WHERE TPCOL_CODIGO = :TPCOL_CODIGO');
+   qLocal.ParamByName('TPCOL_CODIGO').AsString := pTpColaborador;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+   pTpColaboradorDescricao.Text := qlocal.FieldByName('TPCOL_NOME').AsString;
    qlocal.Free;
    Result := True;
 end;
@@ -2469,6 +2738,11 @@ begin
    result := PesquisarCadastro('RAMOATIVIDADE_RAMO',pCodigo,pDescricao);
 end;
 
+function fPesquisarTpColaborador(pCodigo,pDescricao:TEdit):Boolean;
+begin
+   result := PesquisarCadastro('TIPOCOLABORADOR_TPCOL',pCodigo,pDescricao);
+end;
+
 function fPesquisarBairro(pCodigo,pDescricao:TEdit):Boolean;
 begin
    result := PesquisarCadastro('BAIRRO_BAI',pCodigo,pDescricao);
@@ -2484,13 +2758,19 @@ begin
    result := PesquisarCadastro('ZONA_ZON',pCodigo,pDescricao);
 end;
 
+function fPesquisarMarca(pCodigo,pDescricao:TEdit):Boolean;
+begin
+   result := PesquisarCadastro('PRODUTOMARCA_PM',pCodigo,pDescricao);
+end;
+
 function fCaption(pTabela:String):String;
 begin
-        if  pTabela = 'ZONA_ZON'           then result := 'Cadastro | Zona'
-  else  if  pTabela = 'REGIAO_REG'         then result := 'Cadastro | Região'
-  else  if  pTabela = 'BAIRRO_BAI'         then result := 'Cadastro | Bairro'
-  else  if  pTabela = 'RAMOATIVIDADE_RAMO' then result := 'Cadastro | Atividade'
-
+        if  pTabela = 'ZONA_ZON'              then result := 'Cadastro | Zona'
+  else  if  pTabela = 'PRODUTOMARCA_PM'       then result := 'Cadastro | Marca'
+  else  if  pTabela = 'REGIAO_REG'            then result := 'Cadastro | Região'
+  else  if  pTabela = 'BAIRRO_BAI'            then result := 'Cadastro | Bairro'
+  else  if  pTabela = 'RAMOATIVIDADE_RAMO'    then result := 'Cadastro | Atividade'
+  else  if  pTabela = 'TIPOCOLABORADOR_TPCOL' then result := 'Cadastro | Tipo Colaborador'
   else  result := '';
 end;
 
@@ -2500,19 +2780,23 @@ end;
 
 function TPesquisaF1.Chaves: String;
 begin
-        if  FTabela = 'ZONA_ZON'           then result := 'ZON_CODIGO'
-  else  if  FTabela = 'REGIAO_REG'         then result := 'REG_CODIGO'
-  else  if  FTabela = 'BAIRRO_BAI'         then result := 'BAI_CODIGO'
-  else  if  FTabela = 'RAMOATIVIDADE_RAMO' then result := 'RAMO_CODIGO'
+        if  FTabela = 'ZONA_ZON'              then result := 'ZON_CODIGO'
+  else  if  FTabela = 'PRODUTOMARCA_PM'       then result := 'PM_CODIGO'
+  else  if  FTabela = 'REGIAO_REG'            then result := 'REG_CODIGO'
+  else  if  FTabela = 'BAIRRO_BAI'            then result := 'BAI_CODIGO'
+  else  if  FTabela = 'RAMOATIVIDADE_RAMO'    then result := 'RAMO_CODIGO'
+  else  if  FTabela = 'TIPOCOLABORADOR_TPCOL' then result := 'TPCOL_CODIGO'
   else  result := '';
 end;
 
 function TPesquisaF1.Codigos: String;
 begin
-        if  FTabela = 'ZONA_ZON'           then result := 'ZON_CODIGO'
-  else  if  FTabela = 'REGIAO_REG'         then result := 'REG_CODIGO'
-  else  if  FTabela = 'BAIRRO_BAI'         then result := 'BAI_CODIGO'
-  else  if  FTabela = 'RAMOATIVIDADE_RAMO' then result := 'RAMO_CODIGO'
+        if  FTabela = 'ZONA_ZON'              then result := 'ZON_CODIGO'
+  else  if  FTabela = 'PRODUTOMARCA_PM'       then result := 'PM_CODIGO'
+  else  if  FTabela = 'REGIAO_REG'            then result := 'REG_CODIGO'
+  else  if  FTabela = 'BAIRRO_BAI'            then result := 'BAI_CODIGO'
+  else  if  FTabela = 'RAMOATIVIDADE_RAMO'    then result := 'RAMO_CODIGO'
+  else  if  FTabela = 'TIPOCOLABORADOR_TPCOL' then result := 'TPCOL_CODIGO'
   else  result := '';
 end;
 
@@ -2524,10 +2808,12 @@ end;
 
 function TPesquisaF1.Descricoes: String;
 begin
-        if  FTabela = 'ZONA_ZON'           then result := 'ZON_DESCRICAO'
-  else  if  FTabela = 'REGIAO_REG'         then result := 'REG_DESCRICAO'
-  else  if  FTabela = 'BAIRRO_BAI'         then result := 'BAI_DESCRICAO'
-  else  if  FTabela = 'RAMOATIVIDADE_RAMO' then result := 'RAMO_DESCRICAO'
+        if  FTabela = 'ZONA_ZON'              then result := 'ZON_DESCRICAO'
+  else  if  FTabela = 'PRODUTOMARCA_PM'       then result := 'PM_DESCRICAO'
+  else  if  FTabela = 'REGIAO_REG'            then result := 'REG_DESCRICAO'
+  else  if  FTabela = 'BAIRRO_BAI'            then result := 'BAI_DESCRICAO'
+  else  if  FTabela = 'RAMOATIVIDADE_RAMO'    then result := 'RAMO_DESCRICAO'
+  else  if  FTabela = 'TIPOCOLABORADOR_TPCOL' then result := 'TPCOL_NOME'
   else  result := '';
 end;
 
@@ -2660,10 +2946,12 @@ end;
 
 function TPesquisaF1.ProximoCODIGO: String;
 begin
-        if FTabela = 'ZONA_ZON'           then result := ProximoZON_CODIGO
-   else if FTabela = 'REGIAO_REG'         then result := ProximoREG_CODIGO
-   else if FTabela = 'BAIRRO_BAI'         then result := ProximoBAI_CODIGO
-   else if FTabela = 'RAMOATIVIDADE_RAMO' then result := ProximoRAMO_CODIGO
+        if FTabela = 'ZONA_ZON'              then result := ProximoZON_CODIGO
+   else if FTabela = 'PRODUTOMARCA_PM'       then result := ProximoPM_CODIGO
+   else if FTabela = 'REGIAO_REG'            then result := ProximoREG_CODIGO
+   else if FTabela = 'BAIRRO_BAI'            then result := ProximoBAI_CODIGO
+   else if FTabela = 'RAMOATIVIDADE_RAMO'    then result := ProximoRAMO_CODIGO
+   else if FTabela = 'TIPOCOLABORADOR_TPCOL' then result := ProximoTPCOL_CODIGO
    else
    begin
       Log('Funcoes','TPesquisaF1.ProximoCODIGO: Defina Proximo'+FTabela);
@@ -2737,6 +3025,66 @@ begin
    result := true;
 end;
 
+function Existe_Outro_MOTORISTA_Com_Este_CPF(pCPF,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pCPF = '' then
+      exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT MOT_CODIGO, MOT_NOME_FANTASIA         ');
+   qLocal.sql.add('  FROM MOTORISTA_MOT, MOTORISTA_DETALHE_MOTD ');
+   qLocal.sql.add(' WHERE MOTD_CODIGO = MOT_CODIGO              ');
+   qLocal.sql.add('   AND MOT_CODIGO  <> :MOT_CODIGO            ');
+   qLocal.sql.add('   AND MOTD_CPF    =  :MOTD_CPF              ');
+   qLocal.ParamByName('MOT_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('MOTD_CPF'  ).AsString := SoNumeros(pCPF);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.CPF_existente(qLocal.FieldByName('MOT_NOME_FANTASIA').AsString,
+                        qLocal.FieldByName('MOT_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+function Existe_Outro_TRANSPORTADOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pCPF = '' then
+      exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT TRA_CODIGO, TRA_NOME_FANTASIA         ');
+   qLocal.sql.add('  FROM TRANSPORTADORA_TRA, TRANSPORTADORA_DETALHE_TRAD ');
+   qLocal.sql.add(' WHERE TRAD_CODIGO = TRA_CODIGO              ');
+   qLocal.sql.add('   AND TRA_CODIGO  <> :TRA_CODIGO            ');
+   qLocal.sql.add('   AND TRAD_CPF    =  :TRAD_CPF              ');
+   qLocal.ParamByName('TRA_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('TRAD_CPF'  ).AsString := SoNumeros(pCPF);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.CPF_existente(qLocal.FieldByName('TRA_NOME_FANTASIA').AsString,
+                        qLocal.FieldByName('TRA_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
 function Existe_Outro_CONTADOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
 var qLocal : TFDQuery;
 begin
@@ -2765,6 +3113,70 @@ begin
    end;
    Avisos.CNPJ_existente(qLocal.FieldByName('CONT_NOME_FANTASIA').AsString,
                          qLocal.FieldByName('CONT_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+function Existe_Outro_TRANSPORTADOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pCNPJ = '' then
+      exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT TRA_CODIGO,                       ');
+   qLocal.sql.add('       TRA_NOME_FANTASIA,                ');
+   qLocal.sql.add('       TRA_RAZAO_SOCIAL                  ');
+   qLocal.sql.add('  FROM TRANSPORTADORA_TRA, TRANSPORTADORA_DETALHE_TRAD ');
+   qLocal.sql.add(' WHERE TRAD_CODIGO = TRA_CODIGO          ');
+   qLocal.sql.add('   AND TRA_CODIGO  <> :TRA_CODIGO        ');
+   qLocal.sql.add('   AND TRAD_CNPJ   =  :TRAD_CNPJ         ');
+   qLocal.ParamByName('TRA_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('TRAD_CNPJ' ).AsString := SoNumeros(pCNPJ);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.CNPJ_existente(qLocal.FieldByName('TRA_NOME_FANTASIA').AsString,
+                         qLocal.FieldByName('TRA_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+function Existe_Outro_MOTORISTA_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pCNPJ = '' then
+      exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT MOT_CODIGO,                       ');
+   qLocal.sql.add('       MOT_NOME_FANTASIA,                ');
+   qLocal.sql.add('       MOT_RAZAO_SOCIAL                  ');
+   qLocal.sql.add('  FROM MOTORISTA_MOT, MOTORISTA_DETALHE_MOTD ');
+   qLocal.sql.add(' WHERE MOTD_CODIGO = MOT_CODIGO          ');
+   qLocal.sql.add('   AND MOT_CODIGO  <> :MOT_CODIGO        ');
+   qLocal.sql.add('   AND MOTD_CNPJ   =  :MOTD_CNPJ         ');
+   qLocal.ParamByName('MOT_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('MOTD_CNPJ' ).AsString := SoNumeros(pCNPJ);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.CNPJ_existente(qLocal.FieldByName('MOT_NOME_FANTASIA').AsString,
+                         qLocal.FieldByName('MOT_CODIGO').AsString);
    qLocal.Free;
    result := true;
 end;
@@ -2799,6 +3211,67 @@ begin
    result := true;
 end;
 
+function Existe_Outro_MOTORISTA_Com_Esta_IE(pIE,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pIE = ''       then exit;
+   if pIE = 'ISENTO' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT MOT_CODIGO, MOT_NOME_FANTASIA     ');
+   qLocal.sql.add('  FROM MOTORISTA_MOT, MOTORISTA_DETALHE_MOTD ');
+   qLocal.sql.add(' WHERE MOTD_CODIGO = MOT_CODIGO          ');
+   qLocal.sql.add('   AND MOT_CODIGO  <> :MOT_CODIGO        ');
+   qLocal.sql.add('   AND MOTD_IE     =  :MOTD_IE           ');
+   qLocal.ParamByName('MOT_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('MOTD_IE'   ).AsString := SoNumerosOuISENTO(pIE);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.ie_existente(qLocal.FieldByName('MOT_NOME_FANTASIA').AsString,
+                       qLocal.FieldByName('MOT_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+
+function Existe_Outro_TRANSPORTADOR_Com_Esta_IE(pIE,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pIE = ''       then exit;
+   if pIE = 'ISENTO' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT TRA_CODIGO, TRA_NOME_FANTASIA     ');
+   qLocal.sql.add('  FROM TRANSPORTADORA_TRA, TRANSPORTADORA_DETALHE_TRAD ');
+   qLocal.sql.add(' WHERE TRAD_CODIGO = TRA_CODIGO          ');
+   qLocal.sql.add('   AND TRA_CODIGO  <> :TRA_CODIGO        ');
+   qLocal.sql.add('   AND TRAD_IE     =  :TRAD_IE           ');
+   qLocal.ParamByName('TRA_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('TRAD_IE'   ).AsString := SoNumerosOuISENTO(pIE);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.ie_existente(qLocal.FieldByName('TRA_NOME_FANTASIA').AsString,
+                       qLocal.FieldByName('TRA_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
 function Existe_Outro_CONTADOR_Com_Este_RG(pRG,pCliente:String):Boolean;
 var qLocal : TFDQuery;
 begin
@@ -2825,6 +3298,70 @@ begin
    end;
    Avisos.rg_existente(qLocal.FieldByName('CONT_NOME_FANTASIA').AsString,
                        qLocal.FieldByName('CONT_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+function Existe_Outro_MOTORISTA_Com_Este_RG(pRG,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pRG = ''       then exit;
+   if pRG = 'ISENTO' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT MOT_CODIGO,                ');
+   qLocal.sql.add('       MOT_NOME_FANTASIA          ');
+   qLocal.sql.add('  FROM MOTORISTA_MOT,             ');
+   qLocal.sql.add('       MOTORISTA_DETALHE_MOTD     ');
+   qLocal.sql.add(' WHERE MOTD_CODIGO = MOT_CODIGO   ');
+   qLocal.sql.add('   AND MOT_CODIGO  <> :MOT_CODIGO ');
+   qLocal.sql.add('   AND MOTD_RG     =  :MOTD_RG    ');
+   qLocal.ParamByName('MOT_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('MOTD_RG'   ).AsString := SoNumerosOuISENTO(pRG);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.rg_existente(qLocal.FieldByName('MOT_NOME_FANTASIA').AsString,
+                       qLocal.FieldByName('MOT_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+function Existe_Outro_TRANSPORTADOR_Com_Este_RG(pRG,pCliente:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pRG = ''       then exit;
+   if pRG = 'ISENTO' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT TRA_CODIGO,                 ');
+   qLocal.sql.add('       TRA_NOME_FANTASIA           ');
+   qLocal.sql.add('  FROM TRANSPORTADORA_TRA,         ');
+   qLocal.sql.add('       TRANSPORTADORA_DETALHE_TRAD ');
+   qLocal.sql.add(' WHERE TRAD_CODIGO = TRA_CODIGO    ');
+   qLocal.sql.add('   AND TRA_CODIGO  <> :TRA_CODIGO  ');
+   qLocal.sql.add('   AND TRAD_RG     =  :TRAD_RG     ');
+   qLocal.ParamByName('TRA_CODIGO').AsString := pCliente;
+   qLocal.ParamByName('TRAD_RG'   ).AsString := SoNumerosOuISENTO(pRG);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.rg_existente(qLocal.FieldByName('TRA_NOME_FANTASIA').AsString,
+                       qLocal.FieldByName('TRA_CODIGO').AsString);
    qLocal.Free;
    result := true;
 end;
@@ -3002,6 +3539,11 @@ begin
   DM.Query1.ExecSql;
 end;
 
+
+function UniSystem:Boolean;
+begin
+  result := (Empresa.CNPJ = '32.899.293/0001-87');
+end;
 
 end.
 

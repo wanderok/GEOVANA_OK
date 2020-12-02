@@ -401,8 +401,8 @@ var i : Integer;
 begin
    qConsultor.Close;
    qConsultor.Sql.Clear;
-   qConsultor.Sql.Add('DELETE FROM CONTADOR_OBS_CONTOBS ');
-   qConsultor.Sql.Add(' WHERE CONTOBS_CODIGO = :COD    ');
+   qConsultor.Sql.Add('DELETE FROM CONSULTOR_OBS_CONOBS ');
+   qConsultor.Sql.Add(' WHERE CONOBS_CODIGO = :COD    ');
    qConsultor.ParamByName('COD').AsString := FCodigo;
    qConsultor.ExecSql;
 
@@ -410,17 +410,17 @@ begin
    begin
       qConsultor.close;
       qConsultor.sql.Clear;
-      qConsultor.sql.Add('INSERT INTO CONTADOR_OBS_CONTOBS   ');
-      qConsultor.sql.Add('     ( CONTOBS_CODIGO,            ');
-	    qConsultor.sql.Add('       CONTOBS_LINHA,             ');
-      qConsultor.sql.Add('       CONTOBS_TEXTO)             ');
+      qConsultor.sql.Add('INSERT INTO CONSULTOR_OBS_CONOBS   ');
+      qConsultor.sql.Add('     ( CONOBS_CODIGO,            ');
+	    qConsultor.sql.Add('       CONOBS_LINHA,             ');
+      qConsultor.sql.Add('       CONOBS_TEXTO)             ');
       qConsultor.sql.Add('VALUES                           ');
-      qConsultor.sql.Add('     (:CONTOBS_CODIGO,            ');
-	    qConsultor.sql.Add('      :CONTOBS_LINHA,             ');
-      qConsultor.sql.Add('      :CONTOBS_TEXTO)             ');
-      qConsultor.ParamByName('CONTOBS_CODIGO').AsString := FCodigo;
-	    qConsultor.ParamByName('CONTOBS_LINHA' ).AsInteger:= i;
-      qConsultor.ParamByName('CONTOBS_TEXTO' ).AsString := FObservacao[i];
+      qConsultor.sql.Add('     (:CONOBS_CODIGO,            ');
+	    qConsultor.sql.Add('      :CONOBS_LINHA,             ');
+      qConsultor.sql.Add('      :CONOBS_TEXTO)             ');
+      qConsultor.ParamByName('CONOBS_CODIGO').AsString := FCodigo;
+	    qConsultor.ParamByName('CONOBS_LINHA' ).AsInteger:= i;
+      qConsultor.ParamByName('CONOBS_TEXTO' ).AsString := FObservacao[i];
       qConsultor.ExecSql;
    end;
 end;
@@ -848,15 +848,15 @@ begin
    FObservacao.Clear;
    qConsultor.Close;
    qConsultor.Sql.Clear;
-   qConsultor.Sql.Add('SELECT CONTOBS_TEXTO          ');
-   qConsultor.Sql.Add('  FROM CONTADOR_OBS_CONTOBS    ');
-   qConsultor.Sql.Add(' WHERE CONTOBS_CODIGO = :COD  ');
-   qConsultor.Sql.Add(' ORDER BY CONTOBS_LINHA       ');
+   qConsultor.Sql.Add('SELECT CONOBS_TEXTO          ');
+   qConsultor.Sql.Add('  FROM CONSULTOR_OBS_CONOBS  ');
+   qConsultor.Sql.Add(' WHERE CONOBS_CODIGO = :COD  ');
+   qConsultor.Sql.Add(' ORDER BY CONOBS_LINHA       ');
    qConsultor.ParamByName('COD').AsString := FCodigo;
    qConsultor.Open;
    while not qConsultor.eof do
    begin
-     FObservacao.add(qConsultor.fieldbyname('CONTOBS_TEXTO').AsString);
+     FObservacao.add(qConsultor.fieldbyname('CONOBS_TEXTO').AsString);
      qConsultor.Next;
    end;
 end;

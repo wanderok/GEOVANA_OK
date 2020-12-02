@@ -26,7 +26,7 @@ implementation
 
 {$R *.dfm}
 
-uses config_NFe_T32, config_nfce;
+uses config_NFe_T32, config_nfce_T34;
 
 {
 procedure TfrmMenuConfiguracaoNfeNFce.Button1Click(Sender: TObject);
@@ -41,10 +41,10 @@ end;
 
 procedure TfrmMenuConfiguracaoNfeNFce.Button2Click(Sender: TObject);
 begin
-  if not u_funcoes.verificaaberta(Frm_Conf_Nfce) then
+  if not u_funcoes.verificaaberta(Frm_config_nfce_T34) then
   begin
-    Frm_Conf_Nfce := TFrm_Conf_Nfce.Create(nil);
-    Frm_Conf_Nfce.showmodal;
+    Frm_config_nfce_T34 := TFrm_config_nfce_T34.Create(nil);
+    Frm_config_nfce_T34.showmodal;
   end;
   close;
 end;               }

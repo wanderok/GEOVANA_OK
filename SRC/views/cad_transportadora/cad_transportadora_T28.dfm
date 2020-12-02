@@ -234,7 +234,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 0
       TabStop = False
       OnClick = btDetalhesBloqueioClick
@@ -514,7 +514,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 4
       TabStop = False
       OnClick = bHistoricoAlteracoesClick
@@ -795,7 +795,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
           000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
           1F3E000000060000000100000000000000000000000000000000}
         ParentShowHint = False
-        ShowHint = True
+        ShowHint = False
         TabOrder = 7
         TabStop = False
         OnClick = cxButton2Click
@@ -1127,7 +1127,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
       ParentFont = False
     end
     object bPesqBairro: TcxButton
-      Left = 300
+      Left = 299
       Top = 78
       Width = 25
       Height = 26
@@ -1170,7 +1170,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 9
       TabStop = False
       OnClick = bPesqBairroClick
@@ -1220,7 +1220,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 10
       TabStop = False
       Visible = False
@@ -1270,14 +1270,14 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 11
       TabStop = False
       OnClick = cxButton4Click
     end
     object bPesqMunicipio: TcxButton
-      Left = 355
-      Top = 136
+      Left = 360
+      Top = 139
       Width = 25
       Height = 26
       Hint = 'Pesquisa Munic'#237'pio'
@@ -1320,7 +1320,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 12
       TabStop = False
       OnClick = bPesqMunicipioClick
@@ -1370,7 +1370,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 13
       TabStop = False
       OnClick = bPesqZonaClick
@@ -2336,7 +2336,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   object edRNTC: TEdit
     Tag = 123
     Left = 69
-    Top = 238
+    Top = 239
     Width = 207
     Height = 27
     CharCase = ecUpperCase

@@ -3,7 +3,7 @@ object frm_cad_motorista_T26: Tfrm_cad_motorista_T26
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'Cadastro | Contador'
+  Caption = 'Cadastro | Motorista'
   ClientHeight = 483
   ClientWidth = 968
   Color = clWhite
@@ -221,7 +221,7 @@ object frm_cad_motorista_T26: Tfrm_cad_motorista_T26
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 0
       TabStop = False
       OnClick = btDetalhesBloqueioClick
@@ -453,7 +453,9 @@ object frm_cad_motorista_T26: Tfrm_cad_motorista_T26
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
+      ParentShowHint = False
       ReadOnly = True
+      ShowHint = False
       TabOrder = 3
     end
     object bHistoricoAlteracoes: TcxButton
@@ -501,7 +503,7 @@ object frm_cad_motorista_T26: Tfrm_cad_motorista_T26
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 4
       TabStop = False
       OnClick = bHistoricoAlteracoesClick
@@ -738,8 +740,8 @@ object frm_cad_motorista_T26: Tfrm_cad_motorista_T26
         OnExit = edRG_DataEmissaoExit
       end
       object cxButton2: TcxButton
-        Left = 409
-        Top = 10
+        Left = 408
+        Top = 11
         Width = 25
         Height = 26
         Hint = 'Pesquisa Ramo de Atividade'
@@ -782,7 +784,7 @@ object frm_cad_motorista_T26: Tfrm_cad_motorista_T26
           000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
           1F3E000000060000000100000000000000000000000000000000}
         ParentShowHint = False
-        ShowHint = True
+        ShowHint = False
         TabOrder = 7
         TabStop = False
         OnClick = cxButton2Click
@@ -1157,7 +1159,7 @@ object frm_cad_motorista_T26: Tfrm_cad_motorista_T26
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 9
       TabStop = False
       OnClick = bPesqBairroClick
@@ -1207,7 +1209,7 @@ object frm_cad_motorista_T26: Tfrm_cad_motorista_T26
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 10
       TabStop = False
       Visible = False
@@ -1257,7 +1259,7 @@ object frm_cad_motorista_T26: Tfrm_cad_motorista_T26
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 11
       TabStop = False
       OnClick = cxButton4Click
@@ -1307,7 +1309,7 @@ object frm_cad_motorista_T26: Tfrm_cad_motorista_T26
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 12
       TabStop = False
       OnClick = bPesqMunicipioClick
@@ -1357,7 +1359,7 @@ object frm_cad_motorista_T26: Tfrm_cad_motorista_T26
         000000000003241F1D3486726BADB69B91E6CCADA1FFB99C92E988736CB22822
         1F3E000000060000000100000000000000000000000000000000}
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 13
       TabStop = False
       OnClick = bPesqZonaClick

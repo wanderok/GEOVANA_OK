@@ -22,6 +22,7 @@ object Frm_Produto: TFrm_Produto
   Position = poMainFormCenter
   Scaled = False
   OnClose = FormClose
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 16
   object GroupBox4: TGroupBox
@@ -155,7 +156,7 @@ object Frm_Produto: TFrm_Produto
       ParentFont = False
     end
     object Label8: TLabel
-      Left = 334
+      Left = 286
       Top = 142
       Width = 45
       Height = 18
@@ -415,7 +416,7 @@ object Frm_Produto: TFrm_Produto
       OnClick = btn_undClick
     end
     object btn_marca: TcxButton
-      Left = 499
+      Left = 386
       Top = 139
       Width = 22
       Height = 25
@@ -554,10 +555,10 @@ object Frm_Produto: TFrm_Produto
       ParentFont = False
       TabOrder = 6
     end
-    object MARCA: TEdit
-      Left = 385
+    object edMarca: TEdit
+      Left = 337
       Top = 139
-      Width = 111
+      Width = 48
       Height = 25
       CharCase = ecUpperCase
       Font.Charset = ANSI_CHARSET
@@ -567,6 +568,7 @@ object Frm_Produto: TFrm_Produto
       Font.Style = []
       ParentFont = False
       TabOrder = 4
+      OnExit = edMarcaExit
     end
     object CODIGO_BARRAS: TEdit
       Left = 294
@@ -755,6 +757,22 @@ object Frm_Produto: TFrm_Produto
       Lines.Strings = (
         'Memo1')
       TabOrder = 18
+    end
+    object edMarcaDescricao: TEdit
+      Left = 409
+      Top = 138
+      Width = 136
+      Height = 26
+      TabStop = False
+      Color = clSilver
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 19
     end
   end
   object cxLabel1: TcxLabel

@@ -8676,6 +8676,7 @@ object Frm_main: TFrm_main
       Category = 0
       Hint = 'NF-e'
       Visible = ivAlways
+      OnClick = dxBarLargeButton23Click
     end
     object dxBarLargeButton24: TdxBarLargeButton
       Caption = 'New Button'
@@ -8694,6 +8695,7 @@ object Frm_main: TFrm_main
       Category = 0
       Hint = 'NFC-e'
       Visible = ivAlways
+      OnClick = dxBarLargeButton26Click
     end
     object dxBarLargeButton27: TdxBarLargeButton
       Caption = 'C'#243'pia de Seguran'#231'a'

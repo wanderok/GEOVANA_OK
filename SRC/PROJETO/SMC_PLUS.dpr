@@ -18,14 +18,14 @@ uses
   Classe_Empresa in '..\..\src\Classes\Classe_Empresa.pas',
   PesquisaF1_T16 in '..\..\SRC\views\Consulta_Cadastros\PesquisaF1_T16.pas' {frm_PesquisaF1_T16},
   cad_comissoes_T30 in '..\..\src\views\cad_colaborador\cad_comissoes_T30.pas' {frm_cad_comissoes_T30},
-  tipo_colab in '..\..\src\views\cad_colaborador\tipo_colab.pas' {Frm_tipo_colab},
+  tipo_colaborador_T8 in '..\..\SRC\views\cad_colaborador\tipo_colaborador_T8.pas' {Frm_tipo_colaborador_T8},
   cad_ramo_atividade_T9 in '..\..\src\views\cad_ramo_atividade\cad_ramo_atividade_T9.pas' {frm_cad_ramo_atividade_T9},
   cad_regiao_T11 in '..\..\src\views\cad_regiao\cad_regiao_T11.pas' {frm_cad_regiao_T11},
-  config_certificado in '..\..\src\views\configs\config_certificado.pas' {frm_config_certificado},
+  config_certificado_T33 in '..\..\SRC\views\configs\config_certificado_T33.pas' {frm_config_certificado_T33},
   config_email in '..\..\src\views\configs\config_email.pas' {frm_config_email},
   config_mde in '..\..\src\views\configs\config_mde.pas' {Frm_Conf_mde},
   config_mdfe in '..\..\src\views\configs\config_mdfe.pas' {Frm_config_MDFe},
-  config_nfce in '..\..\src\views\configs\config_nfce.pas' {Frm_Conf_Nfce},
+  config_nfce_T34 in '..\..\SRC\views\configs\config_nfce_T34.pas' {Frm_config_nfce_T34},
   config_nfs in '..\..\src\views\configs\config_nfs.pas' {frm_confi_nfs},
   email_arquivos_fiscais in '..\..\src\views\configs\email_arquivos_fiscais.pas' {frm_config_email_fiscais},
   integracao_outros_bancos in '..\..\src\views\configs\integracao_outros_bancos.pas' {frm_intagracao_outras_base_dados},
@@ -88,7 +88,11 @@ uses
   Classe_Comissao in '..\..\src\Classes\Classe_Comissao.pas',
   Consultor_Banco_Comissoes_T31 in '..\..\src\views\cad_consultor\Consultor_Banco_Comissoes_T31.pas' {frmConsultor_Banco_Comissoes_T31},
   Telas_Numeros in '..\..\src\Controles\Telas_Numeros.pas',
-  config_nfe_T32 in '..\..\SRC\views\configs\config_nfe_T32.pas' {frmConfig_NFe_T32};
+  config_nfe_T32 in '..\..\SRC\views\configs\config_nfe_T32.pas' {frmConfig_NFe_T32},
+  cad_cliente_SMC_T35 in '..\..\src\views\cad_clientes\cad_cliente_SMC_T35.pas' {Frm_cad_cliente_SMC_T35},
+  Classe_Colaborador_Tipo in '..\..\src\Classes\Classe_Colaborador_Tipo.pas',
+  cad_marca in '..\..\SRC\views\Produto\cad_marca\cad_marca.pas' {Frm_Marca},
+  cadastro_produto in '..\..\SRC\views\Produto\cadastro_produto.pas' {Frm_Produto};
 
 {$R *.res}
 

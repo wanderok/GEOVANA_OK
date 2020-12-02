@@ -71,6 +71,8 @@ type
       FZona              : String;
       FEndereco          : TEndereco;
       FContato           : TContato;
+      FContador          : String;
+      FConsultor         : String;
       //FCodigoMunicipio   : String;           // CLID_CDCIDADE
       //
       function  getFDataCadastro: TDateTime;
@@ -84,6 +86,10 @@ type
       procedure setFRegiao(const Value: String);
       function getFZona: String;
       procedure setFZona(const Value: String);
+      function getFConsultor: String;
+      function getFContador: String;
+      procedure setFConsultor(const Value: String);
+      procedure setFContador(const Value: String);
       //function getFCodigoMunicipio: String;
       //procedure setFCodigoMunicipio(const Value: String); // CLID_DT
 
@@ -100,7 +106,8 @@ type
       property Zona              : String           read getFZona               write setFZona;
       property Endereco          : TEndereco        read FEndereco              write FEndereco;
       property Contato           : TContato         read FContato               write FContato;
-      //property Municipio         : String         read getFCodigoMunicipio    write setFCodigoMunicipio;
+      property Contador          : String           read getFContador           write setFContador;
+      property Consultor         : String           read getFConsultor          write setFConsultor;
 end;
 
   TClienteAlteracao = class(TAlteracao);
@@ -468,6 +475,8 @@ begin
         qCliente.SQL.Add('       CLID_CDRAMO,              ');
         qCliente.SQL.Add('       CLID_CDREGIAO,            ');
         qCliente.SQL.Add('       CLID_CDZONA,              ');
+        qCliente.SQL.Add('       CLID_CDCONTADOR,          ');
+        qCliente.SQL.Add('       CLID_CDCONSULTOR,         ');
         qCliente.SQL.Add('       CLID_DT                   ');
         qCliente.SQL.Add('     )                           ');
         qCliente.SQL.Add('VALUES                           ');
@@ -493,6 +502,8 @@ begin
         qCliente.SQL.Add('      :CLID_CDRAMO,              ');
         qCliente.SQL.Add('      :CLID_CDREGIAO,            ');
         qCliente.SQL.Add('      :CLID_CDZONA,              ');
+        qCliente.SQL.Add('      :CLID_CDCONTADOR,          ');
+        qCliente.SQL.Add('      :CLID_CDCONSULTOR,         ');
         qCliente.SQL.Add('      :CLID_DT                   ');
         qCliente.SQL.Add('     )                           ');
         qCliente.ParamByName('CLID_CODIGO'             ).AsString   := FCodigo;
@@ -513,10 +524,12 @@ begin
         qCliente.ParamByName('CLID_ALT_DTBLOQUEADO'    ).AsDateTime := 0;
         qCliente.ParamByName('CLID_ALT_DTLIBERADO'     ).AsDateTime := 0;
         qCliente.ParamByName('CLID_ALT_DTINATIVO'      ).AsDateTime := 0;
-        qCliente.ParamByName('CLID_CDRAMO'           ).AsString   := FDetalhes.FRamoAtividade;
-        qCliente.ParamByName('CLID_CDREGIAO'         ).AsString   := FDetalhes.FRegiao;
-        qCliente.ParamByName('CLID_CDZONA'           ).AsString   := FDetalhes.FZona;
-        qCliente.ParamByName('CLID_DT'               ).AsDateTime := DataServidor;
+        qCliente.ParamByName('CLID_CDRAMO'             ).AsString   := FDetalhes.FRamoAtividade;
+        qCliente.ParamByName('CLID_CDREGIAO'           ).AsString   := FDetalhes.FRegiao;
+        qCliente.ParamByName('CLID_CDZONA'             ).AsString   := FDetalhes.FZona;
+        qCliente.ParamByName('CLID_CDCONTADOR'         ).AsString   := FDetalhes.FContador;
+        qCliente.ParamByName('CLID_CDCONSULTOR'        ).AsString   := FDetalhes.FConsultor;
+        qCliente.ParamByName('CLID_DT'                 ).AsDateTime := DataServidor;
         qCliente.ExecSql;
         Result := true;
     except
@@ -660,9 +673,11 @@ begin
        FCNPJ                     := qCliente.FieldByName('CLID_CNPJ'               ).AsString;
        FIE                       := qCliente.FieldByName('CLID_IE'                 ).AsString;
     end;
-    FDetalhes.RamoAtividade      := qCliente.FieldByName('CLID_CDRAMO'             ).AsString;
-    FDetalhes.Regiao             := qCliente.FieldByName('CLID_CDREGIAO'           ).AsString;
-    FDetalhes.Zona               := qCliente.FieldByName('CLID_CDZONA'             ).AsString;
+    FDetalhes.FRamoAtividade     := qCliente.FieldByName('CLID_CDRAMO'             ).AsString;
+    FDetalhes.FRegiao            := qCliente.FieldByName('CLID_CDREGIAO'           ).AsString;
+    FDetalhes.FZona              := qCliente.FieldByName('CLID_CDZONA'             ).AsString;
+    FDetalhes.FContador          := qCliente.FieldByName('CLID_CDCONTADOR'         ).AsString;
+    FDetalhes.FConsultor         := qCliente.FieldByName('CLID_CDCONSULTOR'        ).AsString;
     FDetalhes.FDataCadastro      := qCliente.FieldByName('CLID_DT'                 ).AsDateTime;
     Pegar_Alteracoes;
 end;
@@ -979,7 +994,9 @@ begin
         qCliente.SQL.Add('       CLID_ALT_DTINATIVO       = :CLID_ALT_DTINATIVO,       ');
         qCliente.SQL.Add('       CLID_CDRAMO              = :CLID_CDRAMO,              ');
         qCliente.SQL.Add('       CLID_CDREGIAO            = :CLID_CDREGIAO,            ');
-        qCliente.SQL.Add('       CLID_CDZONA              = :CLID_CDZONA               ');
+        qCliente.SQL.Add('       CLID_CDZONA              = :CLID_CDZONA,              ');
+        qCliente.SQL.Add('       CLID_CDCONTADOR          = :CLID_CDCONTADOR,          ');
+        qCliente.SQL.Add('       CLID_CDCONSULTOR         = :CLID_CDCONSULTOR          ');
         qCliente.SQL.Add(' WHERE CLID_CODIGO              = :CLID_CODIGO               ');
         qCliente.ParamByName('CLID_CODIGO'          ).AsString   := FCodigo;
         qCliente.ParamByName('CLID_NUVEM_ATUALIZADO').AsInteger  := 0;
@@ -1002,6 +1019,8 @@ begin
         qCliente.ParamByName('CLID_CDRAMO'          ).AsString   := FDetalhes.FRamoAtividade;
         qCliente.ParamByName('CLID_CDREGIAO'        ).AsString   := FDetalhes.FRegiao;
         qCliente.ParamByName('CLID_CDZONA'          ).AsString   := FDetalhes.FZona;
+        qCliente.ParamByName('CLID_CDCONTADOR'      ).AsString   := FDetalhes.FContador;
+        qCliente.ParamByName('CLID_CDCONSULTOR'     ).AsString   := FDetalhes.FConsultor;
         qCliente.ExecSql;
 
         Log('Classe_Cliente','Alterou Cliente '+ FNomeFantasia);
@@ -1082,6 +1101,16 @@ begin
    result := FCodigoMunicipio;
 end;
 }
+function tDetalhes_Cliente.getFConsultor: String;
+begin
+  Result := FConsultor;
+end;
+
+function tDetalhes_Cliente.getFContador: String;
+begin
+  Result := FContador;
+end;
+
 function tDetalhes_Cliente.getFDataCadastro: TDateTime;
 begin
    result := FDataCadastro;
@@ -1113,6 +1142,16 @@ begin
    FCodigoMunicipio := Value;
 end;
 }
+procedure tDetalhes_Cliente.setFConsultor(const Value: String);
+begin
+   FConsultor := Copy(Value,1,10);
+end;
+
+procedure tDetalhes_Cliente.setFContador(const Value: String);
+begin
+   FContador := Copy(Value,1,10);
+end;
+
 procedure tDetalhes_Cliente.setFDataCadastro(const Value: TDateTime);
 begin
    FDataCadastro := Value;

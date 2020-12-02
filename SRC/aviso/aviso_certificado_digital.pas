@@ -68,7 +68,7 @@ end;
 procedure Tfrm_aviso_certificado_vencido.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-   CanClose := vPodeFechar;
+   //CanClose := vPodeFechar;
 end;
 
 procedure Tfrm_aviso_certificado_vencido.FormCreate(Sender: TObject);

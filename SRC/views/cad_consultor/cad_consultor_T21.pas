@@ -664,8 +664,6 @@ procedure Tfrm_cad_consultor_T21.edDataNascimentoExit(Sender: TObject);
 begin
    if DataNoFuturo((Sender as TMaskEdit)) then
       (Sender as TEdit).SetFocus;
-   if edNome.Text = '' then
-      pesquisar_CPF_na_SEFAZ;
 end;
 
 procedure Tfrm_cad_consultor_T21.edEmail1Exit(Sender: TObject);
@@ -888,7 +886,7 @@ end;
 procedure Tfrm_cad_consultor_T21.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-   CanClose := vPodeFechar;
+   //CanClose := vPodeFechar;
 end;
 
 procedure Tfrm_cad_consultor_T21.FormCreate(Sender: TObject);

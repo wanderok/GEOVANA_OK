@@ -125,6 +125,9 @@ type
     GroupBox1: TGroupBox;
     mmObservacoes: TMemo;
     bComissoes: TcxButton;
+    edTpColaborador: TEdit;
+    bPesqTpColaborador: TcxButton;
+    edTpColaboradorDescricao: TEdit;
     procedure bPesqZonaClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure bPesqBairroClick(Sender: TObject);
@@ -176,6 +179,7 @@ type
     function SelectMunicipio(pMunicipio:String;pMunicipioNome:TEdit):Boolean;
     procedure PesquisaRegiao;
     procedure PesquisaZona;
+    procedure PesquisaTpColaborador;
     procedure edRegiaoExit(Sender: TObject);
     procedure edZonaExit(Sender: TObject);
     procedure edNOMEKeyPress(Sender: TObject; var Key: Char);
@@ -203,6 +207,8 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure bComissoesClick(Sender: TObject);
+    procedure edTpColaboradorExit(Sender: TObject);
+    procedure bPesqTpColaboradorClick(Sender: TObject);
 
   public
     { Public declarations }
@@ -222,6 +228,7 @@ uses
   ValidadorDeDocumentos,
   U_Municipio_T5,
   consulta_T7,
+  tipo_colaborador_T8,
   auditoria_T10,
   cad_regiao_T11,
   cad_zona_T12,
@@ -274,6 +281,11 @@ end;
 procedure Tfrm_cad_colaborador_T20.cxButton2Click(Sender: TObject);
 begin
    pesquisar_CPF_na_SEFAZ;
+end;
+
+procedure Tfrm_cad_colaborador_T20.bPesqTpColaboradorClick(Sender: TObject);
+begin
+   PesquisaTpColaborador;
 end;
 
 procedure Tfrm_cad_colaborador_T20.pesquisar_CPF_na_SEFAZ;
@@ -349,6 +361,14 @@ Begin
     edRegiao.SetFocus;
     edRegiaoExit(nil);
     }
+end;
+
+procedure Tfrm_cad_colaborador_T20.PesquisaTpColaborador;
+begin
+    if fPesquisarTpColaborador(edTpColaborador,edTpColaboradorDescricao) then
+       edTpColaboradorExit(nil)
+    else
+       edTpColaborador.SetFocus;
 end;
 
 procedure Tfrm_cad_colaborador_T20.PesquisaZona;
@@ -444,7 +464,7 @@ end;
 
 procedure Tfrm_cad_colaborador_T20.bPesqZonaClick(Sender: TObject);
 begin
-   PesquisaZona;
+  PesquisaZona;
 end;
 
 procedure Tfrm_cad_colaborador_T20.btDetalhesBloqueioClick(Sender: TObject);
@@ -615,7 +635,7 @@ begin
       exit;
    end;
 
-   if Existe_Outro_CLIENTE_Com_Este_CNPJ((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_COLABORADOR_Com_Este_CNPJ((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -650,7 +670,7 @@ begin
       exit;
    end;
 
-   if Existe_Outro_CLIENTE_Com_Este_CPF((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_COLABORADOR_Com_Este_CPF((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -666,8 +686,6 @@ procedure Tfrm_cad_colaborador_T20.edDataNascimentoExit(Sender: TObject);
 begin
    if DataNoFuturo((Sender as TMaskEdit)) then
       (Sender as TEdit).SetFocus;
-   if edNome.Text = '' then
-      pesquisar_CPF_na_SEFAZ;
 end;
 
 procedure Tfrm_cad_colaborador_T20.edEmail1Exit(Sender: TObject);
@@ -730,7 +748,7 @@ begin
      exit;
    end;
    edIE.text := SoNumeros(edIE.text);
-   if Existe_Outro_CLIENTE_Com_Esta_IE((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_COLABORADOR_Com_Esta_IE((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -744,6 +762,19 @@ begin
       key:=#0;
       (Sender as TEdit).Text := 'ISENTO';
    end;
+end;
+
+procedure Tfrm_cad_colaborador_T20.edTpColaboradorExit(Sender: TObject);
+begin
+//   if not PesquisaF1.ExisteCodigo('ZONA_ZON',edZona.Text) then
+
+   if not SelectTpColaborador(edTpColaborador.Text,edTpColaboradorDescricao) then
+   begin
+      Avisos.Avisar('Tipo de Colaborador inexistente...');
+      edTpColaborador.SetFocus;
+      exit;
+   end
+
 end;
 
 procedure Tfrm_cad_colaborador_T20.edCelKeyPress(Sender: TObject; var Key: Char);
@@ -818,7 +849,7 @@ begin
      exit;
    end;
    edRG.text := SoNumerosOuISENTO(edRG.text);
-   if Existe_Outro_CLIENTE_Com_Este_RG((Sender as TEdit).Text,edCodigo.Text) then
+   if Existe_Outro_COLABORADOR_Com_Este_RG((Sender as TEdit).Text,edCodigo.Text) then
    begin
       (Sender as TEdit).SetFocus;
       exit;
@@ -890,7 +921,7 @@ end;
 procedure Tfrm_cad_colaborador_T20.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-   CanClose := vPodeFechar;
+   //CanClose := vPodeFechar;
 end;
 
 procedure Tfrm_cad_colaborador_T20.FormCreate(Sender: TObject);
@@ -930,7 +961,8 @@ begin
    begin
            if edEnderecoMunicipioIBGE.Focused then PesquisaMunicipio
       else if edZona.Focused                  then PesquisaZona
-      else if edRegiao.Focused                then PesquisaRegiao;
+      else if edRegiao.Focused                then PesquisaRegiao
+      else if edTpColaborador.Focused         then PesquisaTpColaborador;
    end;
 end;
 
@@ -1066,6 +1098,7 @@ begin
 
         Colaborador.Detalhes.Regiao               := edRegiao.Text;
         Colaborador.Detalhes.Zona                 := edZona.Text;
+        Colaborador.Detalhes.Tipo                 := edTpColaborador.Text;
         Colaborador.Detalhes.Endereco.Rua         := edRua.Text;
         Colaborador.Detalhes.Endereco.Numero      := edNumero.Text;
         Colaborador.Detalhes.Endereco.Bairro      := edBairro.Text;
@@ -1171,6 +1204,7 @@ procedure Tfrm_cad_colaborador_T20.Preencher_Endereco;
 begin
    edRegiao.Text                      := Colaborador.Detalhes.Regiao;
    edZona.Text                        := Colaborador.Detalhes.Zona;
+   edTpColaborador.Text               := Colaborador.Detalhes.Tipo;
    edRua.Text                         := Colaborador.Detalhes.Endereco.Rua;
    edNumero.Text                      := Colaborador.Detalhes.Endereco.Numero;
    edBairro.Text                      := Colaborador.Detalhes.Endereco.Bairro;
@@ -1182,6 +1216,7 @@ begin
    SelectRegiao(edRegiao.Text,edRegiaoDescricao);
    SelectZona(edZona.Text,edZonaDescricao);
    SelectMunicipio(edEnderecoMunicipioIBGE.Text,edCidade);
+   SelectTpColaborador(edTpColaborador.Text,edTpColaboradorDescricao);
 end;
 
 procedure Tfrm_cad_colaborador_T20.Preencher_Historicos;

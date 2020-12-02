@@ -1,11 +1,11 @@
-object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
+object Frm_tipo_colaborador_T8: TFrm_tipo_colaborador_T8
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'Cadastro | Bairro'
-  ClientHeight = 271
-  ClientWidth = 358
+  Caption = 'Cadastro | Tipo Colaborador'
+  ClientHeight = 269
+  ClientWidth = 286
   Color = clBtnFace
   DefaultMonitor = dmMainForm
   Font.Charset = DEFAULT_CHARSET
@@ -19,55 +19,40 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object Label5: TLabel
+    Left = 13
+    Top = 12
+    Width = 67
+    Height = 18
+    Caption = 'Descri'#231#227'o:'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
   object lbNomeDaTela: TLabel
     Left = 0
-    Top = 258
-    Width = 358
+    Top = 256
+    Width = 286
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
-    Caption = '[ T16 ] '
+    Caption = '[ T8 ] '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 318
-    ExplicitWidth = 40
-  end
-  object SpeedButton1: TSpeedButton
-    Left = 8
-    Top = 189
-    Width = 337
-    Height = 24
-    Caption = 'Editar'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    Glyph.Data = {
-      76010000424D7601000000000000760000002800000020000000100000000100
-      04000000000000010000120B0000120B00001000000000000000000000000000
-      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333000000
-      000033333377777777773333330FFFFFFFF03FF3FF7FF33F3FF700300000FF0F
-      00F077F777773F737737E00BFBFB0FFFFFF07773333F7F3333F7E0BFBF000FFF
-      F0F077F3337773F3F737E0FBFBFBF0F00FF077F3333FF7F77F37E0BFBF00000B
-      0FF077F3337777737337E0FBFBFBFBF0FFF077F33FFFFFF73337E0BF0000000F
-      FFF077FF777777733FF7000BFB00B0FF00F07773FF77373377373330000B0FFF
-      FFF03337777373333FF7333330B0FFFF00003333373733FF777733330B0FF00F
-      0FF03333737F37737F373330B00FFFFF0F033337F77F33337F733309030FFFFF
-      00333377737FFFFF773333303300000003333337337777777333}
-    NumGlyphs = 2
-    ParentFont = False
-    OnClick = SpeedButton1Click
+    ExplicitLeft = 253
+    ExplicitWidth = 33
   end
   object edFiltro: TEdit
     Left = 86
     Top = 8
-    Width = 259
+    Width = 187
     Height = 26
     CharCase = ecUpperCase
     Font.Charset = DEFAULT_CHARSET
@@ -79,12 +64,11 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
     ParentFont = False
     TabOrder = 0
     OnChange = edFiltroChange
-    OnKeyPress = edFiltroKeyPress
   end
   object DBGrid2: TDBGrid
-    Left = 8
-    Top = 40
-    Width = 337
+    Left = 13
+    Top = 46
+    Width = 260
     Height = 150
     DataSource = DataSource1
     Font.Charset = DEFAULT_CHARSET
@@ -92,7 +76,6 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
     ParentFont = False
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
@@ -105,21 +88,41 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
     Columns = <
       item
         Expanded = False
-        FieldName = 'DESCRICAO'
-        Title.Caption = 'Descri'#231#227'o'
+        FieldName = 'TPCOL_CODIGO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        Title.Caption = 'C'#243'digo'
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -11
         Title.Font.Name = 'Tahoma'
         Title.Font.Style = [fsBold]
-        Width = 289
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TPCOL_NOME'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        Title.Caption = 'Tipo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Visible = True
       end>
   end
-  object bGravar: TcxButton
-    Left = 9
+  object cxButton1: TcxButton
+    Left = 13
     Top = 211
-    Width = 103
+    Width = 98
     Height = 45
     Caption = 'Gravar'
     LookAndFeel.NativeStyle = False
@@ -262,10 +265,10 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    OnClick = bGravarClick
+    OnClick = cxButton1Click
   end
   object cxButton2: TcxButton
-    Left = 242
+    Left = 170
     Top = 211
     Width = 103
     Height = 45
@@ -412,44 +415,16 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
     ParentFont = False
     OnClick = cxButton2Click
   end
-  object edCodigo: TEdit
-    Left = 12
-    Top = 8
-    Width = 73
-    Height = 26
-    CharCase = ecUpperCase
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -15
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    MaxLength = 10
-    ParentFont = False
-    TabOrder = 4
-    OnExit = edCodigoExit
-    OnKeyPress = edFiltroKeyPress
-  end
-  object ACBrEnterTab1: TACBrEnterTab
-    EnterAsTab = True
-    Left = 245
-    Top = 48
-  end
   object qLocal: TFDQuery
     Connection = DM.Database1
-    UpdateOptions.AssignedValues = [uvEDelete, uvEInsert, uvEUpdate]
-    UpdateOptions.EnableDelete = False
-    UpdateOptions.EnableInsert = False
-    UpdateOptions.EnableUpdate = False
     SQL.Strings = (
-      
-        'SELECT ZON_CODIGO AS CODIGO, ZON_DESCRICAO AS DESCRICAO  FROM ZO' +
-        'NA_ZON')
-    Left = 184
-    Top = 80
+      'SELECT * FROM TIPOCOLABORADOR_TPCOL')
+    Left = 48
+    Top = 104
   end
   object DataSource1: TDataSource
     DataSet = qLocal
     Left = 112
-    Top = 88
+    Top = 104
   end
 end

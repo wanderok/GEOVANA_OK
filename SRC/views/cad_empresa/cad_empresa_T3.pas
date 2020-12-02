@@ -9,7 +9,7 @@ uses
   cxLookAndFeelPainters, Vcl.Menus, dxSkinsCore, cxControls, cxContainer,
   cxEdit, Vcl.ComCtrls, dxCore, cxDateUtils, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, cxCalendar, Vcl.Mask, Vcl.DBCtrls, Vcl.StdCtrls, cxCheckBox,
-  cxButtons, config_nfce, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
+  cxButtons, config_nfce_T34, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
   dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
   dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
   dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
@@ -188,7 +188,7 @@ uses
    cad_regiao_T11,
    cad_zona_T12,
 
-   config_certificado, config_email,
+   config_certificado_T33, config_email,
    config_nfe_T32, config_mde, config_nfs,
    email_arquivos_fiscais,
    integracao_outros_bancos, config_mdfe;
@@ -204,8 +204,9 @@ end;
 
 procedure Tfrm_cad_empresa_T3.BtnCertificadoClick(Sender: TObject);
 begin
-    frm_config_certificado := Tfrm_config_certificado.Create(nil);
-    frm_config_certificado.showmodal;
+    frm_config_certificado_T33 := Tfrm_config_certificado_T33.Create(nil);
+    frm_config_certificado_T33.showmodal;
+    frm_config_certificado_T33.Free;
 end;
 
 procedure Tfrm_cad_empresa_T3.BtnEmailClick(Sender: TObject);
@@ -233,14 +234,16 @@ end;
 
 procedure Tfrm_cad_empresa_T3.BtnNFCEClick(Sender: TObject);
 begin
-    Frm_Conf_Nfce := TFrm_Conf_Nfce.Create(nil);
-    Frm_Conf_Nfce.showmodal;
+    Frm_config_nfce_T34 := TFrm_config_nfce_T34.Create(nil);
+    Frm_config_nfce_T34.showmodal;
+    Frm_config_nfce_T34.Free;
 end;
 
 procedure Tfrm_cad_empresa_T3.BtnNFEClick(Sender: TObject);
 begin
     FrmConfig_nfe_T32 := TFrmConfig_nfe_T32.Create(nil);
     FrmConfig_nfe_T32.showmodal;
+    FrmConfig_nfe_T32.Free;
 end;
 
 procedure Tfrm_cad_empresa_T3.BtnNFSEClick(Sender: TObject);
