@@ -43,7 +43,7 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue;
+  dxSkinXmas2008Blue, ACBrBase, ACBrEnterTab;
 
 type
   TFrm_Produto = class(TForm)
@@ -53,25 +53,17 @@ type
     Label4: TLabel;
     A: TLabel;
     Label5: TLabel;
-    Label7: TLabel;
     Label37: TLabel;
     Label15: TLabel;
     Label6: TLabel;
     Label8: TLabel;
-    Label36: TLabel;
     lbl2: TLabel;
     Label18: TLabel;
-    btn_familia: TcxButton;
     btn_sub: TcxButton;
-    btn_grupo: TcxButton;
-    btn_und: TcxButton;
     btn_marca: TcxButton;
     DESCRICAO_PRODUTO: TEdit;
     REFERENCIA_FABRICANTE: TEdit;
-    FAMILIA: TEdit;
     SUBGRUPO: TEdit;
-    UNIDADE_MEDIDA: TEdit;
-    GRUPO: TEdit;
     edMarca: TEdit;
     CODIGO_BARRAS: TEdit;
     dbedt_codigo: TEdit;
@@ -101,6 +93,18 @@ type
     cxButton28: TcxButton;
     cxButton8: TcxButton;
     edMarcaDescricao: TEdit;
+    cxButton2: TcxButton;
+    edUnidade: TEdit;
+    edUnidadeDescricao: TEdit;
+    Label2: TLabel;
+    edFamilia: TEdit;
+    cxButton4: TcxButton;
+    edFamiliaDescricao: TEdit;
+    edGrupo: TEdit;
+    cxButton5: TcxButton;
+    edGrupoDescricao: TEdit;
+    Label36: TLabel;
+    ACBrEnterTab1: TACBrEnterTab;
     procedure cxButton11Click(Sender: TObject);
     procedure cxButton9Click(Sender: TObject);
     procedure cxButton16Click(Sender: TObject);
@@ -118,10 +122,19 @@ type
     procedure cxButton1Click(Sender: TObject);
     procedure edMarcaExit(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edUnidadeExit(Sender: TObject);
+    procedure edGrupoExit(Sender: TObject);
+    procedure edFamiliaExit(Sender: TObject);
+    procedure cxButton4Click(Sender: TObject);
+    procedure cxButton5Click(Sender: TObject);
+    procedure cxButton2Click(Sender: TObject);
 
   private
     { Private declarations }
     procedure PesquisaMarca;
+    procedure PesquisaUnidade;
+    procedure PesquisaFamilia;
+    procedure PesquisaGrupo;
 
 
   public
@@ -182,10 +195,25 @@ begin
   //frm_tributacao_produto.ShowModal;
 end;
 
+procedure TFrm_Produto.cxButton2Click(Sender: TObject);
+begin
+   PesquisaUnidade;
+end;
+
 procedure TFrm_Produto.cxButton3Click(Sender: TObject);
 begin
   //frm_produto_precos := tfrm_produto_precos.CREATE(Application);
   //frm_produto_precos.ShowModal;
+end;
+
+procedure TFrm_Produto.cxButton4Click(Sender: TObject);
+begin
+   PesquisaFamilia;
+end;
+
+procedure TFrm_Produto.cxButton5Click(Sender: TObject);
+begin
+   PesquisaGrupo;
 end;
 
 procedure TFrm_Produto.cxButton8Click(Sender: TObject);
@@ -201,6 +229,36 @@ begin
 end;
 
 
+procedure TFrm_Produto.edUnidadeExit(Sender: TObject);
+begin
+   if not SelectUnidade(edUnidade.Text,edUnidadeDescricao) then
+   begin
+      Avisos.Avisar('Unidade de medida inexistente...');
+      edUnidade.SetFocus;
+      exit;
+   end;
+end;
+
+procedure TFrm_Produto.edFamiliaExit(Sender: TObject);
+begin
+    if not SelectFamilia(edFamilia.Text,edFamiliaDescricao) then
+   begin
+      Avisos.Avisar('Familia inexistente...');
+      edFamilia.SetFocus;
+      exit;
+   end;
+end;
+
+procedure TFrm_Produto.edGrupoExit(Sender: TObject);
+begin
+   if not SelectGrupo(edGrupo.Text,edGrupoDescricao) then
+   begin
+      Avisos.Avisar('Grupo inexistente...');
+      edGrupo.SetFocus;
+      exit;
+   end;
+end;
+
 procedure TFrm_Produto.edMarcaExit(Sender: TObject);
 begin
    if not SelectMarca(edMarca.Text,edMarcaDescricao) then
@@ -208,7 +266,7 @@ begin
       Avisos.Avisar('Marca inexistente...');
       edMarca.SetFocus;
       exit;
-   end
+   end;
 end;
 
 procedure TFrm_Produto.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -223,9 +281,26 @@ begin
    if key = vk_f1 Then
    begin
            if edMarca.Focused         then PesquisaMarca
-      else if edMarca.Focused         then PesquisaMarca
-      else if edMarca.Focused         then PesquisaMarca;
-   end
+      else if edUnidade.Focused       then PesquisaUnidade
+      else if edGrupo.Focused         then PesquisaGrupo
+      else if edFamilia.Focused       then PesquisaFamilia;
+   end;
+end;
+
+procedure TFrm_Produto.PesquisaFamilia;
+begin
+   if fPesquisarFamilia(edFamilia,edFamiliaDescricao) then
+       edMarcaExit(nil)
+    else
+       edMarca.SetFocus;
+end;
+
+procedure TFrm_Produto.PesquisaGrupo;
+begin
+    if fPesquisarGrupo(edGrupo,edGrupoDescricao) then
+       edGrupoExit(nil)
+    else
+       edGrupo.SetFocus;
 end;
 
 procedure TFrm_Produto.PesquisaMarca;
@@ -234,6 +309,14 @@ begin
        edMarcaExit(nil)
     else
        edMarca.SetFocus;
+end;
+
+procedure TFrm_Produto.PesquisaUnidade;
+begin
+    if fPesquisarUnidade(edUnidade,edUnidadeDescricao) then
+       edUnidadeExit(nil)
+    else
+       edUnidade.SetFocus;
 end;
 
 procedure TFrm_Produto.btn_undClick(Sender: TObject);

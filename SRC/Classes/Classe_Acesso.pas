@@ -2205,6 +2205,39 @@ begin
       DM.Query1.ExecSql;
   end;
 
+  if not Ja_Executou_Script('Criada Tabela UNIDADEMEDIDA_UM') then
+  begin
+      DM.Query1.Close;
+      DM.Query1.Sql.Clear;
+      DM.Query1.Sql.Add('CREATE TABLE UNIDADEMEDIDA_UM (        ');
+      DM.Query1.Sql.Add('        UM_CODIGO    VARCHAR(10) NULL, ');
+      DM.Query1.Sql.Add('        UM_DESCRICAO VARCHAR(40) NULL  ');
+      DM.Query1.Sql.Add('     )                                 ');
+      DM.Query1.ExecSql;
+  end;
+
+  if not Ja_Executou_Script('Criada Tabela PRODUTOFAMILIA_PF') then
+  begin
+      DM.Query1.Close;
+      DM.Query1.Sql.Clear;
+      DM.Query1.Sql.Add('CREATE TABLE PRODUTOFAMILIA_PF (       ');
+      DM.Query1.Sql.Add('        PF_CODIGO    VARCHAR(10) NULL, ');
+      DM.Query1.Sql.Add('        PF_DESCRICAO VARCHAR(40) NULL  ');
+      DM.Query1.Sql.Add('     )                                 ');
+      DM.Query1.ExecSql;
+  end;
+
+  if not Ja_Executou_Script('Criada Tabela PRODUTOGRUPO_PG') then
+  begin
+      DM.Query1.Close;
+      DM.Query1.Sql.Clear;
+      DM.Query1.Sql.Add('CREATE TABLE PRODUTOGRUPO_PG (         ');
+      DM.Query1.Sql.Add('        PG_CODIGO    VARCHAR(10) NULL, ');
+      DM.Query1.Sql.Add('        PG_DESCRICAO VARCHAR(40) NULL  ');
+      DM.Query1.Sql.Add('     )                                 ');
+      DM.Query1.ExecSql;
+  end;
+
 end;
 
 procedure TAcesso.setNomeDaConexao(const Value: String);

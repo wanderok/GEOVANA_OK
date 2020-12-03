@@ -122,6 +122,9 @@ function fPesquisarBairro(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarRegiao(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarZona(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarMarca(pCodigo,pDescricao:TEdit):Boolean;
+function fPesquisarUnidade(pCodigo,pDescricao:TEdit):Boolean;
+function fPesquisarGrupo(pCodigo,pDescricao:TEdit):Boolean;
+function fPesquisarFamilia(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarAtividade(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarTpColaborador(pCodigo,pDescricao:TEdit):Boolean;
 function fCaption(pTabela:String):String;
@@ -176,6 +179,9 @@ function SelectRegiao(pRegiao:String;pRegiaoDescricao:Tedit):Boolean;
 function SelectZona(pZona:String;pZonaDescricao:Tedit):Boolean;
 function SelectTpColaborador(pTpColaborador:String;pTpColaboradorDescricao:Tedit):Boolean;
 function SelectMarca(pMarca:String;pMarcaDescricao:Tedit):Boolean;
+function SelectUnidade(pUnidade:String;pUnidadeDescricao:Tedit):Boolean;
+function SelectFamilia(pFamilia:String;pFamiliaDescricao:Tedit):Boolean;
+function SelectGrupo(pGrupo:String;pGrupoDescricao:Tedit):Boolean;
 function ZeroSeDataNula(pData:String):TDatetime;
 function BarrasSeDataNula(pData:String):String;
 function DataNoFuturo(pData:TMaskEdit):Boolean;
@@ -221,6 +227,9 @@ function ProximoZON_CODIGO:String;
 function ProximoRAMO_CODIGO:String;
 function ProximoTPCOL_CODIGO:String;
 function ProximoPM_CODIGO:String;
+function ProximoUM_CODIGO:String;
+function ProximoPG_CODIGO:String;
+function ProximoPF_CODIGO:String;
 //
 Function DataDoExecutavel:String;
 
@@ -1571,6 +1580,130 @@ begin
     q.Free;
 end;
 
+function ProximoUM_CODIGO:String;
+var Q : TFDQuery;
+    i : Integer;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+  try
+    Q.Close;
+    Q.Sql.Clear;
+    Q.SQL.Add('SELECT MAX(UM_CODIGO) AS MAIOR ');
+    Q.SQL.Add('  FROM UNIDADEMEDIDA_UM        ');
+    Q.open;
+    if Q.eof then
+       result := '1'
+    else
+       if Q.FieldByName('MAIOR').AsString = '' then
+           result := '1'
+       else
+           result := FormatFloat('#',Q.FieldByName('MAIOR').AsInteger + 1);
+   except
+        i := 1;
+        Q.Close;
+        Q.Sql.Clear;
+        Q.SQL.Add('SELECT *                ');
+        Q.SQL.Add('  FROM UNIDADEMEDIDA_UM ');
+        Q.SQL.Add(' WHERE UM_CODIGO = :COD ');
+        Q.ParamByName('COD').AsString := FormatFloat('#',i);
+        Q.open;
+        while not Q.eof do
+        begin
+          Inc(i);
+          Q.Close;
+          Q.ParamByName('COD').AsString := FormatFloat('#',i);
+          Q.open;
+        end;
+        result:= FormatFloat('#',i);
+     end;
+    q.Free;
+end;
+
+ function ProximoPG_CODIGO:String;
+var Q : TFDQuery;
+    i : Integer;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+  try
+    Q.Close;
+    Q.Sql.Clear;
+    Q.SQL.Add('SELECT MAX(PG_CODIGO) AS MAIOR ');
+    Q.SQL.Add('  FROM PRODUTOGRUPO_PG         ');
+    Q.open;
+    if Q.eof then
+       result := '1'
+    else
+       if Q.FieldByName('MAIOR').AsString = '' then
+           result := '1'
+       else
+           result := FormatFloat('#',Q.FieldByName('MAIOR').AsInteger + 1);
+   except
+        i := 1;
+        Q.Close;
+        Q.Sql.Clear;
+        Q.SQL.Add('SELECT *                              ');
+        Q.SQL.Add('  FROM PRODUTOGRUPO_PG                ');
+        Q.SQL.Add(' WHERE PRODUTOGRUPO_PG_CODIGO = :COD  ');
+        Q.ParamByName('COD').AsString := FormatFloat('#',i);
+        Q.open;
+        while not Q.eof do
+        begin
+          Inc(i);
+          Q.Close;
+          Q.ParamByName('COD').AsString := FormatFloat('#',i);
+          Q.open;
+        end;
+        result:= FormatFloat('#',i);
+     end;
+    q.Free;
+end;
+
+ function ProximoPF_CODIGO:String;
+var Q : TFDQuery;
+    i : Integer;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+  try
+    Q.Close;
+    Q.Sql.Clear;
+    Q.SQL.Add('SELECT MAX(PF_CODIGO) AS MAIOR ');
+    Q.SQL.Add('  FROM PRODUTOFAMILIA_PF       ');
+    Q.open;
+    if Q.eof then
+       result := '1'
+    else
+       if Q.FieldByName('MAIOR').AsString = '' then
+           result := '1'
+       else
+           result := FormatFloat('#',Q.FieldByName('MAIOR').AsInteger + 1);
+   except
+        i := 1;
+        Q.Close;
+        Q.Sql.Clear;
+        Q.SQL.Add('SELECT *                ');
+        Q.SQL.Add('  FROM PRODUTOFAMILIA_PF');
+        Q.SQL.Add(' WHERE PF_CODIGO = :COD ');
+        Q.ParamByName('COD').AsString := FormatFloat('#',i);
+        Q.open;
+        while not Q.eof do
+        begin
+          Inc(i);
+          Q.Close;
+          Q.ParamByName('COD').AsString := FormatFloat('#',i);
+          Q.open;
+        end;
+        result:= FormatFloat('#',i);
+     end;
+    q.Free;
+end;
+
+
 function ProximoPM_CODIGO:String;
 var Q : TFDQuery;
     i : Integer;
@@ -2485,6 +2618,100 @@ begin
    Result := True;
 end;
 
+function SelectUnidade(pUnidade:String;pUnidadeDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   Result := True;
+   pUnidadeDescricao.Text := '';
+   if pUnidade = '' then
+   begin
+      exit;
+   end;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT UM_DESCRICAO          ');
+   qLocal.sql.add('  FROM UNIDADEMEDIDA_UM      ');
+   qLocal.sql.add(' WHERE UM_CODIGO = :UM_CODIGO');
+   qLocal.ParamByName('UM_CODIGO').AsString := pUnidade;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+
+   pUnidadeDescricao.Text := qlocal.FieldByName('UM_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
+function SelectGrupo(pGrupo:String;pGrupoDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   Result := True;
+   pGrupoDescricao.Text := '';
+   if pGrupo = '' then
+   begin
+      exit;
+   end;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT PG_DESCRICAO          ');
+   qLocal.sql.add('  FROM PRODUTOGRUPO_PG       ');
+   qLocal.sql.add(' WHERE PG_CODIGO = :PG_CODIGO');
+   qLocal.ParamByName('PG_CODIGO').AsString := pGrupo;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+   pGrupoDescricao.Text := qlocal.FieldByName('PG_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
+function SelectFamilia(pFamilia:String;pFamiliaDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   Result := True;
+   pFamiliaDescricao.Text := '';
+   if pFamilia = '' then
+   begin
+      exit;
+   end;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT PF_DESCRICAO               ');
+   qLocal.sql.add('  FROM PRODUTOFAMILIA_PF          ');
+   qLocal.sql.add(' WHERE PF_CODIGO = : PF_CODIGO    ');
+   qLocal.ParamByName('PF_CODIGO').AsString := pFamilia;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+   pFamiliaDescricao.Text := qlocal.FieldByName('FP_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
 function SelectTpColaborador(pTpColaborador:String;pTpColaboradorDescricao:Tedit):Boolean;
 var qLocal : tFDQuery;
 begin
@@ -2763,10 +2990,28 @@ begin
    result := PesquisarCadastro('PRODUTOMARCA_PM',pCodigo,pDescricao);
 end;
 
+function fPesquisarFamilia(pCodigo,pDescricao:TEdit):Boolean;
+begin
+   result := PesquisarCadastro('PRODUTOFAMILIA_PF',pCodigo,pDescricao);
+end;
+
+function fPesquisarUnidade(pCodigo,pDescricao:TEdit):Boolean;
+begin
+   result := PesquisarCadastro('UNIDADEMEDIDA_UM',pCodigo,pDescricao);
+end;
+
+function fPesquisarGrupo(pCodigo,pDescricao:TEdit):Boolean;
+begin
+   result := PesquisarCadastro('PRODUTOGRUPO_PG',pCodigo,pDescricao);
+end;
+
 function fCaption(pTabela:String):String;
 begin
         if  pTabela = 'ZONA_ZON'              then result := 'Cadastro | Zona'
   else  if  pTabela = 'PRODUTOMARCA_PM'       then result := 'Cadastro | Marca'
+  else  if  pTabela = 'UNIDADEMEDIDA_UM'      then result := 'Cadastro | Unidade de Medida'
+  else  if  pTabela = 'PRODUTOGRUPO_PG'       then result := 'Cadastro | Grupo de Produto'
+  else  if  pTabela = 'PRODUTOFAMILIA_PF'     then result := 'Cadastro | Família de Produto'
   else  if  pTabela = 'REGIAO_REG'            then result := 'Cadastro | Região'
   else  if  pTabela = 'BAIRRO_BAI'            then result := 'Cadastro | Bairro'
   else  if  pTabela = 'RAMOATIVIDADE_RAMO'    then result := 'Cadastro | Atividade'
@@ -2782,6 +3027,9 @@ function TPesquisaF1.Chaves: String;
 begin
         if  FTabela = 'ZONA_ZON'              then result := 'ZON_CODIGO'
   else  if  FTabela = 'PRODUTOMARCA_PM'       then result := 'PM_CODIGO'
+  else  if  FTabela = 'UNIDADEMEDIDA_UM'      then result := 'UM_CODIGO'
+  else  if  FTabela = 'PRODUTOGRUPO_PG'       then result := 'PG_CODIGO'
+  else  if  FTabela = 'PRODUTOFAMILIA_PF'     then result := 'PF_CODIGO'
   else  if  FTabela = 'REGIAO_REG'            then result := 'REG_CODIGO'
   else  if  FTabela = 'BAIRRO_BAI'            then result := 'BAI_CODIGO'
   else  if  FTabela = 'RAMOATIVIDADE_RAMO'    then result := 'RAMO_CODIGO'
@@ -2793,6 +3041,9 @@ function TPesquisaF1.Codigos: String;
 begin
         if  FTabela = 'ZONA_ZON'              then result := 'ZON_CODIGO'
   else  if  FTabela = 'PRODUTOMARCA_PM'       then result := 'PM_CODIGO'
+  else  if  FTabela = 'UNIDADEMEDIDA_UM'      then result := 'UM_CODIGO'
+  else  if  FTabela = 'PRODUTOGRUPO_PG'       then result := 'PG_CODIGO'
+  else  if  FTabela = 'PRODUTOFAMILIA_PF'     then result := 'PF_CODIGO'
   else  if  FTabela = 'REGIAO_REG'            then result := 'REG_CODIGO'
   else  if  FTabela = 'BAIRRO_BAI'            then result := 'BAI_CODIGO'
   else  if  FTabela = 'RAMOATIVIDADE_RAMO'    then result := 'RAMO_CODIGO'
@@ -2810,6 +3061,9 @@ function TPesquisaF1.Descricoes: String;
 begin
         if  FTabela = 'ZONA_ZON'              then result := 'ZON_DESCRICAO'
   else  if  FTabela = 'PRODUTOMARCA_PM'       then result := 'PM_DESCRICAO'
+  else  if  FTabela = 'UNIDADEMEDIDA_UM'      then result := 'UM_DESCRICAO'
+  else  if  FTabela = 'PRODUTOGRUPO_PG'       then result := 'PG_DESCRICAO'
+  else  if  FTabela = 'PRODUTOFAMILIA_PF'     then result := 'PF_DESCRICAO'
   else  if  FTabela = 'REGIAO_REG'            then result := 'REG_DESCRICAO'
   else  if  FTabela = 'BAIRRO_BAI'            then result := 'BAI_DESCRICAO'
   else  if  FTabela = 'RAMOATIVIDADE_RAMO'    then result := 'RAMO_DESCRICAO'
@@ -2948,6 +3202,9 @@ function TPesquisaF1.ProximoCODIGO: String;
 begin
         if FTabela = 'ZONA_ZON'              then result := ProximoZON_CODIGO
    else if FTabela = 'PRODUTOMARCA_PM'       then result := ProximoPM_CODIGO
+   else if FTabela = 'UNIDADEMEDIDA_UM'      then result := ProximoUM_CODIGO
+   else if FTabela = 'PRODUTOGRUPO_PG'       then result := ProximoPG_CODIGO
+   else if FTabela = 'PRODUTOFAMILIA_PF'     then result := ProximoPF_CODIGO
    else if FTabela = 'REGIAO_REG'            then result := ProximoREG_CODIGO
    else if FTabela = 'BAIRRO_BAI'            then result := ProximoBAI_CODIGO
    else if FTabela = 'RAMOATIVIDADE_RAMO'    then result := ProximoRAMO_CODIGO
