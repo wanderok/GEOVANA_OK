@@ -390,6 +390,34 @@
             <Form>Frm_Produto</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\..\src\views\SMC\painel_SMC_T36.pas">
+            <Form>frm_painel_SMC_T36</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\SMC\SMC_Fiscal_T37.pas">
+            <Form>frm_SMC_Fiscal_T37</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\SMC\GraficoSistemasSMC.pas">
+            <Form>frmGraficoSistemasSMC</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\SMC\GraficoProdutividadeSMC.pas">
+            <Form>frmGraficoProdutividadeSMC</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\SMC\GraficoContadoresSMC.pas">
+            <Form>frmGraficoContadoresSMC</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\SMC\ConfigArquivosFiscaisSMC.pas">
+            <Form>frmConfigArquivosFiscaisSMC</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\Acessos_Permissoes\Acessos_T38.pas">
+            <Form>frmAcessos_T38</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <None Include="ModelSupport_SMC_PLUS\default.txaPackage"/>
         <None Include="ModelSupport_SMC_PLUS\default.txvpck"/>
         <None Include="ModelSupport_SMC_PLUS\vw_Login\Class Diagram1.txvcls"/>

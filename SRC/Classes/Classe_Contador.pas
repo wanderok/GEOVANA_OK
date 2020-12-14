@@ -366,20 +366,20 @@ begin
     try
         qContador.Close;
         qContador.SQL.Clear;
-        qContador.SQL.Add('INSERT INTO CONTADOR_CONT   ');
-        qContador.SQL.Add('     (                    ');
+        qContador.SQL.Add('INSERT INTO CONTADOR_CONT  ');
+        qContador.SQL.Add('     (                     ');
         qContador.SQL.Add('       CONT_CODIGO,        ');
         qContador.SQL.Add('       CONT_NOME_FANTASIA, ');
         qContador.SQL.Add('       CONT_RAZAO_SOCIAL,  ');
         qContador.SQL.Add('       CONT_STATUS         ');
-        qContador.SQL.Add('     )                    ');
-        qContador.SQL.Add('VALUES                    ');
-        qContador.SQL.Add('     (                    ');
+        qContador.SQL.Add('     )                     ');
+        qContador.SQL.Add('VALUES                     ');
+        qContador.SQL.Add('     (                     ');
         qContador.SQL.Add('      :CONT_CODIGO,        ');
         qContador.SQL.Add('      :CONT_NOME_FANTASIA, ');
         qContador.SQL.Add('      :CONT_RAZAO_SOCIAL,  ');
         qContador.SQL.Add('      :CONT_STATUS         ');
-        qContador.SQL.Add('     )                    ');
+        qContador.SQL.Add('     )                     ');
         Preencher_Parametros_CONTADOR_CONT(qContador);
         qContador.ParamByname('CONT_STATUS').AsInteger := 0;
         qContador.ExecSql;

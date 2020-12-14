@@ -1103,9 +1103,9 @@ object frm_cad_usuario_T2: Tfrm_cad_usuario_T2
   end
   object bGravar: TcxButton
     Left = 240
-    Top = 177
+    Top = 164
     Width = 84
-    Height = 23
+    Height = 45
     Caption = 'Gravar'
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Metropolis'
@@ -1155,9 +1155,9 @@ object frm_cad_usuario_T2: Tfrm_cad_usuario_T2
   end
   object bCancelar: TcxButton
     Left = 378
-    Top = 177
+    Top = 164
     Width = 84
-    Height = 23
+    Height = 45
     Caption = '&Sair'
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Metropolis'
@@ -1361,9 +1361,9 @@ object frm_cad_usuario_T2: Tfrm_cad_usuario_T2
   end
   object bPermissoes: TcxButton
     Left = 502
-    Top = 177
+    Top = 164
     Width = 99
-    Height = 23
+    Height = 45
     Caption = 'Permiss'#245'es'
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Metropolis'
@@ -1409,5 +1409,6 @@ object frm_cad_usuario_T2: Tfrm_cad_usuario_T2
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = bPermissoesClick
   end
 end

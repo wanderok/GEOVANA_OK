@@ -1230,12 +1230,12 @@ object FrmLimpaBaseDeDados: TFrmLimpaBaseDeDados
     Height = 3
     TabOrder = 7
   end
-  object CheckBox4: TCheckBox
+  object cbArquivosFiscaisSMC: TCheckBox
     Left = 370
     Top = 42
-    Width = 139
+    Width = 158
     Height = 17
-    Caption = 'xxxxxxxxxxx'
+    Caption = 'Arquivos Fiscais SMC'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13

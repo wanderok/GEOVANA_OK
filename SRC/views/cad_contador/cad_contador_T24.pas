@@ -248,6 +248,15 @@ end;
 procedure Tfrm_cad_contador_T24.cxButton21Click(Sender: TObject);
 var vNuvem: TNuvem;
 begin
+   if Contador.Existe then
+   begin
+      if not fTemAcesso(Usuario.Codigo,'ALTCONTAD') then
+          exit;
+   end
+   else
+      if not fTemAcesso(Usuario.Codigo,'CADCONTAD') then
+          exit;
+
    if not DadosCorretos then
       exit;
 
@@ -477,7 +486,7 @@ begin
       // PESSOA FÍSICA
       pgControlPessoa.ActivePage := tsPessoaFisica;
       edNOME.Tag                 := Campo_Obrigatorio;
-      edCPF.Tag                  := Campo_Obrigatorio;
+      //edCPF.Tag                  := Campo_Obrigatorio;
       //
       edRazaoSocial.Tag          := Campo_Nao_Obrigatorio;
       edNomeFantasia.Tag         := Campo_Nao_Obrigatorio;
@@ -495,8 +504,8 @@ begin
       //
       edRazaoSocial.Tag          := Campo_Obrigatorio;
       edNomeFantasia.Tag         := Campo_Obrigatorio;
-      edCNPJ.Tag                 := Campo_Obrigatorio;
-      edIE.Tag                   := Campo_Obrigatorio;
+      //edCNPJ.Tag                 := Campo_Obrigatorio;
+      //edIE.Tag                   := Campo_Obrigatorio;
    end;
 
    if NaoPreencheuCamposObrigatoriosOuImportantes(frm_cad_contador_T24) then
@@ -659,7 +668,12 @@ begin
       (sender as TEdit).SetFocus;
       exit;
    end;
-   (sender as TEdit).Text := vVDD_DocumentoFormatado;
+   if Existe_Outro_CONTADOR_Com_Este_Email((Sender as TEdit).Text,edCodigo.Text) then
+   begin
+      (Sender as TEdit).SetFocus;
+      exit;
+   end;
+  (sender as TEdit).Text := vVDD_DocumentoFormatado;
 end;
 
 procedure Tfrm_cad_contador_T24.edEnderecoMunicipioIBGEExit(Sender: TObject);
@@ -735,6 +749,13 @@ procedure Tfrm_cad_contador_T24.edFone1Exit(Sender: TObject);
 begin
    if not TelValido((Sender as TEdit)) then
       (Sender as TEdit).SetFocus;
+
+   if Existe_Outro_CONTADOR_Com_Este_Fone((Sender as TEdit).Text,edCodigo.Text) then
+   begin
+      (Sender as TEdit).SetFocus;
+      exit;
+   end;
+
 end;
 
 procedure Tfrm_cad_contador_T24.edFone2KeyPress(Sender: TObject; var Key: Char);
@@ -1090,6 +1111,8 @@ end;
 
 procedure Tfrm_cad_contador_T24.Preencher_Campos_da_Tela;
 begin
+   if not fTemAcesso('CONCONTAD') then
+      exit;
    Limpar_os_campos_da_Tela(frm_cad_contador_T24);
 
    edCodigo.Text      := Contador.Codigo;
@@ -1227,19 +1250,19 @@ begin
 
    edCEP.MaxLength             := 8;
    edCEP.TabOrder              := 0;
-   edCEP.Tag                   := 100;
+   edCEP.Tag                   := 200;
 
    edRua.MaxLength             := 50;
    edRua.TabOrder              := 1;
-   edRua.Tag                   := 100;
+   edRua.Tag                   := 200;
 
    edNumero.MaxLength          := 10;
    edNumero.TabOrder           := 2;
-   edNumero.Tag                := 100;
+   edNumero.Tag                := 200;
 
    edBairro.MaxLength          := 10;
    edBairro.TabOrder           := 3;
-   edBairro.Tag                := 100;
+   edBairro.Tag                := 200;
 
 end;
 

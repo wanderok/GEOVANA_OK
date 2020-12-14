@@ -11,7 +11,7 @@ uses Classes, Dialogs, SysUtils, IniFiles,
      Classe_empresa;
 
 type
-   TAcesso = class
+  TAcesso = class
   private
       FNomeDaConexao,
       vNomeDoArquivoINI: String;
@@ -24,22 +24,25 @@ type
       procedure AtualizaBaseDeDados;
       procedure AtualizaBaseDeDadosNuvem;
       procedure Alteracoes_Gerais;
-      procedure Cad_Empresa;
-      procedure Cad_Cliente;
-      procedure Cad_Fornecedor;
-      procedure Cad_Colaborador;
-      procedure Tratar_Cad_Bairro;
-      procedure Cad_Consultor;
-      procedure Cad_Vendedor;
-      procedure Cad_Motorista;
-      procedure Cad_Transportadora;
-      procedure Cad_Contador;
+      procedure CADEmpresa;
+      procedure Cliente;
+      procedure Fornecedor;
+      procedure Colaborador;
+      procedure Tratar_Bairro;
+      procedure Consultor;
+      procedure Vendedor;
+      procedure Motorista;
+      procedure Transportadora;
+      procedure Contador;
       procedure Comissoes_colaboradores;
       procedure Comissoes_consultor;
       procedure Configuracoes_NFe;
       procedure DadosDaTela;
       procedure NotasFiscais;
       procedure Produtos;
+      procedure SMC;
+      procedure Funcoes_de_Acesso;
+      procedure Cria(Funcao,Descricao:String);
 
    public
       procedure Conectar;
@@ -48,6 +51,10 @@ type
       property nomeDaConexao: String read  getNomeDaConexao
                                      write setNomeDaConexao;
    end;
+
+
+var vQtdeFuncoes:Integer;
+    vFUN_GRUPO:Integer;
 
 implementation
 
@@ -70,7 +77,7 @@ begin
    result := true;
 end;
 
-procedure TAcesso.Cad_Cliente;
+procedure TAcesso.Cliente;
 begin
    Executar_Script('SELECT * INTO CLIENTE_CLI_OLD FROM CLIENTE_CLI');
    Executar_Script('DROP TABLE CLIENTE_CLI');
@@ -278,6 +285,14 @@ begin
    Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_CDCONTADOR  VARCHAR(10) NULL');
    Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_CDCONSULTOR VARCHAR(10) NULL');
 
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_SMC           INTEGER NULL DEFAULT 0');
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_SMCPLUS       INTEGER NULL DEFAULT 0');
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_MERCHANT      INTEGER NULL DEFAULT 0');
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_MDE           INTEGER NULL DEFAULT 0');
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_GETRANSPORTE  INTEGER NULL DEFAULT 0');
+   Executar_Script('ALTER TABLE CLIENTE_DETALHE_CLID ADD CLID_CERTIFICADOA1A3 INTEGER NULL DEFAULT 0');
+
+
 {CREATE TABLE Orders (
     OrderID int NOT NULL PRIMARY KEY,
     OrderNumber int NOT NULL,
@@ -287,7 +302,7 @@ begin
 
 end;
 
-procedure TAcesso.Cad_Colaborador;
+procedure TAcesso.Colaborador;
 begin
    if not Ja_Executou_Script('Criar_COLABORADOR_DETALHE_CLID...') then
    begin
@@ -460,7 +475,7 @@ begin
 
 end;
 
-procedure TAcesso.Cad_Consultor;
+procedure TAcesso.Consultor;
 begin
    if not Ja_Executou_Script('Criar_CONSULTOR') then
    begin
@@ -620,7 +635,7 @@ begin
 
 end;
 
-procedure TAcesso.Cad_Contador;
+procedure TAcesso.Contador;
 begin
    if not Ja_Executou_Script('Criar_CONTADOR') then
    begin
@@ -776,7 +791,25 @@ begin
 
 end;
 
-procedure TAcesso.Cad_Empresa;
+procedure TAcesso.Cria(Funcao, Descricao: String);
+var x,y : integer;
+begin
+     DM.Query1.Close;
+     DM.Query1.SQL.Clear;
+     DM.Query1.Sql.Add('INSERT INTO FUNCOES_FUN                                ');
+     DM.Query1.Sql.Add(' (FUN_NUMERO, FUN_CODIGO, FUN_DESCRICAO, FUN_SISTEMA, FUN_GRUPO)  ');
+     DM.Query1.Sql.Add('VALUES                                                 ');
+     DM.Query1.Sql.Add(' (:NUMERO,    :CODIGO,    :DESCRICAO,    :SISTEMA, :GRUPO)     ');
+     vQtdeFuncoes := vQtdeFuncoes+1;
+     DM.Query1.ParamByName('NUMERO'   ).AsFloat   := vQtdeFuncoes;
+     DM.Query1.ParamByName('CODIGO'   ).AsString  := UpperCase(Copy(Funcao,1,10));
+     DM.Query1.ParamByName('DESCRICAO').AsString  := UpperCase(Copy(RemoveAcento(Descricao),1,40));
+     DM.Query1.ParamByName('SISTEMA'  ).AsString  := '';
+     DM.Query1.ParamByName('GRUPO'    ).AsInteger := vFUN_GRUPO;
+     DM.Query1.ExecSql;
+end;
+
+procedure TAcesso.CADEmpresa;
 begin
    Executar_Script('ALTER TABLE EMPRESA_EMP DROP COLUMN CLID_ALT_USU VARCHAR(10) NULL');
    Executar_Script('ALTER TABLE EMPRESA_EMP DROP COLUMN CLID_ALT_DT  DATETIME    NULL');
@@ -877,7 +910,7 @@ begin
 
 end;
 
-procedure TAcesso.Cad_Fornecedor;
+procedure TAcesso.Fornecedor;
 begin
    if not Ja_Executou_Script('Criar_FORNECEDOR_FOR...') then
    begin
@@ -1042,7 +1075,1369 @@ begin
 
 end;
 
-procedure TAcesso.Cad_Motorista;
+procedure TAcesso.Funcoes_de_Acesso;
+begin
+   //CheckListBox1.enabled := false;
+   try
+       dm.query1.close;
+       dm.query1.sql.clear;
+       dm.query1.sql.add('DELETE FROM ACESSOS_ACC');
+       dm.query1.sql.add(' WHERE ACC_USUARIO NOT IN (SELECT DISTINCT USU_CODIGO FROM USUARIO_USU) ');
+       dm.query1.execsql;
+   except
+   end;
+
+     vQtdeFuncoes := 0;
+     Executar('TRUNCATE TABLE FUNCOES_FUN');
+     if not Ja_Executou_Script('FUN_GRUPO') then
+     begin
+        Executar('ALTER TABLE FUNCOES_FUN DROP COLUMN FUN_DESCRICAO');
+        Executar('ALTER TABLE FUNCOES_FUN ADD FUN_DESCRICAO VARCHAR(100) NULL');
+        Executar('ALTER TABLE FUNCOES_FUN ADD FUN_GRUPO INTEGER NULL DEFAULT 0');
+     end;
+
+     //------------------------------------------------------------------------//
+     vFUN_GRUPO := 1; // 'PRODUTO';
+     //------------------------------------------------------------------------//
+     Cria('FILIZOLA','Balança Filizola Platina');
+
+     //------------------------------------------------------------------------//
+     vFUN_GRUPO := 2; //'COBRADOR';
+     //------------------------------------------------------------------------//
+//         1234567890
+     Cria('CADCONTAD' ,'Cadastrar Contador');
+     Cria('CONCONTAD' ,'Consultar Contador');
+     Cria('ALTCONTAD' ,'Alterar Contador');
+     Cria('BLOQCONTAD','Bloquear Contador');
+     Cria('DESBCONTAD','Desbloquear Contador');
+     Cria('RELCONTAD' ,'Listar Contadores');
+
+     //------------------------------------------------------------------------//
+     vFUN_GRUPO := 4; //'OUTROS';
+     //------------------------------------------------------------------------//
+     Cria('NEWPEDIDO','Menu - Orgaos Publicos');
+
+     //------------------------------------------------------------------------//
+     vFUN_GRUPO := 5; //'AGENDA';
+     //------------------------------------------------------------------------//
+     Cria('COMPROMIS','Agenda de Compromissos Pessoais');
+
+     //------------------------------------------------------------------------//
+     vFUN_GRUPO := 6; //'VENDA';
+     //------------------------------------------------------------------------//
+     Cria('ACOMPVEND','Acompanha Vendas');
+     Cria('VENDAS'   ,'MENU DE VENDAS');
+
+
+{
+Todos
+Produto
+Cobrador
+Outros
+Agenda
+Venda
+Orçamento
+Compra
+}
+
+     //------------------------------------------------------------------------//
+     vFUN_GRUPO := 7; //'ORCAMENTO';
+     //------------------------------------------------------------------------//
+     Cria('ORCAMENTO','MENU DE ORÇAMENTO');
+
+     //------------------------------------------------------------------------//
+     vFUN_GRUPO := 8; //'COMPRA';
+     //------------------------------------------------------------------------//
+     Cria('COMPRAS'  ,'MENU DE COMPRAS');
+
+     //------------------------------------------------------------------------//
+     vFUN_GRUPO := 9; //'MENUS';
+     //------------------------------------------------------------------------//
+
+     Cria('CONTAS'   ,'MENU DE CONTAS');
+     Cria('MOVESTOQ' ,'MENU MOVIMENT.ESTOQUE');
+     Cria('FINANC'   ,'MENU FINANCEIRO');
+     Cria('CADASTROS','MENU DE CADASTROS');
+     Cria('UTIL'     ,'MENU DE UTILITARIOS');
+     Cria('VALESTOQ' ,'GESTOR-VALOR DO ESTOQUE');
+
+     Cria('ANAPAULA' ,'OS-Desenvolvimento');
+
+//     Cria('BRENAFALA','Ouvir mensagens do Brena');
+
+
+     Cria('BLOQSIST'  ,'Bloquear Sistema');
+     Cria('LIBSIST'   ,'Desbloquear Sistema');
+
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('RELLOG'    ,'Log Sistema - Relatório');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('REGORCAM'  ,'Orçamento - Registrar');
+     Cria('REGVENDA'  ,'Venda-Registrar');
+     Cria('EXCVENDA'  ,'Venda-Excluir');
+     Cria('REGVENDASI','Venda Simples-Cad');
+     Cria('MANVENDA'  ,'Venda-Alterar');
+     Cria('CONVENDA'  ,'Venda-Consultar');
+     Cria('RELVENDA'  ,'Venda-Rel Sintético');
+     Cria('RELVENDA2' ,'Venda-Rel Agrup/Tipo Movimento');
+     Cria('RELVENDA3' ,'Venda-Rel Agrup/Ramo Atividade');
+     Cria('RELVENDA4' ,'Venda-Rel Agrup/Vendedor');
+     Cria('RELBONIFIC' ,'Venda-Rel Bonificações');
+     Cria('ANALCOMPOR' ,'Venda-Rel Análise Comportamento');
+     Cria('RELDESEMP' ,'Venda-Rel Desemp Vendedor');
+     Cria('RELVENDNAL','Venda-Rel Analítico');
+     Cria('GRAMELHOR' ,'Venda-Gráfico-Produto');
+     Cria('COMPARAVE' ,'Venda-Gráfico-Vendededor');
+     Cria('COMPARACL' ,'Venda-Gráfico-Cliente');
+     Cria('COMPARARG' ,'Venda-Gráfico-Região');
+     Cria('MINPRECO'  ,'Venda-Menores Preços Praticados');
+     Cria('GRAVENDA'  ,'Venda-Gráfico-Um Produto');
+     Cria('PDVVENDA'  ,'Venda-PDV');
+     Cria('EMINOTAFIS','Venda-Emite Nt Fiscal');
+     Cria('ASSCOMPVEN','Venda-Associa Compra x Venda');
+     Cria('LUCRATIVID','Venda-Rel.Lucratividade-Modelo 1');
+     Cria('LUCRATIVI2','Venda-Rel.Lucratividade-Modelo 2');
+
+     Cria('REGCOMPRA' ,'Compra-Registrar');
+     Cria('CONCOMPRA' ,'Compra-Consultar');
+     Cria('ALTCOMPRA' ,'Compra-Alterar ');
+     Cria('EXCCOMPRA' ,'Compra-Excluir ');
+
+     Cria('RELPEDIDOC','Compra-Relatorio');
+
+     Cria('REGCOMPRAC','Compra C/Custo-Registrar');
+     Cria('CONCOMPRAC','Compra C/Custo-Consultar');
+     Cria('ALTCOMPRAC','Compra C/Custo-Alterar');
+     Cria('EXCCOMPRAC','Compra C/Custo-Excluir');
+
+     Cria('CDCUST1VDA','Custo de Venda - Informar Custo de Venda');
+     Cria('ALCUST1VDA','Custo de Venda - Alterar');
+     Cria('EXCUST1VDA','Custo de Venda - Excluir');
+     Cria('RLCUST1VDA','Custo de Venda - Relatório');
+
+     Cria('RELCOMPRA' ,'Compra-Relatorio');
+     Cria('NFCOMPRA'  ,'Compra-Emite Nota Fiscal');
+     Cria('RLSDPENTRE','Compra-Rel.Saldo Estoque p/ Atender Entrega');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CTARECLAN','Conta Receber-Lançamento');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('EXCREC'   ,'Conta Receber-Excluir');
+     Cria('ESTORNOR' ,'Conta Receber-Estornos');
+
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CTARECEXT','Conta Receber-Extrato');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('EMITEBOL' ,'Conta Receber-Emitir Boleto');
+     Cria('RELDEBCLI','Conta Receber-Saldo Receber Cliente');
+     Cria('TITULOSCOB','Conta Receber-Relaciona Títulos p/Cobrança');
+     Cria('RELTITCOB','Conta Receber-Relatório de Cobrança');
+
+
+     Cria('ZERACLI','Auditoria - Apaga vendas e Conta Corrente de Cliente');
+     Cria('ZERAFOR','Auditoria - Apaga compras e Conta Corrente de Fornecedor');
+
+
+//     Cria('CTARECPAG','Conta Receber-Baixar');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('BAIXAREC' ,'Conta Receber-Baixa');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('BXCHQREC' ,'Conta Receber-Baixar Cheque');
+     Cria('RELCHQREC','Conta Receber-Rel Cheque Recebidos');
+     Cria('CADOREPAS','Conta Receber-Repasse Financeiro-Cadastrar ');
+     Cria('CONOREPAS','Conta Receber-Repasse Financeiro-Consultar');
+     Cria('EXCOREPAS','Conta Receber-Repasse Financeiro-Excluir ');
+     Cria('ALTOREPAS','Conta Receber-Repasse Financeiro-Alterar ');
+     Cria('RELOREPAS','Conta Receber-Repasse Financeiro-Relatorio ');
+     Cria('IMPOREPAS','Conta Receber-Repasse Financeiro-Imprimir');
+     Cria('OREFETIVA','Conta Receber-Repasse Financeiro-Efetivar');
+     Cria('ORPENDE'  ,'Conta Receber-Repasse Tornar Pendente');
+     Cria('RELRECCLI','Conta Receber-Rel.Saldo Todos Clientes');
+     Cria('ALTDTREC' ,'Conta Receber-Altera Data de Vencimento');
+     Cria('ERTC'     ,'Conta Receber-Envio a Cobranca');
+     Cria('RELRECEXC','Conta Receber-Rel.Para Excel');
+
+     Cria('RELCHQPAG' ,'Conta Pagar-Rel Cheque RePassados');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CTAPAGLAN' ,'Conta Pagar-Lançamento');
+     Cria('CTAPAGEXT' ,'Conta Pagar-Extrato 1');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('CTAPAGEXT2','Conta Pagar-Extrato 2');
+     Cria('ESTORNOP'  ,'Conta Pagar-Estornos');
+     Cria('RELDEBFOR' ,'Conta Pagar-Saldo Pagar Fornecedor');
+     Cria('RELPAGFOR' ,'Conta Pagar-Rel.Saldo Todos Fornecedores');
+     Cria('RELPAGEXC' ,'Conta Pagar-Rel.Para Excel');
+
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CADCLI','Cliente-Cadastrar ');
+     Cria('CONCLI','Cliente-Consultar ');
+     Cria('ALTCLI','Cliente-Alterar    ');
+     Cria('EXCCLI','Cliente-Excluir   ');
+     Cria('RELCLI','Cliente-Relatorio ');
+     Cria('BLOQCLI','Cliente-Bloqueia/Desbloqueia ');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('PESOREGIAO','Pedido-Programar');
+
+     Cria('CADEMPENHO','Empenho-Cadastrar ');
+     Cria('CONEMPENHO','Empenho-Consultar');
+     Cria('ALTEMPENHO','Empenho-Alterar');
+     Cria('EXCEMPENHO','Empenho-Excluir ');
+     Cria('RELEMPENHO','Empenho-Relatorio ');
+     Cria('SLDEMPENHO','Empenho-Saldo Inicial');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CADFOR','Fornecedor-Cadastrar ');
+     Cria('CONFOR','Fornecedor-Consultar');
+     Cria('ALTFOR','Fornecedor-Alterar ');
+     Cria('EXCFOR','Fornecedor-Excluir ');
+     Cria('RELFOR','Fornecedor-Relatorio ');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('CADFUNC','Funcionario-Cadastrar ');
+     Cria('CONFUNC','Funcionario-Consultar');
+     Cria('ALTFUNC','Funcionario-Alterar ');
+     Cria('EXCFUNC','Funcionario-Excluir ');
+     Cria('RELFUNC','Funcionario-Relatorio ');
+
+     Cria('CADVEN','Vendedor-Cadastrar ');
+     Cria('CONVEN','Vendedor-Consultar');
+     Cria('ALTVEN','Vendedor-Alterar ');
+     Cria('EXCVEN','Vendedor-Excluir ');
+     Cria('RELVEN','Vendedor-Relatorio ');
+
+     Cria('CADCOMPR','Comprador-Cadastrar ');
+     Cria('ALTCOMPR','Comprador-Alterar ');
+     Cria('CONCOMPR','Comprador-Consultar');
+     Cria('EXCCOMPR','Comprador-Excluir ');
+     Cria('RELCOMPR','Comprador-Relatorio ');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CADPRO'    ,'Produto-Cadastrar');
+     Cria('CONPRO'    ,'Produto-Consultar');
+     Cria('ALTPRO'    ,'Produto-Alterar');
+     Cria('EXCPRO'    ,'Produto-Excluir');
+     Cria('RELMOVPRO' ,'Produto-Relatorio Mov Fisico');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('RELPRO'    ,'Produto-Relatorio Saldo x E x S x Saldo');
+     Cria('SLDPROINI' ,'Produto-Informar Saldo Inicial');
+
+
+     Cria('RELMOVPROF','Produto-Relatorio Mov Financ');
+     Cria('TXTMOVPRO' ,'Produto-Exporta Mov Prod p/ TXT');
+     Cria('RELESTQFIS','Produto-Relatorio Posição Estoq-Fisico');
+     Cria('RELESTQFIN','Produto-Relatorio Posição Estoq-Financ');
+     Cria('RELPROD'   ,'Produto-Relatorio Produto');
+     Cria('RELSLDEST1','Produto-Relatorio Saldo Estoque 1');
+     Cria('RECUSTOMED','Produto-Recalcular Custo Médio');
+     Cria('CUSTOTRANS','Produto-Atribuir Custo Médio Transferência');
+     Cria('TABMAE'    ,'Produto-Tabela Precos');
+     Cria('RECSLDESTQ','Produto-Recalc.Saldo Estoq');
+     Cria('ESTRUTPROD','Produto-Estrutura Prod');
+     Cria('COMPORPREC','Produto-Compor Preço Venda');
+     Cria('PRODTMAE'  ,'Produto-Produtos Tabela Precos');
+     Cria('DEFPRECOS1','Produto-Definir Precos');
+
+     Cria('RELTBPRECO','Tabela Preços-Imprimir');
+     Cria('ATUPRECTAB','Tabela Precos-Atualizar Preços ');
+     Cria('RELSUBTBPR','SubTabela Preços-Imprimir');
+
+     Cria('CADTPROD','Tipo Produto-Cadastrar ');
+     Cria('ALTTPROD','Tipo Produto-Alterar ');
+     Cria('EXCTPROD','Tipo Produto-Excluir ');
+     Cria('CONTPROD','Tipo Produto-Consultar');
+     Cria('RELTPROD','Tipo Produto-Relatorio ');
+
+     Cria('MOVPRO'   ,'Movimentacao Estoque-Cadastrar ');
+     Cria('CONMOVEST','Movimentacao Estoque-Consultar');
+     Cria('ALTMOVEST','Movimentacao Estoque-Alterar ');
+     Cria('EXCMOVEST','Movimentacao Estoque-Excluir ');
+     Cria('RELMOVEST','Movimentacao Estoque-Relatorio ');
+     Cria('RELESTQNEG','Movimentacao Estoque-Quando Ficou Negativo ');
+
+     Cria('CADGRU','Grupo Produto-Cadastrar');
+     Cria('CONGRU','Grupo Produto-Consultar');
+     Cria('ALTGRU','Grupo Produto-Alterar');
+     Cria('EXCGRU','Grupo Produto-Excluir');
+     Cria('RELGRU','Grupo Produto-Relatorio');
+
+     Cria('CADGCLI','Grupo Cliente-Cadastrar ');
+     Cria('CONGCLI','Grupo Cliente-Consultar');
+     Cria('ALTGCLI','Grupo Cliente-Alterar ');
+     Cria('EXCGCLI','Grupo Cliente-Excluir ');
+     Cria('RELGCLI','Grupo Cliente-Relatorio ');
+
+     Cria('CADSUBGRU','SubGrupo Prod-Cadastrar ');
+     Cria('CONSUBGRU','SubGrupo Prod-Consultar');
+     Cria('ALTSUBGRU','SubGrupo Prod-Alterar ');
+     Cria('EXCSUBGRU','SubGrupo Prod-Excluir ');
+     Cria('RELSUBGRU','SubGrupo Prod-Relatorio ');
+
+     Cria('CADGRUPOTB','GRUPO Produto Tabela Preco-Cadastrar');
+     Cria('CONGRUPOTB','GRUPO Produto Tabela Preco-Consultar');
+     Cria('ALTGRUPOTB','GRUPO Produto Tabela Preco-Alterar');
+     Cria('EXCGRUPOTB','GRUPO Produto Tabela Preco-Excluir');
+     Cria('RELGRUPOTB','GRUPO Produto Tabela Preco-Relatorio');
+     Cria('SLDGRUPOTB','GRUPO Produto Tabela Preco-Saldo Inicial');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CADUSU','Usuarios-Cadastro');
+     Cria('ALTUSU','Usuarios-Alterar');
+     Cria('EXCUSU','Usuarios-Excluir');
+     Cria('RELUSU','Usuarios-Listagem');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('CADUNI','Unidade Medida-Cadastrar');
+     Cria('ALTUNI','Unidade Medida-Alterar');
+     Cria('EXCUNI','Unidade Medida-Excluir');
+     Cria('RELUNI','Unidade Medida-Relatorio');
+
+     Cria('CADIDE','Identificação-Cadastrar');
+     Cria('ALTIDE','Identificação-Alterar');
+     Cria('EXCIDE','Identificação-Excluir');
+     Cria('RELIDE','Identificação-Relatorio');
+
+     Cria('CADACD','Acrescimo/Decrescimo-Cadastrar');
+     Cria('ALTACD','Acrescimo/Decrescimo-Alterar');
+     Cria('EXCACD','Acrescimo/Decrescimo-Excluir');
+     Cria('RELACD','Acrescimo/Decrescimo-Relatorio');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CADNAT','Natureza Financeira-Cadastrar');
+     Cria('ALTNAT','Natureza Financeira-Alterar ');
+     Cria('CONNAT','Natureza Financeira-Consultar');
+     Cria('EXCNAT','Natureza Financeira-Excluir ');
+     Cria('RELNAT','Natureza Financeira-Relatorio ');
+
+     Cria('CADGNAT','Grupo Natureza Financeira-Cadastrar ');
+     Cria('CONGNAT','Grupo Natureza Financeira-Consultar');
+     Cria('ALTGNAT','Grupo Natureza Financeira-Alterar ');
+     Cria('EXCGNAT','Grupo Natureza Financeira-Excluir ');
+     Cria('RELGNAT','Grupo Natureza Financeira-Relatorio ');
+
+     Cria('CADSGNAT','SubGrupo Natureza Financeira-Cadastrar ');
+     Cria('CONSGNAT','SubGrupo Natureza Financeira-Consultar');
+     Cria('ALTSGNAT','SubGrupo Natureza Financeira-Alterar ');
+     Cria('EXCSGNAT','SubGrupo Natureza Financeira-Excluir ');
+     Cria('RELSGNAT','SubGrupo Natureza Financeira-Relatorio ');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('CADTIP','Tipo Movimento-Cadastrar');
+     Cria('ALTTIP','Tipo Movimento-Alterar');
+     Cria('EXCTIP','Tipo Movimento-Excluir');
+     Cria('RELTIP','Tipo Movimento-Relatorio');
+
+     Cria('CONFIG'    ,'Configurar Venda');
+     Cria('CFG_COMPRA','Configurar Compra');
+     Cria('CONFORC'   ,'Configurar Orçamento');
+     Cria('CONFIGBACK','Configurar Backup');
+     Cria('CONFIGCX'  ,'Configurar Caixa');
+     Cria('CFGCTAREC' ,'Configurar Contas a Receber');
+     Cria('CFGCTAPAG' ,'Configurar Contas a Pagar');
+     Cria('CFGVIAGEM' ,'Configurar Viagens');
+     Cria('CFGCHEQUE' ,'Configurar Cheques');
+
+     Cria('CRIFUN','Criar Funções');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('DEFACE','Definir Acessos');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('FINRECLAN' ,'Financ Receita-Cadastrar ');
+     Cria('FINRECCON' ,'Financ Receita-Consultar');
+     Cria('FINRECALT' ,'Financ Receita-Alterar ');
+     Cria('FINRECEXC' ,'Financ Receita-Excluir ');
+     Cria('FINRECREL' ,'Financ Receita-Relatorio ');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('FINRECGRA' ,'Financ Receita-Grafico');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('FINDESLAN' ,'Financ Despesa-Cadastrar  ');
+     Cria('FINDESCON' ,'Financ Despesa-Consultar ');
+     Cria('FINDESALT' ,'Financ Despesa-Alterar  ');
+     Cria('FINDESEXC' ,'Financ Despesa-Excluir  ');
+     Cria('FINDESREL' ,'Financ Despesa-Relatorio  ');
+     Cria('FINDESGRA' ,'Financ Despesa-Grafico ');
+     Cria('FINCONSREL','Financ Consolidado-Relatorio');
+     Cria('FINCONSREL','Financ Consolidado-Grafico');
+     Cria('RESFIN'    ,'Financ Resumo Financ');
+     Cria('EXCLANCCTA','Financ Cancelar Sequencial');
+
+     Cria('DESCEXCLAN','Financ Descancelar Sequencial');
+     Cria('RELSEQUENC','Financ Relatorio Sequenciais');
+     Cria('RECALC_PG' ,'Financ Recalculo Saldo Pagar');
+     Cria('RECALC_RC' ,'Financ Recalculo Saldo Receber');
+     Cria('ABRECRECBX','Financ Abre Conta Receber/Baixa');
+     Cria('POSFINANCE','Financ Posição Financeira');
+     Cria('RESUMOFINA','Financ Resumo Financ');
+     Cria('LANSALARIO','Financ Lanca Salario Funcionario');
+     Cria('CADMCSEQFI','Financ Motivo Cancel Seq Financ-Cadastrar');
+     Cria('ALTMCSEQFI','Financ Motivo Cancel Seq Financ-Alterar');
+     Cria('CONMCSEQFI','Financ Motivo Cancel Seq Financ-Consultar');
+     Cria('EXCMCSEQFI','Financ Motivo Cancel Seq Financ-Excluir');
+     Cria('RELMCSEQFI','Financ Motivo Cancel Seq Financ-Relatorio');
+     Cria('CANCVARCC' ,'Financ Cancela(desc) vários Seq Finan');
+
+     Cria('CADGRUCC','Grupo Centro Custo-Cadastrar ');
+     Cria('ALTGRUCC','Grupo Centro Custo-Alterar ');
+     Cria('CONGRUCC','Grupo Centro Custo-Consultar');
+     Cria('EXCGRUCC','Grupo Centro Custo-Excluir ');
+     Cria('RELGRUCC','Grupo Centro Custo-Relatorio ');
+
+     Cria('CADCC','Centro Custo-Cadastrar');
+     Cria('ALTCC','Centro Custo-Alterar');
+     Cria('CONCC','Centro Custo-Consultar');
+     Cria('EXCCC','Centro Custo-Excluir');
+     Cria('RELCC','Centro Custo-Relatorio');
+
+     Cria('CADBAN'     ,'Banco-Cadastrar');
+     Cria('ALTBAN'     ,'Banco-Alterar');
+     Cria('CONBAN'     ,'Banco-Consultar');
+     Cria('EXCBAN'     ,'Banco-Excluir');
+     Cria('RELBAN'     ,'Banco-Relatorio');
+     Cria('CXTRANSFCB' ,'Banco-Transfere p/Caixa');
+
+     Cria('MB_CREDDIN','Banco-Creditar Dinheiro ');
+     Cria('MB_DEBDIN' ,'Banco-Debitar  Dinheiro ');
+     Cria('MB_CREDCHQ','Banco-Creditar Cheque   ');
+     Cria('MB_EFETIVA','Banco-Efetivar      ');
+     Cria('MB_DESEFET','Banco-Torna Pendente');
+     Cria('MB_ESTORNO','Banco-Estorno       ');
+
+     Cria('MC_CREDDIN','Caixa-Creditar Dinheiro ');
+     Cria('MC_DEBDIN' ,'Caixa-Debitar  Dinheiro ');
+     Cria('MC_CREDCHQ','Caixa-Creditar Cheque   ');
+     Cria('MC_EFETIVA','Caixa-Efetivar      ');
+     Cria('MC_DESEFET','Caixa-Torna Pendente');
+     Cria('MC_ESTORNO','Caixa-Estorno       ');
+     Cria('CXSALDO'   ,'Caixa-Acertar o Saldo');
+
+     Cria('EXTCC', 'Extrato Conta Corrente');
+
+     Cria('CADAGB','Agencia Banco-Cadastrar ');
+     Cria('ALTAGB','Agencia Banco-Alterar ');
+     Cria('CONAGB','Agencia Banco-Consultar');
+     Cria('EXCAGB','Agencia Banco-Excluir ');
+     Cria('RELAGB','Agencia Banco-Relatorio ');
+
+     Cria('CADCCB','Conta Corrente Banco-Cadastrar ');
+     Cria('ALTCCB','Conta Corrente Banco-Alterar ');
+     Cria('CONCCB','Conta Corrente Banco-Consultar');
+     Cria('EXCCCB','Conta Corrente Banco-Excluir ');
+     Cria('RELCCB','Conta Corrente Banco-Relatorio ');
+
+     Cria('CADICMS','ICMS-Cadastrar ');
+     Cria('ALTICMS','ICMS-Alterar ');
+     Cria('CONICMS','ICMS-Consultar');
+     Cria('EXCICMS','ICMS-Excluir ');
+     Cria('RELICMS','ICMS-Relatorio ');
+
+     Cria('ALTECC','Extrato Centro Custo-Alterar ');
+     Cria('CONECC','Extrato Centro Custo-Consultar');
+     Cria('EXCECC','Extrato Centro Custo-Excluir ');
+     Cria('RELECC','Extrato Centro Custo-Relatorio ');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('BACKUP' ,'Backup - Salvar');
+     Cria('RESTORE','Backup - Recuperar');
+     Cria('SQL','SQL na base de dados');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('FORMAPGCAD','Forma Pagamento-Cadastrar ');
+     Cria('FORMAPGCON','Forma Pagamento-Consultar');
+     Cria('FORMAPGALT','Forma Pagamento-Alterar ');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('FORMAPGEXC','Forma Pagamento-Excluir ');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('FORMAPGREL','Forma Pagamento-Relatorio ');
+
+     Cria('CONDPGCAD','Condição Pagamento-Cadastrar ');
+     Cria('CONDPGCON','Condição Pagamento-Consultar');
+     Cria('CONDPGALT','Condição Pagamento-Alterar ');
+     Cria('CONDPGEXC','Condição Pagamento-Excluir ');
+     Cria('CONDPGREL','Condição Pagamento-Relatorio ');
+
+     Cria('OPERMASSA','Operações em Massa');
+
+     Cria('CADMODCHEQ','Modelo Cheque-Cadastrar ');
+     Cria('ALTMODCHEQ','Modelo Cheque-Alterar ');
+     Cria('CONMODCHEQ','Modelo Cheque-Consultar');
+     Cria('EXCMODCHEQ','Modelo Cheque-Excluir ');
+     Cria('RELMODCHEQ','Modelo Cheque-Relatorio ');
+
+     Cria('CADMODDUPL','Modelo Duplicata-Cadastrar ');
+     Cria('CONMODDUPL','Modelo Duplicata-Consultar');
+     Cria('ALTMODDUPL','Modelo Duplicata-Alterar ');
+     Cria('EXCMODDUPL','Modelo Duplicata-Excluir ');
+     Cria('RELMODDUPL','Modelo Duplicata-Relatorio ');
+
+     Cria('CADMODBOL','Modelo Boleto-Cadastrar ');
+     Cria('CONMODBOL','Modelo Boleto-Consultar');
+     Cria('ALTMODBOL','Modelo Boleto-Alterar ');
+     Cria('EXCMODBOL','Modelo Boleto-Excluir ');
+     Cria('RELMODBOL','Modelo Boleto-Relatorio ');
+
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CONFIGBOLE','Configura Boleto Bancário');
+
+     //vFuncao_do_Brena_ou_Koalla:='K.ESCOLA';
+     Cria('CADCUR','Cursos-Cadastro');
+     Cria('ALTCUR','Cursos-Alterar');
+     Cria('EXCCUR','Cursos-Excluir');
+     Cria('RELCUR','Cursos-Listagem');
+     //
+     Cria('CADTUR','Turmas-Cadastro');
+     Cria('ALTTUR','Turmas-Alterar');
+     Cria('EXCTUR','Turmas-Excluir');
+     Cria('RELTUR','Turmas-Listagem');
+
+     Cria('CADMOD','Modalidade Contrato-Cadastro');
+     Cria('ALTMOD','Modalidade Contrato-Alterar');
+     Cria('EXCMOD','Modalidade Contrato-Excluir');
+     Cria('RELMOD','Modalidade Contrato-Listagem');
+
+     Cria('CADMODC','Modalidade Contrato/Curso-Cadastro');
+     Cria('ALTMODC','Modalidade Contrato/Curso-Alterar');
+     Cria('EXCMODC','Modalidade Contrato/Curso-Excluir');
+     Cria('RELMODC','Modalidade Contrato/Curso-Listagem');
+
+     Cria('CADALUC','Aluno/Curso-Cadastro');
+     Cria('ALTALUC','Aluno/Curso-Alterar');
+     Cria('EXCALUC','Aluno/Curso-Excluir');
+     Cria('RELALUC','Aluno/Curso-Listagem');
+
+     Cria('TVAGAS'     ,'Ver Total de Vagas');
+     Cria('TALUNOS'    ,'Ver Total de Alunos');
+
+
+     Cria('CADPROFES','Professor-Cadastro');
+     Cria('ALTPROFES','Professor-Alterar');
+     Cria('EXCPROFES','Professor-Excluir');
+     Cria('RELPROFES','Professor-Listagem');
+
+     Cria('TURPROFES','Professor X Turmas');
+
+     Cria('FREQALUNO','Frequência-Alunos');
+     Cria('FREQPROF' ,'Frequência-Professor');
+     Cria('NOTAS'    ,'Notas de Alunos');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('CADMODNF','Modelo Nota Fiscal-Cadastrar');
+     Cria('CONMODNF','Modelo Nota Fiscal-Consultar');
+     Cria('ALTMODNF','Modelo Nota Fiscal-Alterar');
+     Cria('EXCMODNF','Modelo Nota Fiscal-Excluir');
+     Cria('RELMODNF','Modelo Nota Fiscal-Relatorio');
+
+     Cria('CADDUPL','Duplicata-Cadastrar  ');
+     Cria('CONDUPL','Duplicata-Consultar  ');
+     Cria('ALTDUPL','Duplicata-Alterar    ');
+     Cria('EXCDUPL','Duplicata-Excluir    ');
+     Cria('RELDUPL','Duplicata-Relatorio  ');
+     Cria('EMIDUPL','Duplicata-Emitir     ');
+
+     Cria('MEMFISCAL','Impressora Fiscal-Ler Memória');
+
+     Cria('CADCFOP','Natureza Operacao Fiscal-Cadastrar ');
+     Cria('CONCFOP','Natureza Operacao Fiscal-Consultar');
+     Cria('ALTCFOP','Natureza Operacao Fiscal-Alterar ');
+     Cria('EXCCFOP','Natureza Operacao Fiscal-Excluir ');
+     Cria('RELCFOP','Natureza Operacao Fiscal-Relatorio ');
+
+     Cria('CADPLANOCT','Plano Contas-Cadastrar ');
+     Cria('ALTPLANOCT','Plano Contas-Alterar ');
+     Cria('CONPLANOCT','Plano Contas-Consultar');
+     Cria('EXCPLANOCT','Plano Contas-Excluir ');
+     Cria('RELPLANOCT','Plano Contas-Relatorio ');
+     Cria('LIVRORAZAO','Contabilidade-Livro Razão');
+     Cria('SLDCONTINI','Contabilidade-Saldo Inicial Contas');
+     Cria('CADPLANOCT','Contabilidade-Plano de Contas');
+     Cria('TRANSFCONT','Contabilidade-Transfer.entre Contas');
+     Cria('BALANCETE' ,'Contabilidade-Balancete Verificacao');
+
+     Cria('CADRAMO','Ramo Atividade-Cadastrar ');
+     Cria('CONRAMO','Ramo Atividade-Consultar');
+     Cria('ALTRAMO','Ramo Atividade-Alterar ');
+     Cria('EXCRAMO','Ramo Atividade-Excluir ');
+     Cria('RELRAMO','Ramo Atividade-Relatorio ');
+
+     Cria('CADROTA','Rota Entrega-Cadastrar ');
+     Cria('CONROTA','Rota Entrega-Consultar');
+     Cria('ALTROTA','Rota Entrega-Alterar ');
+     Cria('EXCROTA','Rota Entrega-Excluir ');
+     Cria('RELROTA','Rota Entrega-Relatorio ');
+
+     Cria('PDVSUPRIME','PDV-Suprimento');
+     Cria('PDVSANGRIA','PDV-Sangria');
+     Cria('PDVCADALIQ','PDV-Cadastra Alíquota ICMS');
+     Cria('PDVRETALIQ','PDV-Exibe Alíquotas ICMS');
+     Cria('PDVMSGPROM','PDV-Mensagem Promocional');
+     Cria('PDVCANCCUP','PDV-Cancela Cupom');
+     Cria('PDVHRVERAO','PDV-Horario de Verão');
+     Cria('PDVLEITX'  ,'PDV-Leitura X');
+     Cria('PDVREDZ'   ,'PDV-Redução Z');
+     Cria('PDVTESTES' ,'PDV-Testes');
+
+
+     Cria('RELFAT'    ,'Fatura-Relatorio Faturas     ');
+     Cria('RELTPNOTAS','Fatura-Relatorio Tipos Notas ');
+     Cria('LOCALNOTA' ,'Fatura-Localiza Nota Fiscal');
+     Cria('ESTORNANF' ,'Fatura-Estorna Impressao Nota Fiscal');
+     Cria('GERADISCOF','Fatura-Monta Dsk fat-Auto    ');
+     Cria('GERADISCOM','Fatura-Monta Dsk fat_Manual  ');
+
+     Cria('TIRACENTO' ,'Uteis-Tirar Acentos');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('REINDEXA'  ,'Uteis-Criar indices do Banco de Dados ');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('DELINDEX'  ,'Uteis-Apagar indices do Banco de Dados');
+     Cria('MIGRAR'    ,'Uteis-Importar Dados');
+     Cria('RECIBO'    ,'Uteis-Emitir Recibo ');
+     Cria('ATUASIST'  ,'Uteis-Atualizar Versao Brena');
+     Cria('AUDITORIA' ,'Uteis-Auditoria do Brena');
+     Cria('PEDSEMFIN' ,'Uteis-Auditoria Pedidos S/ Financ');
+
+     Cria('CADPEDIDO' ,'Pedido-Registrar');
+     Cria('CONPEDIDO' ,'Pedido-Conferir');
+     Cria('ALTPEDIDO' ,'Pedido-Alterar');
+     Cria('CANCPEDIDO','Pedido-Cancelar');
+     Cria('RELPEDIDO' ,'Pedido-Relatorio');
+     Cria('LIBPED',    'Pedido-Libera p/Emitir Nota Fiscal');
+     Cria('ATUAPRECOS','Pedido-Atualiza Preço Itens Peds Liberados');
+     Cria('RELSEPARAA','Pedido-Rel.Separacao Sintét-Físico');
+     Cria('RELSEPARAB','Pedido-Rel.Separacao Sintét-Financ');
+     Cria('RELSEPARAC','Pedido-Rel.Separacao Analít-Físico');
+     Cria('RELSEPARAD','Pedido-Rel.Separacao Analít-Financ');
+     Cria('RELSEPARA1','Pedido-Rel.Separacao Analít-Tipo 1');
+     Cria('RELSEPARIA','Pedido-Rel.Separacao Ident.Cli-Fisico');
+     Cria('RELSEPARIB','Pedido-Rel.Separacao Ident.Cli-Financ');
+     Cria('LOCALPED'  ,'Pedido-Localiza Carro Cubou pedido');
+     Cria('LOCPEDCLI' ,'Pedido-Localiza Nro Pedido Cliente');
+     Cria('PEDPASSADO','Pedido-Digitar c/ Data Retroativa');
+     Cria('RELSEPRETA','Pedido-Rel.Separacao.Analít-Retorno-Físico');
+     Cria('RELSEPRETB','Pedido-Rel.Separacao.Analít-Retorno-Financ');
+     Cria('RELSEPRETC','Pedido-Rel.Separacao.Sintét-Retorno-Físico');
+     Cria('RELSEPRETD','Pedido-Rel.Separacao.Sintét-Retorno-Financ');
+     Cria('ALTSTATPED','Pedido-Altera Status');
+     Cria('IMPPEDIDO' ,'Pedido-Importar Pedidos de Clientes');
+     Cria('EXPPEDIDO' ,'Pedido-Exportar Pedidos de Clientes');
+     Cria('EXPPEDSIAC','Pedido-Exportar Pedidos p/ SIAC');
+     Cria('EXPNFISCAL','Pedido-Exportar Notas Fiscais p/Faturamento');
+     Cria('PEDNF'     ,'Pedido-Emitir Nota Fiscal');
+     Cria('PEDNFR'    ,'Pedido-Reemitir Nota Fiscal');
+     Cria('NFDEV'     ,'Pedido-Nota Fiscal Devolucao');
+//     Cria('NFCOMPR'   ,'Pedido-Nota Fiscal de Compra');
+     Cria('NFDEVCPR'  ,'Pedido-Nota Fiscal Dev.Compra');
+     Cria('REGPDCOMPR','Pedido-Registra Pedido Compra');
+     Cria('CPEDCOMPR' ,'Pedido-Consulta Pedido Compras');
+     Cria('APEDCOMPR' ,'Pedido-Altera   Pedido Compras');
+     Cria('PROGEMBARQ','Pedido-Progr Embarq-Prod.Exige Marca');
+     Cria('PROGEMBAR2','Pedido-Progr Embarq-Prod.Nao Exige Marca');
+     Cria('PROGEMBARA','Pedido-Progr Embarq-Alterar Marca Programada');
+     Cria('PROGEMBBAX','Pedido-Progr Embarq-Baixa Estoque');
+     Cria('TIRAITEMPD','Pedido-Elimina Item dos Pedidos');
+     Cria('REPETEPED' ,'Pedido-Repete Ped.p/outra Data');
+     Cria('LIBPEDPREC','Pedido-Libera Pedido Pendente de Preço');
+
+
+     Cria('RELES'     ,'Estoque - Relatório de E/S');
+     Cria('PDASSNFS'  ,'Nota Fiscal Saída  -Associa Pedido');
+     Cria('PDASSNFE'  ,'Nota Fiscal Entrada-Associa Pedido');
+
+     Cria('CHSMISTURA','Auditoria-Peds c/ CHS misturados');
+
+     Cria('ROMANEIO'  ,'Transporte-Romaneio-Marca Digitada');
+     Cria('ROMANEIO2' ,'Transporte-Romaneio-Marca Programada');
+
+     Cria('AUTOCARGA' ,'Transporte-Imprime Autoriz.Carregamto.');
+     Cria('ROTEIRO'   ,'Transporte-Imprime Roteiro');
+     Cria('RETENTREGA','Transporte-Retorno de Entrega');
+     Cria('RETAUSENCI','Transporte-Retorno Entrega-Ausência Veículo');
+     Cria('RETPERFEIT','Transporte-Retorno Entrega-Perfeita');
+
+     Cria('REGSOBRASE','Transporte-Sobras de Entregas');
+     Cria('RELSOBRA1' ,'Transporte-Relatorio.Analit.Retorno ');
+     Cria('RELPESOREG','Transporte-Relatorio.Peso Carregar/Regiao');
+     Cria('RELOCOPED' ,'Transporte-Relatorio.Ocorr.Ped.Entregas');
+     Cria('RELOCOIPED','Transporte-Relatorio.Ocorr.Itens Ped.Entregas');
+     Cria('ESCALAPESQ','Transporte-Pesquisa Escala de Carro');
+     Cria('ESCALAREL' ,'Transporte-Relatorio.Físico Escalas Carro');
+     Cria('ESCALARELF','Transporte-Relatorio.Financ.Escalas Carro');
+
+     Cria('RELSAIDSIN','Transporte-Relatorio.Saída Prod-Sintét');
+     Cria('RELSAIDANA','Transporte-Relatorio.Saída Prod-Analít');
+     Cria('GEHISTSOBR','Transporte-Gera Histórico Sobra ');
+     Cria('REHISTSOBR','Transporte-Relatorio. Histórico Sobra ');
+
+     Cria('ROTAVALORA','Transporte-Relatorio.Rota Valorada');
+
+     Cria('CADGRPEVE' ,'Transporte-Grupo Evento-Cadastrar');
+     Cria('CONGRPEVE' ,'Transporte-Grupo Evento-Consultar');
+     Cria('ALTGRPEVE' ,'Transporte-Grupo Evento-Alterar');
+     Cria('EXCGRPEVE' ,'Transporte-Grupo Evento-Excluir');
+     Cria('RELGRPEVE' ,'Transporte-Grupo Evento-Relatorio');
+
+     Cria('CADSGRPEVE','Transporte-SubGrupo Evento-Cadastrar');
+     Cria('CONSGRPEVE','Transporte-SubGrupo Evento-Consultar');
+     Cria('ALTSGRPEVE','Transporte-SubGrupo Evento-Alterar  ');
+     Cria('EXCSGRPEVE','Transporte-SubGrupo Evento-Excluir  ');
+     Cria('RELSGRPEVE','Transporte-SubGrupo Evento-Relatorio');
+
+     Cria('CADEVENTO' ,'Transporte-Evento-Cadastrar');
+     Cria('CONEVENTO' ,'Transporte-Evento-Consultar');
+     Cria('ALTEVENTO' ,'Transporte-Evento-Alterar  ');
+     Cria('EXCEVENTO' ,'Transporte-Evento-Excluir  ');
+     Cria('RELEVENTO' ,'Transporte-Evento-Relatorio');
+
+     Cria('CADABASTEC','Abastecimento-Cadastrar ');
+     Cria('CONABASTEC','Abastecimento-Consultar');
+     Cria('ALTABASTEC','Abastecimento-Alterar ');
+     Cria('EXCABASTEC','Abastecimento-Excluir ');
+     Cria('RELABASTEC','Abastecimento-Relatorio ');
+
+     Cria('CADFORNECI','Fornecimento-Cadastrar');
+     Cria('ALTFORNECI','Fornecimento-Alterar');
+     Cria('EXCFORNECI','Fornecimento-Excluir');
+     Cria('RELFORNECI','Fornecimento-Relatorio');
+
+     Cria('MOTDEVCHEQ','Motivo Devol Cheque-Cadastrar');
+     Cria('ALTDEVCHEQ','Motivo Devol Cheque-Alterar');
+     Cria('EXCDEVCHEQ','Motivo Devol Cheque-Excluir');
+     Cria('RELDEVCHEQ','Motivo Devol Cheque-Relatorio');
+
+     Cria('CADMCANCNF','Motivo Cancel Nt Fisc-Cadastrar');
+     Cria('ALTMCANCNF','Motivo Cancel Nt Fisc-Alterar');
+     Cria('EXCMCANCNF','Motivo Cancel Nt Fisc-Excluir ');
+     Cria('RELMCANCNF','Motivo Cancel Nt Fisc-Relatorio');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('BAIXAPAG'  ,'Conta Pagar-Baixa');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('LANCAPAG'  ,'Conta Pagar-Cadastrar');
+
+     Cria('DEVCHEQCLI','Financeiro-Reg.Cheque Devolvido/Cliente');
+     Cria('DEVCHEQFOR','Financeiro-Reg.Cheque Devolvido/Fornecedor');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CHQRECEBCD','Financeiro-Reg.Cheque Recebidos/Cliente');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('CHQRECEBAL','Financeiro-Alterar Cheque Recebidos/Cliente');
+     Cria('CHQRECEBEX','Financeiro-Excluir.Cheque Recebidos/Cliente');
+     Cria('CHQRECEBRL','Financeiro-Relatorio.Cheque Recebidos/Cliente');
+
+     Cria('TRANFBCFOR','Financeiro-Transf Banco->Forneced');
+
+     Cria('CHQRPASSCD','Financeiro-Reg.Cheque Repass/Forneced');
+     Cria('CHQRPASSEX','Financeiro-Excluir.Cheque Repass/Forneced');
+     Cria('CHQRPASSRL','Financeiro-Relatorio.Cheque Repass/Forneced');
+     Cria('CHQRPASSDV','Financeiro-Forneced Devolv Cheque');
+     Cria('CANCREPASS','Financeiro-Cancel Repass Cheque Forneced');
+     Cria('IMPCHEQUE' ,'Financeiro-Imprime Cheque');
+     Cria('EFECHEQUE' ,'Financeiro-Efetiva/Torna Pendente Cheque');
+
+     Cria('CXABRE'     ,'Caixa-Abertura');
+     Cria('CXRETIRADA' ,'Caixa-Retirada');
+     Cria('CXINCLUIR'  ,'Caixa-Incluir');
+     Cria('CXFECHA'    ,'Caixa-Fechar ');
+     Cria('CXTRANSF'   ,'Caixa-Transferir');
+     Cria('CXTRANSFBC' ,'Caixa-Transferir p/Banco');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CXRELAT'    ,'Caixa-Relatorio');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('CXDEBCRED'  ,'Caixa-Lancar D/C');
+
+     Cria('BCOTRANSF' ,'Banco-Transf C/C ==> C/C');
+     Cria('BCTRANSFCX','Banco-Transf C/C ==> Caixa');
+
+     Cria('CADCST'    ,'Situacao Tributaria-Cadastrar ');
+     Cria('ALTCST'    ,'Situacao Tributaria-Alterar ');
+     Cria('EXCCST'    ,'Situacao Tributaria-Excluir ');
+     Cria('CONCST'    ,'Situacao Tributaria-Consultar');
+     Cria('RELCST'    ,'Situacao Tributaria-Relatorio ');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CADEMP'    ,'Empresa-Cadastrar ');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('CONEMP'    ,'Empresa-Consultar');
+     Cria('ALTEMP'    ,'Empresa-Alterar ');
+     Cria('EXCEMP'    ,'Empresa-Excluir ');
+
+     Cria('RELEMP'    ,'Empresa-Relatorio ');
+
+     Cria('CADFIL'    ,'Filial-Cadastrar ');
+     Cria('CONFIL'    ,'Filial-Consultar');
+     Cria('ALTFIL'    ,'Filial-Alterar ');
+     Cria('EXCFIL'    ,'Filial-Excluir ');
+     Cria('RELFIL'    ,'Filial-Relatorio ');
+
+     Cria('CADMOT'    ,'Motorista-Cadastrar ');
+     Cria('CONMOT'    ,'Motorista-Consultar');
+     Cria('ALTMOT'    ,'Motorista-Alterar ');
+     Cria('EXCMOT'    ,'Motorista-Excluir ');
+     Cria('RELMOT'    ,'Motorista-Relatorio ');
+
+     Cria('CADMVEI'   ,'Motivo Bloquear Veiculo-Cadastrar ');
+     Cria('CONMVEI'   ,'Motivo Bloquear Veiculo-Consultar');
+     Cria('ALTMVEI'   ,'Motivo Bloquear Veiculo-Alterar ');
+     Cria('EXCMVEI'   ,'Motivo Bloquear Veiculo-Excluir ');
+     Cria('RELMVEI'   ,'Motivo Bloquear Veiculo-Relatorio ');
+
+     Cria('CADMCF'   ,'Motivo Cancelamento Fatura-Cadastrar ');
+     Cria('CONMCF'   ,'Motivo Cancelamento Fatura-Consultar');
+     Cria('ALTMCF'   ,'Motivo Cancelamento Fatura-Alterar ');
+     Cria('EXCMCF'   ,'Motivo Cancelamento Fatura-Excluir ');
+     Cria('RELMCF'   ,'Motivo Cancelamento Fatura-Relatorio ');
+
+     Cria('CADCLA'    ,'Classificac-Cadastrar ');
+     Cria('CONCLA'    ,'Classificac-Consultar');
+     Cria('ALTCLA'    ,'Classificac-Alterar ');
+     Cria('EXCCLA'    ,'Classificac-Excluir ');
+     Cria('RELCLA'    ,'Classificac-Relatorio ');
+
+     Cria('CADDES'    ,'Destinacao-Cadastrar ');
+     Cria('CONDES'    ,'Destinacao-Consultar');
+     Cria('ALTDES'    ,'Destinacao-Alterar ');
+     Cria('EXCDES'    ,'Destinacao-Excluir ');
+     Cria('RELDES'    ,'Destinacao-Relatorio ');
+
+     Cria('CADCEP'   ,'CEP-Cadastro');
+
+     Cria('CADMHOMOLG'   ,'Marca Homologada-Cadastrar ');
+     Cria('CONMHOMOLG'   ,'Marca Homologada-Consultar');
+     Cria('ALTMHOMOLG'   ,'Marca Homologada-Alterar ');
+     Cria('EXCMHOMOLG'   ,'Marca Homologada-Excluir ');
+     Cria('RELMHOMOLG'   ,'Marca Homologada-Relatorio ');
+
+     Cria('CADPHOMOLG'   ,'Prod Homologado-Cadastrar ');
+     Cria('CONPHOMOLG'   ,'Prod Homologado-Consultar');
+     Cria('ALTPHOMOLG'   ,'Prod Homologado-Alterar ');
+     Cria('EXCPHOMOLG'   ,'Prod Homologado-Excluir ');
+     Cria('RELPHOMOLG'   ,'Prod Homologado-Relatorio ');
+
+     Cria('CADALMOX'   ,'Almoxarifado-Cadastrar ');
+     Cria('CONALMOX'   ,'Almoxarifado-Consultar');
+     Cria('ALTALMOX'   ,'Almoxarifado-Alterar ');
+     Cria('EXCALMOX'   ,'Almoxarifado-Excluir ');
+     Cria('RELALMOX'   ,'Almoxarifado-Relatorio ');
+
+     Cria('CONFIGESTA','Config Estacao Trabalho');
+
+     Cria('CADTPCARGA','Tipo Carga-Cadastrar ');
+     Cria('CONTPCARGA','Tipo Carga-Consultar');
+     Cria('ALTTPCARGA','Tipo Carga-Alterar ');
+     Cria('EXCTPCARGA','Tipo Carga-Excluir ');
+     Cria('RELTPCARGA','Tipo Carga-Relatorio ');
+
+     Cria('CADTPCARRO','Tipo Veículo-Cadastrar ');
+     Cria('CONTPCARRO','Tipo Veículo-Consultar');
+     Cria('ALTTPCARRO','Tipo Veículo-Alterar ');
+     Cria('EXCTPCARRO','Tipo Veículo-Excluir ');
+     Cria('RELTPCARRO','Tipo Veículo-Relatorio ');
+
+     Cria('CADCARRO' ,'Veículo-Cadastrar ');
+     Cria('CONCARRO' ,'Veículo-Consultar');
+     Cria('ALTCARRO' ,'Veículo-Alterar ');
+     Cria('EXCCARRO' ,'Veículo-Excluir ');
+     Cria('RELCARRO' ,'Veículo-Relatorio ');
+     Cria('CANCROMAN','Veículo-Cancel Romaneio');
+
+     Cria('INFSALDOFF','Estoque-Informa Saldo Financ');
+     Cria('RELSALDOFF','Estoque-Relatorio.Saldo Fisico/Financ');
+     Cria('SLDFISCPRD','Estoque-Consultar Saldo Físico/Prod');
+
+     Cria('CADMSG','Mensagem-Cadastrar ');
+     Cria('CONMSG','Mensagem-Consultar');
+     Cria('ALTMSG','Mensagem-Alterar ');
+     Cria('EXCMSG','Mensagem-Excluir ');
+     Cria('RELMSG','Mensagem-Relatorio ');
+
+     Cria('CADCLAxMSG','Classe x Mensagem-Cadastrar ');
+     Cria('CONCLAxMSG','Classe x Mensagem-Consultar');
+     Cria('ALTCLAxMSG','Classe x Mensagem-Alterar ');
+     Cria('EXCCLAxMSG','Classe x Mensagem-Excluir ');
+     Cria('RELCLAxMSG','Classe x Mensagem-Relatorio ');
+
+     Cria('CADDIARIA','Diaria Transporte-Cadastrar ');
+     Cria('CONDIARIA','Diaria Transporte-Consultar');
+     Cria('ALTDIARIA','Diaria Transporte-Alterar ');
+     Cria('EXCDIARIA','Diaria Transporte-Excluir ');
+     Cria('RELDIARIA','Diaria Transporte-Relatorio ');
+
+     Cria('CADOCO','Ocorrencia-Cadastrar ');
+     Cria('CONOCO','Ocorrencia-Consultar');
+     Cria('ALTOCO','Ocorrencia-Alterar ');
+     Cria('EXCOCO','Ocorrencia-Excluir ');
+     Cria('RELOCO','Ocorrencia-Relatorio ');
+
+     Cria('CADCUBAG','Cubagem-Cadastrar ');
+     Cria('CONCUBAG','Cubagem-Consultar');
+     Cria('ALTCUBAG','Cubagem-Alterar ');
+     Cria('EXCCUBAG','Cubagem-Excluir ');
+     Cria('RELCUBAG','Cubagem-Relatorio ');
+
+     Cria('CADAGENDA','Agenda-Cadastrar  ');
+     Cria('CONAGENDA','Agenda-Consultar ');
+     Cria('ALTAGENDA','Agenda-Alterar  ');
+     Cria('EXCAGENDA','Agenda-Excluir  ');
+     Cria('RELAGENDA','Agenda-Relatorio  ');
+
+     Cria('CADREGIAO','Regiao-Cadastrar  ');
+     Cria('CONREGIAO','Regiao-Consultar ');
+     Cria('ALTREGIAO','Regiao-Alterar  ');
+     Cria('EXCREGIAO','Regiao-Excluir  ');
+     Cria('RELREGIAO','Regiao-Relatorio  ');
+
+     Cria('CADERROSNF','Codigo Erro Nota Fiscal-Cadastrar ');
+     Cria('CONERROSNF','Codigo Erro Nota Fiscal-Consultar');
+     Cria('ALTERROSNF','Codigo Erro Nota Fiscal-Alterar ');
+     Cria('EXCERROSNF','Codigo Erro Nota Fiscal-Excluir ');
+     Cria('RELERROSNF','Codigo Erro Nota Fiscal-Relatorio ');
+
+     Cria('CADSERIENF','Serie Nota Fiscal-Cadastrar ');
+     Cria('CONSERIENF','Serie Nota Fiscal-Consultar');
+     Cria('ALTSERIENF','Serie Nota Fiscal-Alterar ');
+     Cria('EXCSERIENF','Serie Nota Fiscal-Excluir ');
+     Cria('RELSERIENF','Serie Nota Fiscal-Relatorio ');
+
+     Cria('CONTATUQTD','Contrato Fornecimento-Atualiza Qtde');
+     Cria('CADCONTRAT','Contrato Fornecimento-Cadastrar Contrato');
+     Cria('ALTCONTRAT','Contrato Fornecimento-Alterar Contrato');
+     Cria('RELSLDCONT','Contrato Fornecimento-Relatorio Saldo');
+
+     Cria('MANUTNF','Notas Fiscais - Manutencao');
+
+     Cria('REGTRANSF' ,'Transferencia Almoxarifado-Cadastrar ');
+     Cria('ALTTRANSF' ,'Transferencia Almoxarifado-Alterar ');
+     Cria('EXCTRANSF' ,'Transferencia Almoxarifado-Canc');
+     Cria('TRANSFORMA','Transformacao de Produto');
+
+     Cria('TABFILHA'  ,'SubTabela de Preco-Cadastrar Prod');
+     Cria('ALTTBFILHA','SubTabela de Preco-Alterar Prod');
+     Cria('EXCTBFILHA','SubTabela de Preco-Excluir Prod');
+     Cria('RELTBFILHA','SubTabela de Preco-Relatorio Prod');
+     Cria('COPSUBTAB' ,'SubTabela de Preco-Copia Tab');
+
+     Cria('CADCPO' ,'Especificacao Produto Cliente-Cadastrar ');
+     Cria('CONCPO' ,'Especificacao Produto Cliente-Consultar');
+     Cria('ALTCPO' ,'Especificacao Produto Cliente-Alterar ');
+     Cria('EXCCPO' ,'Especificacao Produto Cliente-Excluir ');
+     Cria('RELCPO' ,'Especificacao Produto Cliente-Relatorio ');
+
+     Cria('REGOCOISO' ,'Ocorrencia Isolada-Cadastrar');
+
+     Cria('TELEMARK' ,'Telemarketing');
+
+     Cria('VIAGEMINI','Viagem-Inicio');
+     Cria('VIAGEMCAN','Viagem-Cancela');
+//     Cria('VIAGEMPER','Viagem-Percurso');
+     Cria('VIAGEMFIM','Viagem-Fim');
+     Cria('VIAGEMREL','Viagem-Relatorio');
+     Cria('VIAGEMABRE','Viagem-Reabre Viagem Fechada');
+
+     Cria('CADCID' ,'Cidade-Cadastrar ');
+     Cria('CONCID' ,'Cidade-Consultar');
+     Cria('ALTCID' ,'Cidade-Alterar ');
+     Cria('EXCCID' ,'Cidade-Excluir ');
+     Cria('RELCID' ,'Cidade-Relatorio ');
+
+     Cria('CADBALAN' ,'Balanças-Cadastrar ');
+     Cria('CONBALAN' ,'Balanças-Consultar');
+     Cria('ALTBALAN' ,'Balanças-Alterar ');
+     Cria('EXCBALAN' ,'Balanças-Excluir ');
+     Cria('RELBALAN' ,'Balanças-Relatorio ');
+
+     Cria('CADTDOC','Tipo de Documento-Cadastrar  ');
+     Cria('CONTDOC','Tipo de Documento-Consultar  ');
+     Cria('ALTTDOC','Tipo de Documento-Alterar    ');
+     Cria('EXCTDOC','Tipo de Documento-Excluir    ');
+     Cria('RELTDOC','Tipo de Documento-Relatorio  ');
+     Cria('TITULOSCOB','Relaciona Títulos para Cobrança');
+
+
+     Cria('CONFTRANSP','Configura Transporte');
+
+     Cria('TITULOSCOB','Conta Receber-Relaciona Títulos p/Cobrança');
+     Cria('MARCAREC'  ,'Conta Receber-Marca Tit/Cob Recebido');
+     Cria('DSMARCAREC','Conta Receber-Marca Tit/Cob Nao Recebido');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('REMESSA'   ,'Boleto-Gera Arquivo Remessa');
+     Cria('RETORNO'   ,'Boleto-Processa Arquivo Retorno');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('DETBOLETO' ,'Boleto-Mostra Detalhes');
+     Cria('EMITEBOLA' ,'Conta Receber-Emitir Boleto Avulso');
+     Cria('CONFIGSIST','Configurar o Sistema');
+     Cria('CONFIGVEND','Configurar Vendas');
+     Cria('APURARESUL','Apura Resultado Modelo 1');
+     Cria('APURARESU2','Apura Resultado Modelo 2');
+     Cria('RELRESULTA','Apura Resultado Lucro x Despesas');
+     Cria('FORMATAAGE','Formatar Agenda');
+     Cria('AGENDAOS'  ,'Agendar Ordem de Serviço');
+     Cria('CONFCADAST','Configurar Cadastros');
+     Cria('CONFCHAMAD','Configurar Chamados-OS');
+     Cria('ABXMINIMO' ,'Vender abaixo preço mínimo');
+     Cria('FERIADOS'  ,'Feriados');
+     Cria('CONENTREGA','Entregadores');
+
+     Cria('CADMCP','Motivo Canc Pedido-Cadastrar');
+     Cria('ALTMCP','Motivo Canc Pedido-Alterar');
+     Cria('EXCMCP','Motivo Canc Pedido-Excluir');
+     Cria('CONMCP','Motivo Canc Pedido-Consultar');
+     Cria('RELMCP','Motivo Canc Pedido-Relatório');
+
+     Cria('CADDEF','Defeitos-Cadastrar');
+     Cria('ALTDEF','Defeitos-Alterar');
+     Cria('EXCDEF','Defeitos-Excluir');
+     Cria('CONDEF','Defeitos-Consultar');
+     Cria('RELDEF','Defeitos-Relatório');
+
+     Cria('CADSOL','Soluções-Proc Técnicos-Cadastrar');
+     Cria('ALTSOL','Soluções-Proc Técnicos-Alterar');
+     Cria('EXCSOL','Soluções-Proc Técnicos-Excluir');
+     Cria('CONSOL','Soluções-Proc Técnicos-Consultar');
+     Cria('RELSOL','Soluções-Proc Técnicos-Relatório');
+
+     Cria('ANALISEVEN','Vendas-Análise Vendedores');
+     Cria('ANALISEPRO','Vendas-Análise Produtos');
+
+     Cria('ANALISEDES','Vendas-Análise Dispesas');
+
+     Cria('CADMEIOCOM','Meios Comunic.-Cadastrar');
+     Cria('ALTMEIOCOM','Meios Comunic.-Alterar');
+     Cria('EXCMEIOCOM','Meios Comunic.-Excluir');
+     Cria('CONMEIOCOM','Meios Comunic.-Consultar');
+     Cria('RELMEIOCOM','Meios Comunic.-Relatório');
+
+     Cria('ANALISEPUB','Vendas-Análise Publicidade');
+
+     Cria('PREVCX','Previsão de Caixa');
+
+     Cria('NFE'       ,'Nota Fiscal Eletrônica');
+     Cria('NFE_PARAM' ,'Nota Fiscal Eletrônica-Parâmetros');
+
+     Cria('ALTTABPREC' ,'Preços-Alterar');
+     Cria('APLICPRECO' ,'Preços-Aplicar Preços');
+
+     Cria('CADGFPG' ,'Cadastra Grupo de Forma de Pagamento');
+     Cria('CONGFPG' ,'Consulta Grupo de Forma de Pagamento');
+     Cria('ALTGFPG' ,'Altera Grupo de Forma de Pagamento');
+     Cria('EXCGFPG' ,'Exclui Grupo de Forma de Pagamento');
+     Cria('RELGFPG' ,'Lista Grupo de Forma de Pagamento');
+
+     Cria('CADSGFPG' ,'Cadastra SubGrupo de Forma de Pagamento');
+     Cria('CONSGFPG' ,'Consulta SubGrupo de Forma de Pagamento');
+     Cria('ALTSGFPG' ,'Altera SubGrupo de Forma de Pagamento');
+     Cria('EXCSGFPG' ,'Exclui SubGrupo de Forma de Pagamento');
+     Cria('RELSGFPG' ,'Lista SubGrupo de Forma de Pagamento');
+
+     Cria('DEFCCUSTOS' ,'Define Centro de Custos dos Lançamentos');
+
+     Cria('CARTACORRE' ,'Nota Fiscal-Carta de Correção');
+
+     Cria('CADMV' ,'Marca Veículo-Cadastrar');
+     Cria('ALTMV' ,'Marca Veículo-Alterar');
+     Cria('EXCMV' ,'Marca Veículo-Excluir');
+     Cria('RELMV' ,'Marca Veículo-Listar');
+
+     Cria('REGCOMPRAV','Compra Veículo-Registrar');
+     Cria('ALTCOMPRAV','Compra Veículo-Alterar');
+     Cria('EXCCOMPRAV','Compra Veículo-Cancelar');
+
+     Cria('CADMODV' ,'Modelo Veículo-Cadastrar');
+     Cria('ALTMODV' ,'Modelo Veículo-Alterar');
+     Cria('EXCMODV' ,'Modelo Veículo-Excluir');
+     Cria('RELMODV' ,'Modelo Veículo-Listar');
+
+     Cria('BLOQTDEPRO','Prod-Bloq Qtde Venda');
+
+     Cria('ALTCOMPPAG','Altera compra paga');
+     Cria('ADMESTOQ','Corrigir Estoque');
+
+     Cria('CADCDB','Cod.Barras Prod-Cadastrar');
+
+     Cria('CONCDB','Cod.Barras Prod-Consultar');
+     Cria('ALTCDB','Cod.Barras Prod-Alterar');
+     Cria('EXCCDB','Cod.Barras Prod-Excluir');
+     Cria('RELCDB','Cod.Barras Prod-Listar');
+
+     Cria('CXAUDITAR','Caixa-Auditoria');
+
+     Cria('F7CUSTOS','F7/F1 prod c/custos');
+
+     Cria('CADCONTR','Contratos Clientes-Cadastrar');
+     Cria('CONCONTR','Contratos Clientes-Consultar');
+     Cria('ALTCONTR','Contratos Clientes-Alterar');
+     Cria('EXCCONTR','Contratos Clientes-Excluir');
+     Cria('RELCONTR','Contratos Clientes-Listar');
+     Cria('DEBCONTCLI','Contratos Clientes-Debitar');
+
+     Cria('CADCF','Classificação Fiscal de Produtos-Cadastrar');
+     Cria('CONCF','Classificação Fiscal de Produtos-Consultar');
+     Cria('ALTCF','Classificação Fiscal de Produtos-Alterar');
+     Cria('EXCCF','Classificação Fiscal de Produtos-Excluir');
+     Cria('RELCF','Classificação Fiscal de Produtos-Listar');
+
+     Cria('ALTPRECVEN','Venda-Definir o preço dos produtos');
+     Cria('ABXCUSTO'  ,'Venda-Vender abaixo do custo');
+
+    Cria('CADCFOPPRO'  ,'CFOP do Produto na operação-Cadastrar');
+    Cria('CONCFOPPRO'  ,'CFOP do Produto na operação-Consultar');
+    Cria('ALTCFOPPRO'  ,'CFOP do Produto na operação-Alterar');
+    Cria('EXCCFOPPRO'  ,'CFOP do Produto na operação-Excluir');
+    Cria('RELCFOPPRO'  ,'CFOP do Produto na operação-Listar');
+
+    Cria('LIBPRAZO'    ,'Venda-Libera atraso acima do tolerado');
+    Cria('PDVDEVOLVE'  ,'PDV-Devolução');
+    Cria('DCANCPEDID'  ,'PDV-Pedido-Descancelar');
+    Cria('ORCAMVENDA'  ,'PDV-Transformar Orçamento em Venda');
+    Cria('TIPOVENDA'   ,'PDV-Alterar o Tipo');
+    Cria('TIPOPRECO'   ,'PDV-Mudar Tipo de Preço');
+    Cria('DESCONTO'    ,'PDV-Desconto/Acrescimo');
+
+    Cria('VENDCHQDEV'  ,'Vender p/Cliente c/Chq Devolvido');
+    Cria('DESPEDIDO'   ,'Pedido-Desiste antes de concluir');
+
+    Cria('DEFPREQTDE'  ,'Produtos-Define preços e qtd embalagem');
+    Cria('ASSOCIAPRO'  ,'Produtos-Associa dois produtos p/qtd');
+
+    Cria('EXCCIDT'  ,'Custo Informado-Exclui de uma data');
+    Cria('EXCCIPD'  ,'Custo Informado-Exclui de um produto');
+    Cria('EXCCITD'  ,'Custo Informado-Exclui todos');
+
+    Cria('F1PULCUSTO'  ,'F1 pesq prod mostra ultimo custo');
+
+    Cria('CADOP','Origem dos Produtos-Cadastrar');
+    Cria('CONOP','Origem dos Produtos-Consultar');
+    Cria('ALTOP','Origem dos Produtos-Alterar');
+    Cria('EXCOP','Origem dos Produtos-Excluir');
+    Cria('RELOP','Origem dos Produtos-Listar');
+
+    Cria('BXRELACION','Estoque-Baixa Relacionada');
+
+    Cria('SINTEGRA','Sintegra-Gerar TXT');
+    Cria('CADESTACAO','Estação-Cadastrar');
+    Cria('CONESTACAO','Estação-Consultar');
+    Cria('ALTESTACAO','Estação-Alterar');
+    Cria('EXCESTACAO','Estação-Excluir');
+    Cria('RELESTACAO','Estação-Listar');
+
+    Cria('SIC','Importa/Exporta SIC');
+    Cria('PRECISACOM','Produto-Precisa comprar');
+    Cria('ACIMALIMIT','Venda-Libera acima limite cliente');
+
+    Cria('CFGEMAILS','Configura envio de emails');
+    Cria('REIMP_PED','Pedido-Reimprimir');
+
+    Cria('ALTPEDPAGO','Pedido-Alterar Pedido Pago');
+
+    Cria('MANLANCCTA','Financ Manutenção de Sequenciais');
+
+    Cria('CADHCOB','Histórico de Cobrança-Incluir');
+    Cria('CONHCOB','Histórico de Cobrança-Consultar');
+    Cria('EXCHCOB','Histórico de Cobrança-Cancelar');
+    Cria('ALTHCOB','Histórico de Cobrança-Alterar');
+
+     Cria('SUSLANCCTA','Financ Suspender Recebimento');
+     Cria('DSULANCCTA','Financ DesSuspender Recebimento');
+
+     Cria('EXCCECC','Como Evitar Despesa-Excluir');
+     Cria('ALTCECC','Como Evitar Despesa-Alterar');
+
+     Cria('EXCMCC','Motivo Lançamento Financeiro-Excluir');
+     Cria('ALTMCC','Motivo Lançamento Financeiro-Alterar');
+
+
+     Cria('CADIMP','Impressora-Cadastrar');
+     Cria('CONIMP','Impressora-Consultar');
+     Cria('ALTIMP','Impressora-Alterar');
+     Cria('EXCIMP','Impressora-Excluir');
+     Cria('RELIMP','Impressora-Relatorio');
+
+     Cria('ARQMORTO'  ,'Gerar Arquivo Morto');
+     Cria('EXPFINEXCE','Exportar Financeiro Caixa para Excel');
+     Cria('TROCACLIPD','Trocar Cliente do pedido');
+
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('ALTSENHUSU','Usuarios-Alterar Senha');
+     Cria('MONITORAR' ,'Monitorar Sistema por Email e SMS');
+
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('RELGRPTAB' ,'Grupo Produtos Tabela/Contrato-Relatorio');
+
+     Cria('CADTENF' ,'Tipos de Erros em Notas Fiscais - Cadastrar');
+     Cria('ALTTENF' ,'Tipos de Erros em Notas Fiscais - Alterar');
+     Cria('CONTENF' ,'Tipos de Erros em Notas Fiscais - Consultar');
+     Cria('EXCTENF' ,'Tipos de Erros em Notas Fiscais - Excluir');
+     Cria('RELTENF' ,'Tipos de Erros em Notas Fiscais - Listar');
+
+     Cria('CADPROC' ,'Procedimento Ténico - Cadastrar');
+     Cria('ALTPROC' ,'Procedimento Ténico - Alterar');
+     Cria('CONPROC' ,'Procedimento Ténico - Consultar');
+     Cria('EXCPROC' ,'Procedimento Ténico - Excluir');
+     Cria('RELPROC' ,'Procedimento Ténico - Listar');
+
+     Cria('CADACC' ,'Ações sobre Clientes - Cadastrar');
+     Cria('ALTACC' ,'Ações sobre Clientes - Alterar');
+     Cria('CONACC' ,'Ações sobre Clientes - Consultar');
+     Cria('EXCACC' ,'Ações sobre Clientes - Excluir');
+     Cria('RELACC' ,'Ações sobre Clientes - Listar');
+
+     Cria('CADNCMSH' ,'NCM/SH - Cadastrar');
+     Cria('ALTNCMSH' ,'NCM/SH - Alterar');
+     Cria('CONNCMSH' ,'NCM/SH - Consultar');
+     Cria('EXCNCMSH' ,'NCM/SH - Excluir');
+     Cria('RELNCMSH' ,'NCM/SH - Listar');
+
+     Cria('CADCTP' ,'Associa MOV-PROD-CFOP-Cadastrar');
+     Cria('ALTCTP' ,'Associa MOV-PROD-CFOP-Alterar');
+     Cria('CONCTP' ,'Associa MOV-PROD-CFOP-Consultar');
+     Cria('EXCCTP' ,'Associa MOV-PROD-CFOP-Excluir');
+     Cria('RELCTP' ,'Associa MOV-PROD-CFOP-Listar');
+
+     Cria('AVISOAGE','Receber Agenda');
+     Cria('RESUMAO','Resumo Diário');
+
+     Cria('CST_NF_ECF','Relaciona CST NFE x ECF');
+
+     Cria('CADGRADE','Grade de Produtos-Cadastrar');
+     Cria('CONGRADE','Grade de Produtos-Consultar');
+     Cria('ALTGRADE','Grade de Produtos-Alterar');
+     Cria('EXCGRADE','Grade de Produtos-Excluir');
+     Cria('RELGRADE','Grade de Produtos-Relatório');
+
+     Cria('CADTGRADE','Tipos na Grade de Produtos-Cadastrar');
+     Cria('CONTGRADE','Tipos na Grade de Produtos-Consultar');
+     Cria('ALTTGRADE','Tipos na Grade de Produtos-Alterar');
+     Cria('EXCTGRADE','Tipos na Grade de Produtos-Excluir');
+     Cria('RELTGRADE','Tipos na Grade de Produtos-Relatório');
+
+     Cria('CADIGRADE','Itens na Grade de Produtos-Cadastrar');
+     Cria('CONIGRADE','Itens na Grade de Produtos-Consultar');
+     Cria('ALTIGRADE','Itens na Grade de Produtos-Alterar');
+     Cria('EXCIGRADE','Itens na Grade de Produtos-Excluir');
+     Cria('RELIGRADE','Itens na Grade de Produtos-Relatório');
+
+     Cria('APLICAGRAD','Aplicar Grade a Produto');
+
+     Cria('CONFIGBAR','Configura Bar/Restaurante');
+
+     Cria('CADMON','Monitorar Eventos-Cadastrar');
+     Cria('CONMON','Monitorar Eventos-Consultar');
+     Cria('ALTMON','Monitorar Eventos-Alterar');
+     Cria('EXCMON','Monitorar Eventos-Excluir');
+     Cria('RELMON','Monitorar Eventos-Relatório');
+
+     Cria('CADMAN','Manutenção Vei/Maq-Cadastrar');
+     Cria('CONMAN','Manutenção Vei/Maq-Consultar');
+     Cria('ALTMAN','Manutenção Vei/Maq-Alterar');
+     Cria('EXCMAN','Manutenção Vei/Maq-Excluir');
+     Cria('RELMAN','Manutenção Vei/Maq-Relatório');
+
+     Cria('CADPAT','Item Patrimonial-Cadastrar');
+     Cria('CONPAT','Item Patrimonial-Consultar');
+     Cria('ALTPAT','Item Patrimonial-Alterar');
+     Cria('EXCPAT','Item Patrimonial-Excluir');
+     Cria('RELPAT','Item Patrimonial-Relatório');
+
+     Cria('CADSEN','Senhas Externas-Cadastrar');
+     Cria('CONSEN','Senhas Externas-Consultar');
+     Cria('ALTSEN','Senhas Externas-Alterar');
+     Cria('EXCSEN','Senhas Externas-Excluir');
+     Cria('RELSEN','Senhas Externas-Relatório');
+
+     // KOALLAS
+     //vFuncao_do_Brena_ou_Koalla:='KOALLAS';
+     Cria('CORES','Cores-Definir');
+
+     // KOALLA-GOURMET
+     //vFuncao_do_Brena_ou_Koalla:='K.GOURMET';
+     Cria('RESERVA'   ,'Reserva Mesa-Reservar');
+     Cria('CANRESERVA','Reserva Mesa-Cancelar');
+
+     // KOALLA-ESCOLA
+     //vFuncao_do_Brena_ou_Koalla:='K.ESCOLA';
+     Cria('CADDISCIPL','Disciplina-Cadastrar');
+     Cria('CONDISCIPL','Disciplina-Alterar');
+     Cria('ALTDISCIPL','Disciplina-Alterar');
+     Cria('EXCDISCIPL','Disciplina-Excluir');
+     Cria('RELDISCIPL','Disciplina-Relatório');
+
+     //vFuncao_do_Brena_ou_Koalla:='K.ESCOLA';
+     Cria('CADCURDISC','Disciplinas/Cursos-Cad');
+     Cria('CONCURDISC','Disciplinas/Cursos-Cons');
+     Cria('ALTCURDISC','Disciplinas/Cursos-Alt');
+     Cria('EXCCURDISC','Disciplinas/Cursos-Exc');
+     Cria('RELCURDISC','Disciplinas/Cursos-Rel');
+
+     // KOALLA-BRENA
+     //vFuncao_do_Brena_ou_Koalla:='BRENA';
+     Cria('ESTOQLOJAS','Ver Estoq Várias Lojas');
+     Cria('ULTCOMPRAS','Ver Últ Compras Prod');
+
+     Cria('RELPOSKG','Rel Posição em KG');
+     Cria('BDREMOTO','Cad BD Remoto(alias)');
+
+     Cria('CRECEBTEXT','Confirma Receb.Transf.Externa');
+     Cria('DEVOLVVEND','Devolução de Venda');
+     Cria('CONFIGSAT' ,'Configurar SAT');
+     Cria('FRASEDODIA','Definir Frase do Dia');
+
+     Cria('ASSOCIACD','Associa Crédito x Debito Receber');
+     Cria('ALTCREDEV','Altera Crédito Devolução');
+     Cria('CANCREDEV','Cancela Crédito Devolução');
+     Cria('DCANCREDEV','Descancela Crédito Devolução');
+
+     Cria('ACRESCREC','Acréscimo Tit Receber');
+     Cria('DESCONREC','Desconto Tit Receber');
+     Cria('XVENDARET','Cancelar Venda Retroativa');
+
+     Cria('RELSALC'  ,'Rel Saldo Ativo Liq Consolidado');
+
+     Cria('CADLR'    ,'Local Retirada-Cad/Alt');
+     Cria('EXCLR'    ,'Local Retirada-Exc');
+     Cria('CADLE'    ,'Local Entrega-Cad/Alt');
+     Cria('EXCLE'    ,'Local Entrega-Exc');
+
+     Cria('SPED'      ,'SPED');
+     Cria('CADPARTICI','Participante-Cad/Alt');
+     Cria('EXCPARTICI','Participante-Exc');
+
+     Cria('DESASSOCCD','Desassocia Crédito Devolução/Pedido');
+     Cria('ATUANUVEM','Atualizações da Nuvem');
+
+     Cria('ATIVARCLI' ,'Desbloquear Cliente');
+     Cria('DESATIVCLI','Bloquear Cliente');
+
+   //CRIACRIA
+    //   AQUI AQUI criar funcoes
+
+    //AQUI CRIAR FUNCOES
+
+end;
+
+procedure TAcesso.Motorista;
 begin
    if not Ja_Executou_Script('Criar_MOTORISTA') then
    begin
@@ -1199,7 +2594,7 @@ begin
 
 end;
 
-procedure TAcesso.Cad_Transportadora;
+procedure TAcesso.Transportadora;
 begin
    if not Ja_Executou_Script('Criar_TRANSPORTADORA') then
    begin
@@ -1358,7 +2753,7 @@ begin
 
 end;
 
-procedure TAcesso.Cad_Vendedor;
+procedure TAcesso.Vendedor;
 begin
     if not Ja_Executou_Script('Criar_VENDEDOR_BLOQUEIOS_VENDB..') then
     begin
@@ -1618,23 +3013,24 @@ begin
       EXIT;
 
    Alteracoes_Gerais;
-   Cad_Empresa;
-   Cad_Cliente;
-   Cad_Fornecedor;
-   Cad_Colaborador;
-   Cad_Consultor;
-   Cad_Vendedor;
-   Cad_Motorista;
-   Cad_Transportadora;
-   Cad_Contador;
+   CADEmpresa;
+   Cliente;
+   Fornecedor;
+   Colaborador;
+   Consultor;
+   Vendedor;
+   Motorista;
+   Transportadora;
+   Contador;
    Comissoes_colaboradores;
    Comissoes_consultor;
    Configuracoes_NFe;
    DadosDaTela;
    NotasFiscais;
    Produtos;
-
-   Tratar_Cad_Bairro;
+   SMC;
+   Tratar_Bairro;
+   Funcoes_de_Acesso;
 
    AtualizaBaseDeDadosNuvem;
 
@@ -2245,7 +3641,107 @@ begin
    self.FNomeDaConexao := Value;
 end;
 
-procedure TAcesso.Tratar_Cad_Bairro;
+procedure TAcesso.SMC;
+begin
+  if not Ja_Executou_Script('Criada Tabela ARQUIVOS_FISCAIS_AF.....') then
+  begin
+    Executar('DROP TABLE ARQUIVOS_FISCAIS_AF');
+    Dm.Query1.close;
+    Dm.Query1.sql.clear;
+    Dm.Query1.sql.add('CREATE TABLE ARQUIVOS_FISCAIS_AF (                  ');
+    Dm.Query1.sql.add('             AF_MES            INTEGER NOT     NULL,');
+    Dm.Query1.sql.add('             AF_ANO            INTEGER NOT     NULL,');
+    Dm.Query1.sql.add('             AF_CLIENTE        VARCHAR(20) NOT NULL,');
+    Dm.Query1.sql.add('             AF_STATUS         VARCHAR(10)     NULL,');
+    Dm.Query1.sql.add('             AF_STATUSx        VARCHAR(10)     NULL, ');
+    Dm.Query1.sql.add('             AF_USU            VARCHAR(10)     NULL,');
+    Dm.Query1.sql.add('             AF_INICIO_DT      DATETIME        NULL,');
+    Dm.Query1.sql.add('             AF_INICIO_DTx     varchar(10)     NULL,');
+    Dm.Query1.sql.add('             AF_INICIO_HR      VARCHAR(05)     NULL,');
+    Dm.Query1.sql.add('             AF_FIM_USU        VARCHAR(10)     NULL,');
+    Dm.Query1.sql.add('             AF_FIM_DT         DATETIME        NULL,');
+    Dm.Query1.sql.add('             AF_FIM_DTx        varchar(10)     NULL,');
+    Dm.Query1.sql.add('             AF_FIM_HR         VARCHAR(05)     NULL,');
+    Dm.Query1.sql.add('             AF_USA_SMC        VARCHAR(03)     NULL,');
+    Dm.Query1.sql.add('             AF_USA_SMCPLUS    VARCHAR(03)     NULL,');
+    Dm.Query1.sql.add('             AF_USA_MERCHANT   VARCHAR(03)     NULL,');
+    Dm.Query1.sql.add('             AF_USA_GETRANSP   VARCHAR(03)     NULL,');
+    Dm.Query1.sql.add('             AF_USA_MDE        VARCHAR(03)     NULL,');
+
+    Dm.Query1.sql.add('             AF_STATUS_SMC      INTEGER        NULL,');
+    Dm.Query1.sql.add('             AF_STATUS_SMCPLUS  INTEGER        NULL,');
+    Dm.Query1.sql.add('             AF_STATUS_MERCHANT INTEGER        NULL,');
+    Dm.Query1.sql.add('             AF_STATUS_GETRANSP INTEGER        NULL,');
+    Dm.Query1.sql.add('             AF_STATUS_MDE      INTEGER        NULL,');
+
+    Dm.Query1.sql.add('             AF_STATUS_SMCx      VARCHAR(03)   NULL,');
+    Dm.Query1.sql.add('             AF_STATUS_SMCPLUSx  VARCHAR(03)   NULL,');
+    Dm.Query1.sql.add('             AF_STATUS_MERCHANTx VARCHAR(03)   NULL,');
+    Dm.Query1.sql.add('             AF_STATUS_GETRANSPx VARCHAR(03)   NULL,');
+    Dm.Query1.sql.add('             AF_STATUS_MDEx      VARCHAR(03)   NULL,');
+
+    Dm.Query1.sql.add('             AF_ENVIO_SMC      VARCHAR(06)     NULL,');
+    Dm.Query1.sql.add('             AF_ENVIO_SMCPLUS  VARCHAR(06)     NULL,');
+    Dm.Query1.sql.add('             AF_ENVIO_MERCHANT VARCHAR(06)     NULL,');
+    Dm.Query1.sql.add('             AF_ENVIO_GETRANSP VARCHAR(06)     NULL,');
+    Dm.Query1.sql.add('             AF_ENVIO_MDE      VARCHAR(06)     NULL)');
+    Dm.Query1.execsql;
+  end;
+
+  if not Ja_Executou_Script('Criada Tabela GRAFICOARQUIVOSFISCAIS_GAF....') then
+  begin
+    Dm.Query1.close;
+    Dm.Query1.sql.clear;
+    Dm.Query1.sql.add('CREATE TABLE GRAFICOARQUIVOSFISCAIS_GAF ( ');
+    Dm.Query1.sql.add('             GAF_ITEM VARCHAR(20),        ');
+    Dm.Query1.sql.add('             GAF_QTDE INTEGER             ');
+    Dm.Query1.sql.add('           )                              ');
+    Dm.Query1.execsql;
+  end;
+
+//  executar('UPDATE ARQUIVOS_FISCAIS_AF SET AF_USU = ''W'' WHERE AF_USU IS NULL');
+//  executar('UPDATE ARQUIVOS_FISCAIS_AF SET AF_USU = ''W'' WHERE AF_USU = '''' ');
+  executar_Script('ALTER TABLE ARQUIVOS_FISCAIS_AF ADD AF_OBS VARCHAR(255) NULL');
+  executar_Script('ALTER TABLE ARQUIVOS_FISCAIS_AF ADD AF_OBS_USU VARCHAR(10) NULL');
+  executar_Script('ALTER TABLE ARQUIVOS_FISCAIS_AF ADD AF_OBS_DT DATETIME NULL');
+  executar_Script('ALTER TABLE ARQUIVOS_FISCAIS_AF ADD AF_OBS_DTx VARCHAR(10) NULL');
+  executar_Script('ALTER TABLE ARQUIVOS_FISCAIS_AF ADD AF_OBS_HR VARCHAR(05) NULL');
+
+  if not Ja_Executou_Script('Criada Tabela GRAFICOUSUARQUIVOSFISCAIS_GUAF....') then
+  begin
+    Dm.Query1.close;
+    Dm.Query1.sql.clear;
+    Dm.Query1.sql.add('CREATE TABLE GRAFICOUSUARQUIVOSFISCAIS_GUAF ( ');
+    Dm.Query1.sql.add('             GUAF_USU VARCHAR(10),            ');
+    Dm.Query1.sql.add('             GUAF_QTDE INTEGER                ');
+    Dm.Query1.sql.add('           )                                  ');
+    Dm.Query1.execsql;
+  end;
+
+  if not Ja_Executou_Script('Criada Tabela GRAFICOCONTADOR_GC....') then
+  begin
+    Dm.Query1.close;
+    Dm.Query1.sql.clear;
+    Dm.Query1.sql.add('CREATE TABLE GRAFICOCONTADOR_GC (     ');
+    Dm.Query1.sql.add('             GC_CONTADOR VARCHAR(10), ');
+    Dm.Query1.sql.add('             GC_QTDE INTEGER          ');
+    Dm.Query1.sql.add('           )                          ');
+    Dm.Query1.execsql;
+  end;
+
+  if not Ja_Executou_Script('Criada Tabela GRAFICOSISTEMA_GS....') then
+  begin
+    Dm.Query1.close;
+    Dm.Query1.sql.clear;
+    Dm.Query1.sql.add('CREATE TABLE GRAFICOSISTEMA_GS (     ');
+    Dm.Query1.sql.add('             GS_SISTEMA VARCHAR(10), ');
+    Dm.Query1.sql.add('             GS_QTDE INTEGER          ');
+    Dm.Query1.sql.add('           )                          ');
+    Dm.Query1.execsql;
+  end;
+end;
+
+procedure TAcesso.Tratar_Bairro;
 begin
    Executar_Script('CREATE TABLE BAIRRO_BAI (BAI_CODIGO VARCHAR(10) NOT NULL UNIQUE, '+
                                             'BAI_DESCRICAO VARCHAR(50) NOT NULL)');

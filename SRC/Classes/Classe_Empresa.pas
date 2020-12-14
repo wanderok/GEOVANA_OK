@@ -13,7 +13,7 @@ uses Classes, Dialogs, SysUtils, IniFiles,
 
 type
 
-   TEmpresa = class
+  TEmpresa = class
   private
 	  FAtiva                       : Boolean;   // EMP_BLOQUEADA               varchar(1)   NULL
     FNomeFantasia                : String;    // EMP_NOME_FANTASIA           varchar(50)  NULL

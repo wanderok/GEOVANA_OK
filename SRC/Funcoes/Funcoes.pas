@@ -9,6 +9,7 @@ uses Dialogs, SysUtils,
      Classe_Usuario,
      Classe_VerificacaoInicial,
      Classe_Configuracoes,
+     ControleDeAcessos,
      PesquisaF1_T16,
      MostraMemo,
 
@@ -102,6 +103,7 @@ var Acesso            : TAcesso;
     globalFuncoes_Atualizado:String;
 
 function UniSystem:Boolean;
+function fSenhaUsuarioMaster:String;
 procedure ApagaRegistroDeDadosDaTela(pTela:String);
 //Apaga os registros de controle contendo os dados da tela
 procedure ComparaDadosDaTela(pFrase:String;pTela:Tobject);
@@ -152,6 +154,8 @@ function Existe_Outro_CONTADOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
 function Existe_Outro_CONTADOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
 function Existe_Outro_CONTADOR_Com_Esta_IE(pIE,pCliente:String):Boolean;
 function Existe_Outro_CONTADOR_Com_Este_RG(pRG,pCliente:String):Boolean;
+function Existe_Outro_CONTADOR_Com_Este_Fone(pFone,pContador:String):Boolean;
+function Existe_Outro_CONTADOR_Com_Este_Email(pEmail,pContador:String):Boolean;
 
 function Existe_Outro_TRANSPORTADOR_Com_Este_CPF(pCPF,pCliente:String):Boolean;
 function Existe_Outro_TRANSPORTADOR_Com_Este_CNPJ(pCNPJ,pCliente:String):Boolean;
@@ -196,6 +200,7 @@ procedure Inicio_Padrao_De_Todas_As_Telas_Do_Sistema;
 function fPercentualValido(pValor:String):Boolean;
 function masctostr(numero:string):string;
 function f0ou1(pBoolean:Boolean):Integer;
+function fSIMouNAO(pInteiro:Integer):String;
 function SoNumeros(pnumero:String):String;
 function SoNumerosI(pnumero:String):Integer;
 function SoNumerosOuISENTO(pnumero:String):String;
@@ -255,6 +260,9 @@ function HaCamposImportantes_tag_200_NaoPreenchidos(pTela:TForm):Boolean;
 
 procedure Limpar_os_campos_da_Tela(pTela:TForm);
 procedure Gravar_Dados_do_Ultimo_Acesso(pEmpresa:String);
+
+function fTemAcesso(pUsuario,pFuncao:String):Boolean; overload;
+function fTemAcesso(pFuncao:String)         :Boolean; overload;
 
 implementation
 
@@ -736,6 +744,86 @@ begin
    result := true;
 end;
 
+function Existe_Outro_CONTADOR_Com_Este_Fone(pFone,pContador:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pFone = '' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT CONT_CODIGO, CONT_NOME_FANTASIA       ');
+   qLocal.sql.add('  FROM CONTADOR_CONT, CONTADOR_CONTATO_CONTC ');
+   qLocal.sql.add(' WHERE CONTC_CODIGO = CONT_CODIGO            ');
+   qLocal.sql.add('   AND CONT_CODIGO  <> :CONT_CODIGO          ');
+   qLocal.sql.add('   AND (   CONTC_FONE1    = :FONE            ');
+   qLocal.sql.add('        OR CONTC_FONE2    = :FONE            ');
+   qLocal.sql.add('        OR CONTC_CEL1     = :FONE            ');
+   qLocal.sql.add('        OR CONTC_WHATSAPP = :FONE            ');
+   qLocal.sql.add('       )                                     ');
+   qLocal.ParamByName('CONT_CODIGO').AsString := pContador;
+   qLocal.ParamByName('FONE'       ).AsString := SoNumeros(pFone);
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.Avisar('Telefone associado a ' +
+                 qLocal.FieldByName('CONT_NOME_FANTASIA').AsString +
+                 ' '+
+                 qLocal.FieldByName('CONT_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+function Existe_Outro_CONTADOR_Com_Este_Email(pEmail,pContador:String):Boolean;
+var qLocal : TFDQuery;
+begin
+   Result := False;
+   if pEmail = '' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT CONT_CODIGO, CONT_NOME_FANTASIA       ');
+   qLocal.sql.add('  FROM CONTADOR_CONT, CONTADOR_CONTATO_CONTC ');
+   qLocal.sql.add(' WHERE CONTC_CODIGO = CONT_CODIGO            ');
+   qLocal.sql.add('   AND CONT_CODIGO  <> :CONT_CODIGO          ');
+   qLocal.sql.add('   AND (   CONTC_EMAIL1  = :EMAIL            ');
+   qLocal.sql.add('        OR CONTC_EMAIL2  = :EMAIL            ');
+   qLocal.sql.add('       )                                     ');
+   qLocal.ParamByName('CONT_CODIGO').AsString := pContador;
+   qLocal.ParamByName('EMAIL'      ).AsString := pEmail;
+   qLocal.Open;
+   if qLocal.eof then
+   begin
+      qLocal.Free;
+      exit;
+   end;
+   Avisos.Avisar('Email associado a ' +
+                 qLocal.FieldByName('CONT_NOME_FANTASIA').AsString +
+                 ' '+
+                 qLocal.FieldByName('CONT_CODIGO').AsString);
+   qLocal.Free;
+   result := true;
+end;
+
+{
+        qContador.SQL.Add('INSERT INTO CONTADOR_CONTATO_CONTC');
+        qContador.SQL.Add('           (CONTC_CODIGO,        ');
+        qContador.SQL.Add('            CONTC_NOME,          ');
+        qContador.SQL.Add('            CONTC_FONE1,         ');
+        qContador.SQL.Add('            CONTC_FONE2,         ');
+        qContador.SQL.Add('            CONTC_CEL1,          ');
+        qContador.SQL.Add('            CONTC_WHATSAPP,      ');
+        qContador.SQL.Add('            CONTC_EMAIL1,        ');
+        qContador.SQL.Add('            CONTC_EMAIL2)        ');
+}
+
 function Existe_Outro_COLABORADOR_Com_Este_RG(pRG,pCliente:String):Boolean;
 var qLocal : TFDQuery;
 begin
@@ -772,6 +860,14 @@ begin
      result := 1
   else
      result := 0;
+end;
+
+function fSIMouNAO(pInteiro:Integer):String;
+begin
+  if pInteiro = 0 then
+     result := 'Não'
+  else
+     result := 'Sim'
 end;
 
 procedure AtualizaFUSADA_FUS(pUSUARIO,pfuncao:String);
@@ -3796,6 +3892,30 @@ begin
   DM.Query1.ExecSql;
 end;
 
+function fTemAcesso(pUsuario,pFuncao:String):Boolean; overload;
+begin
+  if pUsuario = 'MASTER' then
+  begin
+    result := true;
+    exit;
+  end;
+  result := TemAcesso(pUsuario,pFuncao);
+end;
+
+function fTemAcesso(pFuncao:String)         :Boolean; overload;
+begin
+  if Usuario.Codigo = 'MASTER' then
+  begin
+    result := true;
+    exit;
+  end;
+  result := TemAcesso(pFuncao);
+end;
+
+function fSenhaUsuarioMaster:String;
+begin
+  result := '@123@';
+end;
 
 function UniSystem:Boolean;
 begin

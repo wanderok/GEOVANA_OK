@@ -3,11 +3,11 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
   Top = 0
   AutoSize = True
   Caption = 'Detalhes de Cliente SMC'
-  ClientHeight = 185
-  ClientWidth = 640
+  ClientHeight = 478
+  ClientWidth = 669
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
+  Font.Color = clBlack
   Font.Height = -15
   Font.Name = 'Tahoma'
   Font.Style = [fsBold]
@@ -19,8 +19,8 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
   TextHeight = 18
   object lbNomeDaTela: TLabel
     Left = 0
-    Top = 172
-    Width = 640
+    Top = 465
+    Width = 669
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
@@ -31,15 +31,15 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 600
+    ExplicitLeft = 629
     ExplicitWidth = 40
   end
   object Label1: TLabel
-    Left = 4
-    Top = 4
-    Width = 73
+    Left = 12
+    Top = 42
+    Width = 60
     Height = 18
-    Caption = 'Contador:'
+    Caption = 'C'#243'digo: '
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -15
@@ -48,11 +48,11 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
     ParentFont = False
   end
   object Label2: TLabel
-    Left = 0
-    Top = 84
-    Width = 77
+    Left = 12
+    Top = 196
+    Width = 60
     Height = 18
-    Caption = 'Consultor:'
+    Caption = 'C'#243'digo: '
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -15
@@ -63,7 +63,7 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
   object edContador: TEdit
     Tag = 200
     Left = 80
-    Top = 0
+    Top = 38
     Width = 81
     Height = 26
     CharCase = ecUpperCase
@@ -81,7 +81,7 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
   end
   object bPesqRamoAtividade: TcxButton
     Left = 161
-    Top = 0
+    Top = 38
     Width = 25
     Height = 26
     Hint = 'Pesquisa Ramo de Atividade'
@@ -131,8 +131,8 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
   end
   object edContadorNome: TEdit
     Left = 186
-    Top = 0
-    Width = 450
+    Top = 38
+    Width = 480
     Height = 26
     TabStop = False
     CharCase = ecUpperCase
@@ -149,7 +149,7 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
   object edConsultor: TEdit
     Tag = 200
     Left = 80
-    Top = 80
+    Top = 192
     Width = 81
     Height = 26
     CharCase = ecUpperCase
@@ -167,7 +167,7 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
   end
   object cxButton1: TcxButton
     Left = 161
-    Top = 80
+    Top = 192
     Width = 25
     Height = 26
     Hint = 'Pesquisa Ramo de Atividade'
@@ -213,11 +213,12 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
     ShowHint = True
     TabOrder = 4
     TabStop = False
+    OnClick = cxButton1Click
   end
   object edConsultorNome: TEdit
     Left = 186
-    Top = 80
-    Width = 450
+    Top = 192
+    Width = 480
     Height = 26
     TabStop = False
     CharCase = ecUpperCase
@@ -232,8 +233,8 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
     TabOrder = 5
   end
   object cxButton28: TcxButton
-    Left = 518
-    Top = 120
+    Left = 562
+    Top = 419
     Width = 103
     Height = 44
     Caption = 'Sair'
@@ -381,8 +382,8 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
     OnClick = cxButton28Click
   end
   object cxButton21: TcxButton
-    Left = 414
-    Top = 120
+    Left = 463
+    Top = 419
     Width = 98
     Height = 44
     Caption = 'Gravar'
@@ -529,9 +530,608 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
     ParentFont = False
     OnClick = cxButton21Click
   end
+  object GroupBox3: TGroupBox
+    Left = 0
+    Top = 64
+    Width = 669
+    Height = 91
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 8
+    object TLabel
+      Left = 15
+      Top = 10
+      Width = 50
+      Height = 18
+      Caption = 'Fone 1:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TLabel
+      Left = 41
+      Top = 64
+      Width = 24
+      Height = 18
+      Caption = 'Cel:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TLabel
+      Left = 193
+      Top = 64
+      Width = 72
+      Height = 18
+      Caption = 'WhatsApp:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TLabel
+      Left = 396
+      Top = 33
+      Width = 56
+      Height = 18
+      Caption = 'E-mail 1:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TLabel
+      Left = 15
+      Top = 37
+      Width = 50
+      Height = 18
+      Caption = 'Fone 2:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TLabel
+      Left = 366
+      Top = 6
+      Width = 86
+      Height = 18
+      Caption = 'Respons'#225'vel:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TLabel
+      Left = 396
+      Top = 60
+      Width = 56
+      Height = 18
+      Caption = 'E-mail 2:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object GroupBox8: TGroupBox
+      Left = 184
+      Top = -5
+      Width = 253
+      Height = 3
+      TabOrder = 7
+    end
+    object edFone1: TEdit
+      Tag = 200
+      Left = 71
+      Top = 6
+      Width = 120
+      Height = 26
+      CharCase = ecUpperCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 10
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 0
+    end
+    object edCel: TEdit
+      Tag = 200
+      Left = 71
+      Top = 60
+      Width = 120
+      Height = 26
+      CharCase = ecUpperCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 11
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 3
+    end
+    object edWhatsApp: TEdit
+      Tag = 200
+      Left = 266
+      Top = 60
+      Width = 120
+      Height = 26
+      CharCase = ecUpperCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 11
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 4
+    end
+    object edEmail1: TEdit
+      Tag = 200
+      Left = 458
+      Top = 29
+      Width = 207
+      Height = 26
+      CharCase = ecLowerCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 50
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 5
+    end
+    object edFone2: TEdit
+      Left = 71
+      Top = 33
+      Width = 120
+      Height = 26
+      CharCase = ecUpperCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 10
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 1
+    end
+    object edNomeContato: TEdit
+      Tag = 200
+      Left = 458
+      Top = 2
+      Width = 207
+      Height = 26
+      CharCase = ecUpperCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 50
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 2
+    end
+    object edEmail2: TEdit
+      Left = 458
+      Top = 56
+      Width = 207
+      Height = 26
+      CharCase = ecLowerCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 50
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 6
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 669
+    Height = 37
+    Align = alTop
+    Caption = 'C O N T A D O R'
+    Color = 15254945
+    ParentBackground = False
+    TabOrder = 9
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 155
+    Width = 669
+    Height = 37
+    Caption = 'C O N S U L T O R'
+    Color = 15254945
+    ParentBackground = False
+    TabOrder = 10
+  end
+  object GroupBox1: TGroupBox
+    Left = 0
+    Top = 219
+    Width = 669
+    Height = 91
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 11
+    object TLabel
+      Left = 15
+      Top = 10
+      Width = 50
+      Height = 18
+      Caption = 'Fone 1:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TLabel
+      Left = 41
+      Top = 64
+      Width = 24
+      Height = 18
+      Caption = 'Cel:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TLabel
+      Left = 193
+      Top = 64
+      Width = 72
+      Height = 18
+      Caption = 'WhatsApp:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TLabel
+      Left = 396
+      Top = 33
+      Width = 56
+      Height = 18
+      Caption = 'E-mail 1:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TLabel
+      Left = 15
+      Top = 37
+      Width = 50
+      Height = 18
+      Caption = 'Fone 2:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TLabel
+      Left = 366
+      Top = 6
+      Width = 86
+      Height = 18
+      Caption = 'Respons'#225'vel:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object TLabel
+      Left = 396
+      Top = 60
+      Width = 56
+      Height = 18
+      Caption = 'E-mail 2:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object GroupBox2: TGroupBox
+      Left = 184
+      Top = -5
+      Width = 253
+      Height = 3
+      TabOrder = 7
+    end
+    object Edit1: TEdit
+      Tag = 200
+      Left = 71
+      Top = 6
+      Width = 120
+      Height = 26
+      CharCase = ecUpperCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 10
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 0
+    end
+    object Edit2: TEdit
+      Tag = 200
+      Left = 71
+      Top = 60
+      Width = 120
+      Height = 26
+      CharCase = ecUpperCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 11
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 3
+    end
+    object Edit3: TEdit
+      Tag = 200
+      Left = 266
+      Top = 60
+      Width = 120
+      Height = 26
+      CharCase = ecUpperCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 11
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 4
+    end
+    object Edit4: TEdit
+      Tag = 200
+      Left = 458
+      Top = 29
+      Width = 207
+      Height = 26
+      CharCase = ecLowerCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 50
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 5
+    end
+    object Edit5: TEdit
+      Left = 71
+      Top = 33
+      Width = 120
+      Height = 26
+      CharCase = ecUpperCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 10
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 1
+    end
+    object Edit6: TEdit
+      Tag = 200
+      Left = 458
+      Top = 2
+      Width = 207
+      Height = 26
+      CharCase = ecUpperCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 50
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 2
+    end
+    object Edit7: TEdit
+      Left = 458
+      Top = 56
+      Width = 207
+      Height = 26
+      CharCase = ecLowerCase
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MaxLength = 50
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 6
+    end
+  end
+  object Panel3: TPanel
+    Left = 0
+    Top = 309
+    Width = 354
+    Height = 37
+    Caption = 'S I S T E M A S'
+    Color = 15254945
+    ParentBackground = False
+    TabOrder = 12
+  end
+  object Panel4: TPanel
+    Left = 1
+    Top = 347
+    Width = 353
+    Height = 71
+    TabOrder = 13
+    object CheckBox5: TCheckBox
+      Left = 226
+      Top = 5
+      Width = 124
+      Height = 17
+      Caption = 'GE TRANSPORTE'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 0
+    end
+    object CheckBox4: TCheckBox
+      Left = 107
+      Top = 5
+      Width = 113
+      Height = 17
+      Caption = 'MERCHANT'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 1
+    end
+    object CheckBox1: TCheckBox
+      Left = 4
+      Top = 5
+      Width = 97
+      Height = 17
+      Caption = 'SMC'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 2
+    end
+    object CheckBox2: TCheckBox
+      Left = 4
+      Top = 29
+      Width = 97
+      Height = 17
+      Caption = 'SMC PLUS'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 3
+    end
+    object CheckBox3: TCheckBox
+      Left = 107
+      Top = 28
+      Width = 97
+      Height = 17
+      Caption = 'MDe'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 4
+    end
+  end
+  object Panel5: TPanel
+    Left = 354
+    Top = 309
+    Width = 311
+    Height = 37
+    Caption = 'C E R T I F I C A D O  D I G I T A L'
+    Color = 15254945
+    ParentBackground = False
+    TabOrder = 14
+  end
+  object Panel6: TPanel
+    Left = 354
+    Top = 347
+    Width = 311
+    Height = 71
+    TabOrder = 15
+    object RadioGroup1: TRadioGroup
+      Left = 61
+      Top = 3
+      Width = 170
+      Height = 60
+      Caption = 'Tipo'
+      Columns = 2
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      Items.Strings = (
+        'A1'
+        'A3')
+      ParentFont = False
+      TabOrder = 0
+    end
+  end
   object ACBrEnterTab1: TACBrEnterTab
     EnterAsTab = True
-    Left = 192
-    Top = 112
+    Left = 248
+    Top = 224
   end
 end

@@ -130,6 +130,7 @@ end;
 procedure Tfrm_consulta_T7.Pesquisar;
 begin
     Case rgConsultar.itemindex of
+
        0 : Pesquisar_Clientes;
        1 : Pesquisar_Fornecedor;
        2 : Pesquisar_Consultor;

@@ -92,7 +92,14 @@ uses
   cad_cliente_SMC_T35 in '..\..\src\views\cad_clientes\cad_cliente_SMC_T35.pas' {Frm_cad_cliente_SMC_T35},
   Classe_Colaborador_Tipo in '..\..\src\Classes\Classe_Colaborador_Tipo.pas',
   cad_marca in '..\..\SRC\views\Produto\cad_marca\cad_marca.pas' {Frm_Marca},
-  cadastro_produto in '..\..\SRC\views\Produto\cadastro_produto.pas' {Frm_Produto};
+  cadastro_produto in '..\..\SRC\views\Produto\cadastro_produto.pas' {Frm_Produto},
+  painel_SMC_T36 in '..\..\src\views\SMC\painel_SMC_T36.pas' {frm_painel_SMC_T36},
+  SMC_Fiscal_T37 in '..\..\src\views\SMC\SMC_Fiscal_T37.pas' {frm_SMC_Fiscal_T37},
+  GraficoSistemasSMC in '..\..\SRC\views\SMC\GraficoSistemasSMC.pas' {frmGraficoSistemasSMC},
+  GraficoProdutividadeSMC in '..\..\src\views\SMC\GraficoProdutividadeSMC.pas' {frmGraficoProdutividadeSMC},
+  GraficoContadoresSMC in '..\..\src\views\SMC\GraficoContadoresSMC.pas' {frmGraficoContadoresSMC},
+  ConfigArquivosFiscaisSMC in '..\..\src\views\SMC\ConfigArquivosFiscaisSMC.pas' {frmConfigArquivosFiscaisSMC},
+  Acessos_T38 in '..\..\SRC\views\Acessos_Permissoes\Acessos_T38.pas' {frmAcessos_T38};
 
 {$R *.res}
 

@@ -63,6 +63,7 @@ type
     procedure edt_confirma_senhaKeyPress(Sender: TObject; var Key: Char);
     procedure edt_confirma_senhaExit(Sender: TObject);
     procedure edt_senhaExit(Sender: TObject);
+    procedure bPermissoesClick(Sender: TObject);
   private
     { Private declarations }
     procedure Iniciar;
@@ -79,6 +80,8 @@ var
 implementation
 
 {$R *.dfm}
+
+uses Acessos_T38;
 
 procedure Tfrm_cad_usuario_T2.bGravarClick(Sender: TObject);
 begin
@@ -100,6 +103,16 @@ begin
   UsuarioLocal.Free;
 
   Iniciar;
+end;
+
+procedure Tfrm_cad_usuario_T2.bPermissoesClick(Sender: TObject);
+begin
+   if not fTemAcesso('DEFACE') then
+      exit;
+   frmAcessos_T38 := TfrmAcessos_T38.Create(nil);
+   frmAcessos_T38.edUSU_CODIGO.text := edt_usuario.text;
+   frmAcessos_T38.ShowModal;
+   frmAcessos_T38.Free;
 end;
 
 procedure Tfrm_cad_usuario_T2.Iniciar;
@@ -126,6 +139,11 @@ end;
 
 function Tfrm_cad_usuario_T2.DadosCorretos: Boolean;
 begin
+  if bPermissoes.Focused then
+  begin
+     result := true;
+     exit;
+  end;
   result := false;
 
   if NaoPreencheuCamposObrigatoriosOuImportantes(frm_cad_usuario_T2) then
@@ -142,6 +160,8 @@ end;
 
 procedure Tfrm_cad_usuario_T2.edt_confirma_senhaExit(Sender: TObject);
 begin
+  if bPermissoes.Focused then
+     exit;
    if not DadosCorretos then
       exit;
    bGravar.Enabled:=true;
@@ -160,6 +180,8 @@ end;
 
 procedure Tfrm_cad_usuario_T2.edt_senhaExit(Sender: TObject);
 begin
+  if bPermissoes.Focused then
+     exit;
    edt_confirma_senha.Enabled:= true;
    edt_confirma_senha.Setfocus;
 end;
@@ -176,7 +198,6 @@ end;
 procedure Tfrm_cad_usuario_T2.edt_usuarioExit(Sender: TObject);
 begin
   if edt_Usuario.Text = '' then exit;
-
   try
     UsuarioLocal := TUsuario.Create;
   except
@@ -184,6 +205,9 @@ begin
     UsuarioLocal := TUsuario.Create;
   end;
   edt_Senha.Enabled := True;
+  if bPermissoes.Focused then
+     exit;
+
   edt_Senha.SetFocus;
 end;
 

@@ -3,8 +3,11 @@ unit Telas_Numeros;
 ====================================================================================================
 |tela |unit                                        |form                                           |
 |-----|--------------------------------------------|-----------------------------------------------|
+|T38  |Acessos_T38                                 |frm_Acessos_T38                                |
+|T37  |SMC_Fiscal_T37                              |frm_SMC_Fiscal_T37                             |
+|T36  |painel_SMC_T36                              |frm_painel_SMC_T36                             |
 |T35  |cad_cliente_SMC_T35                         |Frm_cad_cliente_SMC_T35                        |
-|T34  |config_nfce_T34                             |Frm_config_nfce_T34                             |
+|T34  |config_nfce_T34                             |Frm_config_nfce_T34                            |
 |T33  |config_certificado_T33                      |frm_config_certificado_T33                     |
 |T32  |config_nfe_T32                              |frmConfig_NFe_T32                              |
 |T31  |Consultor_Banco_Comissoes_T31               |frmConsultor_Banco_Comissoes_T31               |

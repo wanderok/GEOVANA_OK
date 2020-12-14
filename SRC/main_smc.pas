@@ -315,6 +315,10 @@ uses
     dxBarLargeButton124: TdxBarLargeButton;
     Image1: TImage;
     dxBarLargeButton125: TdxBarLargeButton;
+    dxBarButton86: TdxBarButton;
+    dxBarLargeButton126: TdxBarLargeButton;
+    dxBarLargeButton127: TdxBarLargeButton;
+    dxBarLargeButton128: TdxBarLargeButton;
     procedure dxBarLargeButton12Click(Sender: TObject);
     procedure dxBarLargeButton18Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -370,6 +374,7 @@ uses
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton23Click(Sender: TObject);
     procedure dxBarLargeButton26Click(Sender: TObject);
+    procedure dxBarLargeButton128Click(Sender: TObject);
   
     private
       { Private declarations }
@@ -398,7 +403,7 @@ uses
   cad_motorista_T26,
   cad_transportadora_T28,
   config_nfe_T32, config_nfce_T34,
-  cadastro_produto;
+  cadastro_produto, painel_SMC_T36;
   //cadastro_fornecedor, cad_transportadora,
   //cad_veiculos,
   //cad_sistemas,
@@ -715,6 +720,13 @@ begin
     FrmLimpaBaseDeDados.showmodal;
     FrmLimpaBaseDeDados.Free;
     dxRibbon1.ActiveTab := dxRibbon1Tab1;
+end;
+
+procedure TFrm_main.dxBarLargeButton128Click(Sender: TObject);
+begin
+    frm_painel_SMC_T36 := Tfrm_painel_SMC_T36.Create(nil);
+    frm_painel_SMC_T36.showmodal;
+    frm_painel_SMC_T36.Free;
 end;
 
 procedure TFrm_main.dxBarLargeButton12Click(Sender: TObject);

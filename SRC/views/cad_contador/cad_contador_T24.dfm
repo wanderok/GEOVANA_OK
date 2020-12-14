@@ -512,7 +512,7 @@ object frm_cad_contador_T24: Tfrm_cad_contador_T24
     Top = 95
     Width = 620
     Height = 139
-    ActivePage = tsPessoaFisica
+    ActivePage = tsPessoaJuridica
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -15
@@ -1363,7 +1363,7 @@ object frm_cad_contador_T24: Tfrm_cad_contador_T24
       OnClick = bPesqZonaClick
     end
     object edRua: TEdit
-      Tag = 100
+      Tag = 200
       Left = 112
       Top = 49
       Width = 502
@@ -1380,7 +1380,7 @@ object frm_cad_contador_T24: Tfrm_cad_contador_T24
       OnKeyPress = edNOMEKeyPress
     end
     object edCEP: TEdit
-      Tag = 100
+      Tag = 200
       Left = 112
       Top = 21
       Width = 86
@@ -1398,7 +1398,7 @@ object frm_cad_contador_T24: Tfrm_cad_contador_T24
       OnKeyPress = edCEPKeyPress
     end
     object edNumero: TEdit
-      Tag = 100
+      Tag = 200
       Left = 112
       Top = 78
       Width = 72
@@ -1416,7 +1416,7 @@ object frm_cad_contador_T24: Tfrm_cad_contador_T24
       OnKeyPress = edNumeroKeyPress
     end
     object edBairro: TEdit
-      Tag = 100
+      Tag = 200
       Left = 240
       Top = 78
       Width = 59
@@ -1487,7 +1487,7 @@ object frm_cad_contador_T24: Tfrm_cad_contador_T24
       OnKeyPress = edCPFKeyPress
     end
     object edCidade: TEdit
-      Tag = 100
+      Tag = 200
       Left = 112
       Top = 136
       Width = 242

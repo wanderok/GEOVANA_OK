@@ -5,8 +5,8 @@ object frm_consulta_T7: Tfrm_consulta_T7
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Consulta'
-  ClientHeight = 432
-  ClientWidth = 841
+  ClientHeight = 465
+  ClientWidth = 968
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,13 +22,11 @@ object frm_consulta_T7: Tfrm_consulta_T7
   PixelsPerInch = 96
   TextHeight = 13
   object Label24: TLabel
-    Left = 91
+    Left = 88
     Top = 34
-    Width = 428
+    Width = 242
     Height = 13
-    Caption = 
-      '(Raz'#227'o Social / Fantasia / Cod / CPF / CNPJ / IE / RG / Fones / ' +
-      'Cels / Emails / Contato ...)'
+    Caption = '(C'#243'd / Raz'#227'o Social / Nome Fantasia / CNPJ / CPF)'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -52,8 +50,8 @@ object frm_consulta_T7: Tfrm_consulta_T7
   end
   object lbNomeDaTela: TLabel
     Left = 0
-    Top = 419
-    Width = 841
+    Top = 452
+    Width = 968
     Height = 13
     Align = alBottom
     Alignment = taRightJustify
@@ -64,14 +62,20 @@ object frm_consulta_T7: Tfrm_consulta_T7
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitLeft = 808
+    ExplicitLeft = 935
     ExplicitWidth = 33
   end
   object gd: TcxGrid
     Left = 0
     Top = 53
-    Width = 841
-    Height = 365
+    Width = 968
+    Height = 399
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
     TabOrder = 1
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Office2013White'
@@ -152,11 +156,11 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Width = 300
       end
       object tbfantasia: TcxGridDBColumn
-        Caption = 'Fantasia'
+        Caption = 'Nome Fantasia'
         DataBinding.FieldName = 'fantasia'
         PropertiesClassName = 'TcxTextEditProperties'
         Properties.ReadOnly = True
-        MinWidth = 200
+        MinWidth = 300
         Options.Editing = False
         Options.Filtering = False
         Options.FilteringWithFindPanel = False
@@ -169,7 +173,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Options.GroupFooters = False
         Options.Grouping = False
         Options.HorzSizing = False
-        Width = 200
+        Width = 300
       end
       object tbcnpj: TcxGridDBColumn
         Caption = 'CNPJ'
@@ -179,7 +183,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Properties.ReadOnly = True
         HeaderAlignmentHorz = taCenter
         HeaderGlyphAlignmentHorz = taCenter
-        MinWidth = 125
+        MinWidth = 150
         Options.Editing = False
         Options.Filtering = False
         Options.FilteringWithFindPanel = False
@@ -189,10 +193,11 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Options.FilteringMRUItemsList = False
         Options.FilteringPopup = False
         Options.FilteringPopupMultiSelect = False
+        Options.AutoWidthSizable = False
         Options.GroupFooters = False
         Options.Grouping = False
         Options.HorzSizing = False
-        Width = 125
+        Width = 150
       end
       object tbcpf: TcxGridDBColumn
         Caption = 'CPF'
@@ -202,7 +207,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Properties.ReadOnly = True
         HeaderAlignmentHorz = taCenter
         HeaderGlyphAlignmentHorz = taCenter
-        MinWidth = 100
+        MinWidth = 145
         Options.Editing = False
         Options.Filtering = False
         Options.FilteringWithFindPanel = False
@@ -215,7 +220,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
         Options.GroupFooters = False
         Options.Grouping = False
         Options.HorzSizing = False
-        Width = 100
+        Width = 145
       end
     end
     object lv: TcxGridLevel
@@ -223,7 +228,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
     end
   end
   object btn_relatorios_cli: TcxButton
-    Left = 679
+    Left = 806
     Top = 0
     Width = 162
     Height = 45
@@ -371,15 +376,21 @@ object frm_consulta_T7: Tfrm_consulta_T7
   end
   object edArgumentoDePesquisa: TEdit
     Left = 91
-    Top = 9
-    Width = 262
-    Height = 21
+    Top = 7
+    Width = 390
+    Height = 26
     CharCase = ecUpperCase
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 0
     OnChange = edArgumentoDePesquisaChange
   end
   object cxButton21: TcxButton
-    Left = 574
+    Left = 701
     Top = 0
     Width = 103
     Height = 45
@@ -550,7 +561,7 @@ object frm_consulta_T7: Tfrm_consulta_T7
     Visible = False
   end
   object cbQualquerParteDoNome: TCheckBox
-    Left = 359
+    Left = 487
     Top = 11
     Width = 201
     Height = 17

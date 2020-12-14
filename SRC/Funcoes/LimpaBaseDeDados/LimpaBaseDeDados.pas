@@ -34,7 +34,7 @@ type
     CheckBox2: TCheckBox;
     CheckBox3: TCheckBox;
     Panel2: TPanel;
-    CheckBox4: TCheckBox;
+    cbArquivosFiscaisSMC: TCheckBox;
     CheckBox5: TCheckBox;
     CheckBox6: TCheckBox;
     CheckBox7: TCheckBox;
@@ -46,6 +46,7 @@ type
   private
     { Private declarations }
     procedure ApagarClientes(pFazer:Boolean);
+    procedure ApagarArquivosFiscaisSMC(pFazer:Boolean);
 
   public
     { Public declarations }
@@ -59,6 +60,12 @@ implementation
 {$R *.dfm}
 
 uses funcoes;
+
+procedure TFrmLimpaBaseDeDados.ApagarArquivosFiscaisSMC(pFazer: Boolean);
+begin
+   if not pFazer then exit;
+   Executar('TRUNCATE TABLE ARQUIVOS_FISCAIS_AF');
+end;
 
 procedure TFrmLimpaBaseDeDados.ApagarClientes(pFazer: Boolean);
 begin
@@ -86,6 +93,7 @@ begin
    end;
 
    ApagarClientes(cbCliente.checked);
+   ApagarArquivosFiscaisSMC(cbArquivosFiscaisSMC.checked);
 
    ShowMessage('OK!');
 end;

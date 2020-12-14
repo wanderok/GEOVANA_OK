@@ -73,8 +73,12 @@ type
       FContato           : TContato;
       FContador          : String;
       FConsultor         : String;
-      //FCodigoMunicipio   : String;           // CLID_CDCIDADE
-      //
+      FUsa_SMC           : Integer;
+      FUsa_SMCPLUS       : Integer;
+      FUsa_MERCHANT      : Integer;
+      FUsa_MDE           : Integer;
+      FUsa_GETRANSPORTE  : Integer;
+      fUsa_A1A3          : Integer;
       function  getFDataCadastro: TDateTime;
       procedure setFDataCadastro(const Value: TDateTime);
       function  getDataCadastroString: String;
@@ -90,6 +94,18 @@ type
       function getFContador: String;
       procedure setFConsultor(const Value: String);
       procedure setFContador(const Value: String);
+    function getFUsa_GETRANSPORTE: Integer;
+    function getFUsa_MDE: Integer;
+    function getFUsa_SMC: Integer;
+    function getFUsa_SMCPLUS: Integer;
+    procedure setFUsa_GETRANSPORTE(const Value: Integer);
+    procedure setFUsa_MDE(const Value: Integer);
+    procedure setFUsa_SMC(const Value: Integer);
+    procedure setFUsa_SMCPLUS(const Value: Integer);
+    function getFUsa_MERCHANT: Integer;
+    procedure setFUsa_MERCHANT(const Value: Integer);
+    function getFUsa_A1A3: Integer;
+    procedure setFUsa_A1A3(const Value: Integer);
       //function getFCodigoMunicipio: String;
       //procedure setFCodigoMunicipio(const Value: String); // CLID_DT
 
@@ -108,6 +124,12 @@ type
       property Contato           : TContato         read FContato               write FContato;
       property Contador          : String           read getFContador           write setFContador;
       property Consultor         : String           read getFConsultor          write setFConsultor;
+      property Usa_SMC           : Integer          read getFUsa_SMC            write setFUsa_SMC;
+      property Usa_SMCPLUS       : Integer          read getFUsa_SMCPLUS        write setFUsa_SMCPLUS;
+      property Usa_MDE           : Integer          read getFUsa_MDE            write setFUsa_MDE;
+      property Usa_GETRANSPORTE  : Integer          read getFUsa_GETRANSPORTE   write setFUsa_GETRANSPORTE;
+      property Usa_MERCHANT      : Integer          read getFUsa_MERCHANT       write setFUsa_MERCHANT;
+      property Usa_A1A3          : Integer          read getFUsa_A1A3           write setFUsa_A1A3;
 end;
 
   TClienteAlteracao = class(TAlteracao);
@@ -477,6 +499,12 @@ begin
         qCliente.SQL.Add('       CLID_CDZONA,              ');
         qCliente.SQL.Add('       CLID_CDCONTADOR,          ');
         qCliente.SQL.Add('       CLID_CDCONSULTOR,         ');
+        qCliente.SQL.Add('       CLID_SMC,                 ');
+        qCliente.SQL.Add('       CLID_SMCPLUS,             ');
+        qCliente.SQL.Add('       CLID_MDE,                 ');
+        qCliente.SQL.Add('       CLID_MERCHANT,            ');
+        qCliente.SQL.Add('       CLID_GETRANSPORTE,        ');
+        qCliente.SQL.Add('       CLID_CERTIFICADOA1A3,     ');
         qCliente.SQL.Add('       CLID_DT                   ');
         qCliente.SQL.Add('     )                           ');
         qCliente.SQL.Add('VALUES                           ');
@@ -504,6 +532,12 @@ begin
         qCliente.SQL.Add('      :CLID_CDZONA,              ');
         qCliente.SQL.Add('      :CLID_CDCONTADOR,          ');
         qCliente.SQL.Add('      :CLID_CDCONSULTOR,         ');
+        qCliente.SQL.Add('      :CLID_SMC,                 ');
+        qCliente.SQL.Add('      :CLID_SMCPLUS,             ');
+        qCliente.SQL.Add('      :CLID_MDE,                 ');
+        qCliente.SQL.Add('      :CLID_MERCHANT,            ');
+        qCliente.SQL.Add('      :CLID_GETRANSPORTE,        ');
+        qCliente.SQL.Add('      :CLID_CERTIFICADOA1A3,     ');
         qCliente.SQL.Add('      :CLID_DT                   ');
         qCliente.SQL.Add('     )                           ');
         qCliente.ParamByName('CLID_CODIGO'             ).AsString   := FCodigo;
@@ -529,6 +563,12 @@ begin
         qCliente.ParamByName('CLID_CDZONA'             ).AsString   := FDetalhes.FZona;
         qCliente.ParamByName('CLID_CDCONTADOR'         ).AsString   := FDetalhes.FContador;
         qCliente.ParamByName('CLID_CDCONSULTOR'        ).AsString   := FDetalhes.FConsultor;
+        qCliente.ParamByName('CLID_SMC'                ).AsInteger  := FDetalhes.FUsa_SMC;
+        qCliente.ParamByName('CLID_SMCPLUS'            ).AsInteger  := FDetalhes.FUsa_SMCPLUS;
+        qCliente.ParamByName('CLID_MDE'                ).AsInteger  := FDetalhes.FUsa_MDE;
+        qCliente.ParamByName('CLID_MERCHANT'           ).AsInteger  := FDetalhes.FUsa_MERCHANT;
+        qCliente.ParamByName('CLID_GETRANSPORTE'       ).AsInteger  := FDetalhes.FUsa_GETRANSPORTE;
+        qCliente.ParamByName('CLID_CERTIFICADOA1A3'    ).AsInteger  := FDetalhes.fUsa_A1A3;
         qCliente.ParamByName('CLID_DT'                 ).AsDateTime := DataServidor;
         qCliente.ExecSql;
         Result := true;
@@ -679,6 +719,12 @@ begin
     FDetalhes.FContador          := qCliente.FieldByName('CLID_CDCONTADOR'         ).AsString;
     FDetalhes.FConsultor         := qCliente.FieldByName('CLID_CDCONSULTOR'        ).AsString;
     FDetalhes.FDataCadastro      := qCliente.FieldByName('CLID_DT'                 ).AsDateTime;
+    FDetalhes.FUsa_SMC           := qCliente.FieldByName('CLID_SMC'                ).AsInteger;
+    FDetalhes.FUsa_SMCPLUS       := qCliente.FieldByName('CLID_SMCPLUS'            ).AsInteger;
+    FDetalhes.FUsa_MDE           := qCliente.FieldByName('CLID_MDE'                ).AsInteger;
+    FDetalhes.FUsa_MERCHANT      := qCliente.FieldByName('CLID_MERCHANT'           ).AsInteger;
+    FDetalhes.FUsa_GETRANSPORTE  := qCliente.FieldByName('CLID_GETRANSPORTE'       ).AsInteger;
+    FDetalhes.fUsa_A1A3          := qCliente.FieldByName('CLID_CERTIFICADOA1A3'    ).AsInteger;
     Pegar_Alteracoes;
 end;
 
@@ -996,7 +1042,13 @@ begin
         qCliente.SQL.Add('       CLID_CDREGIAO            = :CLID_CDREGIAO,            ');
         qCliente.SQL.Add('       CLID_CDZONA              = :CLID_CDZONA,              ');
         qCliente.SQL.Add('       CLID_CDCONTADOR          = :CLID_CDCONTADOR,          ');
-        qCliente.SQL.Add('       CLID_CDCONSULTOR         = :CLID_CDCONSULTOR          ');
+        qCliente.SQL.Add('       CLID_CDCONSULTOR         = :CLID_CDCONSULTOR,         ');
+        qCliente.SQL.Add('       CLID_SMC                 = :CLID_SMC,                 ');
+        qCliente.SQL.Add('       CLID_SMCPLUS             = :CLID_SMCPLUS,             ');
+        qCliente.SQL.Add('       CLID_MDE                 = :CLID_MDE,                 ');
+        qCliente.SQL.Add('       CLID_MERCHANT            = :CLID_MERCHANT,            ');
+        qCliente.SQL.Add('       CLID_GETRANSPORTE        = :CLID_GETRANSPORTE,        ');
+        qCliente.SQL.Add('       CLID_CERTIFICADOA1A3     = :CLID_CERTIFICADOA1A3      ');
         qCliente.SQL.Add(' WHERE CLID_CODIGO              = :CLID_CODIGO               ');
         qCliente.ParamByName('CLID_CODIGO'          ).AsString   := FCodigo;
         qCliente.ParamByName('CLID_NUVEM_ATUALIZADO').AsInteger  := 0;
@@ -1021,6 +1073,13 @@ begin
         qCliente.ParamByName('CLID_CDZONA'          ).AsString   := FDetalhes.FZona;
         qCliente.ParamByName('CLID_CDCONTADOR'      ).AsString   := FDetalhes.FContador;
         qCliente.ParamByName('CLID_CDCONSULTOR'     ).AsString   := FDetalhes.FConsultor;
+        qCliente.ParamByName('CLID_SMC'             ).AsInteger  := FDetalhes.FUsa_SMC;
+        qCliente.ParamByName('CLID_SMCPLUS'         ).AsInteger  := FDetalhes.FUsa_SMCPLUS;
+        qCliente.ParamByName('CLID_MDE'             ).AsInteger  := FDetalhes.FUsa_MDE;
+        qCliente.ParamByName('CLID_MERCHANT'        ).AsInteger  := FDetalhes.FUsa_MERCHANT;
+        qCliente.ParamByName('CLID_GETRANSPORTE'    ).AsInteger  := FDetalhes.FUsa_GETRANSPORTE;
+        qCliente.ParamByName('CLID_CERTIFICADOA1A3' ).AsInteger  := FDetalhes.fUsa_A1A3;
+
         qCliente.ExecSql;
 
         Log('Classe_Cliente','Alterou Cliente '+ FNomeFantasia);
@@ -1131,6 +1190,36 @@ begin
    Result := StringToTipoPessoa(FTipoPessoa);
 end;
 
+function tDetalhes_Cliente.getFUsa_A1A3: Integer;
+begin
+   result := FUsa_A1A3;
+end;
+
+function tDetalhes_Cliente.getFUsa_GETRANSPORTE: Integer;
+begin
+   Result := FUsa_GETRANSPORTE;
+end;
+
+function tDetalhes_Cliente.getFUsa_MDE: Integer;
+begin
+   Result := FUsa_MDE;
+end;
+
+function tDetalhes_Cliente.getFUsa_MERCHANT: Integer;
+begin
+   Result := FUsa_MERCHANT;
+end;
+
+function tDetalhes_Cliente.getFUsa_SMC: Integer;
+begin
+   Result := FUsa_SMC;
+end;
+
+function tDetalhes_Cliente.getFUsa_SMCPLUS: Integer;
+begin
+   Result := FUsa_SMCPLUS;
+end;
+
 function tDetalhes_Cliente.getFZona: String;
 begin
    Result := FZona;
@@ -1170,6 +1259,36 @@ end;
 procedure tDetalhes_Cliente.setFTipoPessoa(const Value: TTipoPessoa);
 begin
    FTipoPessoa := TipoPessoaToString(Value);
+end;
+
+procedure tDetalhes_Cliente.setFUsa_A1A3(const Value: Integer);
+begin
+   FUsa_A1A3 := Value;
+end;
+
+procedure tDetalhes_Cliente.setFUsa_GETRANSPORTE(const Value: Integer);
+begin
+   FUsa_GETRANSPORTE := Value;
+end;
+
+procedure tDetalhes_Cliente.setFUsa_MDE(const Value: Integer);
+begin
+   FUsa_MDE := Value;
+end;
+
+procedure tDetalhes_Cliente.setFUsa_MERCHANT(const Value: Integer);
+begin
+   FUsa_MERCHANT := Value;
+end;
+
+procedure tDetalhes_Cliente.setFUsa_SMC(const Value: Integer);
+begin
+   FUsa_SMC := Value;
+end;
+
+procedure tDetalhes_Cliente.setFUsa_SMCPLUS(const Value: Integer);
+begin
+   FUsa_SMCPLUS := Value;
 end;
 
 procedure tDetalhes_Cliente.setFZona(const Value: String);

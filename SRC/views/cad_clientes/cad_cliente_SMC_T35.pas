@@ -26,7 +26,7 @@ uses
   Classe_Contador,
   Classe_Consultor,
 
-  ACBrBase, ACBrEnterTab;
+  ACBrBase, ACBrEnterTab, Vcl.ExtCtrls;
 
 type
   TFrm_cad_cliente_SMC_T35 = class(TForm)
@@ -42,6 +42,36 @@ type
     cxButton28: TcxButton;
     cxButton21: TcxButton;
     ACBrEnterTab1: TACBrEnterTab;
+    GroupBox3: TGroupBox;
+    GroupBox8: TGroupBox;
+    edFone1: TEdit;
+    edCel: TEdit;
+    edWhatsApp: TEdit;
+    edEmail1: TEdit;
+    edFone2: TEdit;
+    edNomeContato: TEdit;
+    edEmail2: TEdit;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    Edit7: TEdit;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    CheckBox5: TCheckBox;
+    CheckBox4: TCheckBox;
+    CheckBox1: TCheckBox;
+    CheckBox2: TCheckBox;
+    CheckBox3: TCheckBox;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    RadioGroup1: TRadioGroup;
     procedure edContadorKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure bPesqRamoAtividadeClick(Sender: TObject);
@@ -53,6 +83,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure edConsultorExit(Sender: TObject);
     procedure edContadorExit(Sender: TObject);
+    procedure cxButton1Click(Sender: TObject);
   private
     { Private declarations }
     procedure ConsultarContador;
@@ -74,7 +105,7 @@ implementation
 
 {$R *.dfm}
 
-uses consulta_T7;
+uses consulta_T7, funcoes;
 
 procedure TFrm_cad_cliente_SMC_T35.bPesqRamoAtividadeClick(Sender: TObject);
 begin
@@ -101,10 +132,21 @@ begin
     PesquisarContador;
 end;
 
+procedure TFrm_cad_cliente_SMC_T35.cxButton1Click(Sender: TObject);
+begin
+   ConsultarConsultor;
+end;
+
 procedure TFrm_cad_cliente_SMC_T35.cxButton21Click(Sender: TObject);
 begin
-   Cliente_T35.Detalhes.Contador  := edContador.Text;
-   Cliente_T35.Detalhes.Consultor := edConsultor.Text;
+   Cliente_T35.Detalhes.Contador         := edContador.Text;
+   Cliente_T35.Detalhes.Consultor        := edConsultor.Text;
+   Cliente_T35.Detalhes.Usa_SMC          := f0ou1(CheckBox1.checked);
+   Cliente_T35.Detalhes.Usa_SMCPLUS      := f0ou1(CheckBox2.checked);
+   Cliente_T35.Detalhes.Usa_MDE          := f0ou1(CheckBox3.checked);
+   Cliente_T35.Detalhes.Usa_MERCHANT     := f0ou1(CheckBox4.checked);
+   Cliente_T35.Detalhes.Usa_GETRANSPORTE := f0ou1(CheckBox5.checked);
+   Cliente_T35.Detalhes.Usa_A1A3         := RadioGroup1.ItemIndex;
    Cliente_T35.Gravar;
    close;
 end;
@@ -147,16 +189,21 @@ end;
 
 procedure TFrm_cad_cliente_SMC_T35.FormShow(Sender: TObject);
 begin
-   edContador.Text  := '';
-   edConsultor.Text := '';
-   edContadorNome.Text  := '';
-   edConsultorNome.Text := '';
+   Limpar_os_campos_da_Tela(Frm_cad_cliente_SMC_T35);
 
    if not Cliente_T35.Existe then
       exit;
 
-   edContador.Text  := Cliente_T35.Detalhes.Contador;
-   edConsultor.Text := Cliente_T35.Detalhes.Consultor;
+   edContador.Text   := Cliente_T35.Detalhes.Contador;
+   edConsultor.Text  := Cliente_T35.Detalhes.Consultor;
+
+   CheckBox1.checked := (Cliente_T35.Detalhes.Usa_SMC = 1);
+   CheckBox2.checked := (Cliente_T35.Detalhes.Usa_SMCPLUS = 1);
+   CheckBox3.checked := (Cliente_T35.Detalhes.Usa_MDE = 1);
+   CheckBox4.checked := (Cliente_T35.Detalhes.Usa_MERCHANT = 1);
+   CheckBox5.checked := (Cliente_T35.Detalhes.Usa_GETRANSPORTE = 1);
+   RadioGroup1.ItemIndex := Cliente_T35.Detalhes.Usa_A1A3;
+
    PesquisarContador;
    PesquisarConsultor;
 end;
@@ -164,6 +211,14 @@ end;
 procedure TFrm_cad_cliente_SMC_T35.PesquisarConsultor;
 begin
    edConsultorNome.Text := '';
+   edit1.text           := '';
+   edit5.Text           := '';
+   edit2.Text           := '';
+   edit3.Text           := '';
+   edit6.Text           := '';
+   edit4.Text           := '';
+   edit7.Text           := '';
+
    if edConsultor.Text = '' then
       exit;
 
@@ -176,11 +231,26 @@ begin
      exit;
    end;
    edConsultorNome.Text := Consultor.NomeFantasia;
+   edit1.text           := Consultor.Detalhes.Contato.Fone1;
+   edit5.Text           := Consultor.Detalhes.Contato.Fone2;
+   edit2.Text           := Consultor.Detalhes.Contato.Cel;
+   edit3.Text           := Consultor.Detalhes.Contato.WhatsApp;
+   edit6.Text           := Consultor.Detalhes.Contato.Nome;
+   edit4.Text           := Consultor.Detalhes.Contato.Email1;
+   edit7.Text           := Consultor.Detalhes.Contato.Email2;
 end;
 
 procedure TFrm_cad_cliente_SMC_T35.PesquisarContador;
 begin
    edContadorNome.Text := '';
+   edFone1.Text        := '';
+   edFone2.Text        := '';
+   edCel.Text          := '';
+   edWhatsApp.Text     := '';
+   edNomeContato.Text  := '';
+   edEmail1.Text       := '';
+   edEmail2.Text       := '';
+
    if edContador.Text = '' then
       exit;
 
@@ -193,6 +263,13 @@ begin
      exit;
    end;
    edContadorNome.Text := Contador.NomeFantasia;
+   edFone1.Text        := Contador.Detalhes.Contato.Fone1;
+   edFone2.Text        := Contador.Detalhes.Contato.Fone2;
+   edCel.Text          := Contador.Detalhes.Contato.Cel;
+   edWhatsApp.Text     := Contador.Detalhes.Contato.WhatsApp;
+   edNomeContato.Text  := Contador.Detalhes.Contato.Nome;
+   edEmail1.Text       := Contador.Detalhes.Contato.Email1;
+   edEmail2.Text       := Contador.Detalhes.Contato.Email2;
 end;
 
 end.

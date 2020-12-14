@@ -92,7 +92,7 @@ begin
     qLocal.SQL.Add('    )                           ');
     qLocal.ParamByName('USU_CODIGO').AsString := FCodigo;
     qLocal.ParamByName('USU_NOME'  ).AsString := FNome;
-    qLocal.ParamByName('USU_SENHA' ).AsString := FSenha;
+    qLocal.ParamByName('USU_SENHA' ).AsString := Criptografar(FSenha);
     qLocal.ParamByName('USU_ATIVO' ).AsInteger:= 1;
     qLocal.ParamByName('USU_ATUALIZADO_NA_NUVEM' ).AsInteger:= 0;
     qLocal.ParamByName('USU_ATUALIZADO_NA_NUVEMW').AsInteger:= 0;
@@ -157,7 +157,7 @@ begin
   begin
     FCodigo := Value;
     FNome   := Value;
-    FSenha  := '@123@';
+    FSenha  := fSenhaUsuarioMaster;
     FAtivo  := True;
     Result := True;
     exit;
