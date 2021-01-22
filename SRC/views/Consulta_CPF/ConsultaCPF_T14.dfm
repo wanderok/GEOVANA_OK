@@ -19,23 +19,6 @@ object frmConsulta_CPFT14: TfrmConsulta_CPFT14
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 432
-    Width = 645
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T14 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 605
-    ExplicitWidth = 40
-  end
   object Panel2: TPanel
     Left = 0
     Top = 240
@@ -366,6 +349,26 @@ object frmConsulta_CPFT14: TfrmConsulta_CPFT14
       ReadOnly = True
       TabOrder = 4
     end
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 430
+    Width = 645
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T14 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 2
+    ExplicitLeft = -323
+    ExplicitWidth = 968
   end
   object Timer1: TTimer
     Enabled = False

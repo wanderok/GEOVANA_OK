@@ -15,6 +15,8 @@ type
       FNome,
       FSenha   : String;
       FAtivo   : Boolean;
+      FLogado  : Integer;
+      FLogadoEstacao:String;
       procedure setCodigo(Const Value:String);
       procedure setNome(Const Value:String);
       procedure setSenha(Const Value:String);
@@ -23,6 +25,8 @@ type
       function getNome:String;
       function getSenha:String;
       function getAtivo:Boolean;
+      function getFLogado: Boolean;
+      function getFLogadoEstacao: String;
    published
       property Codigo: String read  getCodigo
                               write setCodigo;
@@ -32,16 +36,23 @@ type
 
       property Nome: String read  getNome
                             write setNome;
+
+      property Logado: Boolean read  getFLogado;
+
+      property LogadoEstacao: String read  getFLogadoEstacao;
+
       function Existe(Const Value:String):Boolean;
       procedure Insert;
       Procedure Update;
+      Procedure Logou;
+      Procedure Deslogou;
    end;
 
 implementation
 
 { TUsuario }
 
-uses Dados, Funcoes;
+uses DadosSMC, FuncoesSMC;
 
 function TUsuario.getAtivo: Boolean;
 begin
@@ -51,6 +62,16 @@ end;
 function TUsuario.getCodigo: String;
 begin
    result := FCodigo;
+end;
+
+function TUsuario.getFLogado: Boolean;
+begin
+   Result := (FLogado = 1);
+end;
+
+function TUsuario.getFLogadoEstacao: String;
+begin
+   Result := FLogadoEstacao;
 end;
 
 function TUsuario.getNome: String;
@@ -79,7 +100,9 @@ begin
     qLocal.SQL.Add('       USU_SENHA,               ');
     qLocal.SQL.Add('       USU_ATIVO,               ');
     qLocal.SQL.Add('       USU_ATUALIZADO_NA_NUVEM, ');
-    qLocal.SQL.Add('       USU_ATUALIZADO_NA_NUVEMW ');
+    qLocal.SQL.Add('       USU_ATUALIZADO_NA_NUVEMW,');
+    qLocal.SQL.Add('       USU_LOGADO,              ');
+    qLocal.SQL.Add('       USU_LOGADOESTACAO        ');
     qLocal.SQL.Add('    )                           ');
     qLocal.SQL.Add(' VALUES                         ');
     qLocal.SQL.Add('    (                           ');
@@ -88,7 +111,9 @@ begin
     qLocal.SQL.Add('      :USU_SENHA,               ');
     qLocal.SQL.Add('      :USU_ATIVO,               ');
     qLocal.SQL.Add('      :USU_ATUALIZADO_NA_NUVEM, ');
-    qLocal.SQL.Add('      :USU_ATUALIZADO_NA_NUVEMW ');
+    qLocal.SQL.Add('      :USU_ATUALIZADO_NA_NUVEMW,');
+    qLocal.SQL.Add('      :USU_LOGADO,              ');
+    qLocal.SQL.Add('      :USU_LOGADOESTACAO        ');
     qLocal.SQL.Add('    )                           ');
     qLocal.ParamByName('USU_CODIGO').AsString := FCodigo;
     qLocal.ParamByName('USU_NOME'  ).AsString := FNome;
@@ -96,10 +121,34 @@ begin
     qLocal.ParamByName('USU_ATIVO' ).AsInteger:= 1;
     qLocal.ParamByName('USU_ATUALIZADO_NA_NUVEM' ).AsInteger:= 0;
     qLocal.ParamByName('USU_ATUALIZADO_NA_NUVEMW').AsInteger:= 0;
+    qLocal.ParamByName('USU_LOGADO'              ).AsInteger:= 0;
+    qLocal.ParamByName('USU_LOGADOESTACAO'       ).AsString := '';
     qLocal.ExecSql;
     //
     qLocal.Free;
     Log('Classe_Usuario','Cad Usu '+FCodigo);
+end;
+
+procedure TUsuario.Logou;
+var qLocal: TFDQuery;
+begin
+  FLogado := 1;
+  FLogadoEstacao := NomeComputador;
+
+  qLocal := TFDQuery.Create(nil);
+  qLocal.ConnectionName := 'X';
+  qLocal.Close;
+  qLocal.SQL.Clear;
+  qLocal.SQL.Add('UPDATE USUARIO_USU                                         ');
+  qLocal.SQL.Add('   SET USU_LOGADO = 1,                        ');
+  qLocal.SQL.Add('       USU_LOGADOESTACAO = :USU_LOGADOESTACAO ');
+  qLocal.SQL.Add(' WHERE USU_CODIGO               = :USU_CODIGO              ');
+  qLocal.ParamByName('USU_CODIGO'       ).AsString := FCodigo;
+  qLocal.ParamByName('USU_LOGADOESTACAO').AsString := FLogadoEstacao;
+  qLocal.ExecSql;
+  //
+  qLocal.Free;
+  Log('Classe_Usuario','Logou '+FLogadoEstacao);
 end;
 
 procedure TUsuario.setAtivo(const Value: Boolean);
@@ -151,6 +200,29 @@ begin
   Log('Classe_Usuario','Alt Usu '+FCodigo);
 end;
 
+procedure TUsuario.Deslogou;
+var qLocal: TFDQuery;
+begin
+  FLogado := 0;
+  FLogadoEstacao := NomeComputador;
+
+  qLocal := TFDQuery.Create(nil);
+  qLocal.ConnectionName := 'X';
+  qLocal.Close;
+  qLocal.SQL.Clear;
+  qLocal.SQL.Add('UPDATE USUARIO_USU                                         ');
+  qLocal.SQL.Add('   SET USU_LOGADO = 0,                        ');
+  qLocal.SQL.Add('       USU_LOGADOESTACAO = :USU_LOGADOESTACAO ');
+  qLocal.SQL.Add(' WHERE USU_CODIGO               = :USU_CODIGO              ');
+  qLocal.ParamByName('USU_CODIGO'       ).AsString := FCodigo;
+  qLocal.ParamByName('USU_LOGADOESTACAO').AsString := FLogadoEstacao;
+  qLocal.ExecSql;
+  //
+  qLocal.Free;
+  Log('Classe_Usuario','Deslogou '+FLogadoEstacao);
+
+end;
+
 function TUsuario.Existe(Const Value:String):Boolean;
 begin
   if Value = 'MASTER' then
@@ -159,6 +231,8 @@ begin
     FNome   := Value;
     FSenha  := fSenhaUsuarioMaster;
     FAtivo  := True;
+    FLogado := 0;
+    FLogadoEstacao := '';
     Result := True;
     exit;
   end;
@@ -174,11 +248,13 @@ begin
        Result := False;
        exit;
   end;
-  Result := True;
-  FCodigo:= DM.qUSUARIO.FieldByName('USU_CODIGO').AsString;
-  FNome  := DM.qUSUARIO.FieldByName('USU_NOME'  ).AsString;
-  FSenha := Descriptografar(DM.qUSUARIO.FieldByName('USU_SENHA').AsString);
-  FAtivo := (DM.qUSUARIO.FieldByName('USU_ATIVO').AsInteger = 1);
+  Result         := True;
+  FCodigo        := DM.qUSUARIO.FieldByName('USU_CODIGO').AsString;
+  FNome          := DM.qUSUARIO.FieldByName('USU_NOME'  ).AsString;
+  FSenha         := Descriptografar(DM.qUSUARIO.FieldByName('USU_SENHA').AsString);
+  FAtivo         := (DM.qUSUARIO.FieldByName('USU_ATIVO').AsInteger = 1);
+  FLogado        := DM.qUSUARIO.FieldByName('USU_LOGADO'       ).AsInteger;
+  FLogadoEstacao := DM.qUSUARIO.FieldByName('USU_LOGADOESTACAO').AsString;
   DM.qUSUARIO.close;
 end;
 

@@ -1195,7 +1195,7 @@ object FrmLimpaBaseDeDados: TFrmLimpaBaseDeDados
     ParentFont = False
     TabOrder = 4
   end
-  object CheckBox2: TCheckBox
+  object cbColaboradores: TCheckBox
     Left = 206
     Top = 90
     Width = 139
@@ -1244,12 +1244,12 @@ object FrmLimpaBaseDeDados: TFrmLimpaBaseDeDados
     ParentFont = False
     TabOrder = 8
   end
-  object CheckBox5: TCheckBox
+  object cbContadores: TCheckBox
     Left = 370
     Top = 66
     Width = 139
     Height = 17
-    Caption = 'xxxxxxxxxxx'
+    Caption = 'Contadores'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -1258,12 +1258,12 @@ object FrmLimpaBaseDeDados: TFrmLimpaBaseDeDados
     ParentFont = False
     TabOrder = 9
   end
-  object CheckBox6: TCheckBox
+  object cbBairros: TCheckBox
     Left = 370
     Top = 90
     Width = 139
     Height = 17
-    Caption = 'xxxxxxxxxxx'
+    Caption = 'Bairros'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -1272,12 +1272,12 @@ object FrmLimpaBaseDeDados: TFrmLimpaBaseDeDados
     ParentFont = False
     TabOrder = 10
   end
-  object CheckBox7: TCheckBox
+  object cbRamosdeAtividade: TCheckBox
     Left = 370
     Top = 114
-    Width = 139
+    Width = 156
     Height = 17
-    Caption = 'xxxxxxxxxxx'
+    Caption = 'Ramos de Atividade'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -1286,12 +1286,12 @@ object FrmLimpaBaseDeDados: TFrmLimpaBaseDeDados
     ParentFont = False
     TabOrder = 11
   end
-  object CheckBox8: TCheckBox
+  object cbZonas: TCheckBox
     Left = 534
     Top = 42
     Width = 139
     Height = 17
-    Caption = 'xxxxxxxxxxx'
+    Caption = 'Zonas'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -1300,12 +1300,12 @@ object FrmLimpaBaseDeDados: TFrmLimpaBaseDeDados
     ParentFont = False
     TabOrder = 12
   end
-  object CheckBox9: TCheckBox
+  object cbConsultores: TCheckBox
     Left = 534
     Top = 66
     Width = 139
     Height = 17
-    Caption = 'xxxxxxxxxxx'
+    Caption = 'Consultores'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -1314,12 +1314,12 @@ object FrmLimpaBaseDeDados: TFrmLimpaBaseDeDados
     ParentFont = False
     TabOrder = 13
   end
-  object CheckBox10: TCheckBox
+  object cbRegioes: TCheckBox
     Left = 534
-    Top = 90
+    Top = 89
     Width = 139
     Height = 17
-    Caption = 'xxxxxxxxxxx'
+    Caption = 'Regi'#245'es'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13

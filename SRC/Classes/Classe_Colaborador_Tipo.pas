@@ -53,7 +53,7 @@ type
 
 implementation
 
-uses Funcoes;
+uses FuncoesSMC;
 
 { tTipo_Colaborador }
 
@@ -198,7 +198,7 @@ begin
       exit;
     end;
     try
-      vCodigoCandidato := StrToInt(qProximo.FieldByName('MAIOR').AsString)+1;
+      vCodigoCandidato := StrToInt(qProximo.FieldByName('MAIOR').AsString);
       vCodigoCandidato := vCodigoCandidato + 1;
       sCodigoCandidato := FormatFloat('#',vCodigoCandidato);
       result := sCodigoCandidato;

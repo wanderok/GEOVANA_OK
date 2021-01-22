@@ -37,8 +37,6 @@ type
     lHttpLib: TLabel;
     lXmlSign: TLabel;
     Label104: TLabel;
-    Label105: TLabel;
-    Label25: TLabel;
     Label1: TLabel;
     cbSSLLib: TComboBox;
     cbCryptLib: TComboBox;
@@ -56,11 +54,11 @@ type
     Label6: TLabel;
     cxButton3: TcxButton;
     Label7: TLabel;
-    lbNomeDaTela: TLabel;
     OpenDialog1: TOpenDialog;
     ACBrNFe1: TACBrNFe;
     Label2: TLabel;
     Label3: TLabel;
+    Panel17: TPanel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -89,7 +87,7 @@ implementation
 
 {$R *.dfm}
 
-uses Dados, Funcoes;
+uses DadosSMC, FuncoesSMC;
 
 procedure Tfrm_config_certificado_T33.AtualizarSSLLibsCombo;
 begin

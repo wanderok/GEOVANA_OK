@@ -22,7 +22,7 @@ uses
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue,
 
-  Classe_Comissao, ACBrBase, ACBrEnterTab;
+  Classe_Comissao, ACBrBase, ACBrEnterTab, Vcl.ExtCtrls;
 
 type
   Tfrm_cad_comissoes_T30 = class(TForm)
@@ -42,8 +42,8 @@ type
     edEXTERNA: TEdit;
     cxButton21: TcxButton;
     cxButton28: TcxButton;
-    lbNomeDaTela: TLabel;
     ACBrEnterTab1: TACBrEnterTab;
+    Panel17: TPanel;
     procedure cxButton28Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -71,7 +71,7 @@ implementation
 
 {$R *.dfm}
 
-uses TiposDeDados, Funcoes, ValidadorDeDocumentos;
+uses TiposDeDados, FuncoesSMC, ValidadorDeDocumentos;
 
 procedure Tfrm_cad_comissoes_T30.cxButton21Click(Sender: TObject);
 begin

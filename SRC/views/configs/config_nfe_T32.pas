@@ -57,7 +57,6 @@ type
     pnControles: TPanel;
     bControleCancelar: TcxButton;
     bControleGravar: TcxButton;
-    lbNomeDaTela: TLabel;
     ACBrEnterTab1: TACBrEnterTab;
     GroupBox4: TGroupBox;
     rgNFeC_VerMsgWS: TRadioGroup;
@@ -81,6 +80,7 @@ type
     cbxModeloPosPrinter: TComboBox;
     cbxPagCodigo: TComboBox;
     rgNFeC_MostraPreview: TRadioGroup;
+    Panel17: TPanel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
@@ -113,7 +113,7 @@ implementation
 
 {$R *.dfm}
 
-uses funcoes, Dados, Classe_Avisos;
+uses FuncoesSMC, DadosSMC, Classe_Avisos;
 
 procedure TfrmConfig_NFe_T32.bControleCancelarClick(Sender: TObject);
 begin

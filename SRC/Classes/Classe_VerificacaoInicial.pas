@@ -31,7 +31,7 @@ implementation
 
 { TVerificacao }
 
-uses funcoes;
+uses FuncoesSMC;
 
 procedure TVerificacaoInicial.Atualizar_Sistema;
 begin

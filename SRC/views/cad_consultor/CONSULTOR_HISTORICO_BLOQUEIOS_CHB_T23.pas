@@ -27,13 +27,13 @@ type
     dt_CONSULTOR_HISTORICO_BLOQUEIOS_CHB: TDataSource;
     DBGrid1: TDBGrid;
     Panel1: TPanel;
-    lbNomeDaTela: TLabel;
     sql_CONSULTOR_HISTORICO_BLOQUEIOS_CHBCHB_CONSULTOR: TStringField;
     sql_CONSULTOR_HISTORICO_BLOQUEIOS_CHBCHB_DTEVENTO: TDateField;
     sql_CONSULTOR_HISTORICO_BLOQUEIOS_CHBCHB_HREVENTO: TStringField;
     sql_CONSULTOR_HISTORICO_BLOQUEIOS_CHBCHB_USUEVENTO: TStringField;
     sql_CONSULTOR_HISTORICO_BLOQUEIOS_CHBCHB_MAQEVENTO: TStringField;
     sql_CONSULTOR_HISTORICO_BLOQUEIOS_CHBCHB_EVENTO: TStringField;
+    Panel2: TPanel;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
@@ -47,7 +47,7 @@ var
 implementation
 
 {$R *.dfm}
-uses Dados;
+uses DadosSMC;
 
 procedure TfrmCONSULTOR_HISTORICO_BLOQUEIOS_CHB_T23.FormKeyPress(Sender: TObject;
   var Key: Char);

@@ -37,10 +37,10 @@ type
     DBGrid2: TDBGrid;
     bGravar: TcxButton;
     cxButton2: TcxButton;
-    lbNomeDaTela: TLabel;
     DataSource1: TDataSource;
     qLocal: TFDQuery;
     ACBrEnterTab1: TACBrEnterTab;
+    Panel4: TPanel;
     procedure edFiltroChange(Sender: TObject);
     procedure bGravarClick(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -63,7 +63,7 @@ var
 implementation
 
 {$R *.dfm}
-uses Dados, Funcoes;
+uses DadosSMC, FuncoesSMC;
 
 procedure Tfrm_cad_zona_T12.Pesquisar;
 begin

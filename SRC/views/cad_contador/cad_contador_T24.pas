@@ -105,7 +105,6 @@ type
     Label3: TLabel;
     Label7: TLabel;
     Label11: TLabel;
-    lbNomeDaTela: TLabel;
     edRua: TEdit;
     edCEP: TEdit;
     edNumero: TEdit;
@@ -124,6 +123,7 @@ type
     ACBrCEP1: TACBrCEP;
     GroupBox1: TGroupBox;
     mmObservacoes: TMemo;
+    Panel17: TPanel;
     procedure bPesqZonaClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure bPesqBairroClick(Sender: TObject);
@@ -214,7 +214,7 @@ var
 implementation
 
 uses
-  Funcoes,
+  FuncoesSMC,
   TiposDeDados,
   ValidadorDeDocumentos,
   U_Municipio_T5,
@@ -226,7 +226,7 @@ uses
   ConsultaCNPJ_T13,
   ConsultaCPF_T14,
   CONTADOR_HISTORICO_BLOQUEIOS_CONTHB_T25,
-  Dados,
+  DadosSMC,
   Classe_Nuvem;
 
 {$R *.dfm}

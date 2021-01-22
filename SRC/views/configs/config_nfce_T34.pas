@@ -39,7 +39,6 @@ type
     Label5: TLabel;
     edCSC_ID: TEdit;
     edCSC: TEdit;
-    lbNomeDaTela: TLabel;
     GroupBox7: TGroupBox;
     rgNFeC_Ambiente: TRadioGroup;
     GroupBox6: TGroupBox;
@@ -74,6 +73,7 @@ type
     ACBrNFe1: TACBrNFe;
     ACBrEnterTab1: TACBrEnterTab;
     OpenDialog1: TOpenDialog;
+    Panel17: TPanel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure bControleGravarClick(Sender: TObject);
     procedure bControleCancelarClick(Sender: TObject);
@@ -102,7 +102,7 @@ implementation
 
 {$R *.dfm}
 
-uses funcoes, Dados, Classe_Avisos;
+uses FuncoesSMC, DadosSMC, Classe_Avisos;
 
 procedure TFrm_config_nfce_T34.bControleCancelarClick(Sender: TObject);
 begin

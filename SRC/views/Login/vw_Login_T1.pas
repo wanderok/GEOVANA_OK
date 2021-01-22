@@ -61,6 +61,7 @@ type
     procedure edEmpresaKeyPress(Sender: TObject; var Key: Char);
     procedure edt_usuarioKeyPress(Sender: TObject; var Key: Char);
     procedure edt_senhaKeyPress(Sender: TObject; var Key: Char);
+    procedure FormCreate(Sender: TObject);
     {procedure btn_entrarClick(Sender: TObject);
     procedure bSairClick(Sender: TObject);
     procedure edt_usuarioKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -83,6 +84,8 @@ type
 
 var
   frm_Login_T1: Tfrm_Login_T1;
+  vfrm_Login_T1TrocarUsuario:Boolean;
+  vfrm_Login_T1UsuarioAnterior:String;
 //  Acesso : TAcesso;
 //  Usuario: TUsuario;
 
@@ -94,7 +97,7 @@ implementation
 
 uses
   main_smc,
-  funcoes,
+  FuncoesSMC,
   Classe_Acesso,
   Classe_Usuario,
   Classe_VerificacaoInicial;
@@ -281,6 +284,7 @@ begin
 end;
 
 procedure Tfrm_Login_T1.btn_entrarClick(Sender: TObject);
+var vUsuario:String;
 begin
     if not DadosCorretos then
        exit;
@@ -298,7 +302,20 @@ begin
     //------------------------------------------------
 
     frm_Login_T1.Visible := false;
+    if vfrm_Login_T1TrocarUsuario then
+    begin
+       if vfrm_Login_T1UsuarioAnterior <> '' then
+       begin
+          if Usuario.Existe(vfrm_Login_T1UsuarioAnterior) then
+             Usuario.Deslogou;
+       end;
+       if Usuario.Existe(edt_usuario.Text) then
+          Usuario.Logou;
+       close;
+       exit;
+    end;
     AbreMenuPrincipal;
+    Usuario.Deslogou;
     Encerrar_a_Aplicacao;
 end;
 
@@ -371,7 +388,7 @@ begin
   if edt_Senha.text <> Usuario.Senha then
   begin
      Avisos.SenhaInvalida;
-     //ShowMessage('Senha inválida.');
+     edt_Senha.Text := '';
      edt_Senha.SetFocus;
      exit;
   end;
@@ -404,12 +421,20 @@ begin
   if not Usuario.Existe(edt_Usuario.Text) then
   begin
      Usuario.Free;
-     //ShowMessage('Usuário não cadastrado');
      Avisos.Avisar('Usuário não cadastrado');
 
      edt_Usuario.SetFocus;
      exit;
   end;
+  if Usuario.Logado then
+  begin
+     Avisos.Avisar('Usuário está logado em '+Usuario.LogadoEstacao);
+     Usuario.Free;
+
+     edt_Usuario.SetFocus;
+     exit;
+  end;
+
   edt_Senha.Enabled   := True;
   edt_Senha.SetFocus;
 end;
@@ -421,6 +446,12 @@ begin
         key := #0;
         edt_usuarioExit(nil);
      end;
+end;
+
+procedure Tfrm_Login_T1.FormCreate(Sender: TObject);
+begin
+  vfrm_Login_T1TrocarUsuario:=false;
+  vfrm_Login_T1UsuarioAnterior:='';
 end;
 
 procedure Tfrm_Login_T1.FormKeyPress(Sender: TObject; var Key: Char);
@@ -441,6 +472,9 @@ end;
 
 procedure Tfrm_Login_T1.FormShow(Sender: TObject);
 begin
+    if vfrm_Login_T1TrocarUsuario then
+       Usuario.Deslogou;
+
    Preencher_Dados_do_Ultimo_Acesso;
    Desabilitar_Campos_e_Botão_Entrar;
    edEmpresa.SetFocus;

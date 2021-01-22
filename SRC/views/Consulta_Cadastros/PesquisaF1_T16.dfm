@@ -1,10 +1,11 @@
 object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Cadastro | Bairro'
-  ClientHeight = 271
+  ClientHeight = 263
   ClientWidth = 358
   Color = clBtnFace
   DefaultMonitor = dmMainForm
@@ -16,29 +17,14 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
   KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 258
-    Width = 358
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T16 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 318
-    ExplicitWidth = 40
-  end
   object SpeedButton1: TSpeedButton
     Left = 8
-    Top = 189
+    Top = 181
     Width = 337
     Height = 24
     Caption = 'Editar'
@@ -66,7 +52,7 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
   end
   object edFiltro: TEdit
     Left = 86
-    Top = 8
+    Top = 0
     Width = 259
     Height = 26
     CharCase = ecUpperCase
@@ -83,7 +69,7 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
   end
   object DBGrid2: TDBGrid
     Left = 8
-    Top = 40
+    Top = 32
     Width = 337
     Height = 150
     DataSource = DataSource1
@@ -118,7 +104,7 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
   end
   object bGravar: TcxButton
     Left = 9
-    Top = 211
+    Top = 203
     Width = 103
     Height = 45
     Caption = 'Gravar'
@@ -266,7 +252,7 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
   end
   object cxButton2: TcxButton
     Left = 242
-    Top = 211
+    Top = 203
     Width = 103
     Height = 45
     Caption = 'Sair'
@@ -414,7 +400,7 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
   end
   object edCodigo: TEdit
     Left = 12
-    Top = 8
+    Top = 0
     Width = 73
     Height = 26
     CharCase = ecUpperCase
@@ -428,6 +414,24 @@ object frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16
     TabOrder = 4
     OnExit = edCodigoExit
     OnKeyPress = edFiltroKeyPress
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 248
+    Width = 358
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ 16 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
   end
   object ACBrEnterTab1: TACBrEnterTab
     EnterAsTab = True

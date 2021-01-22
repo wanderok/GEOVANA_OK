@@ -105,7 +105,6 @@ type
     Label3: TLabel;
     Label7: TLabel;
     Label11: TLabel;
-    lbNomeDaTela: TLabel;
     edRua: TEdit;
     edCEP: TEdit;
     edNumero: TEdit;
@@ -125,6 +124,7 @@ type
     GroupBox1: TGroupBox;
     mmObservacoes: TMemo;
     cxButton9: TcxButton;
+    Panel2: TPanel;
     procedure bPesqZonaClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure bPesqBairroClick(Sender: TObject);
@@ -217,7 +217,7 @@ var
 implementation
 
 uses
-  Funcoes,
+  FuncoesSMC,
   TiposDeDados,
   ValidadorDeDocumentos,
   U_Municipio_T5,
@@ -230,7 +230,7 @@ uses
   ConsultaCPF_T14,
   CONSULTOR_HISTORICO_BLOQUEIOS_CHB_T23,
   Consultor_Banco_Comissoes_T31,
-  Dados,
+  DadosSMC,
   Classe_Nuvem;
 
 {$R *.dfm}
@@ -251,6 +251,15 @@ end;
 
 procedure Tfrm_cad_consultor_T21.cxButton21Click(Sender: TObject);
 begin
+   if Consultor.Existe then
+   begin
+      if not fTemAcesso(Usuario.Codigo,'ALTCONSUL') then
+          exit;
+   end
+   else
+      if not fTemAcesso(Usuario.Codigo,'CADCONSUL') then
+          exit;
+
    if not DadosCorretos then
       exit;
 
@@ -1106,6 +1115,9 @@ end;
 
 procedure Tfrm_cad_consultor_T21.Preencher_Campos_da_Tela;
 begin
+   if not fTemAcesso('CONCONSUL') then
+      exit;
+
    Limpar_os_campos_da_Tela(frm_cad_consultor_T21);
 
    edCodigo.Text      := Consultor.Codigo;

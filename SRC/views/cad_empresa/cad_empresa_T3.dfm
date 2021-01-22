@@ -21,23 +21,6 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 631
-    Width = 1051
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T3 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 1018
-    ExplicitWidth = 33
-  end
   object BtnGravar: TcxButton
     Left = 939
     Top = 0
@@ -191,7 +174,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     Left = 940
     Top = 100
     Width = 111
-    Height = 530
+    Height = 529
     Color = clWhite
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -2590,7 +2573,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     Left = 499
     Top = 383
     Width = 437
-    Height = 249
+    Height = 247
     Caption = '  Contabilidade  '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -4169,7 +4152,7 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     Left = 5
     Top = 570
     Width = 492
-    Height = 62
+    Height = 59
     Caption = '  Outras Informa'#231#245'es  '
     Color = clSilver
     Font.Charset = DEFAULT_CHARSET
@@ -4453,6 +4436,26 @@ object frm_cad_empresa_T3: Tfrm_cad_empresa_T3
     Font.Style = [fsBold]
     ParentFont = False
     OnClick = cxButton6Click
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 629
+    Width = 1051
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T3 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 12
+    ExplicitTop = 246
+    ExplicitWidth = 286
   end
   object OpenPictureDialog1: TOpenPictureDialog
     Left = 348

@@ -27,13 +27,13 @@ type
     dt_MOTORISTA_HISTORICO_BLOQUEIOS_CONTHB: TDataSource;
     DBGrid1: TDBGrid;
     Panel1: TPanel;
-    lbNomeDaTela: TLabel;
     sql_MOTORISTA_HISTORICO_BLOQUEIOS_MOTHBMOTHB_MOTORISTA: TStringField;
     sql_MOTORISTA_HISTORICO_BLOQUEIOS_MOTHBMOTHB_DTEVENTO: TDateField;
     sql_MOTORISTA_HISTORICO_BLOQUEIOS_MOTHBMOTHB_HREVENTO: TStringField;
     sql_MOTORISTA_HISTORICO_BLOQUEIOS_MOTHBMOTHB_USUEVENTO: TStringField;
     sql_MOTORISTA_HISTORICO_BLOQUEIOS_MOTHBMOTHB_MAQEVENTO: TStringField;
     sql_MOTORISTA_HISTORICO_BLOQUEIOS_MOTHBMOTHB_EVENTO: TStringField;
+    Panel17: TPanel;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
@@ -47,7 +47,7 @@ var
 implementation
 
 {$R *.dfm}
-uses Dados;
+uses DadosSMC;
 
 procedure TfrmMOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27.FormKeyPress(Sender: TObject;
   var Key: Char);

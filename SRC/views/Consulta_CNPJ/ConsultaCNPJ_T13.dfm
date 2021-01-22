@@ -20,8 +20,8 @@ object frmConsultaCNPJ_T13: TfrmConsultaCNPJ_T13
   object Panel2: TPanel
     Left = 0
     Top = 193
-    Width = 657
-    Height = 405
+    Width = 658
+    Height = 391
     BevelInner = bvRaised
     BevelOuter = bvLowered
     TabOrder = 1
@@ -368,7 +368,7 @@ object frmConsultaCNPJ_T13: TfrmConsultaCNPJ_T13
       Left = 8
       Top = 269
       Width = 616
-      Height = 125
+      Height = 119
       ItemHeight = 13
       TabOrder = 12
     end
@@ -558,6 +558,24 @@ object frmConsultaCNPJ_T13: TfrmConsultaCNPJ_T13
       ParentFont = False
       TabOrder = 4
     end
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 583
+    Width = 658
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T13 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 2
   end
   object Timer1: TTimer
     Enabled = False

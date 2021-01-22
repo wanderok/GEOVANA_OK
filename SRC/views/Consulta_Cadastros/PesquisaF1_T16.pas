@@ -25,7 +25,7 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, ACBrBase, ACBrEnterTab, Vcl.Buttons;
+  dxSkinXmas2008Blue, ACBrBase, ACBrEnterTab, Vcl.Buttons, Vcl.ExtCtrls;
 
 type
   Tfrm_PesquisaF1_T16 = class(TForm)
@@ -36,9 +36,9 @@ type
     ACBrEnterTab1: TACBrEnterTab;
     qLocal: TFDQuery;
     DataSource1: TDataSource;
-    lbNomeDaTela: TLabel;
     edCodigo: TEdit;
     SpeedButton1: TSpeedButton;
+    Panel2: TPanel;
     procedure edFiltroChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DBGrid2DblClick(Sender: TObject);
@@ -49,6 +49,8 @@ type
     procedure edCodigoExit(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure edFiltroKeyPress(Sender: TObject; var Key: Char);
+    procedure FormCreate(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     procedure pesquisar;
@@ -60,13 +62,14 @@ type
 var
   frm_PesquisaF1_T16: Tfrm_PesquisaF1_T16;
   vfrm_PesquisaF1_T16,
-  vfrm_PesquisaF1_T16Tabela         : String;
+  vfrm_PesquisaF1_T16Tabela,
+  vfrm_PesquisaF1_T16Grupo: String;
 
 implementation
 
 {$R *.dfm}
 
-uses Dados, Funcoes;
+uses DadosSMC, FuncoesSMC;
 
 procedure Tfrm_PesquisaF1_T16.bGravarClick(Sender: TObject);
 begin
@@ -74,6 +77,7 @@ begin
       exit;
 
    PesquisaF1.Codigo    := edCodigo.Text;
+   PesquisaF1.Grupo     := vfrm_PesquisaF1_T16Grupo;
    PesquisaF1.Descricao := edFiltro.Text;
    PesquisaF1.Gravar;
 
@@ -103,8 +107,10 @@ begin
      if bGravar.Focused then
         exit;
      edFiltro.Text;
-     if not PesquisaF1.ExisteCodigo(vfrm_PesquisaF1_T16Tabela,edCodigo.Text) then
-        exit;
+     if not PesquisaF1.ExisteCodigo(vfrm_PesquisaF1_T16Tabela,
+                                    edCodigo.Text) then
+           exit;
+
      edFiltro.text:=PesquisaF1.Descricao;
 end;
 
@@ -118,9 +124,25 @@ begin
    key := fSemAcentos(key);
 end;
 
+procedure Tfrm_PesquisaF1_T16.FormCreate(Sender: TObject);
+begin
+   vfrm_PesquisaF1_T16Grupo := '';
+end;
+
+procedure Tfrm_PesquisaF1_T16.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+   if key = #27 then
+   begin
+      key := #0;
+      Close;
+   end;
+
+end;
+
 procedure Tfrm_PesquisaF1_T16.FormShow(Sender: TObject);
 begin
    vfrm_PesquisaF1_T16 := '';
+   PesquisaF1.Grupo := vfrm_PesquisaF1_T16Grupo;
 end;
 
 procedure Tfrm_PesquisaF1_T16.pesquisar;

@@ -105,7 +105,6 @@ type
     Label3: TLabel;
     Label7: TLabel;
     Label11: TLabel;
-    lbNomeDaTela: TLabel;
     edRua: TEdit;
     edCEP: TEdit;
     edNumero: TEdit;
@@ -125,6 +124,7 @@ type
     GroupBox1: TGroupBox;
     mmObservacoes: TMemo;
     cbProdutorRural: TCheckBox;
+    Panel2: TPanel;
     procedure bPesqZonaClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure bPesqBairroClick(Sender: TObject);
@@ -215,7 +215,7 @@ var
 implementation
 
 uses
-  Funcoes,
+  FuncoesSMC,
   TiposDeDados,
   ValidadorDeDocumentos,
   U_Municipio_T5,
@@ -228,7 +228,7 @@ uses
   ConsultaCNPJ_T13,
   ConsultaCPF_T14,
   FORNECEDOR_HISTORICO_BLOQUEIOS_FHB_T18,
-  Dados,
+  DadosSMC,
   Classe_Nuvem;
 
 {$R *.dfm}
@@ -250,6 +250,15 @@ end;
 procedure Tfrm_cad_fornecedor_T19.cxButton21Click(Sender: TObject);
 var vNuvem: TNuvem;
 begin
+   if Fornecedor.Existe then
+   begin
+      if not fTemAcesso(Usuario.Codigo,'ALTFORNE') then
+          exit;
+   end
+   else
+      if not fTemAcesso(Usuario.Codigo,'CADFORNE') then
+          exit;
+
    if not DadosCorretos then
       exit;
 
@@ -1097,6 +1106,9 @@ end;
 
 procedure Tfrm_cad_fornecedor_T19.Preencher_Campos_da_Tela;
 begin
+   if not fTemAcesso('CONFORNE') then
+      exit;
+
    Limpar_os_campos_da_Tela(frm_cad_fornecedor_T19);
 
    edCodigo.Text      := Fornecedor.Codigo;

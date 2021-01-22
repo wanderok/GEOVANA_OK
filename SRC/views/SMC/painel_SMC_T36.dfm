@@ -21,23 +21,6 @@ object frm_painel_SMC_T36: Tfrm_painel_SMC_T36
     Height = 201
     Align = alClient
     TabOrder = 0
-    object lbNomeDaTela: TLabel
-      Left = 1
-      Top = 187
-      Width = 445
-      Height = 13
-      Align = alBottom
-      Alignment = taRightJustify
-      Caption = '[ T36 ] '
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      ExplicitLeft = 406
-      ExplicitWidth = 40
-    end
     object bFinanceiro: TButton
       Left = 32
       Top = 80
@@ -45,6 +28,7 @@ object frm_painel_SMC_T36: Tfrm_painel_SMC_T36
       Height = 49
       Caption = 'Financeiro'
       TabOrder = 0
+      OnClick = bFinanceiroClick
     end
     object bFiscal: TButton
       Left = 160
@@ -74,6 +58,26 @@ object frm_painel_SMC_T36: Tfrm_painel_SMC_T36
       Caption = 'Comercial'
       TabOrder = 3
       OnClick = bComercialClick
+    end
+    object Panel17: TPanel
+      Left = 1
+      Top = 185
+      Width = 445
+      Height = 15
+      Align = alBottom
+      BevelOuter = bvNone
+      Caption = '[ T36 ] '
+      Color = 15254945
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 4
+      ExplicitTop = 708
+      ExplicitWidth = 1294
     end
   end
 end

@@ -105,7 +105,6 @@ type
     Label3: TLabel;
     Label7: TLabel;
     Label11: TLabel;
-    lbNomeDaTela: TLabel;
     edRua: TEdit;
     edCEP: TEdit;
     edNumero: TEdit;
@@ -125,6 +124,7 @@ type
     GroupBox1: TGroupBox;
     mmObservacoes: TMemo;
     edRNTC: TEdit;
+    Panel17: TPanel;
     procedure bPesqZonaClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure bPesqBairroClick(Sender: TObject);
@@ -215,7 +215,7 @@ var
 implementation
 
 uses
-  Funcoes,
+  FuncoesSMC,
   TiposDeDados,
   ValidadorDeDocumentos,
   U_Municipio_T5,
@@ -227,7 +227,7 @@ uses
   ConsultaCNPJ_T13,
   ConsultaCPF_T14,
   TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB_T29,
-  Dados,
+  DadosSMC,
   Classe_Nuvem;
 
 {$R *.dfm}
@@ -249,6 +249,15 @@ end;
 procedure Tfrm_cad_transportadora_T28.cxButton21Click(Sender: TObject);
 var vNuvem: TNuvem;
 begin
+   if Transportadora.Existe then
+   begin
+      if not fTemAcesso(Usuario.Codigo,'ALTTRANSPO') then
+          exit;
+   end
+   else
+      if not fTemAcesso(Usuario.Codigo,'CADTRANSPO') then
+          exit;
+
    if not DadosCorretos then
       exit;
 
@@ -1092,6 +1101,9 @@ end;
 
 procedure Tfrm_cad_transportadora_T28.Preencher_Campos_da_Tela;
 begin
+   if not fTemAcesso('CONTRANSPO') then
+      exit;
+
    Limpar_os_campos_da_Tela(frm_cad_transportadora_T28);
 
    edCodigo.Text      := Transportadora.Codigo;

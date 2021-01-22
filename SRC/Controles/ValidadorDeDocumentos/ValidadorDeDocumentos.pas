@@ -37,7 +37,7 @@ implementation
 
 {$R *.dfm}
 
-uses funcoes;
+uses FuncoesSMC;
 
 { TForm1 }
 

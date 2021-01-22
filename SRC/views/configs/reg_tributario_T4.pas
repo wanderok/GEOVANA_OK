@@ -45,7 +45,6 @@ type
     Shape1: TShape;
     Label4: TLabel;
     Label6: TLabel;
-    lbNomeDaTela: TLabel;
     GroupBox2: TGroupBox;
     grpPisCofins: TGroupBox;
     edPISAliquota: TEdit;
@@ -57,6 +56,7 @@ type
     edISSAliquota: TEdit;
     grpIPI: TGroupBox;
     cbContribuinteIPI: TcxCheckBox;
+    Panel4: TPanel;
   private
     { Private declarations }
   public

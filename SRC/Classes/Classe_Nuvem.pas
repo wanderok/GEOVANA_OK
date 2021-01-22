@@ -11,6 +11,7 @@ uses
   FireDAC.Comp.Client,
 
   Classe_Cliente,
+  Classe_Produto,
   Classe_Configuracoes;
 
 type
@@ -23,6 +24,7 @@ type
     FSenha       : String;
     FQuery       : TFDQuery;
     FCliente     : TCliente;
+    FProduto     : TProduto;
     FConfiguracao: TConfiguracao;
     procedure Abrir_configuracoes;
     function getBancoDeDados: String;
@@ -38,6 +40,9 @@ type
     function ClienteExisteNaNuvem:Boolean;
     procedure UpdateClienteNuvem;
     procedure InsertClienteNuvem;
+    function ProdutoExisteNaNuvem:Boolean;
+    procedure UpdateProdutoNuvem;
+    procedure InsertProdutoNuvem;
    public
     constructor Create;
     destructor Destroy; override;
@@ -48,13 +53,14 @@ type
     property Senha       : String  read getSenha        write setSenha;
     procedure GravarConfiguracoesNuvem;
     procedure uploadCliente(pCliente:TCliente);
+    procedure uploadProduto(pProduto:TProduto);
   end;
 
 implementation
 
 { TNuvem }
 
-uses Funcoes,
+uses FuncoesSMC,
      DadosNuvem,
      TiposDeDados;
 
@@ -87,6 +93,29 @@ begin
    DMNuvem.Query1.ParamByName('CLI_CELULAR'      ).AsString   := FCliente.Detalhes.Contato.Cel;
    DMNuvem.Query1.ParamByName('CLI_STATUS'       ).AsInteger:= StatusCadastralToInt(FCliente.Status);
    DMNuvem.Query1.ParamByName('CLI_CODIGO'       ).AsString := FCliente.Codigo;
+   DMNuvem.Query1.ExecSql;
+end;
+
+procedure TNuvem.UpdateProdutoNuvem;
+begin
+   DMNuvem.Query1.close;
+   DMNuvem.Query1.sql.clear;
+   DMNuvem.Query1.sql.add('UPDATE PRODUTO_PROD                                       ');
+   DMNuvem.Query1.sql.add('   SET PROD_DESCRICAO          = :PROD_DESCRICAO,         ');
+   DMNuvem.Query1.sql.add('       PROD_CDUM               = :PROD_CDUM,              ');
+   DMNuvem.Query1.sql.add('       PROD_STATUS             = :PROD_STATUS,            ');
+   DMNuvem.Query1.SQL.Add('       PROD_PRECO_VAREJO       = :PROD_PRECO_VAREJO,      ');
+   DMNuvem.Query1.SQL.Add('       PROD_PRECO_DISTRIBUIDOR = :PROD_PRECO_DISTRIBUIDOR,');
+   DMNuvem.Query1.SQL.Add('       PROD_PRECO_ATACADO      = :PROD_PRECO_ATACADO      ');
+   DMNuvem.Query1.SQL.Add(' WHERE PROD_CODIGO             = :PROD_CODIGO             ');
+   DMNuvem.Query1.ParamByName('PROD_CODIGO'            ).AsString   := FProduto.Codigo;
+   DMNuvem.Query1.ParamByName('PROD_DESCRICAO'         ).AsString   := FProduto.Nome;
+   DMNuvem.Query1.ParamByName('PROD_CDUM'              ).AsString   := FProduto.Unidade;
+   DMNuvem.Query1.ParamByName('PROD_STATUS'            ).AsInteger  := StatusCadastralToInt(FProduto.Status);
+   //PRECOS
+   DMNuvem.Query1.ParamByName('PROD_PRECO_VAREJO'      ).AsFloat := FProduto.Precos.Varejo;
+   DMNuvem.Query1.ParamByName('PROD_PRECO_DISTRIBUIDOR').AsFloat := FProduto.Precos.Distribuidor;
+   DMNuvem.Query1.ParamByName('PROD_PRECO_ATACADO'     ).AsFloat := FProduto.Precos.Atacado;
    DMNuvem.Query1.ExecSql;
 end;
 
@@ -193,6 +222,55 @@ begin
    DMNuvem.Query1.ExecSql;
 end;
 
+procedure TNuvem.InsertProdutoNuvem;
+begin
+    try
+        DMNuvem.Query1.Close;
+        DMNuvem.Query1.SQL.Clear;
+        DMNuvem.Query1.SQL.Add('INSERT INTO PRODUTO_PROD       ');
+        DMNuvem.Query1.SQL.Add('     (                         ');
+        DMNuvem.Query1.SQL.Add('       PROD_CODIGO,            ');
+        DMNuvem.Query1.SQL.Add('       PROD_DESCRICAO,         ');
+        DMNuvem.Query1.SQL.Add('       PROD_CDUM,              ');
+        DMNuvem.Query1.SQL.Add('       PROD_STATUS,            ');
+        DMNuvem.Query1.SQL.Add('       PROD_PRECO_VAREJO,      ');
+        DMNuvem.Query1.SQL.Add('       PROD_PRECO_DISTRIBUIDOR,');
+        DMNuvem.Query1.SQL.Add('       PROD_PRECO_ATACADO      ');
+        DMNuvem.Query1.SQL.Add('     )                         ');
+        DMNuvem.Query1.SQL.Add('VALUES                         ');
+        DMNuvem.Query1.SQL.Add('     (                         ');
+        DMNuvem.Query1.SQL.Add('      :PROD_CODIGO,            ');
+        DMNuvem.Query1.SQL.Add('      :PROD_DESCRICAO,         ');
+        DMNuvem.Query1.SQL.Add('      :PROD_CDUM,              ');
+        DMNuvem.Query1.SQL.Add('      :PROD_STATUS,            ');
+        DMNuvem.Query1.SQL.Add('      :PROD_PRECO_VAREJO,      ');
+        DMNuvem.Query1.SQL.Add('      :PROD_PRECO_DISTRIBUIDOR,');
+        DMNuvem.Query1.SQL.Add('      :PROD_PRECO_ATACADO      ');
+        DMNuvem.Query1.SQL.Add('     )                         ');
+        DMNuvem.Query1.ParamByName('PROD_CODIGO'            ).AsString   := FProduto.Codigo;
+        DMNuvem.Query1.ParamByName('PROD_DESCRICAO'         ).AsString   := FProduto.Nome;
+        DMNuvem.Query1.ParamByName('PROD_CDUM'              ).AsString   := FProduto.Unidade;
+        DMNuvem.Query1.ParamByName('PROD_STATUS'            ).AsInteger  := 1;
+        //PRECOS
+        DMNuvem.Query1.ParamByName('PROD_PRECO_VAREJO'      ).AsFloat := FProduto.Precos.Varejo;
+        DMNuvem.Query1.ParamByName('PROD_PRECO_DISTRIBUIDOR').AsFloat := FProduto.Precos.Distribuidor;
+        DMNuvem.Query1.ParamByName('PROD_PRECO_ATACADO'     ).AsFloat := FProduto.Precos.Atacado;
+        DMNuvem.Query1.ExecSql;
+    except
+    end;
+end;
+
+function TNuvem.ProdutoExisteNaNuvem: Boolean;
+begin
+   DMNuvem.Query1.close;
+   DMNuvem.Query1.sql.clear;
+   DMNuvem.Query1.sql.add('SELECT * FROM PRODUTO_PROD       ');
+   DMNuvem.Query1.sql.add(' WHERE PROD_CODIGO = :PROD_CODIGO');
+   DMNuvem.Query1.ParamByName('PROD_CODIGO').AsString := FProduto.Codigo;
+   DMNuvem.Query1.Open;
+   Result := (not DMNuvem.Query1.EOF);
+end;
+
 procedure TNuvem.setBancoDeDados(const Value: String);
 begin
    self.FSenha:=Value;
@@ -228,6 +306,19 @@ begin
     UpdateClienteNuvem
  else
     InsertClienteNuvem;
+end;
+
+procedure TNuvem.uploadProduto(pProduto: TProduto);
+begin
+ if not FConfiguracao.TrataNuvem then
+    exit;
+
+  FProduto := pProduto;
+ if ProdutoExisteNaNuvem then
+    UpdateProdutoNuvem
+ else
+    InsertProdutoNuvem;
+
 end;
 
 end.

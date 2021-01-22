@@ -16,7 +16,7 @@ uses
   dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
-  ACBrBase, ACBrEnterTab;
+  ACBrBase, ACBrEnterTab, Vcl.ExtCtrls;
 
 type
   TFrm_Municipio_T5 = class(TForm)
@@ -25,7 +25,7 @@ type
     qLocal: TFDQuery;
     DataSource1: TDataSource;
     ACBrEnterTab1: TACBrEnterTab;
-    lbNomeDaTela: TLabel;
+    Panel4: TPanel;
     procedure Edit1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
@@ -46,7 +46,7 @@ implementation
 
 {$R *.dfm}
 
-uses dados;
+uses DadosSMC;
 
 procedure TFrm_Municipio_T5.DBGrid1DblClick(Sender: TObject);
 begin

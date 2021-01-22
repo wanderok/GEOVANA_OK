@@ -23,6 +23,8 @@ object frmGraficoContadoresSMC: TfrmGraficoContadoresSMC
     Height = 552
     Gradient.EndColor = 12615680
     Gradient.Visible = True
+    Title.Text.Strings = (
+      'TDBChart')
     Title.Transparent = False
     Title.Visible = False
     Chart3DPercent = 17

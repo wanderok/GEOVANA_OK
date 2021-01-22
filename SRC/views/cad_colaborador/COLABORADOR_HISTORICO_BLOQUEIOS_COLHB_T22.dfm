@@ -17,23 +17,6 @@ object frmCOLABORADOR_HISTORICO_BLOQUEIOS_COLHB_T22: TfrmCOLABORADOR_HISTORICO_B
   OnKeyPress = FormKeyPress
   PixelsPerInch = 96
   TextHeight = 13
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 212
-    Width = 609
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T22 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 569
-    ExplicitWidth = 40
-  end
   object DBGrid1: TDBGrid
     Left = 0
     Top = 47
@@ -118,6 +101,26 @@ object frmCOLABORADOR_HISTORICO_BLOQUEIOS_COLHB_T22: TfrmCOLABORADOR_HISTORICO_B
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 1
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 210
+    Width = 609
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T22 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 2
+    ExplicitLeft = -363
+    ExplicitWidth = 972
   end
   object sql_COLABORADOR_HISTORICO_BLOQUEIOS_COLHB: TFDQuery
     Connection = DM.Database1

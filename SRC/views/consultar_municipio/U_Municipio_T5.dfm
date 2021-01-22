@@ -1,6 +1,7 @@
 object Frm_Municipio_T5: TFrm_Municipio_T5
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Consultar Munic'#237'pio'
@@ -19,23 +20,6 @@ object Frm_Municipio_T5: TFrm_Municipio_T5
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 154
-    Width = 372
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = 'T5'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 358
-    ExplicitWidth = 14
-  end
   object Edit1: TEdit
     Left = 0
     Top = 0
@@ -91,6 +75,25 @@ object Frm_Municipio_T5: TFrm_Municipio_T5
         Width = 44
         Visible = True
       end>
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 152
+    Width = 372
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T5 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 2
+    ExplicitWidth = 286
   end
   object qLocal: TFDQuery
     Connection = DM.Database1

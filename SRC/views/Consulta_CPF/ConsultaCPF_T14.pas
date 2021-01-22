@@ -65,8 +65,8 @@ type
     EditDtNasc: TEdit;
     EdtIncricao: TEdit;
     Label4: TLabel;
-    lbNomeDaTela: TLabel;
     ACBrEnterTab1: TACBrEnterTab;
+    Panel4: TPanel;
     procedure LabAtualizarCaptchaClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure FormShow(Sender: TObject);

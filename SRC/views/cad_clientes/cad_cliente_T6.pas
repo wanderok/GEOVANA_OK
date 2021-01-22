@@ -106,7 +106,6 @@ type
     Label3: TLabel;
     Label7: TLabel;
     Label11: TLabel;
-    lbNomeDaTela: TLabel;
     edRua: TEdit;
     edCEP: TEdit;
     edNumero: TEdit;
@@ -130,6 +129,7 @@ type
     GroupBox1: TGroupBox;
     mmObservacoes: TMemo;
     bSMC: TcxButton;
+    Panel4: TPanel;
     procedure bPesqZonaClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure bPesqBairroClick(Sender: TObject);
@@ -212,7 +212,6 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure bSMCClick(Sender: TObject);
-
   public
     { Public declarations }
   end;
@@ -222,10 +221,11 @@ var
   Cliente           : TCliente;
   vPodeFechar       : Boolean;
   vMemoLocal        : TMemo;
+
 implementation
 
 uses
-  Funcoes,
+  FuncoesSMC,
   TiposDeDados,
   ValidadorDeDocumentos,
   U_Municipio_T5,
@@ -239,7 +239,7 @@ uses
   ConsultaCPF_T14,
   CLIENTE_HISTORICO_BLOQUEIOS_CHB_T17,
   cad_cliente_SMC_T35,
-  Dados,
+  DadosSMC,
   Classe_Nuvem;
 
 {$R *.dfm}
@@ -261,6 +261,15 @@ end;
 procedure Tfrm_cad_cliente_T6.cxButton21Click(Sender: TObject);
 var vNuvem: TNuvem;
 begin
+   if Cliente.Existe then
+   begin
+      if not fTemAcesso(Usuario.Codigo,'ALTCLI') then
+          exit;
+   end
+   else
+      if not fTemAcesso(Usuario.Codigo,'CADCLI') then
+          exit;
+
    if not DadosCorretos then
       exit;
 
@@ -501,8 +510,6 @@ begin
 end;
 
 function Tfrm_cad_cliente_T6.DadosCorretos: Boolean;
-const Campo_Obrigatorio     = 100;
-      Campo_Nao_Obrigatorio =   0;
 begin
    result := false;
 
@@ -988,8 +995,12 @@ begin
 end;
 
 procedure Tfrm_cad_cliente_T6.FormShow(Sender: TObject);
+var vCliente:String;
 begin
+   vCliente := edCodigo.Text;
    Inicio;
+   edCodigo.Text := vCliente;
+   Pesquisar;
 end;
 
 function Tfrm_cad_cliente_T6.fPessoaFisica: Boolean;
@@ -1123,7 +1134,6 @@ begin
         Cliente.Detalhes.Contato.Email1       := edEmail1.Text;
         Cliente.Detalhes.Contato.Email2       := edEmail2.Text;
 
-
         Lista := TStringList.Create;
         for i := 0 to vMemoLocal.lines.count-1 do
             Lista.Add(vMemoLocal.lines[i]);
@@ -1152,6 +1162,9 @@ end;
 
 procedure Tfrm_cad_cliente_T6.Preencher_Campos_da_Tela;
 begin
+   if not fTemAcesso('CONCLI') then
+      exit;
+
    Limpar_os_campos_da_Tela(frm_cad_cliente_T6);
 
    edCodigo.Text      := Cliente.Codigo;
@@ -1242,7 +1255,7 @@ end;
 
 procedure Tfrm_cad_cliente_T6.Preencher_Observacoes;
 var i     : Integer;
-  ScrollMessage: TWMVScroll;
+  ScrollMessage: TWMVScroll; //uses Winapi.Messages
 begin
    mmObservacoes.lines.clear;
    for i := 0 to Cliente.Observacao.count-1 do

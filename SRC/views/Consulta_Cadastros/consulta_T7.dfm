@@ -48,23 +48,6 @@ object frm_consulta_T7: Tfrm_consulta_T7
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 452
-    Width = 968
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T7 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 935
-    ExplicitWidth = 33
-  end
   object gd: TcxGrid
     Left = 0
     Top = 53
@@ -568,6 +551,24 @@ object frm_consulta_T7: Tfrm_consulta_T7
     Caption = 'Procurar em qualque parte do texto'
     TabOrder = 5
     OnClick = cbQualquerParteDoNomeClick
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 450
+    Width = 968
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T7 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 6
   end
   object qLocal: TFDQuery
     Connection = DM.Database1

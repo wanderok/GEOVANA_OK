@@ -31,6 +31,11 @@ uses Dialogs, SysUtils,
      Dados, DadosNuvem, Winsock, Quickrpt, QRCtrls;
 
 //##############################################################################
+
+const Campo_Obrigatorio     = 100;
+      Campo_Importante      = 200;
+      Campo_Nao_Obrigatorio =   0;
+
 type
    TPesquisaF1 = class
    Const
@@ -41,6 +46,7 @@ type
        FTabela,
        FCodigo,
        FChave,
+       FGrupo,
        FExiste,
        FDescricao          : String;
        FTipoPesquisa       : Integer;
@@ -53,22 +59,28 @@ type
     function ProximoCODIGO:String;
     function getCodigo: String;
     function Codigos:String;
+    function Grupos:String;
     function Chaves: String;
     function Descricoes: String;
     function getFDescricao: String;
     procedure SetCodigo(const Value: String);
     procedure setFDescricao(const Value: String);
+    function getGrupo: String;
+    procedure SetGrupo(const Value: String);
 
 
    public
       constructor Create;
       destructor Destroy; override;
       property Codigo     : String  read getCodigo     write SetCodigo;
+      property Grupo      : String  read getGrupo      write SetGrupo;
       property Tabela     : String  read FTabela;
+
       property Descricao  : String  read getFDescricao write setFDescricao;
       function ExisteDescricao(pTabela,pFiltro:String;pQueryExterna:TFDQuery): Boolean;
       function ProcuraDescricao(pTabela,pFiltro:String;pQueryExterna:TFDQuery): Boolean;
       function ExisteCodigo(pTabela,pFiltro:String): Boolean;
+
       function Gravar:Boolean;
    end;
 //##############################################################################
@@ -104,6 +116,11 @@ var Acesso            : TAcesso;
 
 function UniSystem:Boolean;
 function fSenhaUsuarioMaster:String;
+
+function ZeroSeValorInvalido(pValor:String):Real;
+function NomeProduto(pProduto:String):String;
+procedure Incluir_EAN13(pTela,pProduto,pEAN13:String);
+procedure Excluir_EAN13(pTela,pProduto,pEAN13:String);
 procedure ApagaRegistroDeDadosDaTela(pTela:String);
 //Apaga os registros de controle contendo os dados da tela
 procedure ComparaDadosDaTela(pFrase:String;pTela:Tobject);
@@ -119,14 +136,21 @@ procedure AcessoExclusivoMaster;
 procedure MostrarMemo(pMemo:TMemo);
 function RemoveAcento(const pText: string): string;
 function RemoverObsCorreios(const pText: string): string;
-function PesquisarCadastro(pTabela:String;pFiltro,pDescricao:TEdit):Boolean;
+function PesquisarCadastro(pTabela:String;pFiltro,pDescricao:TEdit):Boolean; overload;
+function PesquisarCadastro(pTabela:String;pGrupo,pFiltro,pDescricao:TEdit):Boolean; overload;
 function fPesquisarBairro(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarRegiao(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarZona(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarMarca(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarUnidade(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarGrupo(pCodigo,pDescricao:TEdit):Boolean;
+function fPesquisarSubGrupo(pGrupo,pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarFamilia(pCodigo,pDescricao:TEdit):Boolean;
+function fPesquisarTipoProduto(pCodigo,pDescricao:TEdit):Boolean;
+function fPesquisarImpressora(pCodigo,pDescricao:TEdit):Boolean;
+function fPesquisarAlmoxarifado(pCodigo,pDescricao:TEdit):Boolean;
+function fPesquisarCentroDeCustos(pCodigo,pDescricao:TEdit):Boolean;
+
 function fPesquisarAtividade(pCodigo,pDescricao:TEdit):Boolean;
 function fPesquisarTpColaborador(pCodigo,pDescricao:TEdit):Boolean;
 function fCaption(pTabela:String):String;
@@ -170,6 +194,7 @@ function Existe_Outro_MOTORISTA_Com_Este_RG(pRG,pCliente:String):Boolean;
 procedure Cria_Objetos_das_Classes;
 procedure Destroi_Objetos_das_Classes;
 //
+Function fTiraAcentos(pFraseComAcentos:String):String;
 function selectCEP(pCEP,pRua,pBairro,pCidade,pUF:TEdit):Boolean;
 Function RetiraExcessoDeEspacos(pFrase:String):String;
 Function CadastrarMunicipio(pCidade,pUF:String):String;
@@ -186,6 +211,11 @@ function SelectMarca(pMarca:String;pMarcaDescricao:Tedit):Boolean;
 function SelectUnidade(pUnidade:String;pUnidadeDescricao:Tedit):Boolean;
 function SelectFamilia(pFamilia:String;pFamiliaDescricao:Tedit):Boolean;
 function SelectGrupo(pGrupo:String;pGrupoDescricao:Tedit):Boolean;
+function SelectSubGrupo(pGrupo,pSubGrupo:String;pSubGrupoDescricao:Tedit):Boolean;
+function SelectTipoProduto(pTipo:String;pTipoDescricao:Tedit):Boolean;
+function SelectImpressora(pImpressora:String;pImpressoraDescricao:Tedit):Boolean;
+function SelectAlmoxarifado(pAlmoxarifado:String;pAlmoxarifadoDescricao:Tedit):Boolean;
+function SelectCentroDeCustos(pAlmoxarifado:String;pAlmoxarifadoDescricao:Tedit):Boolean;
 function ZeroSeDataNula(pData:String):TDatetime;
 function BarrasSeDataNula(pData:String):String;
 function DataNoFuturo(pData:TMaskEdit):Boolean;
@@ -234,7 +264,12 @@ function ProximoTPCOL_CODIGO:String;
 function ProximoPM_CODIGO:String;
 function ProximoUM_CODIGO:String;
 function ProximoPG_CODIGO:String;
+function ProximoPSG_CODIGO:String;
 function ProximoPF_CODIGO:String;
+function ProximoPT_CODIGO:String;
+function ProximoIMP_CODIGO:String;
+function ProximoALM_CODIGO:String;
+function ProximoCCUSTO_CODIGO:String;
 //
 Function DataDoExecutavel:String;
 
@@ -1717,7 +1752,7 @@ begin
     q.Free;
 end;
 
- function ProximoPG_CODIGO:String;
+function ProximoPG_CODIGO:String;
 var Q : TFDQuery;
     i : Integer;
 begin
@@ -1741,9 +1776,9 @@ begin
         i := 1;
         Q.Close;
         Q.Sql.Clear;
-        Q.SQL.Add('SELECT *                              ');
-        Q.SQL.Add('  FROM PRODUTOGRUPO_PG                ');
-        Q.SQL.Add(' WHERE PRODUTOGRUPO_PG_CODIGO = :COD  ');
+        Q.SQL.Add('SELECT *                 ');
+        Q.SQL.Add('  FROM PRODUTOGRUPO_PG   ');
+        Q.SQL.Add(' WHERE PG_CODIGO = :COD  ');
         Q.ParamByName('COD').AsString := FormatFloat('#',i);
         Q.open;
         while not Q.eof do
@@ -1758,7 +1793,48 @@ begin
     q.Free;
 end;
 
- function ProximoPF_CODIGO:String;
+function ProximoPSG_CODIGO:String;
+var Q : TFDQuery;
+    i : Integer;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+  try
+    Q.Close;
+    Q.Sql.Clear;
+    Q.SQL.Add('SELECT MAX(PSG_CODIGO) AS MAIOR ');
+    Q.SQL.Add('  FROM PRODUTOSGRUPO_PSG        ');
+    Q.open;
+    if Q.eof then
+       result := '1'
+    else
+       if Q.FieldByName('MAIOR').AsString = '' then
+           result := '1'
+       else
+           result := FormatFloat('#',Q.FieldByName('MAIOR').AsInteger + 1);
+   except
+        i := 1;
+        Q.Close;
+        Q.Sql.Clear;
+        Q.SQL.Add('SELECT *                  ');
+        Q.SQL.Add('  FROM PRODUTOSGRUPO_PSG  ');
+        Q.SQL.Add(' WHERE PSG_CODIGO = :COD  ');
+        Q.ParamByName('COD').AsString := FormatFloat('#',i);
+        Q.open;
+        while not Q.eof do
+        begin
+          Inc(i);
+          Q.Close;
+          Q.ParamByName('COD').AsString := FormatFloat('#',i);
+          Q.open;
+        end;
+        result:= FormatFloat('#',i);
+     end;
+    q.Free;
+end;
+
+function ProximoPF_CODIGO:String;
 var Q : TFDQuery;
     i : Integer;
 begin
@@ -1799,6 +1875,169 @@ begin
     q.Free;
 end;
 
+function ProximoPT_CODIGO:String;
+var Q : TFDQuery;
+    i : Integer;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+  try
+    Q.Close;
+    Q.Sql.Clear;
+    Q.SQL.Add('SELECT MAX(PT_CODIGO) AS MAIOR ');
+    Q.SQL.Add('  FROM PRODUTOTIPO_PT       ');
+    Q.open;
+    if Q.eof then
+       result := '1'
+    else
+       if Q.FieldByName('MAIOR').AsString = '' then
+           result := '1'
+       else
+           result := FormatFloat('#',Q.FieldByName('MAIOR').AsInteger + 1);
+   except
+        i := 1;
+        Q.Close;
+        Q.Sql.Clear;
+        Q.SQL.Add('SELECT *                ');
+        Q.SQL.Add('  FROM PRODUTOTIPO_PT');
+        Q.SQL.Add(' WHERE PT_CODIGO = :COD ');
+        Q.ParamByName('COD').AsString := FormatFloat('#',i);
+        Q.open;
+        while not Q.eof do
+        begin
+          Inc(i);
+          Q.Close;
+          Q.ParamByName('COD').AsString := FormatFloat('#',i);
+          Q.open;
+        end;
+        result:= FormatFloat('#',i);
+     end;
+    q.Free;
+end;
+
+function ProximoIMP_CODIGO:String;
+var Q : TFDQuery;
+    i : Integer;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+  try
+    Q.Close;
+    Q.Sql.Clear;
+    Q.SQL.Add('SELECT MAX(IMP_CODIGO) AS MAIOR ');
+    Q.SQL.Add('  FROM IMPRESSORA_IMP           ');
+    Q.open;
+    if Q.eof then
+       result := '1'
+    else
+       if Q.FieldByName('MAIOR').AsString = '' then
+           result := '1'
+       else
+           result := FormatFloat('#',Q.FieldByName('MAIOR').AsInteger + 1);
+   except
+        i := 1;
+        Q.Close;
+        Q.Sql.Clear;
+        Q.SQL.Add('SELECT *                 ');
+        Q.SQL.Add('  FROM IMPRESSORA_IMP    ');
+        Q.SQL.Add(' WHERE IMP_CODIGO = :COD ');
+        Q.ParamByName('COD').AsString := FormatFloat('#',i);
+        Q.open;
+        while not Q.eof do
+        begin
+          Inc(i);
+          Q.Close;
+          Q.ParamByName('COD').AsString := FormatFloat('#',i);
+          Q.open;
+        end;
+        result:= FormatFloat('#',i);
+     end;
+    q.Free;
+end;
+
+function ProximoALM_CODIGO:String;
+var Q : TFDQuery;
+    i : Integer;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+  try
+    Q.Close;
+    Q.Sql.Clear;
+    Q.SQL.Add('SELECT MAX(ALM_CODIGO) AS MAIOR ');
+    Q.SQL.Add('  FROM ALMOXARIFADO_ALM         ');
+    Q.open;
+    if Q.eof then
+       result := '1'
+    else
+       if Q.FieldByName('MAIOR').AsString = '' then
+           result := '1'
+       else
+           result := FormatFloat('#',Q.FieldByName('MAIOR').AsInteger + 1);
+   except
+        i := 1;
+        Q.Close;
+        Q.Sql.Clear;
+        Q.SQL.Add('SELECT *                 ');
+        Q.SQL.Add('  FROM ALMOXARIFADO_ALM  ');
+        Q.SQL.Add(' WHERE ALM_CODIGO = :COD ');
+        Q.ParamByName('COD').AsString := FormatFloat('#',i);
+        Q.open;
+        while not Q.eof do
+        begin
+          Inc(i);
+          Q.Close;
+          Q.ParamByName('COD').AsString := FormatFloat('#',i);
+          Q.open;
+        end;
+        result:= FormatFloat('#',i);
+     end;
+    q.Free;
+end;
+
+function ProximoCCUSTO_CODIGO:String;
+var Q : TFDQuery;
+    i : Integer;
+begin
+    q := TFDQuery.Create(nil);
+    Q.ConnectionName := 'X';
+
+  try
+    Q.Close;
+    Q.Sql.Clear;
+    Q.SQL.Add('SELECT MAX(CCUSTO_CODIGO) AS MAIOR ');
+    Q.SQL.Add('  FROM CENTRO_DE_CUSTOS_CCUSTO         ');
+    Q.open;
+    if Q.eof then
+       result := '1'
+    else
+       if Q.FieldByName('MAIOR').AsString = '' then
+           result := '1'
+       else
+           result := FormatFloat('#',Q.FieldByName('MAIOR').AsInteger + 1);
+   except
+        i := 1;
+        Q.Close;
+        Q.Sql.Clear;
+        Q.SQL.Add('SELECT *                      ');
+        Q.SQL.Add('  FROM CENTRO_DE_CUSTOS_CCUSTO');
+        Q.SQL.Add(' WHERE CCUSTO_CODIGO = :COD   ');
+        Q.ParamByName('COD').AsString := FormatFloat('#',i);
+        Q.open;
+        while not Q.eof do
+        begin
+          Inc(i);
+          Q.Close;
+          Q.ParamByName('COD').AsString := FormatFloat('#',i);
+          Q.open;
+        end;
+        result:= FormatFloat('#',i);
+     end;
+    q.Free;
+end;
 
 function ProximoPM_CODIGO:String;
 var Q : TFDQuery;
@@ -2777,6 +3016,162 @@ begin
    Result := True;
 end;
 
+function SelectTipoProduto(pTipo:String;pTipoDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   Result := True;
+   pTipoDescricao.Text := '';
+   if pTipo = '' then
+   begin
+      exit;
+   end;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT PT_DESCRICAO          ');
+   qLocal.sql.add('  FROM PRODUTOTIPO_PT        ');
+   qLocal.sql.add(' WHERE PT_CODIGO = :PT_CODIGO');
+   qLocal.ParamByName('PT_CODIGO').AsString := pTipo;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+   pTipoDescricao.Text := qlocal.FieldByName('PT_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
+function SelectImpressora(pImpressora:String;pImpressoraDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   Result := True;
+   pImpressoraDescricao.Text := '';
+   if pImpressora = '' then
+   begin
+      exit;
+   end;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT IMP_CAMINHO             ');
+   qLocal.sql.add('  FROM IMPRESSORA_IMP          ');
+   qLocal.sql.add(' WHERE IMP_CODIGO = :IMP_CODIGO');
+   qLocal.ParamByName('IMP_CODIGO').AsString := pImpressora;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+   pImpressoraDescricao.Text := qlocal.FieldByName('IMP_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
+function SelectAlmoxarifado(pAlmoxarifado:String;pAlmoxarifadoDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   Result := True;
+   pAlmoxarifadoDescricao.Text := '';
+   if pAlmoxarifado = '' then
+   begin
+      exit;
+   end;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT ALM_DESCRICAO           ');
+   qLocal.sql.add('  FROM ALMOXARIFADO_ALM        ');
+   qLocal.sql.add(' WHERE ALM_CODIGO = :ALM_CODIGO');
+   qLocal.ParamByName('ALM_CODIGO').AsString := pAlmoxarifado;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+   pAlmoxarifadoDescricao.Text := qlocal.FieldByName('ALM_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
+function SelectCentroDeCustos(pAlmoxarifado:String;pAlmoxarifadoDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   Result := True;
+   pAlmoxarifadoDescricao.Text := '';
+   if pAlmoxarifado = '' then
+   begin
+      exit;
+   end;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT CCUSTO_DESCRICAO               ');
+   qLocal.sql.add('  FROM CENTRO_DE_CUSTOS_CCUSTO        ');
+   qLocal.sql.add(' WHERE CCUSTO_CODIGO = :CCUSTO_CODIGO ');
+   qLocal.ParamByName('CCUSTO_CODIGO').AsString := pAlmoxarifado;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+   pAlmoxarifadoDescricao.Text := qlocal.FieldByName('CCUSTO_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
+function SelectSubGrupo(pGrupo,pSubGrupo:String;pSubGrupoDescricao:Tedit):Boolean;
+var qLocal : tFDQuery;
+begin
+   Result := True;
+   pSubGrupoDescricao.Text := '';
+
+   if pGrupo    = '' then exit;
+   if pSubGrupo = '' then exit;
+
+   qLocal := TFDQuery.Create(nil);
+   qLocal.ConnectionName := 'X';
+
+   result := false;
+   qLocal.close;
+   qLocal.sql.clear;
+   qLocal.sql.add('SELECT PSG_DESCRICAO           ');
+   qLocal.sql.add('  FROM PRODUTOSGRUPO_PSG       ');
+   qLocal.sql.add(' WHERE PSG_GRUPO  = :PSG_GRUPO ');
+   qLocal.sql.add('   AND PSG_CODIGO = :PSG_CODIGO');
+   qLocal.ParamByName('PSG_GRUPO' ).AsString := pGrupo;
+   qLocal.ParamByName('PSG_CODIGO').AsString := pSubGrupo;
+   qLocal.Open;
+   if qLocal.Eof then
+   begin
+     qlocal.Free;
+     exit;
+   end;
+   pSubGrupoDescricao.Text := qlocal.FieldByName('PSG_DESCRICAO').AsString;
+   qlocal.Free;
+   Result := True;
+end;
+
 function SelectFamilia(pFamilia:String;pFamiliaDescricao:Tedit):Boolean;
 var qLocal : tFDQuery;
 begin
@@ -3038,7 +3433,7 @@ begin
    Result := 'SMC Plus';
 end;
 
-function PesquisarCadastro(pTabela:String;pFiltro,pDescricao:TEdit):Boolean;
+function PesquisarCadastro(pTabela:String;pFiltro,pDescricao:TEdit):Boolean;  overload;
 begin
    result:=False;
    pDescricao.Text := '';
@@ -3046,6 +3441,25 @@ begin
    frm_PesquisaF1_T16 := Tfrm_PesquisaF1_T16.Create(nil);
    frm_PesquisaF1_T16.Caption := fCaption(pTabela);
    vfrm_PesquisaF1_T16Tabela := pTabela;
+   frm_PesquisaF1_T16.ShowModal;
+   if vfrm_PesquisaF1_T16 <> '' then
+   begin
+      pFiltro.Text    := frm_PesquisaF1_T16.qLocal.FieldByName('CODIGO').AsString;
+      pDescricao.Text := frm_PesquisaF1_T16.qLocal.FieldByName('DESCRICAO').AsString;
+      result          := true;
+   end;
+   frm_PesquisaF1_T16.Free;
+end;
+
+function PesquisarCadastro(pTabela:String;pGrupo,pFiltro,pDescricao:TEdit):Boolean; overload;
+begin
+   result:=False;
+   pDescricao.Text := '';
+
+   frm_PesquisaF1_T16 := Tfrm_PesquisaF1_T16.Create(nil);
+   frm_PesquisaF1_T16.Caption := fCaption(pTabela);
+   vfrm_PesquisaF1_T16Tabela := pTabela;
+   vfrm_PesquisaF1_T16Grupo  := pGrupo.Text;
    frm_PesquisaF1_T16.ShowModal;
    if vfrm_PesquisaF1_T16 <> '' then
    begin
@@ -3091,6 +3505,26 @@ begin
    result := PesquisarCadastro('PRODUTOFAMILIA_PF',pCodigo,pDescricao);
 end;
 
+function fPesquisarTipoProduto(pCodigo,pDescricao:TEdit):Boolean;
+begin
+   result := PesquisarCadastro('PRODUTOTIPO_PT',pCodigo,pDescricao);
+end;
+
+function fPesquisarImpressora(pCodigo,pDescricao:TEdit):Boolean;
+begin
+   result := PesquisarCadastro('IMPRESSORA_IMP',pCodigo,pDescricao);
+end;
+
+function fPesquisarAlmoxarifado(pCodigo,pDescricao:TEdit):Boolean;
+begin
+   result := PesquisarCadastro('ALMOXARIFADO_ALM',pCodigo,pDescricao);
+end;
+
+function fPesquisarCentroDeCustos(pCodigo,pDescricao:TEdit):Boolean;
+begin
+   result := PesquisarCadastro('CENTRO_DE_CUSTOS_CCUSTO',pCodigo,pDescricao);
+end;
+
 function fPesquisarUnidade(pCodigo,pDescricao:TEdit):Boolean;
 begin
    result := PesquisarCadastro('UNIDADEMEDIDA_UM',pCodigo,pDescricao);
@@ -3101,18 +3535,90 @@ begin
    result := PesquisarCadastro('PRODUTOGRUPO_PG',pCodigo,pDescricao);
 end;
 
+function fPesquisarSubGrupo(pGrupo,pCodigo,pDescricao:TEdit):Boolean;
+begin
+   result := PesquisarCadastro('PRODUTOSGRUPO_PSG',pGrupo,pCodigo,pDescricao);
+end;
+
 function fCaption(pTabela:String):String;
 begin
-        if  pTabela = 'ZONA_ZON'              then result := 'Cadastro | Zona'
-  else  if  pTabela = 'PRODUTOMARCA_PM'       then result := 'Cadastro | Marca'
-  else  if  pTabela = 'UNIDADEMEDIDA_UM'      then result := 'Cadastro | Unidade de Medida'
-  else  if  pTabela = 'PRODUTOGRUPO_PG'       then result := 'Cadastro | Grupo de Produto'
-  else  if  pTabela = 'PRODUTOFAMILIA_PF'     then result := 'Cadastro | FamÌlia de Produto'
-  else  if  pTabela = 'REGIAO_REG'            then result := 'Cadastro | Regi„o'
-  else  if  pTabela = 'BAIRRO_BAI'            then result := 'Cadastro | Bairro'
-  else  if  pTabela = 'RAMOATIVIDADE_RAMO'    then result := 'Cadastro | Atividade'
-  else  if  pTabela = 'TIPOCOLABORADOR_TPCOL' then result := 'Cadastro | Tipo Colaborador'
+        if  pTabela = 'ZONA_ZON'                then result := 'Cadastro | Zona'
+  else  if  pTabela = 'PRODUTOMARCA_PM'         then result := 'Cadastro | Marca'
+  else  if  pTabela = 'UNIDADEMEDIDA_UM'        then result := 'Cadastro | Unidade de Medida'
+  else  if  pTabela = 'PRODUTOGRUPO_PG'         then result := 'Cadastro | Grupo de Produto'
+  else  if  pTabela = 'PRODUTOSGRUPO_PSG'       then result := 'Cadastro | SubGrupo de Produtos'
+  else  if  pTabela = 'PRODUTOFAMILIA_PF'       then result := 'Cadastro | FamÌlia de Produto'
+  else  if  pTabela = 'PRODUTOTIPO_PT'          then result := 'Cadastro | Tipo de Produto'
+  else  if  pTabela = 'IMPRESSORA_IMP'          then result := 'Cadastro | Impressora'
+  else  if  pTabela = 'ALMOXARIFADO_ALM'        then result := 'Cadastro | Almoxarifado'
+  else  if  pTabela = 'CENTRO_DE_CUSTOS_CCUSTO' then result := 'Cadastro | Centro de Custos'
+  else  if  pTabela = 'REGIAO_REG'              then result := 'Cadastro | Regi„o'
+  else  if  pTabela = 'BAIRRO_BAI'              then result := 'Cadastro | Bairro'
+  else  if  pTabela = 'RAMOATIVIDADE_RAMO'      then result := 'Cadastro | Atividade'
+  else  if  pTabela = 'TIPOCOLABORADOR_TPCOL'   then result := 'Cadastro | Tipo Colaborador'
   else  result := '';
+end;
+
+Function fTiraAcentos(pFraseComAcentos:String):String;
+var letra,
+    vFraseSemAcentos : String;
+    posicao          : Integer;
+begin
+   vFraseSemAcentos := '';
+   for posicao := 1 to length(pFraseComAcentos) Do
+   begin
+          letra := copy(pFraseComAcentos,posicao,1);
+
+          if letra = '¡' Then  letra := 'A';
+          if letra = '√' Then  letra := 'A';
+          if letra = 'ƒ' Then  letra := 'A';
+          if letra = '¿' Then  letra := 'A';
+          if letra = '…' Then  letra := 'E';
+          if letra = ' ' Then  letra := 'E';
+          if letra = '»' Then  letra := 'E';
+          if letra = 'ê' Then  letra := 'E';
+          if letra = 'Õ' Then  letra := 'I';
+          if letra = 'ê' Then  letra := 'E';
+          if letra = '”' Then  letra := 'O';
+          if letra = '÷' Then  letra := 'O';
+          if letra = '‘' Then  letra := 'O';
+          if letra = '⁄' Then  letra := 'U';
+          if letra = '€' Then  letra := 'U';
+          if letra = '‹' Then  letra := 'U';
+          if letra = '«' Then  letra := 'C';
+          if letra = '·' Then  letra := 'a';
+          if letra = '„' Then  letra := 'a';
+          if letra = '‰' Then  letra := 'a';
+          if letra = '‡' Then  letra := 'a';
+          if letra = 'È' Then  letra := 'e';
+          if letra = 'Í' Then  letra := 'e';
+          if letra = 'Î' Then  letra := 'e';
+          if letra = 'Ë' Then  letra := 'e';
+          if letra = 'Ì' Then  letra := 'i';
+          if letra = 'Û' Then  letra := 'o';
+          if letra = 'ˆ' Then  letra := 'o';
+          if letra = 'ı' Then  letra := 'o';
+          if letra = 'Ù' Then  letra := 'o';
+          if letra = '˙' Then  letra := 'u';
+          if letra = '˚' Then  letra := 'u';
+          if letra = '¸' Then  letra := 'u';
+          if letra = 'Á' Then  letra := 'c';
+          if letra = 'µ' Then  letra := 'A';
+          if letra = '∆' Then  letra := 'A';
+          if letra = '¢' Then  letra := 'O';
+          if letra = '∂' Then  letra := 'A';
+          if letra = 'Ç' Then  letra := 'E';
+          if letra = 'É' Then  letra := 'A';
+          if letra = '°' Then  letra := 'I';
+          if letra = '&' Then  letra := ' ';
+          if letra = 'ß' Then  letra := ',';
+          if letra = 'Ä' Then  letra := 'C';
+          if letra = '=' Then  letra := ' ';
+          if letra = '`' Then  letra := '';
+
+          vFraseSemAcentos := vFraseSemAcentos + letra;
+   end;
+   Result := UpperCase(vFraseSemAcentos);
 end;
 
 // END.
@@ -3121,29 +3627,39 @@ end;
 
 function TPesquisaF1.Chaves: String;
 begin
-        if  FTabela = 'ZONA_ZON'              then result := 'ZON_CODIGO'
-  else  if  FTabela = 'PRODUTOMARCA_PM'       then result := 'PM_CODIGO'
-  else  if  FTabela = 'UNIDADEMEDIDA_UM'      then result := 'UM_CODIGO'
-  else  if  FTabela = 'PRODUTOGRUPO_PG'       then result := 'PG_CODIGO'
-  else  if  FTabela = 'PRODUTOFAMILIA_PF'     then result := 'PF_CODIGO'
-  else  if  FTabela = 'REGIAO_REG'            then result := 'REG_CODIGO'
-  else  if  FTabela = 'BAIRRO_BAI'            then result := 'BAI_CODIGO'
-  else  if  FTabela = 'RAMOATIVIDADE_RAMO'    then result := 'RAMO_CODIGO'
-  else  if  FTabela = 'TIPOCOLABORADOR_TPCOL' then result := 'TPCOL_CODIGO'
+        if  FTabela = 'ZONA_ZON'                then result := 'ZON_CODIGO'
+  else  if  FTabela = 'PRODUTOMARCA_PM'         then result := 'PM_CODIGO'
+  else  if  FTabela = 'UNIDADEMEDIDA_UM'        then result := 'UM_CODIGO'
+  else  if  FTabela = 'PRODUTOGRUPO_PG'         then result := 'PG_CODIGO'
+  else  if  FTabela = 'PRODUTOSGRUPO_PSG'       then result := 'PSG_CODIGO'
+  else  if  FTabela = 'PRODUTOFAMILIA_PF'       then result := 'PF_CODIGO'
+  else  if  FTabela = 'PRODUTOTIPO_PT'          then result := 'PT_CODIGO'
+  else  if  FTabela = 'IMPRESSORA_IMP'          then result := 'IMP_CODIGO'
+  else  if  FTabela = 'ALMOXARIFADO_ALM'        then result := 'ALM_CODIGO'
+  else  if  FTabela = 'CENTRO_DE_CUSTOS_CCUSTO' then result := 'CCUSTO_CODIGO'
+  else  if  FTabela = 'REGIAO_REG'              then result := 'REG_CODIGO'
+  else  if  FTabela = 'BAIRRO_BAI'              then result := 'BAI_CODIGO'
+  else  if  FTabela = 'RAMOATIVIDADE_RAMO'      then result := 'RAMO_CODIGO'
+  else  if  FTabela = 'TIPOCOLABORADOR_TPCOL'   then result := 'TPCOL_CODIGO'
   else  result := '';
 end;
 
 function TPesquisaF1.Codigos: String;
 begin
-        if  FTabela = 'ZONA_ZON'              then result := 'ZON_CODIGO'
-  else  if  FTabela = 'PRODUTOMARCA_PM'       then result := 'PM_CODIGO'
-  else  if  FTabela = 'UNIDADEMEDIDA_UM'      then result := 'UM_CODIGO'
-  else  if  FTabela = 'PRODUTOGRUPO_PG'       then result := 'PG_CODIGO'
-  else  if  FTabela = 'PRODUTOFAMILIA_PF'     then result := 'PF_CODIGO'
-  else  if  FTabela = 'REGIAO_REG'            then result := 'REG_CODIGO'
-  else  if  FTabela = 'BAIRRO_BAI'            then result := 'BAI_CODIGO'
-  else  if  FTabela = 'RAMOATIVIDADE_RAMO'    then result := 'RAMO_CODIGO'
-  else  if  FTabela = 'TIPOCOLABORADOR_TPCOL' then result := 'TPCOL_CODIGO'
+        if  FTabela = 'ZONA_ZON'                then result := 'ZON_CODIGO'
+  else  if  FTabela = 'PRODUTOMARCA_PM'         then result := 'PM_CODIGO'
+  else  if  FTabela = 'UNIDADEMEDIDA_UM'        then result := 'UM_CODIGO'
+  else  if  FTabela = 'PRODUTOGRUPO_PG'         then result := 'PG_CODIGO'
+  else  if  FTabela = 'PRODUTOSGRUPO_PSG'       then result := 'PSG_CODIGO'
+  else  if  FTabela = 'PRODUTOFAMILIA_PF'       then result := 'PF_CODIGO'
+  else  if  FTabela = 'PRODUTOTIPO_PT'          then result := 'PT_CODIGO'
+  else  if  FTabela = 'IMPRESSORA_IMP'          then result := 'IMP_CODIGO'
+  else  if  FTabela = 'ALMOXARIFADO_ALM'        then result := 'ALM_CODIGO'
+  else  if  FTabela = 'CENTRO_DE_CUSTOS_CCUSTO' then result := 'CCUSTO_CODIGO'
+  else  if  FTabela = 'REGIAO_REG'              then result := 'REG_CODIGO'
+  else  if  FTabela = 'BAIRRO_BAI'              then result := 'BAI_CODIGO'
+  else  if  FTabela = 'RAMOATIVIDADE_RAMO'      then result := 'RAMO_CODIGO'
+  else  if  FTabela = 'TIPOCOLABORADOR_TPCOL'   then result := 'TPCOL_CODIGO'
   else  result := '';
 end;
 
@@ -3155,15 +3671,20 @@ end;
 
 function TPesquisaF1.Descricoes: String;
 begin
-        if  FTabela = 'ZONA_ZON'              then result := 'ZON_DESCRICAO'
-  else  if  FTabela = 'PRODUTOMARCA_PM'       then result := 'PM_DESCRICAO'
-  else  if  FTabela = 'UNIDADEMEDIDA_UM'      then result := 'UM_DESCRICAO'
-  else  if  FTabela = 'PRODUTOGRUPO_PG'       then result := 'PG_DESCRICAO'
-  else  if  FTabela = 'PRODUTOFAMILIA_PF'     then result := 'PF_DESCRICAO'
-  else  if  FTabela = 'REGIAO_REG'            then result := 'REG_DESCRICAO'
-  else  if  FTabela = 'BAIRRO_BAI'            then result := 'BAI_DESCRICAO'
-  else  if  FTabela = 'RAMOATIVIDADE_RAMO'    then result := 'RAMO_DESCRICAO'
-  else  if  FTabela = 'TIPOCOLABORADOR_TPCOL' then result := 'TPCOL_NOME'
+        if  FTabela = 'ZONA_ZON'                then result := 'ZON_DESCRICAO'
+  else  if  FTabela = 'PRODUTOMARCA_PM'         then result := 'PM_DESCRICAO'
+  else  if  FTabela = 'UNIDADEMEDIDA_UM'        then result := 'UM_DESCRICAO'
+  else  if  FTabela = 'PRODUTOGRUPO_PG'         then result := 'PG_DESCRICAO'
+  else  if  FTabela = 'PRODUTOSGRUPO_PSG'       then result := 'PSG_DESCRICAO'
+  else  if  FTabela = 'PRODUTOFAMILIA_PF'       then result := 'PF_DESCRICAO'
+  else  if  FTabela = 'PRODUTOTIPO_PT'          then result := 'PT_DESCRICAO'
+  else  if  FTabela = 'IMPRESSORA_IMP'          then result := 'IMP_CAMINHO'
+  else  if  FTabela = 'ALMOXARIFADO_ALM'        then result := 'ALM_DESCRICAO'
+  else  if  FTabela = 'CENTRO_DE_CUSTOS_CCUSTO' then result := 'CCUSTO_DESCRICAO'
+  else  if  FTabela = 'REGIAO_REG'              then result := 'REG_DESCRICAO'
+  else  if  FTabela = 'BAIRRO_BAI'              then result := 'BAI_DESCRICAO'
+  else  if  FTabela = 'RAMOATIVIDADE_RAMO'      then result := 'RAMO_DESCRICAO'
+  else  if  FTabela = 'TIPOCOLABORADOR_TPCOL'   then result := 'TPCOL_NOME'
   else  result := '';
 end;
 
@@ -3213,6 +3734,11 @@ begin
    result := FDescricao;
 end;
 
+function TPesquisaF1.getGrupo: String;
+begin
+   result := FGrupo;
+end;
+
 function TPesquisaF1.Gravar: Boolean;
 var vNovaDescricao:String;
 begin
@@ -3230,26 +3756,56 @@ begin
    end;
 end;
 
+function TPesquisaF1.Grupos: String;
+begin
+       if  FTabela = 'PRODUTOSGRUPO_PSG'     then result := 'PSG_GRUPO'
+  else result := '';
+end;
+
 function TPesquisaF1.Insert: Boolean;
-var vCampoChave,
+var vCampoGrupo,
+    vCampoChave,
     vCampoDescricao:String;
 begin
+   vCampoGrupo    := Grupos;
    vCampoChave    := Codigos;
    vCampoDescricao:= Descricoes;
+
+       if ( (FTabela = 'ZONA_ZON'               ) ) and (not TemAcesso('CADZONA'   ) ) then exit
+  else if ( (FTabela = 'PRODUTOMARCA_PM'        ) ) and (not TemAcesso('CADMARCA'  ) ) then exit
+  else if ( (FTabela = 'UNIDADEMEDIDA_UM'       ) ) and (not TemAcesso('CADUM'     ) ) then exit
+  else if ( (FTabela = 'PRODUTOGRUPO_PG'        ) ) and (not TemAcesso('CADGRUPO'  ) ) then exit
+  else if ( (FTabela = 'PRODUTOSGRUPO_PSG'      ) ) and (not TemAcesso('CADSGRUPO' ) ) then exit
+  else if ( (FTabela = 'PRODUTOFAMILIA_PF'      ) ) and (not TemAcesso('CADFAM'    ) ) then exit
+  else if ( (FTabela = 'PRODUTOTIPO_PT'         ) ) and (not TemAcesso('CADTPPROD' ) ) then exit
+  else if ( (FTabela = 'IMPRESSORA_IMP'         ) ) and (not TemAcesso('CADIMPRESS') ) then exit
+  else if ( (FTabela = 'ALMOXARIFADO_ALM'       ) ) and (not TemAcesso('CADALMOX'  ) ) then exit
+  else if ( (FTabela = 'CENTRO_DE_CUSTOS_CCUSTO') ) and (not TemAcesso('CADCCUSTOS') ) then exit
+  else if ( (FTabela = 'REGIAO_REG'             ) ) and (not TemAcesso('CADRAMO'   ) ) then exit
+  else if ( (FTabela = 'BAIRRO_BAI'             ) ) and (not TemAcesso('CADBAIRRO' ) ) then exit
+  else if ( (FTabela = 'RAMOATIVIDADE_RAMO'     ) ) and (not TemAcesso('CADRAMO'   ) ) then exit
+  else if ( (FTabela = 'TIPOCOLABORADOR_TPCOL'  ) ) and (not TemAcesso('CADTPCOLAB') ) then exit;
 
    qLocal.Close;
    qLocal.SQL.Clear;
    qLocal.Sql.Add('INSERT INTO ' + FTabela      );
    qLocal.Sql.Add('     ( '+ vCampoChave +','   );
+   if vCampoGrupo <> '' then
+      qLocal.Sql.Add('    '+ vCampoGrupo +','   );
    qLocal.Sql.Add('       '+ vCampoDescricao+')');
    qLocal.Sql.Add('VALUES                      ');
    qLocal.Sql.Add('     (:CODIGO,              ');
+   if vCampoGrupo <> '' then
+      qLocal.Sql.Add('   :GRUPO,               ');
    qLocal.Sql.Add('      :DESCRICAO)           ');
    qLocal.ParamByName('CODIGO'   ).AsString := FCodigo;
+   if FGrupo <> '' then
+      qLocal.ParamByName('GRUPO' ).AsString := FGrupo;
    qLocal.ParamByName('DESCRICAO').AsString := FDescricao;
    qLocal.ExecSql;
 end;
 
+{
 function TPesquisaF1.Pesquisar(pQuery:TFDQuery): Boolean;
 begin
    pQuery.Close;
@@ -3282,6 +3838,53 @@ begin
 
    Result := not pQuery.Eof;
 end;
+}
+function TPesquisaF1.Pesquisar(pQuery: TFDQuery): Boolean;
+var vGrupo:String;
+begin
+   vGrupo:= Grupos;
+   pQuery.Close;
+   pQuery.SQL.Clear;
+   pQuery.Sql.Add('SELECT '+ Codigos    + ' AS CODIGO,   ');
+   pQuery.Sql.Add(           Descricoes + ' AS DESCRICAO ');
+   pQuery.Sql.Add('  FROM ' + FTabela                     );
+   pQuery.Sql.Add(' WHERE ' + FChave + ' = ' + FChave     );
+   case FTipoPesquisa of
+      _PESQUISA_DESCRICAO:
+      begin
+         if FFiltro <> '' then
+         begin
+            pQuery.Sql.Add(' AND ' + FChave + ' LIKE :ARGUMENTO1');
+            pQuery.ParamByName('ARGUMENTO1').AsString := '%'+FFiltro+'%';
+         end;
+         if vGrupo <> '' then
+         begin
+            pQuery.Sql.Add(' AND ' + vGrupo + '    = :ARGUMENTO0');
+            pQuery.ParamByName('ARGUMENTO0').AsString := FGrupo;
+         end;
+         pQuery.Sql.Add(' ORDER BY ' + FChave);
+      end;
+      _PESQUISA_CHAVE:
+      begin
+         pQuery.Sql.Add(' AND ' + FChave     + ' = :ARGUMENTO1');
+         pQuery.ParamByName('ARGUMENTO1').AsString := FFiltro;
+         if vGrupo <> '' then
+         begin
+            pQuery.Sql.Add(' AND ' + vGrupo + '    = :ARGUMENTO0');
+            pQuery.ParamByName('ARGUMENTO0').AsString := FGrupo;
+         end;
+//         pQuery.Sql.Add('    OR ' + Descricoes + ' = :ARGUMENTO2');
+//         pQuery.ParamByName('ARGUMENTO2').AsString := FDescricao;
+      end;
+   end;
+   pQuery.Open;
+   if not pQuery.eof then
+      if FTipoPesquisa = _PESQUISA_CHAVE then
+             FDescricao  := pQuery.FieldByName('DESCRICAO').AsString;
+
+   Result := not pQuery.Eof;
+end;
+
 
 function TPesquisaF1.ProcuraDescricao(pTabela, pFiltro: String;
   pQueryExterna: TFDQuery): Boolean;
@@ -3296,15 +3899,20 @@ end;
 
 function TPesquisaF1.ProximoCODIGO: String;
 begin
-        if FTabela = 'ZONA_ZON'              then result := ProximoZON_CODIGO
-   else if FTabela = 'PRODUTOMARCA_PM'       then result := ProximoPM_CODIGO
-   else if FTabela = 'UNIDADEMEDIDA_UM'      then result := ProximoUM_CODIGO
-   else if FTabela = 'PRODUTOGRUPO_PG'       then result := ProximoPG_CODIGO
-   else if FTabela = 'PRODUTOFAMILIA_PF'     then result := ProximoPF_CODIGO
-   else if FTabela = 'REGIAO_REG'            then result := ProximoREG_CODIGO
-   else if FTabela = 'BAIRRO_BAI'            then result := ProximoBAI_CODIGO
-   else if FTabela = 'RAMOATIVIDADE_RAMO'    then result := ProximoRAMO_CODIGO
-   else if FTabela = 'TIPOCOLABORADOR_TPCOL' then result := ProximoTPCOL_CODIGO
+        if FTabela = 'ZONA_ZON'                then result := ProximoZON_CODIGO
+   else if FTabela = 'PRODUTOMARCA_PM'         then result := ProximoPM_CODIGO
+   else if FTabela = 'UNIDADEMEDIDA_UM'        then result := ProximoUM_CODIGO
+   else if FTabela = 'PRODUTOGRUPO_PG'         then result := ProximoPG_CODIGO
+   else if FTabela = 'PRODUTOSGRUPO_PSG'       then result := ProximoPSG_CODIGO
+   else if FTabela = 'PRODUTOFAMILIA_PF'       then result := ProximoPF_CODIGO
+   else if FTabela = 'PRODUTOTIPO_PT'          then result := ProximoPT_CODIGO
+   else if FTabela = 'IMPRESSORA_IMP'          then result := ProximoIMP_CODIGO
+   else if FTabela = 'ALMOXARIFADO_ALM'        then result := ProximoALM_CODIGO
+   else if FTabela = 'CENTRO_DE_CUSTOS_CCUSTO' then result := ProximoCCUSTO_CODIGO
+   else if FTabela = 'REGIAO_REG'              then result := ProximoREG_CODIGO
+   else if FTabela = 'BAIRRO_BAI'              then result := ProximoBAI_CODIGO
+   else if FTabela = 'RAMOATIVIDADE_RAMO'      then result := ProximoRAMO_CODIGO
+   else if FTabela = 'TIPOCOLABORADOR_TPCOL'   then result := ProximoTPCOL_CODIGO
    else
    begin
       Log('Funcoes','TPesquisaF1.ProximoCODIGO: Defina Proximo'+FTabela);
@@ -3326,11 +3934,33 @@ begin
    FDescricao := Copy(Value,1,50);
 end;
 
+procedure TPesquisaF1.SetGrupo(const Value: String);
+begin
+   FGrupo := Value;
+end;
+
 function TPesquisaF1.Update: Boolean;
-var vCampoChave,
+var vCampoGrupo,
+    vCampoChave,
     vCampoDescricao:String;
 begin
+       if ( (FTabela = 'ZONA_ZON'               ) ) and (not TemAcesso('ALTZONA'   ) ) then exit
+  else if ( (FTabela = 'PRODUTOMARCA_PM'        ) ) and (not TemAcesso('ALTMARCA'  ) ) then exit
+  else if ( (FTabela = 'UNIDADEMEDIDA_UM'       ) ) and (not TemAcesso('ALTUM'     ) ) then exit
+  else if ( (FTabela = 'PRODUTOGRUPO_PG'        ) ) and (not TemAcesso('ALTGRUPO'  ) ) then exit
+  else if ( (FTabela = 'PRODUTOSGRUPO_PSG'      ) ) and (not TemAcesso('ALTSGRUPO' ) ) then exit
+  else if ( (FTabela = 'IMPRESSORA_IMP'         ) ) and (not TemAcesso('ALTIMPRESS') ) then exit
+  else if ( (FTabela = 'ALMOXARIFADO_ALM'       ) ) and (not TemAcesso('ALTALMOX'  ) ) then exit
+  else if ( (FTabela = 'CENTRO_DE_CUSTOS_CCUSTO') ) and (not TemAcesso('ALTCCUSTOS') ) then exit
+  else if ( (FTabela = 'PRODUTOFAMILIA_PF'      ) ) and (not TemAcesso('ALTFAM'    ) ) then exit
+  else if ( (FTabela = 'PRODUTOTIPO_PT'         ) ) and (not TemAcesso('ALTTPPROD' ) ) then exit
+  else if ( (FTabela = 'REGIAO_REG'             ) ) and (not TemAcesso('ALTRAMO'   ) ) then exit
+  else if ( (FTabela = 'BAIRRO_BAI'             ) ) and (not TemAcesso('ALTBAIRRO' ) ) then exit
+  else if ( (FTabela = 'RAMOATIVIDADE_RAMO'     ) ) and (not TemAcesso('ALTRAMO'   ) ) then exit
+  else if ( (FTabela = 'TIPOCOLABORADOR_TPCOL'  ) ) and (not TemAcesso('ALTTPCOLAB') ) then exit;
+
    try
+    vCampoGrupo    := Grupos;
     vCampoChave    := Codigos;
     vCampoDescricao:= Descricoes;
 
@@ -3338,7 +3968,16 @@ begin
      qLocal.SQL.Clear;
      qLocal.Sql.Add('UPDATE ' + FTabela);
      qLocal.Sql.Add('   SET ' + vCampoDescricao  + ' = :DESCRICAO');
-     qLocal.Sql.Add(' WHERE ' + vCampoChave      + ' = :CODIGO   ');
+     if vCampoGrupo = '' then
+     begin
+        qLocal.Sql.Add(' WHERE ' + vCampoChave      + ' = :CODIGO   ');
+     end
+     else
+     begin
+        qLocal.Sql.Add(' WHERE ' + vCampoGrupo      + ' = :GRUPO    ');
+        qLocal.Sql.Add('   AND ' + vCampoChave      + ' = :CODIGO   ');
+        qLocal.ParamByName('GRUPO' ).AsString := FGrupo;
+     end;
      qLocal.ParamByName('CODIGO'   ).AsString := FCodigo;
      qLocal.ParamByName('DESCRICAO').AsString := FDescricao;
      qLocal.ExecSql;
@@ -3890,6 +4529,92 @@ begin
   DM.Query1.ParamByName('DT_ESTACAO').AsString := NomeComputador;
   DM.Query1.ParamByName('DT_TELA'   ).AsString := pTela;
   DM.Query1.ExecSql;
+//  Log(pTela,'Alterou '+pFrase+ ', '+pNome + ' de ' + vValorAntesDeAlterar
+//             + ' para ' + pValor +'( '+pTela+' )');
+end;
+
+function NomeProduto(pProduto:String):String;
+var qLocal : TFDQuery;
+begin
+   if pProduto = '' then exit;
+
+   Result := '';
+  qLocal := TFDQuery.Create(nil);
+  qLocal.ConnectionName := 'X';  // Apaga os registros de controle contendo os dados da tela
+  qLocal.Close;
+  qLocal.Sql.Clear;
+  qLocal.Sql.Add('SELECT PROD_DESCRICAO            ');
+  qLocal.Sql.Add('  FROM PRODUTO_PROD              ');
+  qLocal.Sql.Add(' WHERE PROD_CODIGO = :PROD_CODIGO');
+  qLocal.ParamByName('PROD_CODIGO').AsString := pProduto;
+  qLocal.Open;
+  if not qLocal.Eof then
+     Result := qLocal.FieldByName('PROD_DESCRICAO').AsString;
+  qLocal.Free;
+end;
+
+function ZeroSeValorInvalido(pValor:String):Real;
+var vValor : Real;
+begin
+  result := 0;
+  if pValor = '' then exit;
+
+  try
+    vValor := StrToFloat(MascToStr(pValor));
+    if vValor < 0 then
+       exit;
+  except
+    exit;
+  end;
+  result := vValor;
+
+
+
+end;
+procedure Incluir_EAN13(pTela,pProduto,pEAN13:String);
+var qLocal : TFDQuery;
+begin
+   if pProduto = '' then exit;
+   if pEAN13   = '' then exit;
+
+  qLocal := TFDQuery.Create(nil);
+  qLocal.ConnectionName := 'X';
+  qLocal.Close;
+  qLocal.Sql.Clear;
+  qLocal.Sql.Add('INSERT INTO PRODUTO_EAN13_PRODE(');
+  qLocal.Sql.Add('        PRODE_CODIGO,           ');
+  qLocal.Sql.Add('        PRODE_EAN13             ');
+  qLocal.Sql.Add('     )                          ');
+  qLocal.Sql.Add('VALUES (                        ');
+  qLocal.Sql.Add('       :PRODE_CODIGO,           ');
+  qLocal.Sql.Add('       :PRODE_EAN13             ');
+  qLocal.Sql.Add('     )                          ');
+  qLocal.ParamByName('PRODE_CODIGO').AsString := pProduto;
+  qLocal.ParamByName('PRODE_EAN13' ).AsString := pEAN13;
+  qLocal.ExecSql;
+  qLocal.Free;
+  Log(pTela,'Inc Cod Barras '+pEAN13+ ' prod '+pProduto + ' - ' + NomeProduto(pProduto));
+end;
+
+procedure Excluir_EAN13(pTela,pProduto,pEAN13:String);
+var qLocal : TFDQuery;
+begin
+   if pProduto = '' then exit;
+   if pEAN13   = '' then exit;
+
+  qLocal := TFDQuery.Create(nil);
+  qLocal.ConnectionName := 'X';
+
+  qLocal.Close;
+  qLocal.Sql.Clear;
+  qLocal.Sql.Add('DELETE FROM PRODUTO_EAN13_PRODE     ');
+  qLocal.Sql.Add(' WHERE PRODE_CODIGO = :PRODE_CODIGO ');
+  qLocal.Sql.Add('   AND PRODE_EAN13  = :PRODE_EAN13  ');
+  qLocal.ParamByName('PRODE_CODIGO').AsString := pProduto;
+  qLocal.ParamByName('PRODE_EAN13' ).AsString := pEAN13;
+  qLocal.ExecSql;
+  qLocal.Free;
+  Log(pTela,'Exc Cod Barras '+pEAN13+ ' prod '+pProduto + ' - ' + NomeProduto(pProduto));
 end;
 
 function fTemAcesso(pUsuario,pFuncao:String):Boolean; overload;

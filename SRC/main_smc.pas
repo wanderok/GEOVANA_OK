@@ -313,12 +313,37 @@ uses
     dxBarButton85: TdxBarButton;
     dxBarLargeButton123: TdxBarLargeButton;
     dxBarLargeButton124: TdxBarLargeButton;
-    Image1: TImage;
     dxBarLargeButton125: TdxBarLargeButton;
     dxBarButton86: TdxBarButton;
     dxBarLargeButton126: TdxBarLargeButton;
     dxBarLargeButton127: TdxBarLargeButton;
     dxBarLargeButton128: TdxBarLargeButton;
+    dxBarLargeButton129: TdxBarLargeButton;
+    dxBarSubItem45: TdxBarSubItem;
+    dxBarSeparator2: TdxBarSeparator;
+    dxBarLargeButton130: TdxBarLargeButton;
+    dxBarLargeButton131: TdxBarLargeButton;
+    dxBarSubItem46: TdxBarSubItem;
+    dxBarButton87: TdxBarButton;
+    dxBarButton88: TdxBarButton;
+    dxBarLargeButton132: TdxBarLargeButton;
+    dxBarLargeButton133: TdxBarLargeButton;
+    dxBarButton89: TdxBarButton;
+    dxBarButton90: TdxBarButton;
+    dxBarButton91: TdxBarButton;
+    dxBarButton92: TdxBarButton;
+    dxBarSubItem47: TdxBarSubItem;
+    dxBarButton93: TdxBarButton;
+    dxBarSubItem48: TdxBarSubItem;
+    dxBarButton94: TdxBarButton;
+    dxBarLargeButton134: TdxBarLargeButton;
+    dxBarButton95: TdxBarButton;
+    dxBarButton96: TdxBarButton;
+    pnNOME_DO_CLIENTE: TPanel;
+    Panel2: TPanel;
+    Image1: TImage;
+    pnUSUARIO: TPanel;
+    pnBASE: TPanel;
     procedure dxBarLargeButton12Click(Sender: TObject);
     procedure dxBarLargeButton18Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -375,9 +400,26 @@ uses
     procedure dxBarLargeButton23Click(Sender: TObject);
     procedure dxBarLargeButton26Click(Sender: TObject);
     procedure dxBarLargeButton128Click(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure dxBarLargeButton130Click(Sender: TObject);
+    procedure dxBarLargeButton131Click(Sender: TObject);
+    procedure dxBarButton87Click(Sender: TObject);
+    procedure dxBarLargeButton133Click(Sender: TObject);
+    procedure dxBarButton89Click(Sender: TObject);
+    procedure dxBarButton90Click(Sender: TObject);
+    procedure dxBarButton91Click(Sender: TObject);
+    procedure dxBarButton93Click(Sender: TObject);
+    procedure dxBarButton94Click(Sender: TObject);
+    procedure dxBarLargeButton134Click(Sender: TObject);
+    procedure dxBarButton95Click(Sender: TObject);
+    procedure dxBarButton96Click(Sender: TObject);
   
     private
       { Private declarations }
+      procedure F1_Abrir_Cadastro_de_Clientes;
+      procedure F10_TrocarUsuario;
+      procedure F12_AbrirTelaDoSistema(pTela:String);
+      procedure ListarFuncoesDoSistema;
     public
       { Public declarations }
     end;
@@ -389,21 +431,33 @@ uses
 implementation
 
 uses
+  FuncoesSMC,
+  AbreTelas,
   alterar_senha,
   LimpaBaseDeDados,
+  vw_Login_T1,
   cad_usuario_T2,
   cad_empresa_T3,
   reg_tributario_T4,
+  U_Municipio_T5,
   cad_cliente_T6,
+  cad_ramo_atividade_T9,
   auditoria_T10,
+  cad_regiao_T11,
+  cad_zona_T12,
   cad_fornecedor_T19,
   cad_colaborador_T20,
   cad_consultor_T21,
   cad_contador_T24,
   cad_motorista_T26,
   cad_transportadora_T28,
-  config_nfe_T32, config_nfce_T34,
-  cadastro_produto, painel_SMC_T36;
+  config_nfe_T32,
+  config_certificado_T33,
+  config_nfce_T34,
+  painel_SMC_T36,
+
+
+  funcoes_T53;
   //cadastro_fornecedor, cad_transportadora,
   //cad_veiculos,
   //cad_sistemas,
@@ -418,6 +472,13 @@ uses
 
 {$R *.dfm}
 
+procedure TFrm_main.F1_Abrir_Cadastro_de_Clientes;
+begin
+   frm_cad_cliente_T6 := Tfrm_cad_cliente_T6.Create(nil);
+   frm_cad_cliente_T6.ShowModal;
+   frm_cad_cliente_T6.Free;
+end;
+
 procedure TFrm_main.Button1Click(Sender: TObject);
 begin
     frm_reg_tributario_T4 := Tfrm_reg_tributario_T4.Create(nil);
@@ -427,16 +488,12 @@ end;
 
 procedure TFrm_main.cxButton1Click(Sender: TObject);
 begin
-   frm_cad_cliente_T6 := Tfrm_cad_cliente_T6.Create(nil);
-   frm_cad_cliente_T6.ShowModal;
-   frm_cad_cliente_T6.Free;
+   F1_Abrir_Cadastro_de_Clientes;
 end;
 
 procedure TFrm_main.cxButton8Click(Sender: TObject);
 begin
-    Frm_Produto := TFrm_Produto.Create(nil);
-    Frm_Produto.showmodal;
-    Frm_Produto.free;
+   Abre_T40;
 end;
 
 procedure TFrm_main.dxBarButton20Click(Sender: TObject);
@@ -570,8 +627,7 @@ end;
 
 procedure TFrm_main.dxBarButton4Click(Sender: TObject);
 begin
-    //frm_cad_servico := Tfrm_cad_servico.Create(nil);
-    //frm_cad_servico.showmodal;
+   Abre_T49;
 end;
 
 procedure TFrm_main.dxBarButton50Click(Sender: TObject);
@@ -669,11 +725,194 @@ begin
     //frm_controla_lote.showmodal;
 end;
 
+procedure TFrm_main.dxBarButton87Click(Sender: TObject);
+begin
+   Abre_T45;
+end;
+
+procedure TFrm_main.dxBarButton89Click(Sender: TObject);
+begin
+   Abre_T46;
+end;
+
+procedure TFrm_main.dxBarButton90Click(Sender: TObject);
+begin
+   Abre_T47;
+end;
+
+procedure TFrm_main.dxBarButton91Click(Sender: TObject);
+begin
+   Abre_T48;
+end;
+
+procedure TFrm_main.dxBarButton93Click(Sender: TObject);
+var edAlmoxarifado,edAlmoxarifadoDescricao:TEdit;
+begin
+   edAlmoxarifado := TEdit.Create(nil);
+   edAlmoxarifadoDescricao:= TEdit.Create(nil);
+
+   fPesquisarAlmoxarifado(edAlmoxarifado,edAlmoxarifadoDescricao);
+
+   edAlmoxarifado.Free;
+   edAlmoxarifadoDescricao.Free;
+end;
+
+procedure TFrm_main.dxBarButton94Click(Sender: TObject);
+begin
+   Abre_T50;
+end;
+
+procedure TFrm_main.dxBarButton95Click(Sender: TObject);
+begin
+   Abre_T54;
+end;
+
+procedure TFrm_main.dxBarButton96Click(Sender: TObject);
+begin
+   Abre_T55;
+end;
+
+procedure TFrm_main.F10_TrocarUsuario;
+begin
+   frm_Login_T1 := Tfrm_Login_T1.Create(nil);
+   vfrm_Login_T1TrocarUsuario:=True;
+   vfrm_Login_T1UsuarioAnterior:=Usuario.Codigo;
+   frm_Login_T1.showmodal;
+   frm_Login_T1.Free;
+   dxRibbon1.ActiveTab := dxRibbon1Tab1;
+end;
+
+procedure TFrm_main.F12_AbrirTelaDoSistema(pTela: String);
+var vTela:Integer;
+begin
+   if pTela = '' then exit;
+   try
+     vTela:=strtoint(pTela);
+   except
+     exit;
+   end;
+   case vTela of
+      56: Abre_T56;
+      55: Abre_T55;
+      54: Abre_T54;
+      51: Abre_T51;
+      50: Abre_T50;
+      49: Abre_T49;
+      48: Abre_T48;
+      47: Abre_T47;
+      46: Abre_T46;
+      45: Abre_T45;
+      44: Abre_T44;
+      43: Abre_T43;
+      42: Abre_T42;
+      41: Abre_T41;
+   40,52: Abre_T40;
+      38: Abre_T38;
+      37: Abre_T37;
+      36: begin
+             frm_painel_SMC_T36 := Tfrm_painel_SMC_T36.Create(nil);
+             frm_painel_SMC_T36.ShowModal;
+             frm_painel_SMC_T36.Free;
+          end;
+      34: begin
+             Frm_config_nfce_T34 := TFrm_config_nfce_T34.Create(nil);
+             Frm_config_nfce_T34.ShowModal;
+             Frm_config_nfce_T34.Free;
+          end;
+      33: begin
+             frm_config_certificado_T33 := Tfrm_config_certificado_T33.Create(nil);
+             frm_config_certificado_T33.ShowModal;
+             frm_config_certificado_T33.Free;
+          end;
+      32: begin
+             frmConfig_NFe_T32 := TfrmConfig_NFe_T32.Create(nil);
+             frmConfig_NFe_T32.ShowModal;
+             frmConfig_NFe_T32.Free;
+          end;
+      28: begin
+             frm_cad_transportadora_T28 := Tfrm_cad_transportadora_T28.Create(nil);
+             frm_cad_transportadora_T28.ShowModal;
+             frm_cad_transportadora_T28.Free;
+          end;
+      26: begin
+             frm_cad_motorista_T26 := Tfrm_cad_motorista_T26.Create(nil);
+             frm_cad_motorista_T26.ShowModal;
+             frm_cad_motorista_T26.Free;
+          end;
+      24: begin
+             frm_cad_contador_T24 := Tfrm_cad_contador_T24.Create(nil);
+             frm_cad_contador_T24.ShowModal;
+             frm_cad_contador_T24.Free;
+          end;
+      21: begin
+             frm_cad_consultor_T21 := Tfrm_cad_consultor_T21.Create(nil);
+             frm_cad_consultor_T21.ShowModal;
+             frm_cad_consultor_T21.Free;
+          end;
+      20: begin
+             frm_cad_colaborador_T20 := Tfrm_cad_colaborador_T20.Create(nil);
+             frm_cad_colaborador_T20.ShowModal;
+             frm_cad_colaborador_T20.Free;
+          end;
+      19: begin
+             frm_cad_fornecedor_T19 := Tfrm_cad_fornecedor_T19.Create(nil);
+             frm_cad_fornecedor_T19.ShowModal;
+             frm_cad_fornecedor_T19.Free;
+          end;
+      12: begin
+             frm_cad_zona_T12 := Tfrm_cad_zona_T12.Create(nil);
+             frm_cad_zona_T12.ShowModal;
+             frm_cad_zona_T12.Free;
+          end;
+      11: begin
+             frm_cad_regiao_T11 := Tfrm_cad_regiao_T11.Create(nil);
+             frm_cad_regiao_T11.ShowModal;
+             frm_cad_regiao_T11.Free;
+          end;
+      10: begin
+             frm_auditoria_T10 := Tfrm_auditoria_T10.Create(nil);
+             frm_auditoria_T10.ShowModal;
+             frm_auditoria_T10.Free;
+          end;
+      09: begin
+             frm_cad_ramo_atividade_T9 := Tfrm_cad_ramo_atividade_T9.Create(nil);
+             frm_cad_ramo_atividade_T9.ShowModal;
+             frm_cad_ramo_atividade_T9.Free;
+          end;
+      06: begin
+             frm_cad_cliente_T6 := Tfrm_cad_cliente_T6.Create(nil);
+             frm_cad_cliente_T6.ShowModal;
+             frm_cad_cliente_T6.Free;
+          end;
+      05: begin
+             Frm_Municipio_T5 := TFrm_Municipio_T5.Create(nil);
+             Frm_Municipio_T5.ShowModal;
+             Frm_Municipio_T5.Free;
+          end;
+      04: begin
+             frm_reg_tributario_T4 := Tfrm_reg_tributario_T4.Create(nil);
+             frm_reg_tributario_T4.ShowModal;
+             frm_reg_tributario_T4.Free;
+          end;
+      03: begin
+             frm_cad_empresa_T3 := Tfrm_cad_empresa_T3.Create(nil);
+             frm_cad_empresa_T3.ShowModal;
+             frm_cad_empresa_T3.Free;
+          end;
+      02: begin
+             frm_cad_usuario_T2 := Tfrm_cad_usuario_T2.Create(nil);
+             frm_cad_usuario_T2.ShowModal;
+             frm_cad_usuario_T2.Free;
+          end;
+      01: begin
+             F10_TrocarUsuario;
+          end;
+   end;
+end;
+
 procedure TFrm_main.dxBarLargeButton106Click(Sender: TObject);
 begin
-    Frm_Produto := TFrm_Produto.Create(nil);
-    Frm_Produto.showmodal;
-    Frm_Produto.Free;
+   Abre_T40;
 end;
 
 procedure TFrm_main.dxBarLargeButton109Click(Sender: TObject);
@@ -724,6 +963,8 @@ end;
 
 procedure TFrm_main.dxBarLargeButton128Click(Sender: TObject);
 begin
+    if not fTemAcesso('SMC') then
+       exit;
     frm_painel_SMC_T36 := Tfrm_painel_SMC_T36.Create(nil);
     frm_painel_SMC_T36.showmodal;
     frm_painel_SMC_T36.Free;
@@ -733,6 +974,26 @@ procedure TFrm_main.dxBarLargeButton12Click(Sender: TObject);
 begin
    vPodeFechar:=True;
    Close;
+end;
+
+procedure TFrm_main.dxBarLargeButton130Click(Sender: TObject);
+begin
+   Abre_T43;
+end;
+
+procedure TFrm_main.dxBarLargeButton131Click(Sender: TObject);
+begin
+   Abre_T44;
+end;
+
+procedure TFrm_main.dxBarLargeButton133Click(Sender: TObject);
+begin
+   F10_TrocarUsuario;
+end;
+
+procedure TFrm_main.dxBarLargeButton134Click(Sender: TObject);
+begin
+    ListarFuncoesDoSistema;
 end;
 
 procedure TFrm_main.dxBarLargeButton18Click(Sender: TObject);
@@ -767,9 +1028,39 @@ begin
    vPodeFechar:=False;
 end;
 
+procedure TFrm_main.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = VK_F1 then
+     F1_Abrir_Cadastro_de_Clientes
+  else
+  if key = VK_F2 then
+     Abre_T40
+  else
+  if key = VK_F10 then
+     F10_TrocarUsuario
+  else
+  if key = VK_F12 then
+     ListarFuncoesDoSistema;
+end;
+
 procedure TFrm_main.FormShow(Sender: TObject);
 begin
-     dxRibbon1.ActiveTab := dxRibbon1Tab1;
+   pnNOME_DO_CLIENTE.Caption := Empresa.NomeFantasia;
+   pnUSUARIO.Caption         := Usuario.Codigo;
+   pnBASE.Caption            := Acesso.nomeDaConexao;
+
+   dxRibbon1.ActiveTab := dxRibbon1Tab1;
+end;
+
+procedure TFrm_main.ListarFuncoesDoSistema;
+var vfuncaoSelecionada : String;
+begin
+    frm_funcoes_T53 := Tfrm_funcoes_T53.Create(nil);
+    frm_funcoes_T53.showmodal;
+    vfuncaoSelecionada := vfrm_funcoes_T53;
+    frm_funcoes_T53.Free;
+    F12_AbrirTelaDoSistema(vfuncaoSelecionada);
 end;
 
 end.

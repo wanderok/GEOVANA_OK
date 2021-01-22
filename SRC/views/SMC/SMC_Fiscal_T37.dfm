@@ -4,7 +4,7 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
   AutoSize = True
   Caption = 'SMC Fiscal'
   ClientHeight = 723
-  ClientWidth = 1294
+  ClientWidth = 1295
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clBlack
@@ -16,23 +16,9 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 18
-  object lbNomeDaTela: TLabel
-    Left = 1253
-    Top = 704
-    Width = 40
-    Height = 13
-    Alignment = taRightJustify
-    Caption = '[ T37 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
   object Label32: TLabel
-    Left = 28
-    Top = 597
+    Left = 29
+    Top = 581
     Width = 52
     Height = 16
     Caption = 'Contato'
@@ -45,8 +31,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     ParentFont = False
   end
   object Label31: TLabel
-    Left = 20
-    Top = 617
+    Left = 21
+    Top = 601
     Width = 60
     Height = 16
     Caption = 'Contador'
@@ -59,8 +45,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     ParentFont = False
   end
   object Label37: TLabel
-    Left = 202
-    Top = 581
+    Left = 203
+    Top = 565
     Width = 55
     Height = 16
     Caption = 'Telefone'
@@ -73,8 +59,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     ParentFont = False
   end
   object Label38: TLabel
-    Left = 505
-    Top = 581
+    Left = 506
+    Top = 565
     Width = 38
     Height = 16
     Caption = 'E-mail'
@@ -87,8 +73,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     ParentFont = False
   end
   object Label40: TLabel
-    Left = 308
-    Top = 581
+    Left = 309
+    Top = 565
     Width = 44
     Height = 16
     Caption = 'Celular'
@@ -101,8 +87,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     ParentFont = False
   end
   object Label41: TLabel
-    Left = 404
-    Top = 581
+    Left = 405
+    Top = 565
     Width = 66
     Height = 16
     Caption = 'Whatsapp'
@@ -115,8 +101,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     ParentFont = False
   end
   object Label42: TLabel
-    Left = 82
-    Top = 581
+    Left = 83
+    Top = 565
     Width = 35
     Height = 16
     Caption = 'Nome'
@@ -129,8 +115,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     ParentFont = False
   end
   object Label36: TLabel
-    Left = 690
-    Top = 588
+    Left = 691
+    Top = 572
     Width = 17
     Height = 16
     Caption = 'De'
@@ -143,8 +129,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     ParentFont = False
   end
   object Label39: TLabel
-    Left = 683
-    Top = 612
+    Left = 684
+    Top = 596
     Width = 24
     Height = 16
     Caption = 'At'#233
@@ -157,8 +143,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     ParentFont = False
   end
   object Label43: TLabel
-    Left = 779
-    Top = 578
+    Left = 780
+    Top = 562
     Width = 44
     Height = 16
     Caption = 'Cliente'
@@ -171,8 +157,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     ParentFont = False
   end
   object Label44: TLabel
-    Left = 779
-    Top = 622
+    Left = 780
+    Top = 606
     Width = 48
     Height = 16
     Caption = 'T'#233'cnico'
@@ -185,8 +171,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     ParentFont = False
   end
   object Label35: TLabel
-    Left = 3
-    Top = 638
+    Left = 4
+    Top = 622
     Width = 77
     Height = 16
     Caption = 'Observa'#231#227'o'
@@ -198,8 +184,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     ParentFont = False
   end
   object rgSistemaFiltro: TRadioGroup
-    Left = 1070
-    Top = 569
+    Left = 1071
+    Top = 553
     Width = 111
     Height = 93
     Font.Charset = DEFAULT_CHARSET
@@ -221,7 +207,7 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     OnClick = rgSistemaFiltroClick
   end
   object DBChart2: TDBChart
-    Left = 622
+    Left = 623
     Top = 0
     Width = 351
     Height = 225
@@ -275,8 +261,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     end
   end
   object rgStatus: TRadioGroup
-    Left = 1181
-    Top = 570
+    Left = 1182
+    Top = 554
     Width = 111
     Height = 93
     Font.Charset = DEFAULT_CHARSET
@@ -297,7 +283,7 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     OnClick = rgStatusClick
   end
   object DBChart1: TDBChart
-    Left = 971
+    Left = 972
     Top = 0
     Width = 200
     Height = 190
@@ -357,7 +343,7 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     end
   end
   object Panel1: TPanel
-    Left = 5
+    Left = 6
     Top = 0
     Width = 122
     Height = 187
@@ -666,7 +652,7 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     end
   end
   object Panel3: TPanel
-    Left = 128
+    Left = 129
     Top = 0
     Width = 122
     Height = 187
@@ -1023,7 +1009,7 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     end
   end
   object Panel5: TPanel
-    Left = 253
+    Left = 254
     Top = 0
     Width = 122
     Height = 187
@@ -1312,7 +1298,7 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     end
   end
   object Panel7: TPanel
-    Left = 376
+    Left = 377
     Top = 0
     Width = 122
     Height = 187
@@ -1578,7 +1564,7 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     end
   end
   object Panel9: TPanel
-    Left = 500
+    Left = 501
     Top = 0
     Width = 122
     Height = 187
@@ -1966,7 +1952,7 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
   end
   object Panel11: TPanel
     Left = 0
-    Top = 659
+    Top = 644
     Width = 1294
     Height = 42
     Alignment = taLeftJustify
@@ -2040,7 +2026,7 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
       OnClick = Panel14Click
     end
     object Panel15: TPanel
-      Left = 731
+      Left = 739
       Top = 0
       Width = 123
       Height = 41
@@ -2057,7 +2043,7 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
       OnClick = Panel15Click
     end
     object Panel16: TPanel
-      Left = 850
+      Left = 858
       Top = 1
       Width = 123
       Height = 41
@@ -2113,9 +2099,9 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
       OnClick = bListarClick
     end
     object btn_relatorios_cli: TcxButton
-      Left = 974
+      Left = 989
       Top = 0
-      Width = 137
+      Width = 125
       Height = 40
       Caption = 'Imprimir'
       LookAndFeel.NativeStyle = False
@@ -2258,10 +2244,11 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      OnClick = btn_relatorios_cliClick
     end
   end
   object Panel12: TPanel
-    Left = 1171
+    Left = 1172
     Top = 0
     Width = 122
     Height = 187
@@ -2420,10 +2407,10 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     end
   end
   object DBGrid1: TDBGrid
-    Left = 3
+    Left = 4
     Top = 188
     Width = 1290
-    Height = 394
+    Height = 375
     DataSource = DataSource1
     FixedColor = clYellow
     Font.Charset = DEFAULT_CHARSET
@@ -2623,8 +2610,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
       end>
   end
   object cxDBTextEdit1: TcxDBTextEdit
-    Left = 81
-    Top = 596
+    Left = 82
+    Top = 580
     DataBinding.DataField = 'CLIC_NOME'
     DataBinding.DataSource = DataSource1
     ParentFont = False
@@ -2639,8 +2626,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 121
   end
   object cxDBTextEdit2: TcxDBTextEdit
-    Left = 202
-    Top = 596
+    Left = 203
+    Top = 580
     DataBinding.DataField = 'CLIC_FONE1'
     DataBinding.DataSource = DataSource1
     ParentFont = False
@@ -2655,8 +2642,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 101
   end
   object cxDBTextEdit3: TcxDBTextEdit
-    Left = 303
-    Top = 596
+    Left = 304
+    Top = 580
     DataBinding.DataField = 'CLIC_CEL1'
     DataBinding.DataSource = DataSource1
     ParentFont = False
@@ -2671,8 +2658,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 101
   end
   object cxDBTextEdit5: TcxDBTextEdit
-    Left = 404
-    Top = 596
+    Left = 405
+    Top = 580
     DataBinding.DataField = 'CLIC_WHATSAPP'
     DataBinding.DataSource = DataSource1
     ParentFont = False
@@ -2687,8 +2674,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 101
   end
   object cxDBTextEdit6: TcxDBTextEdit
-    Left = 81
-    Top = 617
+    Left = 82
+    Top = 601
     TabStop = False
     DataBinding.DataField = 'CONT_NOME_FANTASIA'
     DataBinding.DataSource = DataSource1
@@ -2704,8 +2691,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 121
   end
   object cxDBTextEdit7: TcxDBTextEdit
-    Left = 202
-    Top = 617
+    Left = 203
+    Top = 601
     TabStop = False
     DataBinding.DataField = 'CONTD_TELEFONE'
     DataBinding.DataSource = DataSource1
@@ -2721,8 +2708,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 101
   end
   object cxDBTextEdit8: TcxDBTextEdit
-    Left = 505
-    Top = 617
+    Left = 506
+    Top = 601
     TabStop = False
     DataBinding.DataField = 'CONTC_EMAIL1'
     DataBinding.DataSource = DataSource1
@@ -2738,8 +2725,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 175
   end
   object cxDBTextEdit9: TcxDBTextEdit
-    Left = 505
-    Top = 596
+    Left = 506
+    Top = 580
     DataBinding.DataField = 'CLIC_EMAIL1'
     DataBinding.DataSource = DataSource1
     ParentFont = False
@@ -2754,8 +2741,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 175
   end
   object cxDBTextEdit10: TcxDBTextEdit
-    Left = 303
-    Top = 617
+    Left = 304
+    Top = 601
     TabStop = False
     DataBinding.DataField = 'CONTC_CEL1'
     DataBinding.DataSource = DataSource1
@@ -2771,8 +2758,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 101
   end
   object cxDBTextEdit11: TcxDBTextEdit
-    Left = 404
-    Top = 617
+    Left = 405
+    Top = 601
     TabStop = False
     DataBinding.DataField = 'CONTC_WHATSAPP'
     DataBinding.DataSource = DataSource1
@@ -2788,8 +2775,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 101
   end
   object edDe: TMaskEdit
-    Left = 712
-    Top = 588
+    Left = 713
+    Top = 572
     Width = 63
     Height = 21
     EditMask = '!99/99/99;1;'
@@ -2804,8 +2791,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Text = '  /  /  '
   end
   object edAte: TMaskEdit
-    Left = 712
-    Top = 609
+    Left = 713
+    Top = 593
     Width = 63
     Height = 21
     EditMask = '!99/99/99;1;'
@@ -2820,8 +2807,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Text = '  /  /  '
   end
   object edCliente: TEdit
-    Left = 778
-    Top = 593
+    Left = 779
+    Top = 577
     Width = 53
     Height = 21
     Font.Charset = DEFAULT_CHARSET
@@ -2837,8 +2824,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     OnKeyDown = edClienteKeyDown
   end
   object bPesqCliente: TcxButton
-    Left = 831
-    Top = 592
+    Left = 832
+    Top = 576
     Width = 25
     Height = 21
     LookAndFeel.Kind = lfOffice11
@@ -2886,8 +2873,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     OnClick = bPesqClienteClick
   end
   object edClienteNome: TEdit
-    Left = 857
-    Top = 593
+    Left = 858
+    Top = 577
     Width = 150
     Height = 21
     TabStop = False
@@ -2902,8 +2889,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     TabOrder = 26
   end
   object edTecnico: TEdit
-    Left = 778
-    Top = 637
+    Left = 779
+    Top = 621
     Width = 53
     Height = 21
     Font.Charset = DEFAULT_CHARSET
@@ -2918,8 +2905,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     OnExit = edTecnicoExit
   end
   object bPesqTecnico: TcxButton
-    Left = 831
-    Top = 636
+    Left = 832
+    Top = 620
     Width = 25
     Height = 21
     LookAndFeel.Kind = lfOffice11
@@ -2966,8 +2953,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     TabStop = False
   end
   object edTecnicoNome: TEdit
-    Left = 857
-    Top = 637
+    Left = 858
+    Top = 621
     Width = 150
     Height = 21
     TabStop = False
@@ -2982,8 +2969,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     TabOrder = 28
   end
   object edOBS: TEdit
-    Left = 81
-    Top = 638
+    Left = 82
+    Top = 622
     Width = 424
     Height = 21
     Font.Charset = DEFAULT_CHARSET
@@ -2998,8 +2985,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     OnExit = edOBSExit
   end
   object edAF_OBS_USU: TcxDBTextEdit
-    Left = 506
-    Top = 638
+    Left = 507
+    Top = 622
     TabStop = False
     DataBinding.DataField = 'AF_OBS_USU'
     DataBinding.DataSource = DataSource1
@@ -3016,8 +3003,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 57
   end
   object edAF_OBS_DT: TcxDBTextEdit
-    Left = 563
-    Top = 638
+    Left = 564
+    Top = 622
     TabStop = False
     DataBinding.DataField = 'AF_OBS_DT'
     DataBinding.DataSource = DataSource1
@@ -3034,8 +3021,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 80
   end
   object edAF_OBS_HR: TcxDBTextEdit
-    Left = 643
-    Top = 638
+    Left = 644
+    Top = 622
     TabStop = False
     DataBinding.DataField = 'AF_OBS_HR'
     DataBinding.DataSource = DataSource1
@@ -3052,8 +3039,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Width = 37
   end
   object pnQtdeClientes: TPanel
-    Left = 682
-    Top = 630
+    Left = 683
+    Top = 614
     Width = 95
     Height = 29
     Caption = '150'
@@ -3066,8 +3053,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     TabOrder = 34
   end
   object bGraficoSistemas: TcxButton
-    Left = 1
-    Top = 700
+    Left = 2
+    Top = 684
     Width = 115
     Height = 23
     Caption = 'Sistemas'
@@ -3097,8 +3084,8 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     OnClick = bGraficoSistemasClick
   end
   object bGraficoContador: TcxButton
-    Left = 121
-    Top = 700
+    Left = 122
+    Top = 684
     Width = 115
     Height = 23
     Caption = 'Contador'
@@ -3126,6 +3113,26 @@ object frm_SMC_Fiscal_T37: Tfrm_SMC_Fiscal_T37
     Font.Style = [fsBold]
     ParentFont = False
     OnClick = bGraficoContadorClick
+  end
+  object Panel17: TPanel
+    Left = 0
+    Top = 708
+    Width = 1295
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T37 ] '
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 37
+    ExplicitLeft = 1
+    ExplicitWidth = 1294
   end
   object qCLIENTE_CLI: TFDQuery
     Connection = DM.Database1

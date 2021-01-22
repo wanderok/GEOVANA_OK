@@ -1,10 +1,11 @@
 object frm_cad_zona_T12: Tfrm_cad_zona_T12
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Cadastro | Zona'
-  ClientHeight = 268
+  ClientHeight = 260
   ClientWidth = 288
   Color = clWhite
   DefaultMonitor = dmDesktop
@@ -20,7 +21,7 @@ object frm_cad_zona_T12: Tfrm_cad_zona_T12
   TextHeight = 13
   object Label5: TLabel
     Left = 13
-    Top = 12
+    Top = 4
     Width = 67
     Height = 18
     Caption = 'Descri'#231#227'o:'
@@ -31,26 +32,9 @@ object frm_cad_zona_T12: Tfrm_cad_zona_T12
     Font.Style = []
     ParentFont = False
   end
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 255
-    Width = 288
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T11 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 248
-    ExplicitWidth = 40
-  end
   object edFiltro: TEdit
     Left = 86
-    Top = 8
+    Top = 0
     Width = 187
     Height = 26
     CharCase = ecUpperCase
@@ -66,7 +50,7 @@ object frm_cad_zona_T12: Tfrm_cad_zona_T12
   end
   object DBGrid2: TDBGrid
     Left = 13
-    Top = 46
+    Top = 38
     Width = 260
     Height = 150
     DataSource = DataSource1
@@ -112,7 +96,7 @@ object frm_cad_zona_T12: Tfrm_cad_zona_T12
   end
   object bGravar: TcxButton
     Left = 13
-    Top = 211
+    Top = 194
     Width = 98
     Height = 45
     Caption = 'Gravar'
@@ -260,7 +244,7 @@ object frm_cad_zona_T12: Tfrm_cad_zona_T12
   end
   object cxButton2: TcxButton
     Left = 170
-    Top = 211
+    Top = 194
     Width = 103
     Height = 45
     Caption = 'Sair'
@@ -405,6 +389,24 @@ object frm_cad_zona_T12: Tfrm_cad_zona_T12
     Font.Style = [fsBold]
     ParentFont = False
     OnClick = cxButton2Click
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 245
+    Width = 288
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T12 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 4
   end
   object DataSource1: TDataSource
     DataSet = qLocal

@@ -1,10 +1,11 @@
 object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Cadastro | Transportadora'
-  ClientHeight = 483
+  ClientHeight = 475
   ClientWidth = 968
   Color = clWhite
   DefaultMonitor = dmMainForm
@@ -26,7 +27,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   TextHeight = 13
   object Label16: TLabel
     Left = 22
-    Top = 111
+    Top = 103
     Width = 63
     Height = 18
     Caption = 'Atividade:'
@@ -39,7 +40,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object Label10: TLabel
     Left = 5
-    Top = 27
+    Top = 19
     Width = 51
     Height = 18
     Caption = 'C'#243'digo'
@@ -52,7 +53,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object Label3: TLabel
     Left = 172
-    Top = 25
+    Top = 17
     Width = 39
     Height = 18
     Caption = 'Ativo'
@@ -65,7 +66,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object Label7: TLabel
     Left = 172
-    Top = 56
+    Top = 48
     Width = 54
     Height = 18
     Caption = 'Inativo'
@@ -78,7 +79,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object Label11: TLabel
     Left = 172
-    Top = 40
+    Top = 32
     Width = 78
     Height = 18
     Caption = 'Bloqueado'
@@ -89,26 +90,9 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 470
-    Width = 968
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T28 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 928
-    ExplicitWidth = 40
-  end
   object TLabel
     Left = 16
-    Top = 242
+    Top = 234
     Width = 47
     Height = 18
     Caption = 'RNTC:'
@@ -121,7 +105,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object rgStatus: TRadioGroup
     Left = 143
-    Top = 8
+    Top = 0
     Width = 111
     Height = 73
     Caption = 'Status'
@@ -139,7 +123,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object gpData: TGroupBox
     Left = 260
-    Top = 8
+    Top = 0
     Width = 301
     Height = 73
     Caption = '  Datas '
@@ -302,7 +286,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object edCodigo: TEdit
     Left = 3
-    Top = 47
+    Top = 39
     Width = 137
     Height = 31
     Hint = 'C'#243'digo do Cliente'
@@ -320,7 +304,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object GroupBox5: TGroupBox
     Left = 558
-    Top = 8
+    Top = 0
     Width = 403
     Height = 73
     Caption = '  '#218'ltima Altera'#231#227'o '
@@ -522,7 +506,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object pgControlPessoa: TPageControl
     Left = 5
-    Top = 95
+    Top = 87
     Width = 620
     Height = 139
     ActivePage = tsPessoaFisica
@@ -981,7 +965,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object grpEndereco: TGroupBox
     Left = 5
-    Top = 272
+    Top = 264
     Width = 620
     Height = 197
     Caption = '  Endere'#231'o  '
@@ -1619,7 +1603,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object cxButton8: TcxButton
     Left = 634
-    Top = 422
+    Top = 414
     Width = 110
     Height = 44
     Caption = 'Consultar'
@@ -1769,7 +1753,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object cxButton21: TcxButton
     Left = 753
-    Top = 422
+    Top = 414
     Width = 98
     Height = 44
     Caption = 'Gravar'
@@ -1918,7 +1902,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object cxButton28: TcxButton
     Left = 858
-    Top = 422
+    Top = 414
     Width = 103
     Height = 44
     Caption = 'Sair'
@@ -2067,7 +2051,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object GroupBox3: TGroupBox
     Left = 634
-    Top = 87
+    Top = 79
     Width = 327
     Height = 255
     Caption = '  Contatos  '
@@ -2304,7 +2288,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   end
   object GroupBox1: TGroupBox
     Left = 634
-    Top = 342
+    Top = 334
     Width = 327
     Height = 79
     Caption = ' Observa'#231#245'es'
@@ -2336,7 +2320,7 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
   object edRNTC: TEdit
     Tag = 123
     Left = 69
-    Top = 239
+    Top = 231
     Width = 207
     Height = 27
     CharCase = ecUpperCase
@@ -2350,6 +2334,24 @@ object frm_cad_transportadora_T28: Tfrm_cad_transportadora_T28
     ParentFont = False
     TabOrder = 3
     Text = '0000000000'
+  end
+  object Panel17: TPanel
+    Left = 0
+    Top = 460
+    Width = 968
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T28 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 12
   end
   object ACBrCEP1: TACBrCEP
     ProxyPort = '8080'

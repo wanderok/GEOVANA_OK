@@ -1,10 +1,11 @@
 object frm_cad_comissoes_T30: Tfrm_cad_comissoes_T30
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Comiss'#227'o de Colaborador '
-  ClientHeight = 254
+  ClientHeight = 238
   ClientWidth = 316
   Color = clWhite
   DefaultMonitor = dmMainForm
@@ -21,26 +22,9 @@ object frm_cad_comissoes_T30: Tfrm_cad_comissoes_T30
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 241
-    Width = 316
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T30 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 276
-    ExplicitWidth = 40
-  end
   object GroupBox12: TGroupBox
     Left = 16
-    Top = 16
+    Top = 0
     Width = 287
     Height = 163
     Caption = '  Comiss'#245'es  '
@@ -215,7 +199,7 @@ object frm_cad_comissoes_T30: Tfrm_cad_comissoes_T30
   end
   object cxButton21: TcxButton
     Left = 16
-    Top = 194
+    Top = 178
     Width = 98
     Height = 44
     Caption = 'Gravar'
@@ -363,7 +347,7 @@ object frm_cad_comissoes_T30: Tfrm_cad_comissoes_T30
   end
   object cxButton28: TcxButton
     Left = 200
-    Top = 194
+    Top = 178
     Width = 103
     Height = 44
     Caption = 'Sair'
@@ -509,9 +493,27 @@ object frm_cad_comissoes_T30: Tfrm_cad_comissoes_T30
     ParentFont = False
     OnClick = cxButton28Click
   end
+  object Panel17: TPanel
+    Left = 0
+    Top = 223
+    Width = 316
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T30 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 3
+  end
   object ACBrEnterTab1: TACBrEnterTab
     EnterAsTab = True
-    Left = 136
-    Top = 200
+    Left = 144
+    Top = 168
   end
 end

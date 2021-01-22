@@ -35,7 +35,7 @@ implementation
 
 {$R *.dfm}
 
-uses Funcoes;
+uses FuncoesSMC;
 
 procedure TfrmGraficoContadoresSMC.DBChart2Click(Sender: TObject);
 begin

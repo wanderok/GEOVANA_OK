@@ -17,23 +17,6 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 18
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 465
-    Width = 669
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T35 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 629
-    ExplicitWidth = 40
-  end
   object Label1: TLabel
     Left = 12
     Top = 42
@@ -62,7 +45,7 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
   end
   object edContador: TEdit
     Tag = 200
-    Left = 80
+    Left = 71
     Top = 38
     Width = 81
     Height = 26
@@ -80,7 +63,7 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
     OnKeyDown = edContadorKeyDown
   end
   object bPesqRamoAtividade: TcxButton
-    Left = 161
+    Left = 153
     Top = 38
     Width = 25
     Height = 26
@@ -130,9 +113,9 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
     OnClick = bPesqRamoAtividadeClick
   end
   object edContadorNome: TEdit
-    Left = 186
+    Left = 180
     Top = 38
-    Width = 480
+    Width = 486
     Height = 26
     TabStop = False
     CharCase = ecUpperCase
@@ -1128,6 +1111,27 @@ object Frm_cad_cliente_SMC_T35: TFrm_cad_cliente_SMC_T35
       ParentFont = False
       TabOrder = 0
     end
+  end
+  object Panel17: TPanel
+    Left = 0
+    Top = 463
+    Width = 669
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T35 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 16
+    ExplicitLeft = 1
+    ExplicitTop = 708
+    ExplicitWidth = 1294
   end
   object ACBrEnterTab1: TACBrEnterTab
     EnterAsTab = True

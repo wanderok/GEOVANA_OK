@@ -8,7 +8,7 @@ uses Classes, Dialogs, SysUtils, IniFiles,
      FireDAC.Comp.Client,
      FireDAC.Stan.Intf, FireDAC.Stan.Option,
 
-     funcoes;
+     FuncoesSMC;
 
 type
    TAlteracao = class

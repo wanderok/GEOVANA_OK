@@ -31,7 +31,7 @@ uses
   FireDAC.Stan.Async, FireDAC.DApt, Vcl.Grids, Vcl.DBGrids,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
 
-  Dados, cxContainer, cxTextEdit, cxDBEdit, cxDBLabel, Vcl.ExtCtrls;
+  DadosSMC, cxContainer, cxTextEdit, cxDBEdit, cxDBLabel, Vcl.ExtCtrls;
 
 type
   TfrmConsultor_Banco_Comissoes_T31 = class(TForm)
@@ -44,7 +44,6 @@ type
     edOperacao: TEdit;
     edConta: TEdit;
     edDigitoConta: TEdit;
-    lbNomeDaTela: TLabel;
     FDQuery1: TFDQuery;
     DataSource1: TDataSource;
     DBGrid1: TDBGrid;
@@ -72,6 +71,7 @@ type
     rgStatus: TRadioGroup;
     edComissao: TEdit;
     FDQuery1STATUS: TStringField;
+    Panel17: TPanel;
     procedure cxButton28Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cxButton21Click(Sender: TObject);
@@ -102,7 +102,7 @@ implementation
 
 {$R *.dfm}
 
-uses Funcoes, ValidadorDeDocumentos, TiposDeDados;
+uses FuncoesSMC, ValidadorDeDocumentos, TiposDeDados;
 
 procedure TfrmConsultor_Banco_Comissoes_T31.cxButton21Click(Sender: TObject);
 begin

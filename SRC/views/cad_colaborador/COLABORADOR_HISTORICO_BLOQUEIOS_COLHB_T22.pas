@@ -27,13 +27,13 @@ type
     dt_COLABORADOR_HISTORICO_BLOQUEIOS_COLHB: TDataSource;
     DBGrid1: TDBGrid;
     Panel1: TPanel;
-    lbNomeDaTela: TLabel;
     sql_COLABORADOR_HISTORICO_BLOQUEIOS_COLHBCOLHB_COLABORADOR: TStringField;
     sql_COLABORADOR_HISTORICO_BLOQUEIOS_COLHBCOLHB_DTEVENTO: TDateField;
     sql_COLABORADOR_HISTORICO_BLOQUEIOS_COLHBCOLHB_HREVENTO: TStringField;
     sql_COLABORADOR_HISTORICO_BLOQUEIOS_COLHBCOLHB_USUEVENTO: TStringField;
     sql_COLABORADOR_HISTORICO_BLOQUEIOS_COLHBCOLHB_MAQEVENTO: TStringField;
     sql_COLABORADOR_HISTORICO_BLOQUEIOS_COLHBCOLHB_EVENTO: TStringField;
+    Panel2: TPanel;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
@@ -47,7 +47,7 @@ var
 implementation
 
 {$R *.dfm}
-uses Dados;
+uses DadosSMC;
 
 procedure TfrmCOLABORADOR_HISTORICO_BLOQUEIOS_COLHB_T22.FormKeyPress(Sender: TObject;
   var Key: Char);

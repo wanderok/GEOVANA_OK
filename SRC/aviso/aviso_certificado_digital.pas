@@ -51,7 +51,7 @@ implementation
 
 {$R *.dfm}
 
-uses funcoes;
+uses FuncoesSMC;
 
 
 procedure Tfrm_aviso_certificado_vencido.cxButton1Click(Sender: TObject);

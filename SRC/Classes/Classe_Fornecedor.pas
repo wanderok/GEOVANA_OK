@@ -188,7 +188,7 @@ end;
 
 implementation
 
-uses Funcoes;
+uses FuncoesSMC;
 
 var qFornecedor, qLocal: TFDQuery;
 
@@ -739,7 +739,7 @@ begin
       exit;
     end;
     try
-      vCodigoCandidato := StrToInt(qProximo.FieldByName('MAIOR').AsString)+1;
+      vCodigoCandidato := StrToInt(qProximo.FieldByName('MAIOR').AsString);
       vCodigoCandidato := vCodigoCandidato + 1;
       sCodigoCandidato := FormatFloat('#',vCodigoCandidato);
       result := sCodigoCandidato;
@@ -846,37 +846,40 @@ end;
 
 procedure TFornecedor.setFStatus(const Value: TStatusCadastral);
 begin
-   Case value of
-      sAtivo : begin
-             if FStatus <> 0 then
-             begin
-                FAlteracao.DataLiberacao := sDataServidor;
-                RegistrarHistoricoDeAtivacao;
-             end;
-             if FStatus = 1 then
-             begin
-               RegistrarHistoricoDeDesBloqueio;
-             end;
-          end;
-      sAtivoBloqueado : begin
-            if FStatus <> 1 then
-            begin
-               FAlteracao.DataBloqueio := sDataServidor;
-               RegistrarHistoricoDeBloqueio;
+   if FExiste then
+   begin
+     Case value of
+        sAtivo : begin
+               if FStatus <> 0 then
+               begin
+                  FAlteracao.DataLiberacao := sDataServidor;
+                  RegistrarHistoricoDeAtivacao;
+               end;
+               if FStatus = 1 then
+               begin
+                 RegistrarHistoricoDeDesBloqueio;
+               end;
             end;
-          end;
-      sInativo : begin
-            if FStatus <> 2 then
-            begin
-               FAlteracao.DataInativo := sDataServidor;
-               RegistrarHistoricoDeInativacao;
+        sAtivoBloqueado : begin
+              if FStatus <> 1 then
+              begin
+                 FAlteracao.DataBloqueio := sDataServidor;
+                 RegistrarHistoricoDeBloqueio;
+              end;
             end;
-            if FStatus = 1 then
-            begin
-              RegistrarHistoricoDeDesBloqueio;
+        sInativo : begin
+              if FStatus <> 2 then
+              begin
+                 FAlteracao.DataInativo := sDataServidor;
+                 RegistrarHistoricoDeInativacao;
+              end;
+              if FStatus = 1 then
+              begin
+                RegistrarHistoricoDeDesBloqueio;
+              end;
             end;
-          end;
-   End;
+     End;
+   end;
 
    FStatus := StatusCadastralToInt(Value);
 end;

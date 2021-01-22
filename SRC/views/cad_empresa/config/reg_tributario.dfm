@@ -96,7 +96,7 @@ object frm_reg_tributaria: Tfrm_reg_tributaria
     Text = 'Edit1'
   end
   object GroupBox1: TGroupBox
-    Left = 14
+    Left = -13
     Top = 73
     Width = 933
     Height = 260

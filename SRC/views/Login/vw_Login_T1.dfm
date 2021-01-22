@@ -11587,6 +11587,7 @@ object frm_Login_T1: Tfrm_Login_T1
   Position = poScreenCenter
   PrintScale = poNone
   Scaled = False
+  OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PixelsPerInch = 96

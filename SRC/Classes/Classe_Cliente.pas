@@ -137,10 +137,10 @@ end;
   TCliente = class
   private
     FExiste            : Boolean;
-    FCodigo            : String;   // CLI_CODIGO
-    FNomeFantasia      : String;   // CLI_NOME_FANTASIA
-    FRazaoSocial       : String;   // CLI_RAZAO_SOCIAL
-	  FStatus            : Integer;  // CLI_STATUS INTEGER NOT NULL (0-ATIVO, 1-ATIVO BLOQUEADO, 2-INATIVO)
+    FCodigo            : String;
+    FNomeFantasia      : String;
+    FRazaoSocial       : String;
+	  FStatus            : Integer;
     FDetalhes          : tDetalhes_Cliente;
     FAlteracao         : TClienteAlteracao;
     FObservacao        : TStringList;
@@ -215,7 +215,7 @@ end;
 
 implementation
 
-uses Funcoes,
+uses FuncoesSMC,
      Classe_Nuvem;
 
 var qCliente, qLocal: TFDQuery;
@@ -414,7 +414,7 @@ begin
         qCliente.SQL.Add('      :CLI_STATUS         ');
         qCliente.SQL.Add('     )                    ');
         Preencher_Parametros_CLIENTE_CLI(qCliente);
-        qCliente.ParamByname('CLI_STATUS').AsInteger := 0;
+        qCliente.ParamByname('CLI_STATUS').AsInteger := 1;
         qCliente.ExecSql;
         result := true
     except
@@ -795,7 +795,7 @@ begin
       exit;
     end;
     try
-      vCodigoCandidato := StrToInt(qProximo.FieldByName('MAIOR').AsString)+1;
+      vCodigoCandidato := StrToInt(qProximo.FieldByName('MAIOR').AsString);
       vCodigoCandidato := vCodigoCandidato + 1;
       sCodigoCandidato := FormatFloat('#',vCodigoCandidato);
       result := sCodigoCandidato;
@@ -902,39 +902,41 @@ end;
 
 procedure TCliente.setFStatus(const Value: TStatusCadastral);
 begin
-   Case value of
-      sAtivo : begin
-             if FStatus <> 0 then
-             begin
-                FAlteracao.DataLiberacao := sDataServidor;
-                RegistrarHistoricoDeAtivacao;
-             end;
-             if FStatus = 1 then
-             begin
-               RegistrarHistoricoDeDesBloqueio;
-             end;
-          end;
-      sAtivoBloqueado : begin
-            if FStatus <> 1 then
-            begin
-               FAlteracao.DataBloqueio := sDataServidor;
-               RegistrarHistoricoDeBloqueio;
-            end;
-          end;
-      sInativo : begin
-            if FStatus <> 2 then
-            begin
-               FAlteracao.DataInativo := sDataServidor;
-               RegistrarHistoricoDeInativacao;
-            end;
-            if FStatus = 1 then
-            begin
-              RegistrarHistoricoDeDesBloqueio;
-            end;
-          end;
-   End;
-
-   FStatus := StatusCadastralToInt(Value);
+   if FExiste then
+   begin
+       Case value of
+          sAtivo : begin
+                 if FStatus <> 0 then
+                 begin
+                    FAlteracao.DataLiberacao := sDataServidor;
+                    RegistrarHistoricoDeAtivacao;
+                 end;
+                 if FStatus = 1 then
+                 begin
+                   RegistrarHistoricoDeDesBloqueio;
+                 end;
+              end;
+          sAtivoBloqueado : begin
+                if FStatus <> 1 then
+                begin
+                   FAlteracao.DataBloqueio := sDataServidor;
+                   RegistrarHistoricoDeBloqueio;
+                end;
+              end;
+          sInativo : begin
+                if FStatus <> 2 then
+                begin
+                   FAlteracao.DataInativo := sDataServidor;
+                   RegistrarHistoricoDeInativacao;
+                end;
+                if FStatus = 1 then
+                begin
+                  RegistrarHistoricoDeDesBloqueio;
+                end;
+              end;
+       End;
+    end;
+    FStatus := StatusCadastralToInt(Value);
 end;
 
 procedure TCliente.setRazaoSocial(const Value: String);

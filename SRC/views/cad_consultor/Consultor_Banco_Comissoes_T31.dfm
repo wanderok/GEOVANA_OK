@@ -21,29 +21,9 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 370
-    Width = 631
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T31 ]'
-    Color = clWhite
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentColor = False
-    ParentFont = False
-    Transparent = True
-    ExplicitLeft = 594
-    ExplicitWidth = 37
-  end
   object TLabel
     Left = 141
-    Top = 359
+    Top = 335
     Width = 321
     Height = 13
     Caption = 'Use duplo clique na conta banc'#225'ria do grid para alter'#225'-la.'
@@ -884,6 +864,25 @@ object frmConsultor_Banco_Comissoes_T31: TfrmConsultor_Banco_Comissoes_T31
     Font.Style = [fsBold]
     ParentFont = False
     OnClick = cxButton28Click
+  end
+  object Panel17: TPanel
+    Left = 0
+    Top = 368
+    Width = 631
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T31 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 3
+    ExplicitTop = 373
   end
   object FDQuery1: TFDQuery
     Connection = DM.Database1

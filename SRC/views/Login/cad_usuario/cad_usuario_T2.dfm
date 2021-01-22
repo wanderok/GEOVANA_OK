@@ -1,15 +1,16 @@
 object frm_cad_usuario_T2: Tfrm_cad_usuario_T2
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Cadastro - Usu'#225'rio'
-  ClientHeight = 223
+  ClientHeight = 252
   ClientWidth = 622
   Color = 12281600
   DefaultMonitor = dmMainForm
   Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
+  Font.Color = clWhite
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
@@ -23,7 +24,7 @@ object frm_cad_usuario_T2: Tfrm_cad_usuario_T2
   TextHeight = 13
   object Image2: TImage
     Left = 8
-    Top = 8
+    Top = 0
     Width = 200
     Height = 200
     AutoSize = True
@@ -1084,26 +1085,9 @@ object frm_cad_usuario_T2: Tfrm_cad_usuario_T2
       C8399CC332384720E7700ECBE01C819CC3392C837304720EE7B00CCE11C8399C
       C332F8FF01C6C9F27A4E9AD2000000000049454E44AE426082}
   end
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 210
-    Width = 622
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T2 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 589
-    ExplicitWidth = 33
-  end
   object bGravar: TcxButton
     Left = 240
-    Top = 164
+    Top = 188
     Width = 84
     Height = 45
     Caption = 'Gravar'
@@ -1155,7 +1139,7 @@ object frm_cad_usuario_T2: Tfrm_cad_usuario_T2
   end
   object bCancelar: TcxButton
     Left = 378
-    Top = 164
+    Top = 188
     Width = 84
     Height = 45
     Caption = '&Sair'
@@ -1207,9 +1191,9 @@ object frm_cad_usuario_T2: Tfrm_cad_usuario_T2
   end
   object GroupBox1: TGroupBox
     Left = 240
-    Top = 16
+    Top = 8
     Width = 361
-    Height = 145
+    Height = 174
     Color = 12281600
     ParentBackground = False
     ParentColor = False
@@ -1358,10 +1342,62 @@ object frm_cad_usuario_T2: Tfrm_cad_usuario_T2
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object bLiberarLogin: TcxButton
+      Left = 216
+      Top = 124
+      Width = 121
+      Height = 45
+      Caption = 'Liberar Login'
+      LookAndFeel.NativeStyle = False
+      LookAndFeel.SkinName = 'Metropolis'
+      OptionsImage.Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        2000000000000004000000000000000000000000000000000000000000000000
+        00030000000C0000001300000015000000150000001600000016000000170000
+        00170000001800000018000000170000000F0000000400000000000000000000
+        000B2C517EC33C6BACFF3967A7FF3762A2FF345E9EFF335999FF315595FF2E51
+        90FF2C4D8CFF2A4A88FF2A4685FF1D305DC70000000F00000000000000000000
+        000F4176B5FF8DDDFEFF52C9FEFF4AC4FEFF40BEFDFF44C2FDFF60CFFEFF55CC
+        FEFF2BB3FCFF19A8FCFF12A4FBFF294786FF0000001500000000000000000000
+        000E437BBBFFA1E5FFFF5ED0FFFF57CCFFFF4BAAD3FF405357FF3C5156FF55AD
+        D3FF2DB6FFFF26B0FEFF1DA9FCFF2C4B8AFF0000001400000000000000000000
+        000D4680C0FFB4EBFFFF6BD7FFFF63D4FFFF5BCFFFFF48707DFF436D7CFF55CA
+        FFFF3ABCFFFF31B9FFFF28B2FCFF2E5090FF0000001300000000000000000000
+        000B4884C5FFC5F2FFFF78DDFFFF70D8FFFF69D5FFFF57A3BFFF529FBFFF78D9
+        FFFF47C4FFFF3FBFFFFF35BAFDFF305594FF0000001100000000000000000000
+        000A4A88C8FFD4F6FFFF81E3FFFF7CDFFFFF74DCFFFF527177FF4F6F76FF7CDB
+        FFFF54CBFFFF4CC7FFFF43BFFDFF335B9AFF0000000F00000000000000000000
+        00084C8BCBFFE0F9FFFF8CE6FFFF85E4FFFF7EE1FFFF5F8C95FF5B8995FF69D8
+        FFFF62D2FFFF5ACFFFFF4FC7FDFF36609FFF0000000E00000000000000000000
+        00064C8CCCFFE7FBFFFFE4FAFFFFDFF9FFFFD8F7FFFFD1F4FFFFC8F2FFFFBFEE
+        FFFFB4EBFFFFA8E7FFFF99E0FDFF3966A5FF0000000C00000000000000000000
+        0003386897C44C8CCCFF4C8CCCFF4B8ACAFF4A87C7FF4884C4FF4681C0FF447D
+        BCFF4279B9FF4075B4FF3E70B0FF2C507FC80000000700000000000000000000
+        000100000012564B3EFFD0CCC8FF665B4EFF0000001B00000007000000080000
+        001F726A5FFFB6AFA9FF4B3F30FF0000001C0000000200000000000000000000
+        00000000000D5E5447F3D8D3CFFF6D6256FF16130F5600000008000000091713
+        105A6F6557FFB6AEA5FF4B3F31F4000000150000000000000000000000000000
+        000000000008585046CBB9B3ACFFA0988FFF3D352BBA1613105616130F583A31
+        28BC91877DFF958C81FF3E352ACE0000000E0000000000000000000000000000
+        000000000003211F1C4D999187FDC3BEB8FFA19990FF72675BFF6F6557FF9289
+        7FFFACA59DFF766C60FE14110E53000000050000000000000000000000000000
+        00000000000000000005433F3A839E958CFFBDB7B0FFD9D5D1FFD6D2CDFFAFA8
+        A0FF7E7569FF2B261F890000000A000000010000000000000000000000000000
+        000000000000000000010000000524211F4A5B554CB96B6256E75B5144E8453D
+        34BA1815124E0000000800000001000000000000000000000000}
+      TabOrder = 4
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      OnClick = bLiberarLoginClick
+    end
   end
   object bPermissoes: TcxButton
     Left = 502
-    Top = 164
+    Top = 188
     Width = 99
     Height = 45
     Caption = 'Permiss'#245'es'
@@ -1410,5 +1446,23 @@ object frm_cad_usuario_T2: Tfrm_cad_usuario_T2
     Font.Style = [fsBold]
     ParentFont = False
     OnClick = bPermissoesClick
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 237
+    Width = 622
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T2 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 4
   end
 end

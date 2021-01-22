@@ -105,7 +105,6 @@ type
     Label3: TLabel;
     Label7: TLabel;
     Label11: TLabel;
-    lbNomeDaTela: TLabel;
     edRua: TEdit;
     edCEP: TEdit;
     edNumero: TEdit;
@@ -128,6 +127,7 @@ type
     edTpColaborador: TEdit;
     bPesqTpColaborador: TcxButton;
     edTpColaboradorDescricao: TEdit;
+    Panel2: TPanel;
     procedure bPesqZonaClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure bPesqBairroClick(Sender: TObject);
@@ -223,7 +223,7 @@ var
 implementation
 
 uses
-  Funcoes,
+  FuncoesSMC,
   TiposDeDados,
   ValidadorDeDocumentos,
   U_Municipio_T5,
@@ -235,7 +235,7 @@ uses
   ConsultaCNPJ_T13,
   ConsultaCPF_T14,
   COLABORADOR_HISTORICO_BLOQUEIOS_COLHB_T22,
-  Dados,
+  DadosSMC,
   Classe_Nuvem,
   cad_comissoes_T30;
 
@@ -258,6 +258,15 @@ end;
 procedure Tfrm_cad_colaborador_T20.cxButton21Click(Sender: TObject);
 var vNuvem: TNuvem;
 begin
+   if Colaborador.Existe then
+   begin
+      if not fTemAcesso(Usuario.Codigo,'ALTCOLAB') then
+          exit;
+   end
+   else
+      if not fTemAcesso(Usuario.Codigo,'CADCOLAB') then
+          exit;
+
    if not DadosCorretos then
       exit;
 
@@ -502,8 +511,6 @@ begin
 end;
 
 function Tfrm_cad_colaborador_T20.DadosCorretos: Boolean;
-const Campo_Obrigatorio     = 100;
-      Campo_Nao_Obrigatorio =   0;
 begin
    result := false;
 
@@ -1142,6 +1149,9 @@ end;
 
 procedure Tfrm_cad_colaborador_T20.Preencher_Campos_da_Tela;
 begin
+   if not fTemAcesso('CONCOLAB') then
+      exit;
+
    Limpar_os_campos_da_Tela(frm_cad_colaborador_T20);
 
    edCodigo.Text      := Colaborador.Codigo;

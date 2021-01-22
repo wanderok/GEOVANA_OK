@@ -34,7 +34,7 @@ uses
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue,
   //----------------------------------------------------------------------------
-  funcoes,
+  FuncoesSMC,
   Classe_Usuario;
 
 type
@@ -51,7 +51,8 @@ type
     btn_cons_usuario: TcxButton;
     Image2: TImage;
     bPermissoes: TcxButton;
-    lbNomeDaTela: TLabel;
+    bLiberarLogin: TcxButton;
+    Panel4: TPanel;
     procedure bCancelarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure edt_usuarioExit(Sender: TObject);
@@ -64,6 +65,7 @@ type
     procedure edt_confirma_senhaExit(Sender: TObject);
     procedure edt_senhaExit(Sender: TObject);
     procedure bPermissoesClick(Sender: TObject);
+    procedure bLiberarLoginClick(Sender: TObject);
   private
     { Private declarations }
     procedure Iniciar;
@@ -85,6 +87,15 @@ uses Acessos_T38;
 
 procedure Tfrm_cad_usuario_T2.bGravarClick(Sender: TObject);
 begin
+  if UsuarioLocal.Existe(edt_Usuario.Text) then
+  begin
+      if not fTemAcesso(Usuario.Codigo,'ALTUSU') then
+          exit;
+  end
+  else
+      if not fTemAcesso(Usuario.Codigo,'CADUSU') then
+          exit;
+
   if not DadosCorretos then
      exit;
 
@@ -92,6 +103,7 @@ begin
   begin
     UsuarioLocal.Senha := edt_senha.Text;
     UsuarioLocal.Update;
+    UsuarioLocal.Deslogou;
   end
   else
   begin
@@ -113,6 +125,17 @@ begin
    frmAcessos_T38.edUSU_CODIGO.text := edt_usuario.text;
    frmAcessos_T38.ShowModal;
    frmAcessos_T38.Free;
+end;
+
+procedure Tfrm_cad_usuario_T2.bLiberarLoginClick(Sender: TObject);
+begin
+   if edt_Usuario.Text = '' then
+      exit;
+   if UsuarioLocal.Existe(edt_Usuario.Text) then
+      UsuarioLocal.Deslogou;
+
+   Avisos.Avisar('O usuário [ '+edt_Usuario.Text+' ] foi liberado para Login');
+   edt_Usuario.SetFocus;
 end;
 
 procedure Tfrm_cad_usuario_T2.Iniciar;
@@ -162,6 +185,9 @@ procedure Tfrm_cad_usuario_T2.edt_confirma_senhaExit(Sender: TObject);
 begin
   if bPermissoes.Focused then
      exit;
+  if bLiberarLogin.Focused then
+     exit;
+
    if not DadosCorretos then
       exit;
    bGravar.Enabled:=true;
@@ -182,6 +208,9 @@ procedure Tfrm_cad_usuario_T2.edt_senhaExit(Sender: TObject);
 begin
   if bPermissoes.Focused then
      exit;
+  if bLiberarLogin.Focused then
+     exit;
+
    edt_confirma_senha.Enabled:= true;
    edt_confirma_senha.Setfocus;
 end;

@@ -17,23 +17,6 @@ object frmFORNECEDOR_HISTORICO_BLOQUEIOS_FHB_T18: TfrmFORNECEDOR_HISTORICO_BLOQU
   OnKeyPress = FormKeyPress
   PixelsPerInch = 96
   TextHeight = 13
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 212
-    Width = 609
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T18 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 569
-    ExplicitWidth = 40
-  end
   object DBGrid1: TDBGrid
     Left = 0
     Top = 47
@@ -118,6 +101,26 @@ object frmFORNECEDOR_HISTORICO_BLOQUEIOS_FHB_T18: TfrmFORNECEDOR_HISTORICO_BLOQU
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 1
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 210
+    Width = 609
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T18 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 2
+    ExplicitLeft = -359
+    ExplicitWidth = 968
   end
   object sql_FORNECEDOR_HISTORICO_BLOQUEIOS_FHB: TFDQuery
     Connection = DM.Database1

@@ -130,12 +130,12 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\Classes\Classe_Acesso.pas"/>
-        <DCCReference Include="..\..\src\DataModules\Dados.pas">
+        <DCCReference Include="..\..\SRC\DataModules\DadosSMC.pas">
             <Form>DM</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\..\src\Funcoes\Funcoes.pas"/>
+        <DCCReference Include="..\..\SRC\Funcoes\FuncoesSMC.pas"/>
         <DCCReference Include="..\..\src\Classes\Classe_Usuario.pas"/>
         <DCCReference Include="..\..\src\Classes\Classe_VerificacaoInicial.pas"/>
         <DCCReference Include="..\..\src\TiposDeDados\TiposDeDados.pas"/>
@@ -192,8 +192,8 @@
             <Form>frm_config_email_fiscais</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\views\configs\integracao_outros_bancos.pas">
-            <Form>frm_intagracao_outras_base_dados</Form>
+        <DCCReference Include="..\..\SRC\views\configs\config_integracao_lojas_T42.pas">
+            <Form>frm_config_integracao_lojas_T42</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\views\configs\MenuConfiguracaoNfeNFce.pas">
@@ -205,8 +205,8 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\Controles\ControleDeAcessos\ControleDeAcessos.pas"/>
-        <DCCReference Include="..\..\src\Controles\ControleDeAcessos\LiberaAcesso.pas">
-            <Form>frmLiberaAcesso</Form>
+        <DCCReference Include="..\..\SRC\Controles\ControleDeAcessos\LiberaAcesso_T39.pas">
+            <Form>frmLiberaAcesso_T39</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\SRC\views\cad_empresa\cad_empresa_T3.pas">
@@ -382,13 +382,11 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\..\src\Classes\Classe_Colaborador_Tipo.pas"/>
-        <DCCReference Include="..\..\SRC\views\Produto\cad_marca\cad_marca.pas">
+        <DCCReference Include="..\..\SRC\views\cad_produto\cad_marca\cad_marca.pas">
             <Form>Frm_Marca</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\SRC\views\Produto\cadastro_produto.pas">
-            <Form>Frm_Produto</Form>
-            <FormType>dfm</FormType>
+        <DCCReference Include="..\..\SRC\views\cad_produto\cadastro_produto_T40.pas">
+            <Form>frm_cadastro_produto_T40</Form>
         </DCCReference>
         <DCCReference Include="..\..\src\views\SMC\painel_SMC_T36.pas">
             <Form>frm_painel_SMC_T36</Form>
@@ -414,8 +412,99 @@
             <Form>frmConfigArquivosFiscaisSMC</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\..\src\Classes\Classe_Produto.pas"/>
+        <DCCReference Include="..\..\SRC\views\funcao\funcoes_T53.pas">
+            <Form>frm_funcoes_T53</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\Fiscal\CST_ICMS\CST_ICMS_T48.pas">
+            <Form>frm_CST_ICMS_T48</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\Fiscal\OrigemDoProduto\OrigemDoProduto_T55.pas">
+            <Form>frm_OrigemDoProduto_T55</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\Fiscal\UF_ICMS\UF_ICMS_T45.pas">
+            <Form>frm_UF_ICMS_T45</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\Fiscal\natureza_operacao\natureza_operacao_cfop_T43.pas">
+            <Form>frm_natureza_operacao_cfop_T43</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\Fiscal\CST_COFINS\CST_COFINS_T46.pas">
+            <Form>frm_CST_COFINS_T46</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\Fiscal\CST_PIS\CST_PIS_T47.pas">
+            <Form>frm_CST_PIS_T47</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\cad_servicos\cad_servico_T49.pas">
+            <Form>frm_cad_servico_T49</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\Classes\Classe_ContaContabil.pas"/>
+        <DCCReference Include="..\..\src\views\Contabilidade\cad_ContaContabil\cad_ContaContabil_T50.pas">
+            <Form>frm_Cad_ContaContabil_T50</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\Consulta_Cadastros\consulta_produto_T41.pas">
+            <Form>frm_consulta_produto_T41</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\cad_produto\fiscal\tributacao_produto_Combustivel_T62.pas">
+            <Form>frm_tributacao_produto_Combustivel_T62</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\Consulta_Cadastros\ConsultaPlanoDeContas_T51.pas">
+            <Form>frm_ConsultaPlanoDeContas_T51</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="..\..\SRC\views\Acessos_Permissoes\Acessos_T38.pas">
             <Form>frmAcessos_T38</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\Fiscal\NCMSH_CEST\NCMSH_CEST_T44.pas">
+            <Form>frm_NCMSH_CEST_T44</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\Fiscal\CSOSN\CSOSN_T54.pas">
+            <Form>frm_CSOSN_T54</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\Auditoria\CrescimentoDaBaseDeDados_T56.pas">
+            <Form>FrmCrescimentoDaBaseDeDados_T56</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\Controles\AbreTelas.pas"/>
+        <DCCReference Include="..\..\SRC\views\cad_produto\fiscal\tributacao_produto_ICMSST_T59.pas">
+            <Form>frm_tributacao_produto_ICMSST_T59</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\cad_produto\fiscal\tributacao_produto_ICMS_T58.pas">
+            <Form>frm_tributacao_produto_ICMS_T58</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\cad_produto\fiscal\tributacao_produto_PIS_COFINS_T60.pas">
+            <Form>frm_tributacao_produto_PIS_COFINS_T60</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\cad_produto\fiscal\tributacao_produto_FCP_T61.pas">
+            <Form>frm_tributacao_produto_FCP_T61</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\cad_produto\fiscal\tributacao_produto_CEST_NCM_T57.pas">
+            <Form>frm_tributacao_produto_CEST_NCM_T57</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\SRC\views\cad_produto\fiscal\Grupo_Tributario_T63.pas">
+            <Form>frm_Grupo_Tributario_T63</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\src\views\cad_produto\fiscal\tributacao_produto_T52.pas">
+            <Form>frm_tributacao_produto_T52</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <None Include="ModelSupport_SMC_PLUS\default.txaPackage"/>

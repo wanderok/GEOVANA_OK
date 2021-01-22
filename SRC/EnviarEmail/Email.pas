@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ComCtrls, ExtCtrls, StdCtrls, Buttons, Db, Dados,
+  ComCtrls, ExtCtrls, StdCtrls, Buttons, Db, DadosSMC,
   IdMessage, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
   IdMessageClient, IdSMTP, IdIMAP4, ACBrBase, ACBrMail, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
@@ -48,7 +48,7 @@ var
 implementation
 
 uses
-  Shellapi, FUNCOES;
+  Shellapi, FuncoesSMC;
 
 {$R *.dfm}
 

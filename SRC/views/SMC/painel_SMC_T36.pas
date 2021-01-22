@@ -11,11 +11,12 @@ type
     Panel1: TPanel;
     bFinanceiro: TButton;
     bFiscal: TButton;
-    lbNomeDaTela: TLabel;
     Panel2: TPanel;
     bComercial: TButton;
+    Panel17: TPanel;
     procedure bFiscalClick(Sender: TObject);
     procedure bComercialClick(Sender: TObject);
+    procedure bFinanceiroClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,10 +30,13 @@ implementation
 
 {$R *.dfm}
 
-uses SMC_Fiscal_T37;
+uses FuncoesSMC,
+     SMC_Fiscal_T37;
 
 procedure Tfrm_painel_SMC_T36.bComercialClick(Sender: TObject);
 begin
+    if not fTemAcesso('SMCCOMERC') then
+       exit;
 {
     frm_SMC_Fiscal_T37 := Tfrm_SMC_Fiscal_T37.Create(nil);
     frm_SMC_Fiscal_T37.showmodal;
@@ -40,8 +44,17 @@ begin
 }
 end;
 
+procedure Tfrm_painel_SMC_T36.bFinanceiroClick(Sender: TObject);
+begin
+    if not fTemAcesso('SMCFINANC') then
+       exit;
+end;
+
 procedure Tfrm_painel_SMC_T36.bFiscalClick(Sender: TObject);
 begin
+    if not fTemAcesso('SMCFISCAL') then
+       exit;
+
     frm_SMC_Fiscal_T37 := Tfrm_SMC_Fiscal_T37.Create(nil);
     frm_SMC_Fiscal_T37.showmodal;
     frm_SMC_Fiscal_T37.Free;

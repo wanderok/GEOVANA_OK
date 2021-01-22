@@ -27,7 +27,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, ACBrBase, ACBrEnterTab;
+  dxSkinXmas2008Blue, ACBrBase, ACBrEnterTab, Vcl.ExtCtrls;
 
 type
   Tfrm_cad_regiao_T11 = class(TForm)
@@ -39,7 +39,7 @@ type
     ACBrEnterTab1: TACBrEnterTab;
     qLocal: TFDQuery;
     DataSource1: TDataSource;
-    lbNomeDaTela: TLabel;
+    Panel4: TPanel;
     procedure bGravarClick(Sender: TObject);
     procedure cxButton28Click(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
@@ -65,7 +65,7 @@ implementation
 
 {$R *.dfm}
 
-uses Dados, Funcoes;
+uses DadosSMC, FuncoesSMC;
 
 { TFrm_regiao }
 

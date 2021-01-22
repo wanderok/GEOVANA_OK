@@ -40,7 +40,7 @@ type
     ACBrEnterTab1: TACBrEnterTab;
     qLocal: TFDQuery;
     DataSource1: TDataSource;
-    lbNomeDaTela: TLabel;
+    Panel4: TPanel;
     procedure FormShow(Sender: TObject);
     procedure edFiltroChange(Sender: TObject);
     procedure DBGrid2DblClick(Sender: TObject);

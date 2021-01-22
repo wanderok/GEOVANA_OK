@@ -114,8 +114,8 @@ type
     OpenPictureDialog1: TOpenPictureDialog;
     imgLogoMarca: TImage;
     imgAssinatura: TImage;
-    lbNomeDaTela: TLabel;
     cxButton6: TcxButton;
+    Panel4: TPanel;
     procedure BtnCertificadoClick(Sender: TObject);
     procedure BtnEmailClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
@@ -179,27 +179,29 @@ var
 implementation
 
 uses
-   Dados,
-   funcoes,
+   DadosSMC,
+   FuncoesSMC,
    ValidadorDeDocumentos,
    reg_tributario_T4,
    U_Municipio_T5,
    //cad_bairro_T8,
    cad_regiao_T11,
    cad_zona_T12,
-
-   config_certificado_T33, config_email,
+   config_certificado_T33,
+   config_integracao_lojas_T42,
+   config_email,
    config_nfe_T32, config_mde, config_nfs,
    email_arquivos_fiscais,
-   integracao_outros_bancos, config_mdfe;
+   config_mdfe;
 
 
 {$R *.dfm}
 
 procedure Tfrm_cad_empresa_T3.BTNbase_dadosClick(Sender: TObject);
 begin
-    frm_intagracao_outras_base_dados := Tfrm_intagracao_outras_base_dados.Create(nil);
-    frm_intagracao_outras_base_dados.showmodal;
+    frm_config_integracao_lojas_T42 := Tfrm_config_integracao_lojas_T42.Create(nil);
+    frm_config_integracao_lojas_T42.showmodal;
+    frm_config_integracao_lojas_T42.Free;
 end;
 
 procedure Tfrm_cad_empresa_T3.BtnCertificadoClick(Sender: TObject);
@@ -754,6 +756,10 @@ end;
 procedure Tfrm_cad_empresa_T3.Preencher_Campos_da_Tela;
 begin
    Limpar_os_campos_da_Tela(frm_cad_empresa_T3);
+
+   if not fTemAcesso('CONEMPRESA') then
+      exit;
+
 
    Empresa.Abrir;
 

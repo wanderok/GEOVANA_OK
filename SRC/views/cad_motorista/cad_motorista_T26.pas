@@ -105,7 +105,6 @@ type
     Label3: TLabel;
     Label7: TLabel;
     Label11: TLabel;
-    lbNomeDaTela: TLabel;
     edRua: TEdit;
     edCEP: TEdit;
     edNumero: TEdit;
@@ -124,6 +123,7 @@ type
     ACBrCEP1: TACBrCEP;
     GroupBox1: TGroupBox;
     mmObservacoes: TMemo;
+    Panel17: TPanel;
     procedure bPesqZonaClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure bPesqBairroClick(Sender: TObject);
@@ -214,7 +214,7 @@ var
 implementation
 
 uses
-  Funcoes,
+  FuncoesSMC,
   TiposDeDados,
   ValidadorDeDocumentos,
   U_Municipio_T5,
@@ -226,7 +226,7 @@ uses
   ConsultaCNPJ_T13,
   ConsultaCPF_T14,
   MOTORISTA_HISTORICO_BLOQUEIOS_MOTHB_T27,
-  Dados,
+  DadosSMC,
   Classe_Nuvem;
 
 {$R *.dfm}
@@ -248,6 +248,15 @@ end;
 procedure Tfrm_cad_motorista_T26.cxButton21Click(Sender: TObject);
 var vNuvem: TNuvem;
 begin
+   if Motorista.Existe then
+   begin
+      if not fTemAcesso(Usuario.Codigo,'ALTMOTOR') then
+          exit;
+   end
+   else
+      if not fTemAcesso(Usuario.Codigo,'CADMOTOR') then
+          exit;
+
    if not DadosCorretos then
       exit;
 
@@ -1090,6 +1099,8 @@ end;
 
 procedure Tfrm_cad_motorista_T26.Preencher_Campos_da_Tela;
 begin
+   if not fTemAcesso('CONMOTOR') then
+      exit;
    Limpar_os_campos_da_Tela(frm_cad_motorista_T26);
 
    edCodigo.Text      := Motorista.Codigo;

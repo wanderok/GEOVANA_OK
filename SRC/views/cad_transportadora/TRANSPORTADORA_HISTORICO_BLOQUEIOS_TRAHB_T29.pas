@@ -27,13 +27,13 @@ type
     dt_TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB: TDataSource;
     DBGrid1: TDBGrid;
     Panel1: TPanel;
-    lbNomeDaTela: TLabel;
     sql_TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHBTRAHB_TRANSPORTADORA: TStringField;
     sql_TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHBTRAHB_DTEVENTO: TDateField;
     sql_TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHBTRAHB_HREVENTO: TStringField;
     sql_TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHBTRAHB_USUEVENTO: TStringField;
     sql_TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHBTRAHB_MAQEVENTO: TStringField;
     sql_TRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHBTRAHB_EVENTO: TStringField;
+    Panel17: TPanel;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
@@ -47,7 +47,7 @@ var
 implementation
 
 {$R *.dfm}
-uses Dados;
+uses DadosSMC;
 
 procedure TfrmTRANSPORTADORA_HISTORICO_BLOQUEIOS_TRAHB_T29.FormKeyPress(Sender: TObject;
   var Key: Char);

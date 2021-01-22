@@ -3,6 +3,30 @@ unit Telas_Numeros;
 ====================================================================================================
 |tela |unit                                        |form                                           |
 |-----|--------------------------------------------|-----------------------------------------------|
+|T62  |frm_tributacao_produto_Combustivel_T62
+|T61  |frm_tributacao_produto_FCP_T61
+|T60  |frm_tributacao_produto_PIS_COFINS_T60
+|T59  |frm_tributacao_produto_ICMSST_T59
+|T58  |frm_tributacao_produto_ICMS_T58
+|T57  |frm_tributacao_produto_CEST_NCM_T57         |CrescimentoDaBaseDeDados_T56                   |
+|T56  |CrescimentoDaBaseDeDados_T56                |CrescimentoDaBaseDeDados_T56                   |
+|T55  |OrigemDoProduto_T55                         |frm_OrigemDoProduto_T55                        |
+|T54  |CSOSN_T54                                   |frm_CSOSN_T54                                  |
+|T53  |funcoes_T53                                 |frm_funcoes_T53                                |
+|T52  |tributacao_produto_T52                      |frm_tributacao_produto_T52                     |
+|T51  |ConsultaPlanoDeContas_T51                   |frm_ConsultaPlanoDeContas_T51                  |
+|T50  |cad_ContaContabil_T50                       |frm_Cad_ContaContabil_T50                      |
+|T49  |cad_servico_T49                             |frm_cad_servico_T49                            |
+|T48  |CST_ICMS_T48                                |frm_CST_ICMS_T48                               |
+|T47  |CST_PIS_T47                                 |frm_CST_PIS_T47                                |
+|T46  |CST_COFINS_T46                              |frm_CST_COFINS_T46                             |
+|T45  |UF_ICMS_T45                                 |frm_UF_ICMS_T45                                |
+|T44  |NCMSH_CEST_T44                              |frm_NCMSH_CEST_T44                             |
+|T43  |natureza_operacao_cfop_T43                  |frm_natureza_operacao_cfop_T43                 |
+|T42  |config_integracao_lojas_T42                 |frm_config_integracao_lojas_T42                |
+|T41  |consulta_produto_T41                        |frm_consulta_produto_T41                       |
+|T40  |cadastro_produto_T40                        |frm_cadastro_produto_T40                       |
+|T39  |LiberaAcesso_T39                            |LiberaAcesso_T39                               |
 |T38  |Acessos_T38                                 |frm_Acessos_T38                                |
 |T37  |SMC_Fiscal_T37                              |frm_SMC_Fiscal_T37                             |
 |T36  |painel_SMC_T36                              |frm_painel_SMC_T36                             |

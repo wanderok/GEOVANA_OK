@@ -1,10 +1,11 @@
 object Frm_tipo_colaborador_T8: TFrm_tipo_colaborador_T8
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Cadastro | Tipo Colaborador'
-  ClientHeight = 269
+  ClientHeight = 261
   ClientWidth = 286
   Color = clBtnFace
   DefaultMonitor = dmMainForm
@@ -21,7 +22,7 @@ object Frm_tipo_colaborador_T8: TFrm_tipo_colaborador_T8
   TextHeight = 13
   object Label5: TLabel
     Left = 13
-    Top = 12
+    Top = 4
     Width = 67
     Height = 18
     Caption = 'Descri'#231#227'o:'
@@ -32,26 +33,9 @@ object Frm_tipo_colaborador_T8: TFrm_tipo_colaborador_T8
     Font.Style = []
     ParentFont = False
   end
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 256
-    Width = 286
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T8 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 253
-    ExplicitWidth = 33
-  end
   object edFiltro: TEdit
     Left = 86
-    Top = 8
+    Top = 0
     Width = 187
     Height = 26
     CharCase = ecUpperCase
@@ -67,7 +51,7 @@ object Frm_tipo_colaborador_T8: TFrm_tipo_colaborador_T8
   end
   object DBGrid2: TDBGrid
     Left = 13
-    Top = 46
+    Top = 38
     Width = 260
     Height = 150
     DataSource = DataSource1
@@ -121,7 +105,7 @@ object Frm_tipo_colaborador_T8: TFrm_tipo_colaborador_T8
   end
   object cxButton1: TcxButton
     Left = 13
-    Top = 211
+    Top = 195
     Width = 98
     Height = 45
     Caption = 'Gravar'
@@ -269,7 +253,7 @@ object Frm_tipo_colaborador_T8: TFrm_tipo_colaborador_T8
   end
   object cxButton2: TcxButton
     Left = 170
-    Top = 211
+    Top = 195
     Width = 103
     Height = 45
     Caption = 'Sair'
@@ -414,6 +398,24 @@ object Frm_tipo_colaborador_T8: TFrm_tipo_colaborador_T8
     Font.Style = [fsBold]
     ParentFont = False
     OnClick = cxButton2Click
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 246
+    Width = 286
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T8 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 4
   end
   object qLocal: TFDQuery
     Connection = DM.Database1

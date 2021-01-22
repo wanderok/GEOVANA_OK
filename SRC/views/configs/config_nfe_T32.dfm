@@ -299,28 +299,11 @@ object frmConfig_NFe_T32: TfrmConfig_NFe_T32
       000000000000}
     Stretch = True
   end
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 392
-    Width = 675
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T32 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 635
-    ExplicitWidth = 40
-  end
   object GroupBox2: TGroupBox
     Left = 225
-    Top = 220
+    Top = 215
     Width = 225
-    Height = 172
+    Height = 177
     Caption = '  Impressora - A4 DANFE  '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -898,7 +881,7 @@ object frmConfig_NFe_T32: TfrmConfig_NFe_T32
   end
   object GroupBox6: TGroupBox
     Left = 0
-    Top = 220
+    Top = 215
     Width = 225
     Height = 56
     Caption = '  Forma de Emiss'#227'o  '
@@ -1248,6 +1231,24 @@ object frmConfig_NFe_T32: TfrmConfig_NFe_T32
       ParentFont = False
       OnClick = btn_buscar_xmlClick
     end
+  end
+  object Panel17: TPanel
+    Left = 0
+    Top = 390
+    Width = 675
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T32 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 10
   end
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.SSLLib = libNone

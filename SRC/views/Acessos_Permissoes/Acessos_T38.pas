@@ -33,10 +33,8 @@ type
     CheckListBox2: TCheckListBox;
     ProgressBar1: TProgressBar;
     MediaPlayer1: TMediaPlayer;
-    lbNomeDaTela: TLabel;
     bConfirma: TcxButton;
     Panel2: TPanel;
-    rgOrdem: TRadioGroup;
     Label1: TLabel;
     Label2: TLabel;
     rgFuncoes: TRadioGroup;
@@ -49,6 +47,8 @@ type
     Query2: TFDQuery;
     edFUN_NUMERO: TEdit;
     Label4: TLabel;
+    rgOrdem: TRadioGroup;
+    Panel3: TPanel;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
     procedure edUSU_CODIGOExit(Sender: TObject);
@@ -87,8 +87,8 @@ implementation
 uses
   Classe_Avisos,
   Consulta_T7,
-  Funcoes,
-  Dados;
+  FuncoesSMC,
+  DadosSMC;
 
 
 {$R *.DFM}
@@ -275,7 +275,7 @@ begin
    While Not Query1.Eof Do
    Begin
       inc(vcontador);
-      CheckListBox1.Items.Add(Query1.FieldByName('FUN_NUMERO').AsString+'.'+Query1.FieldByName('FUN_DESCRICAO').AsString);
+      CheckListBox1.Items.Add('[ '+FormatFloat('000',Query1.FieldByName('FUN_NUMERO').AsInteger)+' ]  '+Query1.FieldByName('FUN_DESCRICAO').AsString);
       CheckListBox2.Items.Add(Query1.FieldByName('FUN_CODIGO').AsString);
       if ExisteAcesso(edUSU_CODIGO.Text, Query1.FieldByName('FUN_CODIGO').AsString) then
          CheckListBox1.Checked[vContador-1] := true;

@@ -89,8 +89,8 @@ type
     FDQuery1LOG_CLIENTE: TStringField;
     FDQuery1LOG_EXECUTAVEL: TStringField;
     gdConveniadosTbVwLOG_TELA: TcxGridDBColumn;
-    lbNomeDaTela: TLabel;
     FDQuery1LOG_TELA: TStringField;
+    Panel4: TPanel;
     procedure edArgumentoChange(Sender: TObject);
     procedure cxButton25Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -121,7 +121,7 @@ implementation
 
 {$R *.dfm}
 
-uses Dados, funcoes;
+uses DadosSMC, FuncoesSMC;
 
 procedure Tfrm_auditoria_T10.btn_marcaClick(Sender: TObject);
 begin

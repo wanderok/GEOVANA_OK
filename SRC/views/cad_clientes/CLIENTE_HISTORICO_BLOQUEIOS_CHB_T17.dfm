@@ -3,7 +3,7 @@ object frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17: TfrmCLIENTE_HISTORICO_BLOQUEIOS_C
   Top = 0
   AutoSize = True
   Caption = 'Hist'#243'rico de Bloqueios e Desbloqueios do Cliente'
-  ClientHeight = 225
+  ClientHeight = 226
   ClientWidth = 609
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,28 +17,11 @@ object frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17: TfrmCLIENTE_HISTORICO_BLOQUEIOS_C
   OnKeyPress = FormKeyPress
   PixelsPerInch = 96
   TextHeight = 13
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 212
-    Width = 609
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T17 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 411
-    ExplicitWidth = 40
-  end
   object DBGrid1: TDBGrid
     Left = 0
     Top = 47
     Width = 609
-    Height = 162
+    Height = 164
     DataSource = dt_CLIENTE_HISTORICO_BLOQUEIOS_CHB
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
     TabOrder = 0
@@ -118,7 +101,27 @@ object frmCLIENTE_HISTORICO_BLOQUEIOS_CHB_T17: TfrmCLIENTE_HISTORICO_BLOQUEIOS_C
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 1
-    ExplicitWidth = 451
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 211
+    Width = 609
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T20 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 2
+    ExplicitLeft = -359
+    ExplicitTop = 217
+    ExplicitWidth = 968
   end
   object sql_CLIENTE_HISTORICO_BLOQUEIOS_CHB: TFDQuery
     Connection = DM.Database1

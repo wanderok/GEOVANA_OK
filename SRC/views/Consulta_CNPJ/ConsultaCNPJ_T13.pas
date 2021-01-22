@@ -54,6 +54,7 @@ type
     EditCNAE1: TEdit;
     Label16: TLabel;
     ACBrConsultaCNPJ1: TACBrConsultaCNPJ;
+    Panel4: TPanel;
     procedure LabAtualizarCaptchaClick(Sender: TObject);
     procedure ButBuscarClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);

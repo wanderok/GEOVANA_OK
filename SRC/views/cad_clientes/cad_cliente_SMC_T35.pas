@@ -30,7 +30,6 @@ uses
 
 type
   TFrm_cad_cliente_SMC_T35 = class(TForm)
-    lbNomeDaTela: TLabel;
     Label1: TLabel;
     edContador: TEdit;
     bPesqRamoAtividade: TcxButton;
@@ -72,6 +71,7 @@ type
     Panel5: TPanel;
     Panel6: TPanel;
     RadioGroup1: TRadioGroup;
+    Panel17: TPanel;
     procedure edContadorKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure bPesqRamoAtividadeClick(Sender: TObject);
@@ -105,7 +105,7 @@ implementation
 
 {$R *.dfm}
 
-uses consulta_T7, funcoes;
+uses consulta_T7, FuncoesSMC;
 
 procedure TFrm_cad_cliente_SMC_T35.bPesqRamoAtividadeClick(Sender: TObject);
 begin

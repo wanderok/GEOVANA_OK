@@ -21,7 +21,7 @@ uses Dialogs, SysUtils,
      Math, Registry,
      stdctrls, Windows, Messages, Classes, Graphics, Forms,
      ExtCtrls, Mask, Grids, Db, Buttons, ComCtrls,
-     Dados, Winsock, Quickrpt, QRCtrls;
+     DadosSMC, Winsock, Quickrpt, QRCtrls;
 
 function TemAcesso(pUSUARIO,funcao:string):Boolean; overload;
 function TemAcesso(funcao:string):Boolean; overload;
@@ -29,7 +29,7 @@ function TemAcessoSemMensagem(pUSUARIO,funcao:string):Boolean;
 
 implementation
 
-uses funcoes, LiberaAcesso;
+uses FuncoesSMC, LiberaAcesso_T39;
 
 function TemAcesso(funcao:string):Boolean; overload;
 begin
@@ -95,22 +95,23 @@ begin
             // NAO PODE INFORMAR O PRECO
             // SOLICITA SENHA PARA LIBERACAO DE PRECO....
             try
-               frmLiberaAcesso := tfrmLiberaAcesso.Create(nil);
+               frmLiberaAcesso_T39 := tfrmLiberaAcesso_T39.Create(nil);
             except
-               frmLiberaAcesso.Free;
-               frmLiberaAcesso := tfrmLiberaAcesso.Create(nil);
+               frmLiberaAcesso_T39.Free;
+               frmLiberaAcesso_T39 := tfrmLiberaAcesso_T39.Create(nil);
             end;
-            frmLiberaAcesso.edFuncao.caption := funcao;
-            frmLiberaAcesso.panel1.caption := qLocal.FieldByName('FUN_NUMERO').AsString;
-            frmLiberaAcesso.ShowModal;
+            frmLiberaAcesso_T39.edFuncao.caption := funcao;
+            frmLiberaAcesso_T39.panel1.caption := qLocal.FieldByName('FUN_NUMERO').AsString;
+            frmLiberaAcesso_T39.ShowModal;
             if vfrmLiberaAcesso then
             begin
-               frmLiberaAcesso.Free;
+               frmLiberaAcesso_T39.Free;
                TemAcesso := True;
                qLocal.free;
                exit;
             end;
-            frmLiberaAcesso.Free;
+            TemAcesso := False;
+            frmLiberaAcesso_T39.Free;
             qLocal.free;
             ShowMessage('Acesso Negado...');
             exit;
@@ -131,7 +132,7 @@ begin
    qLocal.Sql.Add(' WHERE FUN_CODIGO = :CODIGO           ');
    qLocal.ParamByName('CODIGO'   ).AsString := Copy(Funcao,1,10);
    qLocal.open; //PausaDelay;
-   Log('ControleDeAcessos',Funcao+': '+qLocal.FieldByName('FUN_DESCRICAO').AsString);
+   //Log('ControleDeAcessos',Funcao+': '+qLocal.FieldByName('FUN_DESCRICAO').AsString);
    qLocal.free;
 
    AtualizaFUSADA_FUS(pUSUARIO,funcao);

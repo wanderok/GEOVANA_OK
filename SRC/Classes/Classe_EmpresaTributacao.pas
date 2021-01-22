@@ -30,7 +30,7 @@ type
 implementation
 { TEmpresa }
 
-uses Funcoes;
+uses FuncoesSMC;
 
 var qEmpresa: TFDQuery;
 

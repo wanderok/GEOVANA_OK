@@ -1,10 +1,11 @@
 object frm_auditoria_T10: Tfrm_auditoria_T10
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Auditoria'
-  ClientHeight = 413
+  ClientHeight = 406
   ClientWidth = 1195
   Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
@@ -20,7 +21,7 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
   TextHeight = 13
   object Label3: TLabel
     Left = 316
-    Top = 29
+    Top = 22
     Width = 53
     Height = 18
     Caption = 'Usu'#225'rio:'
@@ -33,7 +34,7 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
   end
   object Label1: TLabel
     Left = 505
-    Top = 29
+    Top = 22
     Width = 61
     Height = 18
     Caption = 'Terminal:'
@@ -46,7 +47,7 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
   end
   object Label4: TLabel
     Left = 21
-    Top = 69
+    Top = 62
     Width = 92
     Height = 18
     Caption = 'Pesquisar por:'
@@ -57,26 +58,9 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
     Font.Style = []
     ParentFont = False
   end
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 400
-    Width = 1195
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T10 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 1155
-    ExplicitWidth = 40
-  end
   object edUsuario: TEdit
     Left = 375
-    Top = 25
+    Top = 18
     Width = 92
     Height = 26
     Font.Charset = DEFAULT_CHARSET
@@ -89,7 +73,7 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
   end
   object cxGroupBox6: TcxGroupBox
     Left = 21
-    Top = 7
+    Top = 0
     Caption = '  Per'#237'odo  '
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
@@ -184,7 +168,7 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
   end
   object edTerminal: TEdit
     Left = 572
-    Top = 25
+    Top = 18
     Width = 130
     Height = 26
     Font.Charset = DEFAULT_CHARSET
@@ -197,7 +181,7 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
   end
   object btn_marca: TcxButton
     Left = 468
-    Top = 25
+    Top = 18
     Width = 22
     Height = 25
     Caption = '-'
@@ -250,7 +234,7 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
   end
   object cxButton1: TcxButton
     Left = 705
-    Top = 26
+    Top = 19
     Width = 22
     Height = 25
     Caption = '-'
@@ -303,10 +287,9 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
   end
   object gdConveniados: TcxGrid
     Left = 0
-    Top = 87
+    Top = 80
     Width = 1195
     Height = 313
-    Align = alBottom
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -368,7 +351,7 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
   end
   object edArgumento: TEdit
     Left = 119
-    Top = 60
+    Top = 53
     Width = 348
     Height = 26
     Font.Charset = DEFAULT_CHARSET
@@ -382,7 +365,7 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
   end
   object cxButton25: TcxButton
     Left = 624
-    Top = 67
+    Top = 60
     Width = 103
     Height = 23
     Caption = 'Sair'
@@ -434,7 +417,7 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
   end
   object cxButton3: TcxButton
     Left = 505
-    Top = 67
+    Top = 60
     Width = 98
     Height = 23
     Caption = 'Relat'#243'rio'
@@ -482,6 +465,24 @@ object frm_auditoria_T10: Tfrm_auditoria_T10
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 391
+    Width = 1195
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T10 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 9
   end
   object DataSource1: TDataSource
     DataSet = FDQuery1

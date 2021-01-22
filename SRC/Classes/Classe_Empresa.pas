@@ -232,84 +232,86 @@ implementation
 
 { TEmpresa }
 
-uses Funcoes;
+uses FuncoesSMC;
 
 var qEmpresa: TFDQuery;
 
 procedure TEmpresa.Abrir;
-var qLocal: TFDQuery;
+var qLocalEmpresa: TFDQuery;
 begin
-    qLocal := TFDQuery.Create(nil);
-    qLocal.ConnectionName :='X';
-    qLocal.Close;
-    qLocal.SQL.Clear;
-    qLocal.SQL.Add('SELECT * FROM EMPRESA_EMP');
-    qLocal.Open;
+    qLocalEmpresa := TFDQuery.Create(nil);
+    qLocalEmpresa.ConnectionName :='X';
+
+    qLocalEmpresa.Close;
+    qLocalEmpresa.SQL.Clear;
+    qLocalEmpresa.SQL.Add('SELECT * FROM EMPRESA_EMP');
+    qLocalEmpresa.Open;
+
     FNomeFantasia   := '';
     FCodigoUniSystem:= '';
     FRazaoSocial    := '';
-    if qLocal.eof then
+    if qLocalEmpresa.eof then
     begin
        FExiste:=False;
-       qLocal.Free;
+       qLocalEmpresa.Free;
        exit;
     end;
     FExiste                      := True;
-    FNomeFantasia                := qLocal.FieldByName('EMP_NOME_FANTASIA'          ).AsString;
-    FRazaoSocial                 := qLocal.FieldByName('EMP_RAZAOSOCIAL'            ).AsString;
-    FDataInicioAtividades        := qLocal.FieldByName('EMP_INICIOATIVIDADES'       ).AsDateTime;
-    FDataInicioAtividadesString  := qLocal.FieldByName('EMP_INICIOATIVIDADES'       ).AsString;
-    FAtiva                       :=(qLocal.FieldByName('EMP_BLOQUEADA'              ).AsString = 'N');
-    FPessoaJuridica              :=(qLocal.FieldByName('EMP_PESSOAJF'               ).AsString = 'J');
-    FInscricaoEstadual           := qLocal.FieldByName('EMP_INSCRICAO_ESTADUAL'     ).AsString;
-    FInscricaoMunicipal          := qLocal.FieldByName('EMP_INSCRICAO_MUNICIPAL'    ).AsString;
-    FSUFRAMA                     := qLocal.FieldByName('EMP_SUFRAMA'                ).AsString;
-    FCNAE                        := qLocal.FieldByName('EMP_CNAE'                   ).AsString;
-    FCNPJ                        := qLocal.FieldByName('EMP_CNPJ'                   ).AsString;
-    FNIRE                        := qLocal.FieldByName('EMP_NIRE'                   ).AsString;
-    FIESubstTributario           := qLocal.FieldByName('EMP_INSCRICAO_ESTADUAL_ST'  ).AsString;
-    FEnderecoRua                 := qLocal.FieldByName('EMP_ENDERECO'               ).AsString;
-    FEnderecoCEP                 := qLocal.FieldByName('EMP_CEP'                    ).AsString;
-    FEnderecoNumero              := qLocal.FieldByName('EMP_ENDERECO_NUMERO'        ).AsString;
-    FEnderecoBairro              := qLocal.FieldByName('EMP_BAIRRO'                 ).AsString;
-    FEnderecoComplemento         := qLocal.FieldByname('EMP_ENDERECO_COMPLEMENTO'   ).AsString;
-    FEnderecoMunicipio           := qLocal.FieldByname('EMP_CIDADE'                 ).AsString;
-    FEnderecoMunicipioIBGE       := qLocal.FieldByname('EMP_IBGECIDADE'             ).AsString;
-    FEnderecoUF                  := qLocal.FieldByname('EMP_UF'                     ).AsString;
-    FEnderecoUFIBGE              := qLocal.FieldByName('EMP_IBGEUF'                 ).AsString;
-    FTelefone                    := qLocal.FieldByName('EMP_FONES'                  ).AsString;
-    FCelular                     := qLocal.FieldByName('EMP_CELULAR'                ).AsString;
-    FWhatsApp                    := qLocal.FieldByName('EMP_WHATSAPP'               ).AsString;
-    FEmail                       := qLocal.FieldByName('EMP_EMAIL'                  ).AsString;
-    FContribuinteIPI             :=(qLocal.FieldByname('EMP_CONTRIBUINTE_IPI'       ).AsInteger = 1);
-    FTratarICMS_Diferimento      :=(qLocal.FieldByname('EMP_TRATAR_ICMS_DIFERIMENTO').AsInteger = 1);
-    FResponsavelNome             := qLocal.FieldByname('EMP_RESPONSAVEL_NOME'       ).AsString;
-    FResponsavelWhatsApp         := qLocal.FieldByname('EMP_RESPONSAVEL_WHATSAPP'   ).AsString;
-    FResponsavelCelular          := qLocal.FieldByname('EMP_RESPONSAVEL_CELULAR'    ).AsString;
-    FResponsavelEmail            := qLocal.FieldByname('EMP_RESPONSAVEL_EMAIL'      ).AsString;
-    FContadorEmpresa             := qLocal.FieldByname('EMP_CONTADOR_EMPRESA'       ).AsString;
-    FContadorResponsavel         := qLocal.FieldByname('EMP_CONTADOR_RESPONSAVEL'   ).AsString;
-    FContadorCNPJ                := qLocal.FieldByname('EMP_CONTADOR_CNPJ'          ).AsString;
-    FContadorCPF                 := qLocal.FieldByname('EMP_CONTADOR_CPF'           ).AsString;
-    FContadorTelefone1           := qLocal.FieldByname('EMP_CONTADOR_TEL1'          ).AsString;
-    FContadorTelefone2           := qLocal.FieldByname('EMP_CONTADOR_TEL2'          ).AsString;
-    FContadorCRC                 := qLocal.FieldByname('EMP_CONTADOR_CRC'           ).AsString;
-    FContadorCelular1            := qLocal.FieldByname('EMP_CONTADOR_CEL1'          ).AsString;
-    FContadorCelular2            := qLocal.FieldByname('EMP_CONTADOR_CEL2'          ).AsString;
-    FContadorEmail               := qLocal.FieldByname('EMP_CONTADOR_EMAIL'         ).AsString;
-    FLogomarca                   := qLocal.FieldByname('EMP_LOGO'                   ).AsString;
-    FAssinatura                  := qLocal.FieldByname('EMP_ASSINATURA'             ).AsString;
+    FNomeFantasia                := qLocalEmpresa.FieldByName('EMP_NOME_FANTASIA'          ).AsString;
+    FRazaoSocial                 := qLocalEmpresa.FieldByName('EMP_RAZAOSOCIAL'            ).AsString;
+    FDataInicioAtividades        := qLocalEmpresa.FieldByName('EMP_INICIOATIVIDADES'       ).AsDateTime;
+    FDataInicioAtividadesString  := qLocalEmpresa.FieldByName('EMP_INICIOATIVIDADES'       ).AsString;
+    FAtiva                       :=(qLocalEmpresa.FieldByName('EMP_BLOQUEADA'              ).AsString = 'N');
+    FPessoaJuridica              :=(qLocalEmpresa.FieldByName('EMP_PESSOAJF'               ).AsString = 'J');
+    FInscricaoEstadual           := qLocalEmpresa.FieldByName('EMP_INSCRICAO_ESTADUAL'     ).AsString;
+    FInscricaoMunicipal          := qLocalEmpresa.FieldByName('EMP_INSCRICAO_MUNICIPAL'    ).AsString;
+    FSUFRAMA                     := qLocalEmpresa.FieldByName('EMP_SUFRAMA'                ).AsString;
+    FCNAE                        := qLocalEmpresa.FieldByName('EMP_CNAE'                   ).AsString;
+    FCNPJ                        := qLocalEmpresa.FieldByName('EMP_CNPJ'                   ).AsString;
+    FNIRE                        := qLocalEmpresa.FieldByName('EMP_NIRE'                   ).AsString;
+    FIESubstTributario           := qLocalEmpresa.FieldByName('EMP_INSCRICAO_ESTADUAL_ST'  ).AsString;
+    FEnderecoRua                 := qLocalEmpresa.FieldByName('EMP_ENDERECO'               ).AsString;
+    FEnderecoCEP                 := qLocalEmpresa.FieldByName('EMP_CEP'                    ).AsString;
+    FEnderecoNumero              := qLocalEmpresa.FieldByName('EMP_ENDERECO_NUMERO'        ).AsString;
+    FEnderecoBairro              := qLocalEmpresa.FieldByName('EMP_BAIRRO'                 ).AsString;
+    FEnderecoComplemento         := qLocalEmpresa.FieldByname('EMP_ENDERECO_COMPLEMENTO'   ).AsString;
+    FEnderecoMunicipio           := qLocalEmpresa.FieldByname('EMP_CIDADE'                 ).AsString;
+    FEnderecoMunicipioIBGE       := qLocalEmpresa.FieldByname('EMP_IBGECIDADE'             ).AsString;
+    FEnderecoUF                  := qLocalEmpresa.FieldByname('EMP_UF'                     ).AsString;
+    FEnderecoUFIBGE              := qLocalEmpresa.FieldByName('EMP_IBGEUF'                 ).AsString;
+    FTelefone                    := qLocalEmpresa.FieldByName('EMP_FONES'                  ).AsString;
+    FCelular                     := qLocalEmpresa.FieldByName('EMP_CELULAR'                ).AsString;
+    FWhatsApp                    := qLocalEmpresa.FieldByName('EMP_WHATSAPP'               ).AsString;
+    FEmail                       := qLocalEmpresa.FieldByName('EMP_EMAIL'                  ).AsString;
+    FContribuinteIPI             :=(qLocalEmpresa.FieldByname('EMP_CONTRIBUINTE_IPI'       ).AsInteger = 1);
+    FTratarICMS_Diferimento      :=(qLocalEmpresa.FieldByname('EMP_TRATAR_ICMS_DIFERIMENTO').AsInteger = 1);
+    FResponsavelNome             := qLocalEmpresa.FieldByname('EMP_RESPONSAVEL_NOME'       ).AsString;
+    FResponsavelWhatsApp         := qLocalEmpresa.FieldByname('EMP_RESPONSAVEL_WHATSAPP'   ).AsString;
+    FResponsavelCelular          := qLocalEmpresa.FieldByname('EMP_RESPONSAVEL_CELULAR'    ).AsString;
+    FResponsavelEmail            := qLocalEmpresa.FieldByname('EMP_RESPONSAVEL_EMAIL'      ).AsString;
+    FContadorEmpresa             := qLocalEmpresa.FieldByname('EMP_CONTADOR_EMPRESA'       ).AsString;
+    FContadorResponsavel         := qLocalEmpresa.FieldByname('EMP_CONTADOR_RESPONSAVEL'   ).AsString;
+    FContadorCNPJ                := qLocalEmpresa.FieldByname('EMP_CONTADOR_CNPJ'          ).AsString;
+    FContadorCPF                 := qLocalEmpresa.FieldByname('EMP_CONTADOR_CPF'           ).AsString;
+    FContadorTelefone1           := qLocalEmpresa.FieldByname('EMP_CONTADOR_TEL1'          ).AsString;
+    FContadorTelefone2           := qLocalEmpresa.FieldByname('EMP_CONTADOR_TEL2'          ).AsString;
+    FContadorCRC                 := qLocalEmpresa.FieldByname('EMP_CONTADOR_CRC'           ).AsString;
+    FContadorCelular1            := qLocalEmpresa.FieldByname('EMP_CONTADOR_CEL1'          ).AsString;
+    FContadorCelular2            := qLocalEmpresa.FieldByname('EMP_CONTADOR_CEL2'          ).AsString;
+    FContadorEmail               := qLocalEmpresa.FieldByname('EMP_CONTADOR_EMAIL'         ).AsString;
+    FLogomarca                   := qLocalEmpresa.FieldByname('EMP_LOGO'                   ).AsString;
+    FAssinatura                  := qLocalEmpresa.FieldByname('EMP_ASSINATURA'             ).AsString;
 
-    FTributacao.PIS.Cumulativo   :=(qLocal.FieldByName('EMP_PIS_CUMULATIVO'         ).AsInteger = 1);
-    FTributacao.PIS.Aliquota     := qLocal.FieldByName('EMP_PIS_ALIQUOTA'           ).AsFloat;
-    FTributacao.COFINS.Cumulativo:=(qLocal.FieldByName('EMP_COFINS_CUMULATIVO'      ).AsInteger = 1);
-    FTributacao.COFINS.Aliquota  := qLocal.FieldByName('EMP_COFINS_ALIQUOTA'        ).AsFloat;
+    FTributacao.PIS.Cumulativo   :=(qLocalEmpresa.FieldByName('EMP_PIS_CUMULATIVO'         ).AsInteger = 1);
+    FTributacao.PIS.Aliquota     := qLocalEmpresa.FieldByName('EMP_PIS_ALIQUOTA'           ).AsFloat;
+    FTributacao.COFINS.Cumulativo:=(qLocalEmpresa.FieldByName('EMP_COFINS_CUMULATIVO'      ).AsInteger = 1);
+    FTributacao.COFINS.Aliquota  := qLocalEmpresa.FieldByName('EMP_COFINS_ALIQUOTA'        ).AsFloat;
 
-    FDataCadastro                := qLocal.FieldByName('EMP_DT'                     ).AsDateTime;
-    FCodigoUniSystem             := qLocal.FieldByName('EMP_CODIGO_UNISYSTEM'       ).AsString;
+    FDataCadastro                := qLocalEmpresa.FieldByName('EMP_DT'                     ).AsDateTime;
+    FCodigoUniSystem             := qLocalEmpresa.FieldByName('EMP_CODIGO_UNISYSTEM'       ).AsString;
 
     //PASSO 9
-    Qlocal.Free;
+    qLocalEmpresa.Free;
 end;
 
 constructor TEmpresa.Create;
@@ -539,11 +541,15 @@ begin
 
    if not Existe then
    begin
+      if not fTemAcesso('CADEMPRESA') then
+         exit;
       if not Insert then
          exit;
    end
    else
    begin
+      if not fTemAcesso('ALTEMPRESA') then
+         exit;
       if not Update then
          exit;
    end;

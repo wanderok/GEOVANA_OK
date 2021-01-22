@@ -15,6 +15,7 @@ object frm_intagracao_outras_base_dados: Tfrm_intagracao_outras_base_dados
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -57,71 +58,6 @@ object frm_intagracao_outras_base_dados: Tfrm_intagracao_outras_base_dados
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-  end
-  object GroupBox1: TGroupBox
-    Left = 15
-    Top = 46
-    Width = 678
-    Height = 131
-    Caption = '                                                                '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -15
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 0
-    object Label3: TLabel
-      Left = 0
-      Top = 0
-      Width = 331
-      Height = 19
-      Caption = '  Tratamento de Cadastros de Produtos  '
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object RadioButton1: TRadioButton
-      Left = 13
-      Top = 25
-      Width = 586
-      Height = 17
-      Caption = 
-        'Esta base de dados atualizada automaticamente Produtos de outras' +
-        ' bases remotas.'
-      TabOrder = 0
-    end
-    object RadioButton2: TRadioButton
-      Left = 13
-      Top = 50
-      Width = 536
-      Height = 17
-      Caption = 
-        'Esta base de dados '#233' atualizada automaticamente por outras bases' +
-        ' remotas.'
-      TabOrder = 1
-    end
-    object RadioButton3: TRadioButton
-      Left = 13
-      Top = 99
-      Width = 464
-      Height = 19
-      Caption = 'N'#227'o ha atualiza'#231#227'o autom'#225'ticas entre Produtos de lojas do grupo.'
-      TabOrder = 2
-    end
-    object RadioButton4: TRadioButton
-      Left = 13
-      Top = 74
-      Width = 636
-      Height = 17
-      Caption = 
-        'Esta base de dados automaticamente atualiza outras e '#233' atualizad' +
-        'a por outras bases remotas.'
-      TabOrder = 3
-    end
   end
   object cxButton1: TcxButton
     Left = 506
@@ -584,13 +520,14 @@ object frm_intagracao_outras_base_dados: Tfrm_intagracao_outras_base_dados
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000}
-    TabOrder = 1
+    TabOrder = 0
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -13
     Font.Name = 'X'#39
     Font.Style = [fsBold]
     ParentFont = False
+    OnClick = cxButton1Click
   end
   object Edit1: TEdit
     Left = 112
@@ -603,7 +540,7 @@ object frm_intagracao_outras_base_dados: Tfrm_intagracao_outras_base_dados
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 2
+    TabOrder = 1
     Text = 'Edit1'
   end
   object Edit2: TEdit
@@ -617,7 +554,7 @@ object frm_intagracao_outras_base_dados: Tfrm_intagracao_outras_base_dados
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 2
     Text = 'Edit1'
   end
   object cxGroupBox2: TcxGroupBox
@@ -640,8 +577,30 @@ object frm_intagracao_outras_base_dados: Tfrm_intagracao_outras_base_dados
     StyleDisabled.LookAndFeel.Kind = lfFlat
     StyleDisabled.LookAndFeel.NativeStyle = True
     StyleDisabled.TextColor = clSkyBlue
-    TabOrder = 4
+    TabOrder = 3
     Height = 3
     Width = 710
+  end
+  object RadioGroup1: TRadioGroup
+    Left = 8
+    Top = 44
+    Width = 691
+    Height = 105
+    Caption = 'Integra'#231#227'o com bancos de dados em Nuvem'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    Items.Strings = (
+      'N'#227'o h'#225' atualiza'#231#227'o autom'#225'ticas entre lojas do grupo.'
+      
+        'Esta base de dados envia dados para a nuvem (atualiza automatica' +
+        'mente outras bases remotas).'
+      
+        'Esta base de dados recebe dados da nuvem ('#233' atualizada automatic' +
+        'amente por outras bases remotas).')
+    ParentFont = False
+    TabOrder = 4
   end
 end

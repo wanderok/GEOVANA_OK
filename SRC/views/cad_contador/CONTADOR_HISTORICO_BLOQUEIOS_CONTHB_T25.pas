@@ -27,13 +27,13 @@ type
     dt_CONTADOR_HISTORICO_BLOQUEIOS_CONTHB: TDataSource;
     DBGrid1: TDBGrid;
     Panel1: TPanel;
-    lbNomeDaTela: TLabel;
     sql_CONTADOR_HISTORICO_BLOQUEIOS_CONTHBCONTHB_DTEVENTO: TDateField;
     sql_CONTADOR_HISTORICO_BLOQUEIOS_CONTHBCONTHB_HREVENTO: TStringField;
     sql_CONTADOR_HISTORICO_BLOQUEIOS_CONTHBCONTHB_USUEVENTO: TStringField;
     sql_CONTADOR_HISTORICO_BLOQUEIOS_CONTHBCONTHB_MAQEVENTO: TStringField;
     sql_CONTADOR_HISTORICO_BLOQUEIOS_CONTHBCONTHB_EVENTO: TStringField;
     sql_CONTADOR_HISTORICO_BLOQUEIOS_CONTHBCONTHB_CONTADOR: TStringField;
+    Panel17: TPanel;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
@@ -47,7 +47,7 @@ var
 implementation
 
 {$R *.dfm}
-uses Dados;
+uses DadosSMC;
 
 procedure TfrmCONTADOR_HISTORICO_BLOQUEIOS_CONTHB_T25.FormKeyPress(Sender: TObject;
   var Key: Char);

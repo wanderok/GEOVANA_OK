@@ -41,7 +41,7 @@ implementation
 
 {$R *.dfm}
 
-uses Funcoes;
+uses FuncoesSMC;
 
 procedure TfrmGraficoSistemasSMC.Contar_GETransporte;
 begin

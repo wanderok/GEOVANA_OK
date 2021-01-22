@@ -1,10 +1,9 @@
 object frmLiberaAcesso: TfrmLiberaAcesso
   Left = 240
   Top = 164
-  AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'Usu'#225'rio e Senha para liberar fun'#231#227'o'
-  ClientHeight = 252
+  ClientHeight = 265
   ClientWidth = 376
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,6 +18,23 @@ object frmLiberaAcesso: TfrmLiberaAcesso
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object lbNomeDaTela: TLabel
+    Left = 0
+    Top = 252
+    Width = 376
+    Height = 13
+    Align = alBottom
+    Alignment = taRightJustify
+    Caption = ' T39 '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ExplicitLeft = 349
+    ExplicitWidth = 27
+  end
   object pnSenhaPreco: TPanel
     Left = 0
     Top = 40

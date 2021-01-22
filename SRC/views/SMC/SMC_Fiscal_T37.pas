@@ -31,7 +31,6 @@ uses
 
 type
   Tfrm_SMC_Fiscal_T37 = class(TForm)
-    lbNomeDaTela: TLabel;
     Panel1: TPanel;
     Panel2: TPanel;
     Label1: TLabel;
@@ -173,6 +172,7 @@ type
     btn_relatorios_cli: TcxButton;
     bGraficoSistemas: TcxButton;
     bGraficoContador: TcxButton;
+    Panel17: TPanel;
     procedure FormShow(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -195,6 +195,7 @@ type
     procedure rgStatusClick(Sender: TObject);
     procedure bGraficoContadorClick(Sender: TObject);
     procedure bGraficoSistemasClick(Sender: TObject);
+    procedure btn_relatorios_cliClick(Sender: TObject);
   private
     { Private declarations}
     procedure Listar;
@@ -252,8 +253,8 @@ implementation
 
 {$R *.dfm}
 
-uses Dados,
-     Funcoes,
+uses DadosSMC,
+     FuncoesSMC,
      consulta_T7,
      Classe_Usuario,
      Classe_Cliente,
@@ -267,6 +268,9 @@ begin
        exit;
 
     if qGRID.eof then
+       exit;
+
+    if not fTemAcesso('ABREARQFIS') then
        exit;
 
     if (qGRID.FieldByName('AF_USU').AsString <> '') and
@@ -702,6 +706,24 @@ begin
               end;
        end;
     end;
+
+    if edMes.Text <> '' then
+    begin
+       QGRID.sql.add(' AND (    ( CLI_STATUS <> 2)                                         ');
+       QGRID.sql.add('       OR (                                                          ');
+       QGRID.sql.add('              (CLI_STATUS = 2 )                                     ');
+       //QGRID.sql.add('          AND (CLID_ALT_DTINATIVO > :DATAINATIVACAO)                 ');
+       //QGRID.ParamByName('DATAINATIVACAO').AsDateTime := DataServidor - 45;
+       QGRID.sql.add('          AND (CLID_ALT_DTINATIVO > (SELECT MAX(AF_FIM_DT)           ');
+       QGRID.sql.add('                                            AS ULTIMO                ');
+       QGRID.sql.add('                                       FROM ARQUIVOS_FISCAIS_AF      ');
+       QGRID.sql.add('                                      WHERE AF_CLIENTE  = CLI_CODIGO ');
+       QGRID.sql.add('                                     )                               ');
+       QGRID.sql.add('               )                                                     ');
+       QGRID.sql.add('           )                                                         ');
+       QGRID.sql.add('      )                                                         ');
+    end;
+
     QGRID.sql.add(' ORDER BY CLI_NOME_FANTASIA ');
     QGRID.Open;
 
@@ -731,6 +753,12 @@ end;
 procedure Tfrm_SMC_Fiscal_T37.bPesqClienteClick(Sender: TObject);
 begin
    PesquisarCliente;
+end;
+
+procedure Tfrm_SMC_Fiscal_T37.btn_relatorios_cliClick(Sender: TObject);
+begin
+    if not fTemAcesso('IMPRARQFIS') then
+       exit;
 end;
 
 procedure Tfrm_SMC_Fiscal_T37.ContaContadores;
@@ -1030,6 +1058,8 @@ end;
 
 procedure Tfrm_SMC_Fiscal_T37.bGraficoContadorClick(Sender: TObject);
 begin
+    if not fTemAcesso('GCONARQFIS') then
+       exit;
   frmGraficoContadoresSMC := TfrmGraficoContadoresSMC.Create(nil);
   frmGraficoContadoresSMC.ShowModal;
   frmGraficoContadoresSMC.Free;
@@ -1037,6 +1067,8 @@ end;
 
 procedure Tfrm_SMC_Fiscal_T37.bGraficoSistemasClick(Sender: TObject);
 begin
+    if not fTemAcesso('GSISARQFIS') then
+       exit;
   frmGraficoSistemasSMC := TfrmGraficoSistemasSMC.Create(nil);
   frmGraficoSistemasSMC.ShowModal;
   frmGraficoSistemasSMC.Free;
@@ -1720,6 +1752,9 @@ begin
     if vMesDeReferencia = -1 then
        exit;
 
+    if not fTemAcesso('CONSARQFIS') then
+       exit;
+
     if (qGRID.FieldByName('AF_USU').AsString <> '') and
        (qGRID.FieldByName('AF_USU').AsString <> Usuario.Codigo) then
     begin
@@ -1941,6 +1976,9 @@ var vDataServidor:TDateTime;
     vHoraServidor,
     xDataServidor:String;
 begin
+    if not fTemAcesso('NOVOARQFIS') then
+       exit;
+
     vDataServidor := DataServidor;
     vHoraServidor := HoraServidor;
     xDataServidor := sDataServidor;
@@ -2062,6 +2100,9 @@ end;
 
 procedure Tfrm_SMC_Fiscal_T37.Listar;
 begin
+    if not fTemAcesso('LISTARQFIS') then
+       exit;
+
    PreparaGrid;
 end;
 
@@ -2224,6 +2265,9 @@ begin
        exit;
 
     if qGRID.eof then
+       exit;
+
+    if not fTemAcesso('AGUARRQFIS') then
        exit;
 
     if (qGRID.FieldByName('AF_USU').AsString <> '') and

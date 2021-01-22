@@ -32,23 +32,6 @@
     Font.Style = []
     ParentFont = False
   end
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 256
-    Width = 236
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T11 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 196
-    ExplicitWidth = 40
-  end
   object edFiltro: TEdit
     Left = 86
     Top = 8
@@ -113,7 +96,7 @@
   end
   object bGravar: TcxButton
     Left = 13
-    Top = 211
+    Top = 203
     Width = 90
     Height = 45
     Caption = 'Gravar'
@@ -261,7 +244,7 @@
   end
   object cxButton28: TcxButton
     Left = 127
-    Top = 211
+    Top = 203
     Width = 95
     Height = 45
     Caption = 'Sair'
@@ -406,6 +389,27 @@
     Font.Style = [fsBold]
     ParentFont = False
     OnClick = cxButton28Click
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 254
+    Width = 236
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T11 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 4
+    ExplicitLeft = -52
+    ExplicitTop = 245
+    ExplicitWidth = 288
   end
   object ACBrEnterTab1: TACBrEnterTab
     EnterAsTab = True

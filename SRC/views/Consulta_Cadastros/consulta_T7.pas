@@ -45,11 +45,11 @@ type
     Label24: TLabel;
     Label45: TLabel;
     cxButton21: TcxButton;
-    lbNomeDaTela: TLabel;
     qLocal: TFDQuery;
     DataSource1: TDataSource;
     rgConsultar: TRadioGroup;
     cbQualquerParteDoNome: TCheckBox;
+    Panel4: TPanel;
     procedure cxButton21Click(Sender: TObject);
     procedure edArgumentoDePesquisaChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -230,8 +230,8 @@ begin
    qLocal.SQL.Add('       CONT_NOME_FANTASIA AS fantasia,        ');
    qLocal.SQL.Add('       CONTD_CNPJ         AS cnpj,            ');
    qLocal.SQL.Add('       CONTD_CPF          AS cpf              ');
-   qLocal.SQL.Add('  FROM CONTADOR_CONT                       ');
-   qLocal.SQL.Add('INNER JOIN CONTADOR_DETALHE_CONTD          ');
+   qLocal.SQL.Add('  FROM CONTADOR_CONT                          ');
+   qLocal.SQL.Add('INNER JOIN CONTADOR_DETALHE_CONTD             ');
    qLocal.SQL.Add('        ON CONTD_CODIGO = CONT_CODIGO          ');
    qLocal.SQL.Add(' WHERE CONT_CODIGO        LIKE :ARGUMENTO     ');
    qLocal.SQL.Add('    OR CONT_RAZAO_SOCIAL  LIKE :ARGUMENTO     ');

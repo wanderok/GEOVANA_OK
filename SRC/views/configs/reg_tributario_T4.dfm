@@ -80,23 +80,6 @@ object frm_reg_tributario_T4: Tfrm_reg_tributario_T4
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 514
-    Width = 960
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = 'T4'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 12
-    ExplicitWidth = 948
-  end
   object Edit1: TEdit
     Left = 26
     Top = 30
@@ -424,5 +407,25 @@ object frm_reg_tributario_T4: Tfrm_reg_tributario_T4
         TabOrder = 0
       end
     end
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 512
+    Width = 960
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T4 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitTop = 246
+    ExplicitWidth = 286
   end
 end

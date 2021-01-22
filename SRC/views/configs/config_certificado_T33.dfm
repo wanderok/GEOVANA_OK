@@ -1,10 +1,11 @@
 object frm_config_certificado_T33: Tfrm_config_certificado_T33
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Configura'#231#227'o Certificado Digital'
-  ClientHeight = 527
+  ClientHeight = 487
   ClientWidth = 314
   Color = clMenuBar
   Font.Charset = DEFAULT_CHARSET
@@ -20,7 +21,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   TextHeight = 13
   object lSSLLib: TLabel
     Left = 91
-    Top = 139
+    Top = 108
     Width = 40
     Height = 18
     Alignment = taRightJustify
@@ -36,7 +37,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object lCryptLib: TLabel
     Left = 79
-    Top = 167
+    Top = 136
     Width = 52
     Height = 18
     Alignment = taRightJustify
@@ -52,7 +53,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object lHttpLib: TLabel
     Left = 86
-    Top = 195
+    Top = 164
     Width = 45
     Height = 18
     Alignment = taRightJustify
@@ -68,7 +69,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object lXmlSign: TLabel
     Left = 60
-    Top = 223
+    Top = 192
     Width = 71
     Height = 18
     Alignment = taRightJustify
@@ -84,7 +85,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object Label104: TLabel
     Left = 46
-    Top = 278
+    Top = 247
     Width = 56
     Height = 18
     Caption = 'Caminho'
@@ -95,37 +96,9 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
     Font.Style = []
     ParentFont = False
   end
-  object Label105: TLabel
-    Left = 24
-    Top = 333
-    Width = 40
-    Height = 18
-    Caption = 'Senha'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -15
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
-  object Label25: TLabel
-    Left = 11
-    Top = 305
-    Width = 53
-    Height = 18
-    Caption = 'N'#186' S'#233'rie'
-    Color = clBlack
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -15
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentColor = False
-    ParentFont = False
-  end
   object Label1: TLabel
     Left = 74
-    Top = 251
+    Top = 220
     Width = 57
     Height = 18
     Alignment = taRightJustify
@@ -141,7 +114,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object Label4: TLabel
     Left = 23
-    Top = 7
+    Top = 0
     Width = 255
     Height = 19
     Caption = 'Configura'#231#227'o certificado digital'
@@ -156,7 +129,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object Label5: TLabel
     Left = 67
-    Top = 309
+    Top = 278
     Width = 66
     Height = 13
     Caption = ' (A1) | (A3)'
@@ -171,7 +144,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object Label6: TLabel
     Left = 70
-    Top = 337
+    Top = 306
     Width = 63
     Height = 13
     Caption = '(A1) | (A3)'
@@ -186,7 +159,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object Label7: TLabel
     Left = 106
-    Top = 282
+    Top = 251
     Width = 25
     Height = 13
     Caption = '(A1)'
@@ -199,26 +172,9 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
     ParentColor = False
     ParentFont = False
   end
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 514
-    Width = 314
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T33 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 274
-    ExplicitWidth = 40
-  end
   object Label2: TLabel
-    Left = 67
-    Top = 47
+    Left = 83
+    Top = 40
     Width = 136
     Height = 16
     Caption = 'Data de Vencimento:'
@@ -230,8 +186,8 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
     ParentFont = False
   end
   object Label3: TLabel
-    Left = 79
-    Top = 78
+    Left = 95
+    Top = 71
     Width = 108
     Height = 19
     Caption = 'dd/mm/aaaa'
@@ -244,9 +200,9 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object cxButton23: TcxButton
     Left = 28
-    Top = 490
+    Top = 435
     Width = 84
-    Height = 23
+    Height = 33
     Caption = 'Gravar'
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Metropolis'
@@ -296,9 +252,9 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object cxButton25: TcxButton
     Left = 216
-    Top = 490
+    Top = 435
     Width = 84
-    Height = 23
+    Height = 33
     Caption = 'Sair'
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Metropolis'
@@ -348,7 +304,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object cbSSLLib: TComboBox
     Left = 140
-    Top = 138
+    Top = 107
     Width = 160
     Height = 21
     Style = csDropDownList
@@ -357,7 +313,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object cbCryptLib: TComboBox
     Left = 140
-    Top = 166
+    Top = 135
     Width = 160
     Height = 21
     Style = csDropDownList
@@ -366,7 +322,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object cbHttpLib: TComboBox
     Left = 140
-    Top = 194
+    Top = 163
     Width = 160
     Height = 21
     Style = csDropDownList
@@ -375,7 +331,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object cbXmlSignLib: TComboBox
     Left = 140
-    Top = 222
+    Top = 191
     Width = 160
     Height = 21
     Style = csDropDownList
@@ -384,14 +340,14 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object edtCaminho: TEdit
     Left = 140
-    Top = 277
+    Top = 246
     Width = 133
     Height = 21
     TabOrder = 6
   end
   object edtSenha: TEdit
     Left = 139
-    Top = 332
+    Top = 301
     Width = 161
     Height = 21
     PasswordChar = '*'
@@ -399,7 +355,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object edtNumSerie: TEdit
     Left = 139
-    Top = 304
+    Top = 273
     Width = 133
     Height = 21
     Font.Charset = DEFAULT_CHARSET
@@ -412,7 +368,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object cbxSSLType: TComboBox
     Left = 140
-    Top = 250
+    Top = 219
     Width = 160
     Height = 21
     Style = csDropDownList
@@ -420,7 +376,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object cxButton2: TcxButton
     Left = 273
-    Top = 277
+    Top = 270
     Width = 28
     Height = 21
     LookAndFeel.NativeStyle = False
@@ -471,7 +427,7 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
   end
   object cxButton1: TcxButton
     Left = 28
-    Top = 367
+    Top = 336
     Width = 272
     Height = 44
     Caption = 'Certificados Instalados'
@@ -617,8 +573,8 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
     OnClick = cxButton1Click
   end
   object cxGroupBox2: TcxGroupBox
-    Left = -226
-    Top = 32
+    Left = 23
+    Top = 20
     ParentBackground = False
     ParentColor = False
     ParentFont = False
@@ -637,12 +593,12 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
     StyleDisabled.LookAndFeel.NativeStyle = True
     StyleDisabled.TextColor = clSkyBlue
     TabOrder = 12
-    Height = 2
-    Width = 817
+    Height = 5
+    Width = 291
   end
   object cxButton3: TcxButton
     Left = 28
-    Top = 425
+    Top = 386
     Width = 272
     Height = 44
     Caption = 'Configura'#231#245'es da internet '#13'TLS | SSL'
@@ -786,14 +742,32 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object Panel17: TPanel
+    Left = 0
+    Top = 472
+    Width = 314
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T33 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 14
+  end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-nfe.XML'
     Filter = 
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 30
-    Top = 144
+    Left = 222
+    Top = 160
   end
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.SSLLib = libNone
@@ -810,6 +784,6 @@ object frm_config_certificado_T33: Tfrm_config_certificado_T33
     Configuracoes.WebServices.SSLType = LT_SSLv2
     Configuracoes.RespTec.IdCSRT = 0
     Left = 246
-    Top = 87
+    Top = 47
   end
 end

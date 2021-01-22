@@ -33,23 +33,6 @@ object Frm_config_nfce_T34: TFrm_config_nfce_T34
     ParentColor = False
     ParentFont = False
   end
-  object lbNomeDaTela: TLabel
-    Left = 0
-    Top = 448
-    Width = 676
-    Height = 13
-    Align = alBottom
-    Alignment = taRightJustify
-    Caption = '[ T34 ] '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ExplicitLeft = 636
-    ExplicitWidth = 40
-  end
   object Image1: TImage
     Left = 452
     Top = 158
@@ -1318,6 +1301,25 @@ object Frm_config_nfce_T34: TFrm_config_nfce_T34
       ParentFont = False
       OnClick = bControleGravarClick
     end
+  end
+  object Panel17: TPanel
+    Left = 0
+    Top = 446
+    Width = 676
+    Height = 15
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = '[ T34 ]'
+    Color = 15254945
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 11
+    ExplicitWidth = 669
   end
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.SSLLib = libNone
